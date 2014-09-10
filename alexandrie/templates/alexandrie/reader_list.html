@@ -1,0 +1,39 @@
+{% extends 'alexandrie/base_tpl.html' %}
+
+{% block title %}Liste des lecteurs{% endblock %}
+
+{% block pageTitle %}Liste des lecteurs{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        {% if reader_list %}
+        <table class="table table-bordered table-striped table-condensed">
+            <caption>
+                <h4>Liste des auteurs</h4>
+            </caption>
+            <thead>
+                <tr>
+                    <th>Numéro</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Date d'inscription</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reader in reader_list %}
+                <tr>
+                    <td><a href="{% url 'alexandrie:reader' %}">{{ reader.number }}</a></td>
+                    <td>{{ reader.first_name }}</td>
+                    <td>{{ reader.last_name }}</td>
+                    <td>{{ reader.inscription_date }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>Aucun lecteur saisi.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

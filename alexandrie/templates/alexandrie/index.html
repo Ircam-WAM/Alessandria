@@ -1,0 +1,13 @@
+{% extends 'alexandrie/base_tpl.html' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block pageTitle %}Bonjour {{ request.user }}{% endblock %}
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="span4">
+            <i class="icon-list-alt"></i>&nbsp;<a href="{% url 'alexandrie:reader_list' %}">Liste des lecteurs</a>
+        </div>
+    </div>    
+{% endblock %}
