@@ -25,6 +25,18 @@ class ReferenceEntity(models.Model):
         return self.label
 
 
+class Language(ReferenceEntity):
+    #code = models.CharField(u"Code", max_length=5) # Internationalization https://docs.djangoproject.com/en/1.7/topics/i18n/
+    is_default = models.BooleanField(u"Langue par défaut", default=False)
+
+    class Meta:
+        verbose_name = "Langue"
+
+
+def get_default_language():
+    return Language.objects.filter(is_default=True)[0]
+
+
 class Profession(ReferenceEntity):
     class Meta:
         verbose_name = u"Profession"
@@ -123,6 +135,7 @@ class Book(ModelEntity):
     category = models.ForeignKey(BookCategory)
     sub_category = models.ForeignKey(BookSubCategory, null=True)
     price = models.FloatField('Prix', blank=True, null=True)
+    language = models.ForeignKey(Language, default=get_default_language)
 
     def __str__(self):
         return self.title
@@ -137,6 +150,13 @@ class BookCopy(ModelEntity):
     book = models.ForeignKey(Book)
     condition = models.ForeignKey(BookCondition)
     is_bought = models.BooleanField(u"Acheté ?", null=False, blank=False, default=None)
+
+    def __str(self):
+        return "%s (%s)" %(self.book, self.number)
+
+    class Meta:
+        verbose_name = "Exemplaire d'un livre"
+        verbose_name_plural = "Exemplaires d'un livre"
 
 
 class ReaderBorrow(models.Model):

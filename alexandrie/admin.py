@@ -1,15 +1,12 @@
 from django.contrib import admin
 from alexandrie.models import *
 
-"""
-class EntityAuditAdmin(admin.ModelAdmin):
-    def save_model(self, request, obj, form, change):
-        obj.added_by = request.user
-        obj.updated_by = request.user
-        obj.save()
-"""
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = ('is_default', 'label')
+
 
 admin.site.register(GeneralConfiguration)
+admin.site.register(Language, LanguageAdmin)
 admin.site.register(Profession)
 admin.site.register(BookCondition)
 admin.site.register(BookCategory)
