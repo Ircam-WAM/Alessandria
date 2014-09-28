@@ -85,7 +85,7 @@ class Reader(ModelEntity):
     last_name = models.CharField(u"Nom", max_length=30)
     addr1 = models.CharField(u"Adresse 1", max_length=30)
     addr2 = models.CharField(u"Adresse 2", null=True, max_length=30, blank=True)
-    zip = models.PositiveIntegerField(u"Code postal", max_length=5, null=True, blank=True)
+    zip = models.PositiveIntegerField(u"Code postal", max_length=5)
     city = models.CharField(u"Ville", max_length=30)
     country = CountryField()
     inscription_date = models.DateField(u"Date d'inscription")
@@ -130,12 +130,15 @@ class Book(ModelEntity):
     publisher = models.ForeignKey(Publisher)
     classif_mark = models.CharField(u"Cote", max_length=10)
     height = models.PositiveIntegerField(u"Hauteur (mm)", max_length=3)
-    isbn_nb = models.CharField(u"No. ISBN", max_length=30, null=True, blank=True)
-    audience = models.ForeignKey(BookAudience)
+    isbn_nb = models.CharField(u"No. ISBN", max_length=30, null=True, blank=True, unique=True)
+    audience = models.ManyToManyField(BookAudience)
     category = models.ForeignKey(BookCategory)
     sub_category = models.ForeignKey(BookSubCategory, null=True)
-    price = models.FloatField('Prix', blank=True, null=True)
     language = models.ForeignKey(Language, default=get_default_language)
+
+    def get_nb_copy(self):
+        return self.bookcopy_set.count()
+    get_nb_copy.short_description = 'Nb exemplaires'
 
     def __str__(self):
         return self.title
@@ -150,8 +153,10 @@ class BookCopy(ModelEntity):
     book = models.ForeignKey(Book)
     condition = models.ForeignKey(BookCondition)
     is_bought = models.BooleanField(u"Acheté ?", null=False, blank=False, default=None)
+    price = models.FloatField("Prix", blank=True, null=True)
+    price_date = models.DateField("Date (prix)", blank=True, null=True)
 
-    def __str(self):
+    def __str__(self):
         return "%s (%s)" %(self.book, self.number)
 
     class Meta:

@@ -1,720 +1,712 @@
 [
 {
+    "model": "alexandrie.generalconfiguration",
+    "pk": 1,
     "fields": {
         "max_borrow_days": 21
-    },
-    "pk": 1,
-    "model": "alexandrie.generalconfiguration"
+    }
 },
 {
-    "fields": {
-        "label": "Fran\u00e7ais",
-        "is_default": true
-    },
+    "model": "alexandrie.language",
     "pk": 1,
-    "model": "alexandrie.language"
+    "fields": {
+        "is_default": true,
+        "label": "Fran\u00e7ais"
+    }
 },
 {
-    "fields": {
-        "label": "Anglais",
-        "is_default": false
-    },
+    "model": "alexandrie.language",
     "pk": 2,
-    "model": "alexandrie.language"
+    "fields": {
+        "is_default": false,
+        "label": "Anglais"
+    }
 },
 {
-    "fields": {
-        "label": "Allemand",
-        "is_default": false
-    },
+    "model": "alexandrie.language",
     "pk": 3,
-    "model": "alexandrie.language"
+    "fields": {
+        "is_default": false,
+        "label": "Allemand"
+    }
 },
 {
-    "fields": {
-        "label": "Italien",
-        "is_default": false
-    },
+    "model": "alexandrie.language",
     "pk": 4,
-    "model": "alexandrie.language"
-},
-{
     "fields": {
-        "label": "Espagnol",
-        "is_default": false
-    },
-    "pk": 5,
-    "model": "alexandrie.language"
+        "is_default": false,
+        "label": "Italien"
+    }
 },
 {
+    "model": "alexandrie.language",
+    "pk": 5,
+    "fields": {
+        "is_default": false,
+        "label": "Espagnol"
+    }
+},
+{
+    "model": "alexandrie.bookaudience",
+    "pk": 1,
     "fields": {
         "label": "Adultes"
-    },
-    "pk": 1,
-    "model": "alexandrie.bookaudience"
+    }
 },
 {
+    "model": "alexandrie.bookaudience",
+    "pk": 2,
     "fields": {
         "label": "Adolescents"
-    },
-    "pk": 2,
-    "model": "alexandrie.bookaudience"
+    }
 },
 {
+    "model": "alexandrie.bookaudience",
+    "pk": 3,
     "fields": {
         "label": "Enfants"
-    },
-    "pk": 3,
-    "model": "alexandrie.bookaudience"
+    }
 },
 {
+    "model": "alexandrie.bookcondition",
+    "pk": 1,
     "fields": {
         "label": "Neuf"
-    },
-    "pk": 1,
-    "model": "alexandrie.bookcondition"
+    }
 },
 {
+    "model": "alexandrie.bookcondition",
+    "pk": 2,
     "fields": {
         "label": "Bon"
-    },
-    "pk": 2,
-    "model": "alexandrie.bookcondition"
+    }
 },
 {
+    "model": "alexandrie.bookcondition",
+    "pk": 3,
     "fields": {
         "label": "Passable"
-    },
-    "pk": 3,
-    "model": "alexandrie.bookcondition"
+    }
 },
 {
+    "model": "alexandrie.bookcondition",
+    "pk": 4,
     "fields": {
         "label": "Mauvais"
-    },
-    "pk": 4,
-    "model": "alexandrie.bookcondition"
+    }
 },
 {
+    "model": "alexandrie.bookcategory",
+    "pk": 1,
     "fields": {
         "label": "Roman"
-    },
-    "pk": 1,
-    "model": "alexandrie.bookcategory"
+    }
 },
 {
+    "model": "alexandrie.bookcategory",
+    "pk": 2,
     "fields": {
         "label": "Documentaire"
-    },
-    "pk": 2,
-    "model": "alexandrie.bookcategory"
+    }
 },
 {
+    "model": "alexandrie.bookcategory",
+    "pk": 3,
     "fields": {
         "label": "Magazine"
-    },
-    "pk": 3,
-    "model": "alexandrie.bookcategory"
+    }
 },
 {
+    "model": "alexandrie.bookcategory",
+    "pk": 4,
     "fields": {
         "label": "BD"
-    },
-    "pk": 4,
-    "model": "alexandrie.bookcategory"
+    }
 },
 {
+    "model": "alexandrie.bookcategory",
+    "pk": 5,
     "fields": {
         "label": "Dictionnaire"
-    },
-    "pk": 5,
-    "model": "alexandrie.bookcategory"
+    }
 },
 {
-    "fields": {
-        "label": "Histoire",
-        "parent_category": 2
-    },
+    "model": "alexandrie.booksubcategory",
     "pk": 1,
-    "model": "alexandrie.booksubcategory"
+    "fields": {
+        "parent_category": 2,
+        "label": "Histoire"
+    }
 },
 {
-    "fields": {
-        "label": "G\u00e9ographie",
-        "parent_category": 2
-    },
-    "pk": 2,
-    "model": "alexandrie.booksubcategory"
-},
-{
-    "fields": {
-        "label": "Histoire",
-        "parent_category": 3
-    },
-    "pk": 3,
-    "model": "alexandrie.booksubcategory"
-},
-{
-    "fields": {
-        "label": "G\u00e9ographie",
-        "parent_category": 3
-    },
+    "model": "alexandrie.booksubcategory",
     "pk": 4,
-    "model": "alexandrie.booksubcategory"
+    "fields": {
+        "parent_category": 3,
+        "label": "G\u00e9ographie"
+    }
 },
 {
-    "fields": {
-        "label": "Policier",
-        "parent_category": 1
-    },
+    "model": "alexandrie.booksubcategory",
     "pk": 5,
-    "model": "alexandrie.booksubcategory"
+    "fields": {
+        "parent_category": 1,
+        "label": "Policier"
+    }
 },
 {
-    "fields": {
-        "label": "Aventures",
-        "parent_category": 1
-    },
+    "model": "alexandrie.booksubcategory",
     "pk": 6,
-    "model": "alexandrie.booksubcategory"
+    "fields": {
+        "parent_category": 1,
+        "label": "Aventures"
+    }
 },
 {
-    "fields": {
-        "label": "Terroir",
-        "parent_category": 1
-    },
+    "model": "alexandrie.booksubcategory",
     "pk": 7,
-    "model": "alexandrie.booksubcategory"
+    "fields": {
+        "parent_category": 1,
+        "label": "Terroir"
+    }
 },
 {
-    "fields": {
-        "codename": "add_logentry",
-        "name": "Can add log entry",
-        "content_type": 1
-    },
-    "pk": 1,
-    "model": "auth.permission"
-},
-{
-    "fields": {
-        "codename": "change_logentry",
-        "name": "Can change log entry",
-        "content_type": 1
-    },
-    "pk": 2,
-    "model": "auth.permission"
-},
-{
-    "fields": {
-        "codename": "delete_logentry",
-        "name": "Can delete log entry",
-        "content_type": 1
-    },
-    "pk": 3,
-    "model": "auth.permission"
-},
-{
-    "fields": {
-        "codename": "add_permission",
-        "name": "Can add permission",
-        "content_type": 2
-    },
-    "pk": 4,
-    "model": "auth.permission"
-},
-{
-    "fields": {
-        "codename": "change_permission",
-        "name": "Can change permission",
-        "content_type": 2
-    },
-    "pk": 5,
-    "model": "auth.permission"
-},
-{
-    "fields": {
-        "codename": "delete_permission",
-        "name": "Can delete permission",
-        "content_type": 2
-    },
-    "pk": 6,
-    "model": "auth.permission"
-},
-{
-    "fields": {
-        "codename": "add_group",
-        "name": "Can add group",
-        "content_type": 3
-    },
-    "pk": 7,
-    "model": "auth.permission"
-},
-{
-    "fields": {
-        "codename": "change_group",
-        "name": "Can change group",
-        "content_type": 3
-    },
+    "model": "alexandrie.booksubcategory",
     "pk": 8,
-    "model": "auth.permission"
+    "fields": {
+        "parent_category": 5,
+        "label": "Langues \u00e9trang\u00e8res"
+    }
 },
 {
+    "model": "auth.permission",
+    "pk": 1,
     "fields": {
-        "codename": "delete_group",
-        "name": "Can delete group",
-        "content_type": 3
-    },
+        "content_type": 1,
+        "codename": "add_logentry",
+        "name": "Can add log entry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "content_type": 1,
+        "codename": "change_logentry",
+        "name": "Can change log entry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "content_type": 1,
+        "codename": "delete_logentry",
+        "name": "Can delete log entry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "content_type": 2,
+        "codename": "add_permission",
+        "name": "Can add permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "content_type": 2,
+        "codename": "change_permission",
+        "name": "Can change permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "content_type": 2,
+        "codename": "delete_permission",
+        "name": "Can delete permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "content_type": 3,
+        "codename": "add_group",
+        "name": "Can add group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "content_type": 3,
+        "codename": "change_group",
+        "name": "Can change group"
+    }
+},
+{
+    "model": "auth.permission",
     "pk": 9,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 3,
+        "codename": "delete_group",
+        "name": "Can delete group"
+    }
 },
 {
-    "fields": {
-        "codename": "add_user",
-        "name": "Can add user",
-        "content_type": 4
-    },
+    "model": "auth.permission",
     "pk": 10,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 4,
+        "codename": "add_user",
+        "name": "Can add user"
+    }
 },
 {
-    "fields": {
-        "codename": "change_user",
-        "name": "Can change user",
-        "content_type": 4
-    },
+    "model": "auth.permission",
     "pk": 11,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 4,
+        "codename": "change_user",
+        "name": "Can change user"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_user",
-        "name": "Can delete user",
-        "content_type": 4
-    },
+    "model": "auth.permission",
     "pk": 12,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 4,
+        "codename": "delete_user",
+        "name": "Can delete user"
+    }
 },
 {
-    "fields": {
-        "codename": "add_contenttype",
-        "name": "Can add content type",
-        "content_type": 5
-    },
+    "model": "auth.permission",
     "pk": 13,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 5,
+        "codename": "add_contenttype",
+        "name": "Can add content type"
+    }
 },
 {
-    "fields": {
-        "codename": "change_contenttype",
-        "name": "Can change content type",
-        "content_type": 5
-    },
+    "model": "auth.permission",
     "pk": 14,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 5,
+        "codename": "change_contenttype",
+        "name": "Can change content type"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_contenttype",
-        "name": "Can delete content type",
-        "content_type": 5
-    },
+    "model": "auth.permission",
     "pk": 15,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 5,
+        "codename": "delete_contenttype",
+        "name": "Can delete content type"
+    }
 },
 {
-    "fields": {
-        "codename": "add_session",
-        "name": "Can add session",
-        "content_type": 6
-    },
+    "model": "auth.permission",
     "pk": 16,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 6,
+        "codename": "add_session",
+        "name": "Can add session"
+    }
 },
 {
-    "fields": {
-        "codename": "change_session",
-        "name": "Can change session",
-        "content_type": 6
-    },
+    "model": "auth.permission",
     "pk": 17,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 6,
+        "codename": "change_session",
+        "name": "Can change session"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_session",
-        "name": "Can delete session",
-        "content_type": 6
-    },
+    "model": "auth.permission",
     "pk": 18,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 6,
+        "codename": "delete_session",
+        "name": "Can delete session"
+    }
 },
 {
-    "fields": {
-        "codename": "add_generalconfiguration",
-        "name": "Can add Configuration g\u00e9n\u00e9rale",
-        "content_type": 7
-    },
+    "model": "auth.permission",
     "pk": 19,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 7,
+        "codename": "add_generalconfiguration",
+        "name": "Can add Configuration g\u00e9n\u00e9rale"
+    }
 },
 {
-    "fields": {
-        "codename": "change_generalconfiguration",
-        "name": "Can change Configuration g\u00e9n\u00e9rale",
-        "content_type": 7
-    },
+    "model": "auth.permission",
     "pk": 20,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 7,
+        "codename": "change_generalconfiguration",
+        "name": "Can change Configuration g\u00e9n\u00e9rale"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_generalconfiguration",
-        "name": "Can delete Configuration g\u00e9n\u00e9rale",
-        "content_type": 7
-    },
+    "model": "auth.permission",
     "pk": 21,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 7,
+        "codename": "delete_generalconfiguration",
+        "name": "Can delete Configuration g\u00e9n\u00e9rale"
+    }
 },
 {
-    "fields": {
-        "codename": "add_language",
-        "name": "Can add Langue",
-        "content_type": 8
-    },
+    "model": "auth.permission",
     "pk": 22,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 8,
+        "codename": "add_language",
+        "name": "Can add Langue"
+    }
 },
 {
-    "fields": {
-        "codename": "change_language",
-        "name": "Can change Langue",
-        "content_type": 8
-    },
+    "model": "auth.permission",
     "pk": 23,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 8,
+        "codename": "change_language",
+        "name": "Can change Langue"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_language",
-        "name": "Can delete Langue",
-        "content_type": 8
-    },
+    "model": "auth.permission",
     "pk": 24,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 8,
+        "codename": "delete_language",
+        "name": "Can delete Langue"
+    }
 },
 {
-    "fields": {
-        "codename": "add_profession",
-        "name": "Can add Profession",
-        "content_type": 9
-    },
+    "model": "auth.permission",
     "pk": 25,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 9,
+        "codename": "add_profession",
+        "name": "Can add Profession"
+    }
 },
 {
-    "fields": {
-        "codename": "change_profession",
-        "name": "Can change Profession",
-        "content_type": 9
-    },
+    "model": "auth.permission",
     "pk": 26,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 9,
+        "codename": "change_profession",
+        "name": "Can change Profession"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_profession",
-        "name": "Can delete Profession",
-        "content_type": 9
-    },
+    "model": "auth.permission",
     "pk": 27,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 9,
+        "codename": "delete_profession",
+        "name": "Can delete Profession"
+    }
 },
 {
-    "fields": {
-        "codename": "add_bookaudience",
-        "name": "Can add Public cible",
-        "content_type": 10
-    },
+    "model": "auth.permission",
     "pk": 28,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 10,
+        "codename": "add_bookaudience",
+        "name": "Can add Public cible"
+    }
 },
 {
-    "fields": {
-        "codename": "change_bookaudience",
-        "name": "Can change Public cible",
-        "content_type": 10
-    },
+    "model": "auth.permission",
     "pk": 29,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 10,
+        "codename": "change_bookaudience",
+        "name": "Can change Public cible"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_bookaudience",
-        "name": "Can delete Public cible",
-        "content_type": 10
-    },
+    "model": "auth.permission",
     "pk": 30,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 10,
+        "codename": "delete_bookaudience",
+        "name": "Can delete Public cible"
+    }
 },
 {
-    "fields": {
-        "codename": "add_bookcondition",
-        "name": "Can add Etat d'un livre",
-        "content_type": 11
-    },
+    "model": "auth.permission",
     "pk": 31,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 11,
+        "codename": "add_bookcondition",
+        "name": "Can add Etat d'un livre"
+    }
 },
 {
-    "fields": {
-        "codename": "change_bookcondition",
-        "name": "Can change Etat d'un livre",
-        "content_type": 11
-    },
+    "model": "auth.permission",
     "pk": 32,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 11,
+        "codename": "change_bookcondition",
+        "name": "Can change Etat d'un livre"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_bookcondition",
-        "name": "Can delete Etat d'un livre",
-        "content_type": 11
-    },
+    "model": "auth.permission",
     "pk": 33,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 11,
+        "codename": "delete_bookcondition",
+        "name": "Can delete Etat d'un livre"
+    }
 },
 {
-    "fields": {
-        "codename": "add_bookcategory",
-        "name": "Can add Cat\u00e9gorie du livre",
-        "content_type": 12
-    },
+    "model": "auth.permission",
     "pk": 34,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 12,
+        "codename": "add_bookcategory",
+        "name": "Can add Cat\u00e9gorie du livre"
+    }
 },
 {
-    "fields": {
-        "codename": "change_bookcategory",
-        "name": "Can change Cat\u00e9gorie du livre",
-        "content_type": 12
-    },
+    "model": "auth.permission",
     "pk": 35,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 12,
+        "codename": "change_bookcategory",
+        "name": "Can change Cat\u00e9gorie du livre"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_bookcategory",
-        "name": "Can delete Cat\u00e9gorie du livre",
-        "content_type": 12
-    },
+    "model": "auth.permission",
     "pk": 36,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 12,
+        "codename": "delete_bookcategory",
+        "name": "Can delete Cat\u00e9gorie du livre"
+    }
 },
 {
-    "fields": {
-        "codename": "add_booksubcategory",
-        "name": "Can add Sous-cat\u00e9gorie d'un livre",
-        "content_type": 13
-    },
+    "model": "auth.permission",
     "pk": 37,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 13,
+        "codename": "add_booksubcategory",
+        "name": "Can add Sous-cat\u00e9gorie d'un livre"
+    }
 },
 {
-    "fields": {
-        "codename": "change_booksubcategory",
-        "name": "Can change Sous-cat\u00e9gorie d'un livre",
-        "content_type": 13
-    },
+    "model": "auth.permission",
     "pk": 38,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 13,
+        "codename": "change_booksubcategory",
+        "name": "Can change Sous-cat\u00e9gorie d'un livre"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_booksubcategory",
-        "name": "Can delete Sous-cat\u00e9gorie d'un livre",
-        "content_type": 13
-    },
+    "model": "auth.permission",
     "pk": 39,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 13,
+        "codename": "delete_booksubcategory",
+        "name": "Can delete Sous-cat\u00e9gorie d'un livre"
+    }
 },
 {
-    "fields": {
-        "codename": "add_reader",
-        "name": "Can add Lecteur",
-        "content_type": 14
-    },
+    "model": "auth.permission",
     "pk": 40,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 14,
+        "codename": "add_reader",
+        "name": "Can add Lecteur"
+    }
 },
 {
-    "fields": {
-        "codename": "change_reader",
-        "name": "Can change Lecteur",
-        "content_type": 14
-    },
+    "model": "auth.permission",
     "pk": 41,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 14,
+        "codename": "change_reader",
+        "name": "Can change Lecteur"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_reader",
-        "name": "Can delete Lecteur",
-        "content_type": 14
-    },
+    "model": "auth.permission",
     "pk": 42,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 14,
+        "codename": "delete_reader",
+        "name": "Can delete Lecteur"
+    }
 },
 {
-    "fields": {
-        "codename": "add_author",
-        "name": "Can add Auteur",
-        "content_type": 15
-    },
+    "model": "auth.permission",
     "pk": 43,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 15,
+        "codename": "add_author",
+        "name": "Can add Auteur"
+    }
 },
 {
-    "fields": {
-        "codename": "change_author",
-        "name": "Can change Auteur",
-        "content_type": 15
-    },
+    "model": "auth.permission",
     "pk": 44,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 15,
+        "codename": "change_author",
+        "name": "Can change Auteur"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_author",
-        "name": "Can delete Auteur",
-        "content_type": 15
-    },
+    "model": "auth.permission",
     "pk": 45,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 15,
+        "codename": "delete_author",
+        "name": "Can delete Auteur"
+    }
 },
 {
-    "fields": {
-        "codename": "add_publisher",
-        "name": "Can add Editeur",
-        "content_type": 16
-    },
+    "model": "auth.permission",
     "pk": 46,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 16,
+        "codename": "add_publisher",
+        "name": "Can add Editeur"
+    }
 },
 {
-    "fields": {
-        "codename": "change_publisher",
-        "name": "Can change Editeur",
-        "content_type": 16
-    },
+    "model": "auth.permission",
     "pk": 47,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 16,
+        "codename": "change_publisher",
+        "name": "Can change Editeur"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_publisher",
-        "name": "Can delete Editeur",
-        "content_type": 16
-    },
+    "model": "auth.permission",
     "pk": 48,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 16,
+        "codename": "delete_publisher",
+        "name": "Can delete Editeur"
+    }
 },
 {
-    "fields": {
-        "codename": "add_book",
-        "name": "Can add Livre",
-        "content_type": 17
-    },
+    "model": "auth.permission",
     "pk": 49,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 17,
+        "codename": "add_book",
+        "name": "Can add Livre"
+    }
 },
 {
-    "fields": {
-        "codename": "change_book",
-        "name": "Can change Livre",
-        "content_type": 17
-    },
+    "model": "auth.permission",
     "pk": 50,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 17,
+        "codename": "change_book",
+        "name": "Can change Livre"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_book",
-        "name": "Can delete Livre",
-        "content_type": 17
-    },
+    "model": "auth.permission",
     "pk": 51,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 17,
+        "codename": "delete_book",
+        "name": "Can delete Livre"
+    }
 },
 {
-    "fields": {
-        "codename": "add_bookcopy",
-        "name": "Can add Exemplaire d'un livre",
-        "content_type": 18
-    },
+    "model": "auth.permission",
     "pk": 52,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 18,
+        "codename": "add_bookcopy",
+        "name": "Can add Exemplaire d'un livre"
+    }
 },
 {
-    "fields": {
-        "codename": "change_bookcopy",
-        "name": "Can change Exemplaire d'un livre",
-        "content_type": 18
-    },
+    "model": "auth.permission",
     "pk": 53,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 18,
+        "codename": "change_bookcopy",
+        "name": "Can change Exemplaire d'un livre"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_bookcopy",
-        "name": "Can delete Exemplaire d'un livre",
-        "content_type": 18
-    },
+    "model": "auth.permission",
     "pk": 54,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 18,
+        "codename": "delete_bookcopy",
+        "name": "Can delete Exemplaire d'un livre"
+    }
 },
 {
-    "fields": {
-        "codename": "add_readerborrow",
-        "name": "Can add reader borrow",
-        "content_type": 19
-    },
+    "model": "auth.permission",
     "pk": 55,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 19,
+        "codename": "add_readerborrow",
+        "name": "Can add reader borrow"
+    }
 },
 {
-    "fields": {
-        "codename": "change_readerborrow",
-        "name": "Can change reader borrow",
-        "content_type": 19
-    },
+    "model": "auth.permission",
     "pk": 56,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 19,
+        "codename": "change_readerborrow",
+        "name": "Can change reader borrow"
+    }
 },
 {
-    "fields": {
-        "codename": "delete_readerborrow",
-        "name": "Can delete reader borrow",
-        "content_type": 19
-    },
+    "model": "auth.permission",
     "pk": 57,
-    "model": "auth.permission"
+    "fields": {
+        "content_type": 19,
+        "codename": "delete_readerborrow",
+        "name": "Can delete reader borrow"
+    }
 },
 {
+    "model": "auth.user",
+    "pk": 1,
     "fields": {
-        "last_name": "",
-        "email": "example@mirelsol.org",
-        "groups": [],
-        "password": "pbkdf2_sha256$12000$aeLWObcNK9xq$owGF6DECMUMr2GrGUnmhl5O7KwNmV3I7IhLBBTko2Tg=",
-        "username": "admin",
         "user_permissions": [],
         "is_superuser": true,
         "first_name": "",
-        "last_login": "2014-09-28T10:13:45.980Z",
         "is_active": true,
-        "date_joined": "2014-09-28T10:13:26.988Z",
-        "is_staff": true
-    },
-    "pk": 1,
-    "model": "auth.user"
+        "password": "pbkdf2_sha256$12000$aeLWObcNK9xq$owGF6DECMUMr2GrGUnmhl5O7KwNmV3I7IhLBBTko2Tg=",
+        "email": "example@mirelsol.org",
+        "is_staff": true,
+        "last_name": "",
+        "username": "admin",
+        "last_login": "2014-09-28T12:44:28.805Z",
+        "groups": [],
+        "date_joined": "2014-09-28T10:13:26.988Z"
+    }
 }
 ]
