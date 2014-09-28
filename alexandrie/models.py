@@ -121,7 +121,8 @@ class Book(ModelEntity):
     isbn_nb = models.CharField(u"No. ISBN", max_length=30, null=True, blank=True)
     audience = models.ForeignKey(BookAudience)
     category = models.ForeignKey(BookCategory)
-    sub_category = models.ForeignKey(BookSubCategory)
+    sub_category = models.ForeignKey(BookSubCategory, null=True)
+    price = models.FloatField('Prix', blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -131,7 +132,7 @@ class Book(ModelEntity):
 
 
 class BookCopy(ModelEntity):
-    nb = models.CharField(u"Numéro", max_length=25)
+    number = models.CharField(u"Numéro", max_length=25)
     registered_on = models.DateField(u"Date d'enregistrement")
     book = models.ForeignKey(Book)
     condition = models.ForeignKey(BookCondition)

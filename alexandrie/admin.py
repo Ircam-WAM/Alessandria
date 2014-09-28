@@ -18,5 +18,6 @@ admin.site.register(BookAudience)
 
 admin.site.register(Reader)
 admin.site.register(Book)
+admin.site.register(BookCopy)
 admin.site.register(Author)
 admin.site.register(Publisher)
