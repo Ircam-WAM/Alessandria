@@ -9,6 +9,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from alexandrie.models import *
 from alexandrie.forms import *
 
+class EntityCreateView(CreateView):
+    pass
 
 class HomeView(TemplateView):
     template_name = 'alexandrie/index.html'
@@ -19,7 +21,7 @@ class HomeView(TemplateView):
         return context
 
 
-class AuthorCreate(CreateView):
+class AuthorCreateView(CreateView):
     template_name = 'alexandrie/author_detail.html'
     model = Author
     form_class = AuthorForm
@@ -34,11 +36,16 @@ class AuthorCreate(CreateView):
         return super(AuthorCreate, self).form_valid(form)
 
 
-class AuthorUpdate(UpdateView):
+class AuthorUpdateView(UpdateView):
     template_name = 'alexandrie/author_detail.html'
     model = Author
     form_class = AuthorForm
 
+
+class AuthorListView(ListView):
+    template_name = 'alexandrie/author_list.html'
+    model = Author
+    context_object_name = 'author_list'
 
 
 class ReaderView(View):

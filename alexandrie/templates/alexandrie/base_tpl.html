@@ -37,7 +37,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Auteur <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="{% url 'alexandrie:author_add' %}">Ajouter</a></li>
-                  <li><a href="#">Lister</a></li>
+                  <li><a href="{% url 'alexandrie:author_list' %}">Lister</a></li>
                   <!--li class="divider"></li>
                   <li class="dropdown-header">Nav header</li>
                   <li><a href="#">Separated link</a></li>
@@ -53,8 +53,7 @@
         </div><!--/.container-fluid -->
       </div>
     
-    
-      <div class="homePage">
+      <div class="container">
         <h1>{% block pageTitle %}Alexandrie{% endblock %}</h1>
         {% block content %}{% endblock %}
       </div>

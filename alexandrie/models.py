@@ -110,12 +110,17 @@ class Author(ModelEntity):
     birth_year = models.PositiveIntegerField(u"Année de naissance", max_length=4, null=True, blank=True)
     country = CountryField()
 
-    def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+    def get_full_name(self):
+        if not self.first_name:
+            return ""
+        return ' '.join([self.first_name, self.last_name])
 
     def get_absolute_url(self):
         return reverse('alexandrie:author_update', kwargs={'pk': self.pk})
-        
+
+    def __str__(self):
+        return self.get_full_name()
+
     class Meta:
         verbose_name = "Auteur"
 

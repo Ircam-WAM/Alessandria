@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'localflavor',
     'alexandrie',
+    'alexandrie.templatetags.tag_extras',
 )
 
 MIDDLEWARE_CLASSES = (
