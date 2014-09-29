@@ -73,7 +73,11 @@ class BookSubCategory(ReferenceEntity):
 #########
 
 class ModelEntity(models.Model):
-    notes = models.TextField(u"Notes", null=True, blank=True)    
+    created_by = models.ForeignKey(DjangoUser, related_name="%(app_label)s_%(class)s_add")
+    created_on = models.DateTimeField(verbose_name=u"Créé le", auto_now_add=True)
+    modified_by = models.ForeignKey(DjangoUser, related_name="%(app_label)s_%(class)s_update", null=True)
+    modified_on = models.DateTimeField(verbose_name=u"Modifié le", auto_now=True, null=True)
+    notes = models.TextField(u"Notes", null=True, blank=True)
     
     class Meta:
         abstract = True
@@ -108,6 +112,9 @@ class Author(ModelEntity):
 
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
+
+    def get_absolute_url(self):
+        return reverse('alexandrie:author_update', kwargs={'pk': self.pk})
         
     class Meta:
         verbose_name = "Auteur"
@@ -164,7 +171,7 @@ class BookCopy(ModelEntity):
         verbose_name_plural = "Exemplaires d'un livre"
 
 
-class ReaderBorrow(models.Model):
+class ReaderBorrow(ModelEntity):
     reader = models.ForeignKey(Reader)
     bookCopy = models.ForeignKey(BookCopy)
     borrowed_date = models.DateField(u"Prêté le")

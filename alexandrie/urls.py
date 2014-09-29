@@ -13,4 +13,8 @@ urlpatterns = patterns('',
     # Example : /alexandrie/reader/1/
     url(r'^reader/(?P<reader_id>\d+)/$', views.ReaderView.as_view(), name='reader_detail'),
     url(r'^reader_list/$', views.ReaderListView.as_view(), name='reader_list'),
+
+    url(r'author/add/$', views.AuthorCreate.as_view(), name='author_add'),
+    url(r'author/(?P<pk>\d+)/$', views.AuthorUpdate.as_view(), name='author_update'),
+    #url(r'author/(?P<pk>\d+)/delete/$', AuthorDelete.as_view(), name='author_delete'),
 )

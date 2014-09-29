@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.forms.models import inlineformset_factory
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from alexandrie.models import *
 from alexandrie.forms import *
@@ -16,6 +17,28 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         #context['category_list'] = Category.objects.all()
         return context
+
+
+class AuthorCreate(CreateView):
+    template_name = 'alexandrie/author_detail.html'
+    model = Author
+    form_class = AuthorForm
+    #fields = ['first_name']
+    
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        author = form.save(commit=False)
+        author.created_by = self.request.user
+        author.save()
+        return super(AuthorCreate, self).form_valid(form)
+
+
+class AuthorUpdate(UpdateView):
+    template_name = 'alexandrie/author_detail.html'
+    model = Author
+    form_class = AuthorForm
+
 
 
 class ReaderView(View):
