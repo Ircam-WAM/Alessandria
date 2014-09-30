@@ -10,6 +10,7 @@
 
 <div class="row">
     <div class="col-sm-12">
+        {% include 'alexandrie/inc_form_header.html' %}
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">{{form.instance.get_full_name|default:"Nouvel auteur"}}</h3>
@@ -24,6 +25,7 @@
                 {% endfor %}
                     <button type="submit" class="btn btn-default">Enregistrer</button>
                 </form>
+                {% include 'alexandrie/inc_form_footer.html' %}
             </div>
         </div>
     </div><!-- /.col-sm-12 -->

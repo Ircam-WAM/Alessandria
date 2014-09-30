@@ -5,12 +5,39 @@ from django.forms.models import inlineformset_factory
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib import messages
 
 from alexandrie.models import *
 from alexandrie.forms import *
 
 class EntityCreateView(CreateView):
-    pass
+    def form_invalid(self, form):
+        messages.error(self.request, u"Erreur lors de l'enregistrement.")
+        return super(EntityCreateView, self).form_invalid(form)
+    
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        entity = form.save(commit=False)
+        entity.created_by = self.request.user
+        entity.save()
+        messages.success(self.request, u"Enregistement effectué avec succès.")
+        return super(EntityCreateView, self).form_valid(form)
+
+class EntityUpdateView(UpdateView):
+    def form_invalid(self, form):
+        messages.error(self.request, u"Erreur lors de l'enregistrement.")
+        return super(EntityUpdateView, self).form_invalid(form)
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        entity = form.save(commit=False)
+        entity.modified_by = self.request.user
+        entity.save()
+        messages.success(self.request, u"Mise à jour effectuée avec succès.")
+        return super(EntityUpdateView, self).form_valid(form)
+
 
 class HomeView(TemplateView):
     template_name = 'alexandrie/index.html'
@@ -21,25 +48,22 @@ class HomeView(TemplateView):
         return context
 
 
-class AuthorCreateView(CreateView):
+class AuthorCreateView(EntityCreateView):
     template_name = 'alexandrie/author_detail.html'
     model = Author
     form_class = AuthorForm
-    #fields = ['first_name']
     
     def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        author = form.save(commit=False)
-        author.created_by = self.request.user
-        author.save()
-        return super(AuthorCreate, self).form_valid(form)
+        return super(AuthorCreateView, self).form_valid(form)
 
 
-class AuthorUpdateView(UpdateView):
+class AuthorUpdateView(EntityUpdateView):
     template_name = 'alexandrie/author_detail.html'
     model = Author
     form_class = AuthorForm
+
+    def form_valid(self, form):
+        return super(AuthorUpdateView, self).form_valid(form)
 
 
 class AuthorListView(ListView):

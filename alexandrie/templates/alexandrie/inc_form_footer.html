@@ -1,0 +1,4 @@
+{% if form.instance.id > 0 %}
+  <div>Créé le {{ form.instance.created_on }} par {{ form.instance.created_by }}</div>
+  <div>Modifié le {{ form.instance.modified_on }} par {{ form.instance.modified_by }}</div>
+{% endif %}

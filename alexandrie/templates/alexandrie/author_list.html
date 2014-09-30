@@ -1,0 +1,32 @@
+{% extends 'alexandrie/base_tpl.html' %}
+
+{% block title %}Liste des auteurs{% endblock %}
+
+{% block pageTitle %}Liste des auteurs{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Créé le</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for author in author_list %}
+                    <tr>
+                        <td><a href="{% url 'alexandrie:author_update' author.id %}">{{ author.first_name }}&nbsp;{{ author.last_name }}</a></td>
+                        <td>{{ author.created_on|date }}</td>
+                    </tr>
+                    {% empty %}
+                        <tr><td colspan=2>Aucun auteur.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
