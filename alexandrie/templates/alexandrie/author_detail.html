@@ -11,10 +11,10 @@
         {% include 'alexandrie/inc_form_header.html' %}
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">{{form.instance.get_full_name|default:"Nouvel auteur"}}</h3>
+                <h3 class="panel-title">{{object.get_full_name|default:"Nouvel auteur"}}</h3>
             </div>
             <div class="panel-body">
-                {% include 'alexandrie/inc_form_content_std.html' %}
+                {% include 'alexandrie/inc_form_content_std.html' with delete_url='alexandrie:author_delete' %}
                 {% include 'alexandrie/inc_form_footer.html' %}
             </div>
         </div>

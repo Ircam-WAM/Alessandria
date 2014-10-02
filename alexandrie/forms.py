@@ -2,8 +2,8 @@
 import datetime
 
 from django import forms
-from django.forms.util import flatatt
-from django.forms.models import inlineformset_factory
+
+from django.forms.extras.widgets import SelectDateWidget
 
 from django.utils.safestring import mark_safe
 
@@ -30,8 +30,9 @@ class BookCopyForm(forms.ModelForm):
     class Meta:
         model = BookCopy
         exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'book')
-
-BookCopyFormSet = inlineformset_factory(Book, BookCopy, form=BookCopyForm, extra=1)
+    
+    registered_on = forms.DateField(label = Meta.model._meta.get_field('registered_on').verbose_name, widget=SelectDateWidget(), initial=datetime.date.today)
+    #price_date = forms.DateField(widget=SelectDateWidget())
 
 '''
 class GameForm(forms.ModelForm):

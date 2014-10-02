@@ -1,6 +1,6 @@
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.forms.models import inlineformset_factory
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
@@ -72,21 +72,26 @@ class AuthorUpdateView(EntityUpdateView):
     def form_valid(self, form):
         return super(AuthorUpdateView, self).form_valid(form)
 
+class AuthorDeleteView(DeleteView):
+    template_name = 'alexandrie/confirm_delete.html'
+    model = Author
+    success_url = reverse_lazy('alexandrie:author_list')
+
+    def get(self, request, **kwargs):
+        # This method is called before displaying the page 'template_name'
+        author = Author.objects.get(id=kwargs['pk'])
+        if author.book_set.count() > 0:
+            messages.error(self.request, u"Impossible de supprimer cet auteur car il est référencé dans un livre.")
+            return redirect('alexandrie:author_update', pk=author.id)
+            #return redirect(author) # Call to get_absolute_url of Author model
+        return super(AuthorDeleteView, self).get(request, kwargs)
+
+
 class AuthorListView(ListView):
     template_name = 'alexandrie/author_list.html'
     model = Author
     context_object_name = 'author_list'
 
-"""
-class BookCreateView(EntityCreateView):
-    model = Book
-
-    def get_template_names(self):
-        return ['alexandrie/book_detail.html']
-
-    def get_success_url(self):
-        return reverse('alexandrie:book_list')
-"""
 
 class BookCreateView(EntityCreateView):
     template_name = 'alexandrie/book_detail.html'
@@ -101,8 +106,20 @@ class BookUpdateView(EntityUpdateView):
     model = Book
     form_class = BookForm
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(BookUpdateView, self).get_context_data(**kwargs)
+        context['bookcopy_list'] = self.object.bookcopy_set.all()
+        return context
+
     def form_valid(self, form):
         return super(BookUpdateView, self).form_valid(form)
+
+class BookDeleteView(DeleteView):
+    # TODO: check that the related book copies are not borrowed
+    template_name = 'alexandrie/confirm_delete.html'
+    model = Book
+    success_url = reverse_lazy('alexandrie:book_list')
 
 class BookListView(ListView):
     template_name = 'alexandrie/book_list.html'

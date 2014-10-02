@@ -1,13 +1,12 @@
 {% extends 'alexandrie/base_tpl.html' %}
 
-
+{% load tag_extras %}
 
 {% block title %}Exemplaire d'un livre{% endblock %}
 
 {% block pageTitle %}Exemplaire d'un livre{% endblock %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-sm-12">
         {% include 'alexandrie/inc_form_header.html' %}
@@ -16,7 +15,21 @@
                 <h3 class="panel-title">{{form.instance.number|default:"Nouvel exemplaire"}} ({{ form.instance.book }})</h3>
             </div>
             <div class="panel-body">
-                {% include 'alexandrie/inc_form_content_std.html' %}
+                <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label }}</label>
+                        <div class="col-sm-10">
+                            {{ field|addcss:"form-control" }}
+                            {% if field.errors %}
+                                <div class="text-danger">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <a class="btn" href="{% url 'alexandrie:book_update' form.instance.book.id %}">Annuler</a>
+                </form>
                 {% include 'alexandrie/inc_form_footer.html' %}
             </div>
         </div>

@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'localflavor',
+    #'bootstrap3',
     'alexandrie',
     'alexandrie.templatetags.tag_extras',
 )

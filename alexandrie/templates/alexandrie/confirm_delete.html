@@ -1,0 +1,17 @@
+{% extends 'alexandrie/base_tpl.html' %}
+
+{% block title %}Confirmation de suppression{% endblock %}
+
+{% block pageTitle %}Confirmation de suppression{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <form action="" method="post">{% csrf_token %}
+            <p>Etes-vous sur de vouloir supprimer "{{ object }}" ?</p>
+            <button type="submit" class="btn btn-danger">Confirmer</button>
+        </form>
+    </div><!-- /.col-sm-12 -->
+</div>
+{% endblock %}
