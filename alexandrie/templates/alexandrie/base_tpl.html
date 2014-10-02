@@ -34,7 +34,7 @@
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Auteur <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Auteurs<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="{% url 'alexandrie:author_add' %}">Ajouter</a></li>
                   <li><a href="{% url 'alexandrie:author_list' %}">Lister</a></li>
@@ -42,6 +42,15 @@
                   <li class="dropdown-header">Nav header</li>
                   <li><a href="#">Separated link</a></li>
                   <li><a href="#">One more separated link</a></li-->
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Livres<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="{% url 'alexandrie:book_add' %}">Ajouter</a></li>
+                  <li><a href="{% url 'alexandrie:book_list' %}">Lister</a></li>
                 </ul>
               </li>
             </ul>
@@ -66,5 +75,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="{% static 'alexandrie/layout/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!--script src="{% static 'alexandrie/layout/js/jquery/jquery-1.11.1.min.js' %}"></script-->
+    <script src="{% static 'alexandrie/layout/js/jquery/jquery.formset.js' %}"></script>
+    {% block jscript %}{% endblock %}
   </body>
 </html>

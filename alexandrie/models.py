@@ -108,7 +108,7 @@ class Author(ModelEntity):
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
     birth_year = models.PositiveIntegerField(u"Année de naissance", max_length=4, null=True, blank=True)
-    country = CountryField()
+    country = CountryField(verbose_name=u'Pays')
 
     def get_full_name(self):
         if not self.first_name:
@@ -138,19 +138,22 @@ class Publisher(ModelEntity):
 
 class Book(ModelEntity):
     title = models.CharField(u"Titre", max_length=50)
-    authors = models.ManyToManyField(Author)
-    publisher = models.ForeignKey(Publisher)
+    authors = models.ManyToManyField(Author, verbose_name=u'Auteurs')
+    publisher = models.ForeignKey(Publisher, verbose_name=u'Editeur')
     classif_mark = models.CharField(u"Cote", max_length=10)
     height = models.PositiveIntegerField(u"Hauteur (mm)", max_length=3)
     isbn_nb = models.CharField(u"No. ISBN", max_length=30, null=True, blank=True, unique=True)
-    audience = models.ManyToManyField(BookAudience)
-    category = models.ForeignKey(BookCategory)
-    sub_category = models.ForeignKey(BookSubCategory, null=True)
-    language = models.ForeignKey(Language, default=get_default_language)
+    audience = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
+    category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
+    sub_category = models.ForeignKey(BookSubCategory, null=True, verbose_name=u'Sous-catégorie')
+    language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
 
     def get_nb_copy(self):
         return self.bookcopy_set.count()
     get_nb_copy.short_description = 'Nb exemplaires'
+
+    def get_absolute_url(self):
+        return reverse('alexandrie:book_update', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title

@@ -1,0 +1,60 @@
+{% extends 'alexandrie/base_tpl.html' %}
+
+{% load tag_extras %}
+
+{% block title %}Livre{% endblock %}
+
+{% block pageTitle %}Livre{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        {% include 'alexandrie/inc_form_header.html' %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{form.instance.title|default:"Nouveau livre"}}</h3>
+            </div>
+            <div class="panel-body">
+                <form action="." method="post">
+                    {% csrf_token %}
+                    <div>
+                        {{ form.as_p }}
+                    </div>
+                    <fieldset>
+                        <legend>Exemplaires</legend>
+                        {{ bookcopy_form.management_form }}
+                        {{ bookcopy_form.non_form_errors }}
+                        {% for form in bookcopy_form %}
+                            {{ form.id }}
+                            <div class="inline {{ bookcopy_form.prefix }}">
+                                {% for field in form %}
+                                    <div>
+                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        {{ field }}
+                                        {% if field.errors %}
+                                            <div class="text-danger">{{ field.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </fieldset>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </form>
+                {% include 'alexandrie/inc_form_footer.html' %}
+            </div>
+        </div>
+    </div><!-- /.col-sm- -->
+</div>
+{% endblock %}
+
+{% block jscript %}
+    <script type="text/javascript">
+        $(function() {
+            $(".inline.{{ bookcopy_form.prefix }}").formset({
+                prefix: "{{ bookcopy_form.prefix }}",
+            })
+        })
+    </script>
+{% endblock %}

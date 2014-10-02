@@ -1,8 +1,10 @@
 {% extends 'alexandrie/base_tpl.html' %}
 
-{% block title %}Auteur{% endblock %}
 
-{% block pageTitle %}Auteur{% endblock %}
+
+{% block title %}Exemplaire d'un livre{% endblock %}
+
+{% block pageTitle %}Exemplaire d'un livre{% endblock %}
 
 {% block content %}
 
@@ -11,13 +13,13 @@
         {% include 'alexandrie/inc_form_header.html' %}
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">{{form.instance.get_full_name|default:"Nouvel auteur"}}</h3>
+                <h3 class="panel-title">{{form.instance.number|default:"Nouvel exemplaire"}} ({{ form.instance.book }})</h3>
             </div>
             <div class="panel-body">
                 {% include 'alexandrie/inc_form_content_std.html' %}
                 {% include 'alexandrie/inc_form_footer.html' %}
             </div>
         </div>
-    </div><!-- /.col-sm-12 -->
+    </div><!-- /.col-sm- -->
 </div>
 {% endblock %}

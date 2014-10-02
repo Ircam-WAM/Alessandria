@@ -1,0 +1,39 @@
+{% extends 'alexandrie/base_tpl.html' %}
+
+{% block title %}Livre{% endblock %}
+
+{% block pageTitle %}Livre{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-8">
+        {% include 'alexandrie/inc_form_header.html' %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{form.instance.title|default:"Nouveau livre"}}</h3>
+            </div>
+            <div class="panel-body">
+                {% include 'alexandrie/inc_form_content_std.html' %}
+                {% include 'alexandrie/inc_form_footer.html' %}
+            </div>
+        </div>
+    </div><!-- /.col-sm- -->
+    <div class="col-sm-4">
+    {% if form.instance.id > 0 %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Exemplaires</h3><a href="{% url 'alexandrie:bookcopy_add' form.instance.id %}">Ajouter</a>
+            </div>
+            <div class="panel-body">
+                <ul>
+                {% for bookcopy in form.instance.bookcopy_set.all %}
+                    <li><a href="{% url 'alexandrie:bookcopy_update' bookcopy.id %}">Exemplaire {{ bookcopy }}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

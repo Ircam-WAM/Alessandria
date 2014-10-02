@@ -3,6 +3,8 @@ import datetime
 
 from django import forms
 from django.forms.util import flatatt
+from django.forms.models import inlineformset_factory
+
 from django.utils.safestring import mark_safe
 
 from alexandrie.models import *
@@ -22,8 +24,14 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         #fields = ('first_name', 'last_name', 'birth_year', 'country', 'notes')
-        #exclude = ('created_by', 'created_on', 'modified_by', 'modified_on')
+        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on')
 
+class BookCopyForm(forms.ModelForm):
+    class Meta:
+        model = BookCopy
+        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'book')
+
+BookCopyFormSet = inlineformset_factory(Book, BookCopy, form=BookCopyForm, extra=1)
 
 '''
 class GameForm(forms.ModelForm):

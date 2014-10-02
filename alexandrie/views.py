@@ -7,6 +7,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib import messages
 
+from nested_formset import nestedformset_factory
+
 from alexandrie.models import *
 from alexandrie.forms import *
 
@@ -14,13 +16,16 @@ class EntityCreateView(CreateView):
     def form_invalid(self, form):
         messages.error(self.request, u"Erreur lors de l'enregistrement.")
         return super(EntityCreateView, self).form_invalid(form)
-    
+
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
+        """
         entity = form.save(commit=False)
         entity.created_by = self.request.user
         entity.save()
+        """
+        form.instance.created_by = self.request.user
         messages.success(self.request, u"Enregistement effectué avec succès.")
         return super(EntityCreateView, self).form_valid(form)
 
@@ -32,9 +37,12 @@ class EntityUpdateView(UpdateView):
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
+        """
         entity = form.save(commit=False)
         entity.modified_by = self.request.user
         entity.save()
+        """
+        form.instance.modified_by = self.request.user
         messages.success(self.request, u"Mise à jour effectuée avec succès.")
         return super(EntityUpdateView, self).form_valid(form)
 
@@ -56,7 +64,6 @@ class AuthorCreateView(EntityCreateView):
     def form_valid(self, form):
         return super(AuthorCreateView, self).form_valid(form)
 
-
 class AuthorUpdateView(EntityUpdateView):
     template_name = 'alexandrie/author_detail.html'
     model = Author
@@ -65,11 +72,72 @@ class AuthorUpdateView(EntityUpdateView):
     def form_valid(self, form):
         return super(AuthorUpdateView, self).form_valid(form)
 
-
 class AuthorListView(ListView):
     template_name = 'alexandrie/author_list.html'
     model = Author
     context_object_name = 'author_list'
+
+"""
+class BookCreateView(EntityCreateView):
+    model = Book
+
+    def get_template_names(self):
+        return ['alexandrie/book_detail.html']
+
+    def get_success_url(self):
+        return reverse('alexandrie:book_list')
+"""
+
+class BookCreateView(EntityCreateView):
+    template_name = 'alexandrie/book_detail.html'
+    model = Book
+    form_class = BookForm
+    
+    def form_valid(self, form):
+        return super(BookCreateView, self).form_valid(form)
+
+class BookUpdateView(EntityUpdateView):
+    template_name = 'alexandrie/book_detail.html'
+    model = Book
+    form_class = BookForm
+
+    def form_valid(self, form):
+        return super(BookUpdateView, self).form_valid(form)
+
+class BookListView(ListView):
+    template_name = 'alexandrie/book_list.html'
+    model = Book
+    context_object_name = 'book_list'
+
+
+class BookCopyCreateView(EntityCreateView):
+    template_name = 'alexandrie/bookcopy_detail.html'
+    model = BookCopy
+    form_class = BookCopyForm
+
+    def get_form(self, form_class):
+        form = super(BookCopyCreateView, self).get_form(form_class)
+        self.book = Book.objects.get(pk=self.kwargs['book_id'])
+        form.instance.book = self.book
+        return form
+
+    def get_success_url(self):
+        return self.book.get_absolute_url()
+
+    def form_valid(self, form):
+        return super(BookCopyCreateView, self).form_valid(form)
+
+class BookCopyUpdateView(EntityUpdateView):
+    template_name = 'alexandrie/bookcopy_detail.html'
+    model = BookCopy
+    form_class = BookCopyForm
+
+    def get_success_url(self):
+        form = super(BookCopyUpdateView, self).get_form(self.form_class)
+        return form.instance.book.get_absolute_url()
+
+    def form_valid(self, form):
+        return super(BookCopyUpdateView, self).form_valid(form)
 
 
 class ReaderView(View):

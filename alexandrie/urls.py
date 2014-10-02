@@ -17,5 +17,13 @@ urlpatterns = patterns('',
     url(r'author/add/$', views.AuthorCreateView.as_view(), name='author_add'),
     url(r'author/(?P<pk>\d+)/$', views.AuthorUpdateView.as_view(), name='author_update'),
     #url(r'author/(?P<pk>\d+)/delete/$', AuthorDelete.as_view(), name='author_delete'),
-    url(r'author/list/$', views.AuthorListView.as_view(), name='author_list')
+    url(r'author/list/$', views.AuthorListView.as_view(), name='author_list'),
+
+    url(r'book/add/$', views.BookCreateView.as_view(), name='book_add'),
+    url(r'book/(?P<pk>\d+)/$', views.BookUpdateView.as_view(), name='book_update'),
+    #url(r'author/(?P<pk>\d+)/delete/$', AuthorDelete.as_view(), name='author_delete'),
+    url(r'book/list/$', views.BookListView.as_view(), name='book_list'),
+
+    url(r'bookcopy/add/(?P<book_id>\d+)/$', views.BookCopyCreateView.as_view(), name='bookcopy_add'),
+    url(r'bookcopy/(?P<pk>\d+)/$', views.BookCopyUpdateView.as_view(), name='bookcopy_update'),
 )
