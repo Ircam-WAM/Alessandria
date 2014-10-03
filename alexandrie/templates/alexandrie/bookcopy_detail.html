@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {% include 'alexandrie/inc_form_buttons_std.html' %}
                     <a class="btn" href="{% url 'alexandrie:book_update' form.instance.book.id %}">Annuler</a>
                 </form>
                 {% include 'alexandrie/inc_form_footer.html' %}

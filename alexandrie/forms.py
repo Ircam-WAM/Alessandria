@@ -23,15 +23,20 @@ class AuthorForm(forms.ModelForm):
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        #fields = ('first_name', 'last_name', 'birth_year', 'country', 'notes')
         exclude = ('created_by', 'created_on', 'modified_by', 'modified_on')
+
+    audience = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs={'class': 'list-unstyled'}),
+        queryset=BookAudience.objects.all())
+
 
 class BookCopyForm(forms.ModelForm):
     class Meta:
         model = BookCopy
         exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'book')
     
-    registered_on = forms.DateField(label = Meta.model._meta.get_field('registered_on').verbose_name, widget=SelectDateWidget(), initial=datetime.date.today)
+    registered_on = forms.DateField(
+        label=Meta.model._meta.get_field('registered_on').verbose_name, widget=SelectDateWidget(),
+        initial=datetime.date.today)
     #price_date = forms.DateField(widget=SelectDateWidget())
 
 '''

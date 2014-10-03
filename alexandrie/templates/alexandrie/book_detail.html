@@ -14,7 +14,10 @@
                 <h3 class="panel-title">{{object.title|default:"Nouveau livre"}}</h3>
             </div>
             <div class="panel-body">
-                {% include 'alexandrie/inc_form_content_std.html' with delete_url='alexandrie:book_delete' %}
+                <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
+                    {% include 'alexandrie/inc_form_content_std.html' %}
+                    {% include 'alexandrie/inc_form_buttons_std.html' %}
+                </form>
                 {% include 'alexandrie/inc_form_footer.html' %}
             </div>
         </div>

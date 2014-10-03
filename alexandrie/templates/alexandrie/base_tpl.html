@@ -73,9 +73,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
+    <script src="{% static 'alexandrie/layout/js/jquery/jquery-1.11.1.min.js' %}"></script>
     <script src="{% static 'alexandrie/layout/bootstrap/js/bootstrap.min.js' %}"></script>
-    <!--script src="{% static 'alexandrie/layout/js/jquery/jquery-1.11.1.min.js' %}"></script-->
     <script src="{% static 'alexandrie/layout/js/jquery/jquery.formset.js' %}"></script>
     {% block jscript %}{% endblock %}
   </body>
