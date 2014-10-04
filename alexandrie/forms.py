@@ -32,12 +32,20 @@ class BookForm(forms.ModelForm):
 class BookCopyForm(forms.ModelForm):
     class Meta:
         model = BookCopy
-        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'book')
+        fields = ('number', 'registered_on', 'condition', 'is_bought', 'price', 'price_date')
+        #exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'book')
     
     registered_on = forms.DateField(
         label=Meta.model._meta.get_field('registered_on').verbose_name, widget=SelectDateWidget(),
         initial=datetime.date.today)
-    #price_date = forms.DateField(widget=SelectDateWidget())
+
+class BookCopyRemoveForm(forms.ModelForm):
+    class Meta:
+        model = BookCopy
+        fields = ('removed_on',)
+
+    removed_on = forms.DateField(
+        label=Meta.model._meta.get_field('removed_on').verbose_name, required=True)
 
 '''
 class GameForm(forms.ModelForm):

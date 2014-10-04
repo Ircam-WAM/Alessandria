@@ -151,6 +151,10 @@ class Book(ModelEntity):
     def get_nb_copy(self):
         return self.bookcopy_set.count()
     get_nb_copy.short_description = 'Nb exemplaires'
+    
+    def has_copies(self):
+        return self.get_nb_copy() > 0
+    
 
     def get_absolute_url(self):
         return reverse('alexandrie:book_update', kwargs={'pk': self.pk})
@@ -170,6 +174,16 @@ class BookCopy(ModelEntity):
     is_bought = models.BooleanField(u"Acheté ?", null=False, blank=False, default=None)
     price = models.FloatField("Prix", blank=True, null=True)
     price_date = models.DateField("Date (prix)", blank=True, null=True)
+    removed_on = models.DateField("Date de retrait", blank=True, null=True)
+
+    def was_borrowed(self):
+        return self.readerborrow_set.count() > 0
+
+    def is_removed(self):
+        return self.removed_on is not None
+
+    def removed_on_label(self): # Convenient function to be accessed from the template
+        return self._meta.get_field('removed_on').verbose_name
 
     def __str__(self):
         return "%s (%s)" %(self.book, self.number)
@@ -181,7 +195,7 @@ class BookCopy(ModelEntity):
 
 class ReaderBorrow(ModelEntity):
     reader = models.ForeignKey(Reader)
-    bookCopy = models.ForeignKey(BookCopy)
+    bookcopy = models.ForeignKey(BookCopy)
     borrowed_date = models.DateField(u"Prêté le")
     borrow_due_date = models.DateField(u"Retour pour le")
     returned_on = models.DateField(u"Retourné le")

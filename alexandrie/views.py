@@ -13,11 +13,11 @@ from alexandrie.models import *
 from alexandrie.forms import *
 
 class EntityCreateView(CreateView):
-    def form_invalid(self, form):
-        messages.error(self.request, u"Erreur lors de l'enregistrement.")
+    def form_invalid(self, form, error_msg=u"Erreur lors de l'enregistrement."):
+        messages.error(self.request, error_msg)
         return super(EntityCreateView, self).form_invalid(form)
 
-    def form_valid(self, form):
+    def form_valid(self, form, success_msg=u"Enregistement effectué avec succès."):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         """
@@ -26,15 +26,15 @@ class EntityCreateView(CreateView):
         entity.save()
         """
         form.instance.created_by = self.request.user
-        messages.success(self.request, u"Enregistement effectué avec succès.")
+        messages.success(self.request, success_msg)
         return super(EntityCreateView, self).form_valid(form)
 
 class EntityUpdateView(UpdateView):
-    def form_invalid(self, form):
-        messages.error(self.request, u"Erreur lors de l'enregistrement.")
+    def form_invalid(self, form, error_msg=u"Erreur lors de l'enregistrement."):
+        messages.error(self.request, error_msg)
         return super(EntityUpdateView, self).form_invalid(form)
 
-    def form_valid(self, form):
+    def form_valid(self, form, success_msg=u"Enregistement effectué avec succès."):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         """
@@ -43,7 +43,7 @@ class EntityUpdateView(UpdateView):
         entity.save()
         """
         form.instance.modified_by = self.request.user
-        messages.success(self.request, u"Mise à jour effectuée avec succès.")
+        messages.success(self.request, success_msg)
         return super(EntityUpdateView, self).form_valid(form)
 
 
@@ -116,7 +116,6 @@ class BookUpdateView(EntityUpdateView):
         return super(BookUpdateView, self).form_valid(form)
 
 class BookDeleteView(DeleteView):
-    # TODO: check that the related book copies are not borrowed
     template_name = 'alexandrie/confirm_delete.html'
     model = Book
     success_url = reverse_lazy('alexandrie:book_list')
@@ -155,6 +154,27 @@ class BookCopyUpdateView(EntityUpdateView):
 
     def form_valid(self, form):
         return super(BookCopyUpdateView, self).form_valid(form)
+
+class BookCopyDeleteView(DeleteView):
+    template_name = 'alexandrie/confirm_delete.html'
+    model = BookCopy
+
+    def get_success_url(self):
+        return self.object.book.get_absolute_url()
+
+class BookCopyRemoveView(EntityUpdateView):
+    template_name = 'alexandrie/bookcopy_remove.html'
+    model = BookCopy
+    form_class = BookCopyRemoveForm
+
+    def form_valid(self, form):
+        if self.object.removed_on < self.object.registered_on:
+            messages.error(self.request, u"La date de retrait ne peut etre antérieure à la date d'enregistrement.")
+            return redirect('alexandrie:bookcopy_remove', pk=self.object.id)
+        return super(BookCopyRemoveView, self).form_valid(form, u"L'exemplaire a été retiré avec succès.")
+
+    def get_success_url(self):
+        return self.object.book.get_absolute_url()
 
 
 class ReaderView(View):

@@ -10,13 +10,16 @@
 <div class="row">
     <div class="col-sm-12">
         {% include 'alexandrie/inc_form_header.html' %}
+        {% if form.instance.is_removed %}
+            <div class="textInfo">Cet exemplaire a été retiré.</div>
+        {% endif %}
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">{{form.instance.number|default:"Nouvel exemplaire"}} ({{ form.instance.book }})</h3>
             </div>
             <div class="panel-body">
                 <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
-                {% for field in form %}
+                    {% for field in form %}
                     <div class="form-group">
                         <label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label }}</label>
                         <div class="col-sm-10">
@@ -26,9 +29,29 @@
                             {% endif %}
                         </div>
                     </div>
-                {% endfor %}
-                    {% include 'alexandrie/inc_form_buttons_std.html' %}
-                    <a class="btn" href="{% url 'alexandrie:book_update' form.instance.book.id %}">Annuler</a>
+                    {% endfor %}
+                    {% if form.instance.is_removed %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{ form.instance.removed_on_label }}</label>
+                        <div class="col-sm-10">
+                             {{ form.instance.removed_on }}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            {% if form.instance.id > 0 %}
+                                {% if not form.instance.is_removed %}
+                                    <a class="btn btn-warning" href="{% url 'alexandrie:bookcopy_remove' form.instance.id %}">Retirer</a>
+                                {% endif %}
+                                {% if not form.instance.was_borrowed %}
+                                    <a class="btn btn-danger" href="{% url 'alexandrie:bookcopy_delete' form.instance.id %}">Supprimer</a>
+                                {% endif %}
+                            {% endif %}
+                            <a class="btn" href="{% url 'alexandrie:book_update' form.instance.book.id %}">Annuler</a>
+                        </div>
+                    </div>
                 </form>
                 {% include 'alexandrie/inc_form_footer.html' %}
             </div>
