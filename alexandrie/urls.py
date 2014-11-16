@@ -9,10 +9,11 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/alexandrie'}, name='logout'),
 
     url(r'^home/$', views.HomeView.as_view(), name='home'),
-    url(r'^reader/$', views.ReaderView.as_view(), name='reader_add'),
-    # Example : /alexandrie/reader/1/
-    url(r'^reader/(?P<reader_id>\d+)/$', views.ReaderView.as_view(), name='reader_detail'),
-    url(r'^reader_list/$', views.ReaderListView.as_view(), name='reader_list'),
+
+    url(r'reader/add/$', views.ReaderCreateView.as_view(), name='reader_add'),
+    url(r'reader/(?P<pk>\d+)/$', views.ReaderUpdateView.as_view(), name='reader_update'),
+    url(r'reader/list/$', views.ReaderListView.as_view(), name='reader_list'),
+    url(r'reader/(?P<pk>\d+)/disable/$', views.ReaderDisableView.as_view(), name='reader_disable'),
 
     url(r'author/add/$', views.AuthorCreateView.as_view(), name='author_add'),
     url(r'author/(?P<pk>\d+)/$', views.AuthorUpdateView.as_view(), name='author_update'),

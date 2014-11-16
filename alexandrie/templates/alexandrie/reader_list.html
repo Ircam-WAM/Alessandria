@@ -8,25 +8,24 @@
 <div class="row-fluid">
     <div class="span12">
         {% if reader_list %}
-        <table class="table table-bordered table-striped table-condensed">
-            <caption>
-                <h4>Liste des auteurs</h4>
-            </caption>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Numéro</th>
                     <th>Prénom</th>
                     <th>Nom</th>
                     <th>Date d'inscription</th>
+                    <th>Actif</th>
                 </tr>
             </thead>
             <tbody>
             {% for reader in reader_list %}
                 <tr>
-                    <td><a href="{% url 'alexandrie:reader' %}">{{ reader.number }}</a></td>
+                    <td><a href="{% url 'alexandrie:reader_update' reader.id %}">{{ reader.number }}</a></td>
                     <td>{{ reader.first_name }}</td>
                     <td>{{ reader.last_name }}</td>
                     <td>{{ reader.inscription_date }}</td>
+                    <td>{{ reader.is_disabled|yesno:"Non,Oui" }}</td>
                 </tr>
             {% endfor %}
             </tbody>

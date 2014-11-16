@@ -1,0 +1,34 @@
+{% extends 'alexandrie/base_tpl.html' %}
+
+{% block title %}Lecteur{% endblock %}
+
+{% block pageTitle %}Lecteur{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        {% include 'alexandrie/inc_form_header.html' %}
+        {% if form.instance.is_disabled %}
+            <div class="textInfo">Ce lecteur a été désactivé le {{form.instance.disabled_on }}.</div>
+        {% endif %}        
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{object.get_full_name|default:"Nouveau lecteur"}}</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
+                    {% include 'alexandrie/inc_form_content_std.html' %}
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {% if form.instance.id > 0 %}
+                        {% if not form.instance.is_disabled %}
+                            <a class="btn btn-warning" href="{% url 'alexandrie:reader_disable' form.instance.id %}">Désactiver</a>
+                        {% endif %}
+                    {% endif %}
+                </form>
+                {% include 'alexandrie/inc_form_footer.html' %}
+            </div>
+        </div>
+    </div><!-- /.col-sm-12 -->
+</div>
+{% endblock %}

@@ -1,3 +1,5 @@
+from datetime import datetime as stddatetime
+
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -86,7 +88,6 @@ class AuthorDeleteView(DeleteView):
             #return redirect(author) # Call to get_absolute_url of Author model
         return super(AuthorDeleteView, self).get(request, kwargs)
 
-
 class AuthorListView(ListView):
     template_name = 'alexandrie/author_list.html'
     model = Author
@@ -155,13 +156,6 @@ class BookCopyUpdateView(EntityUpdateView):
     def form_valid(self, form):
         return super(BookCopyUpdateView, self).form_valid(form)
 
-class BookCopyDeleteView(DeleteView):
-    template_name = 'alexandrie/confirm_delete.html'
-    model = BookCopy
-
-    def get_success_url(self):
-        return self.object.book.get_absolute_url()
-
 class BookCopyDisableView(EntityUpdateView):
     template_name = 'alexandrie/bookcopy_disable.html'
     model = BookCopy
@@ -176,37 +170,46 @@ class BookCopyDisableView(EntityUpdateView):
     def get_success_url(self):
         return self.object.book.get_absolute_url()
 
+class BookCopyDeleteView(DeleteView):
+    template_name = 'alexandrie/confirm_delete.html'
+    model = BookCopy
 
-class ReaderView(View):
-    def get(self, request, training_id=None):
-        if reader_id:
-            # Update mode
-            reader = get_object_or_404(Reader, id=reader_id)
-        else:
-            # Add mode
-            pass
-        return self._display_template(request)
+    def get_success_url(self):
+        return self.object.book.get_absolute_url()
+
+
+class ReaderCreateView(EntityCreateView):
+    template_name = 'alexandrie/reader_detail.html'
+    model = Reader
+    form_class = ReaderForm
     
-    def post(self, request, training_id=None):
-        reader = None
-        if reader_id:
-            # Update existing training
-            reader = get_object_or_404(Reader, id=reader_id)
-        """
-        if self.training_form.is_valid() and self.player_form_set.is_valid():
-            training = self.training_form.save()
-            self.player_form_set.instance = training
-            self.player_form_set.save()
-            return HttpResponseRedirect(training.get_absolute_url())
-        else:
-            self.coach_form = TrainingCoachForm() ### CHANGE ME! ###
-            return self._display_template(request)
-        """
-    def _display_template(self, request):
-        context = {
-        }
-        return render(request, 'alexandrie/reader.html', context)
+    def form_valid(self, form):
+        return super(ReaderCreateView, self).form_valid(form)
 
+class ReaderUpdateView(EntityUpdateView):
+    template_name = 'alexandrie/reader_detail.html'
+    model = Reader
+    form_class = ReaderForm
+
+    def form_valid(self, form):
+        return super(ReaderUpdateView, self).form_valid(form)
+
+class ReaderListView(ListView):
+    template_name = 'alexandrie/read_list.html'
+    model = Reader
+    context_object_name = 'reader_list'
+
+class ReaderDisableView(EntityUpdateView):
+    template_name = 'alexandrie/reader_disable.html'
+    model = Reader
+    form_class = ReaderDisableForm
+
+    def form_valid(self, form):
+        self.object.disabled_on = stddatetime.now()
+        return super(ReaderDisableView, self).form_valid(form, u"Le lecteur a été désactivé avec succès.")
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
 
 class ReaderListView(ListView):
     template_name = 'alexandrie/reader_list.html'

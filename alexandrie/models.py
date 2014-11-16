@@ -100,11 +100,23 @@ class Reader(ModelEntity):
     addr2 = models.CharField(u"Adresse 2", null=True, max_length=30, blank=True)
     zip = models.PositiveIntegerField(u"Code postal", max_length=5)
     city = models.CharField(u"Ville", max_length=30)
-    country = CountryField()
+    country = CountryField(verbose_name=u'Pays')
     inscription_date = models.DateField(u"Date d'inscription")
     email = models.EmailField(u"E-mail", unique=True, null=True, blank=True)
     phone_number = models.CharField(u"Téléphone", max_length=20, null=True, blank=True)
     profession = models.ForeignKey(Profession, null=True)
+    disabled_on = models.DateField("Date de désactivation", blank=True, null=True)
+
+    def is_disabled(self):
+        return self.disabled_on is not None
+
+    def get_full_name(self):
+        if not self.first_name:
+            return None
+        return ' '.join([self.first_name, self.last_name])
+
+    def get_absolute_url(self):
+        return reverse('alexandrie:reader_update', kwargs={'pk': self.pk})
 
     def __str__(self):
         return "%s - %s %s" % (self.number, self.first_name, self.last_name)

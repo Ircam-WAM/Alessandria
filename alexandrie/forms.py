@@ -12,6 +12,12 @@ from alexandrie.models import *
 class ReaderForm(forms.ModelForm):
     class Meta:
         model = Reader
+        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')
+
+class ReaderDisableForm(forms.ModelForm):
+    class Meta:
+        model = Reader
+        fields = ()
 
 
 class AuthorForm(forms.ModelForm):

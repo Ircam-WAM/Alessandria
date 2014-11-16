@@ -1,0 +1,27 @@
+{% extends 'alexandrie/base_tpl.html' %}
+
+{% block title %}Désactivation d'un auteur{% endblock %}
+
+{% block pageTitle %}Désactivation d'un auteur{% endblock %}
+
+{% block content %}
+
+<div class="textWarning">
+    <p>Désactiver un lecteur signifie qu'il ne pourra plus emprunter de livres.&nbsp;
+    Toutefois il sera conservé dans l'historique du système.</p>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        {% include 'alexandrie/inc_form_header.html' %}
+        <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
+            {% include 'alexandrie/inc_form_content_std.html' %}
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-warning">Désactiver</button>
+                    <a class="btn" href="{% url 'alexandrie:reader_update' form.instance.id %}">Annuler</a>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.col-sm-12 -->
+</div>
+{% endblock %}
