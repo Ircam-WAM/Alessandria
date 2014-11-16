@@ -143,7 +143,7 @@ class Book(ModelEntity):
     classif_mark = models.CharField(u"Cote", max_length=10)
     height = models.PositiveIntegerField(u"Hauteur (mm)", max_length=3)
     isbn_nb = models.CharField(u"No. ISBN", max_length=30, null=True, blank=True, unique=True)
-    audience = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
+    audiences = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
     category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
     sub_category = models.ForeignKey(BookSubCategory, null=True, verbose_name=u'Sous-catégorie')
     language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
