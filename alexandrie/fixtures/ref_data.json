@@ -708,6 +708,6 @@
         "groups": [],
         "date_joined": "2014-09-28T10:13:26.988Z"
     }
-}
+},
+{"pk": 1, "fields": {"label": "Informaticien"}, "model": "alexandrie.profession"}, {"pk": 2, "fields": {"label": "Retrait\u00e9"}, "model": "alexandrie.profession"}, {"pk": 3, "fields": {"label": "Enseignant"}, "model": "alexandrie.profession"}
 ]
-[{"pk": 1, "fields": {"label": "Informaticien"}, "model": "alexandrie.profession"}, {"pk": 2, "fields": {"label": "Retrait\u00e9"}, "model": "alexandrie.profession"}, {"pk": 3, "fields": {"label": "Enseignant"}, "model": "alexandrie.profession"}]
