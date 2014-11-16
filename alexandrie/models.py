@@ -34,7 +34,10 @@ class Language(ReferenceEntity):
 
 
 def get_default_language():
-    return Language.objects.filter(is_default=True)[0]
+    if Language.objects.count() > 0:
+        return Language.objects.filter(is_default=True)[0]
+    else:
+        return None
 
 
 class Profession(ReferenceEntity):
