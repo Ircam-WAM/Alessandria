@@ -155,7 +155,7 @@ class Book(ModelEntity):
     audiences = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
     category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
     sub_category = models.ForeignKey(BookSubCategory, null=True, verbose_name=u'Sous-catégorie')
-    tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes')
+    tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes', null=True, blank=True)
     language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
 
     def get_nb_copy(self):
