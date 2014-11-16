@@ -68,6 +68,12 @@ class BookSubCategory(ReferenceEntity):
         verbose_name = u"Sous-catégorie d'un livre"
         verbose_name_plural = u"Sous-catégories d'un livre"
 
+
+class BookTag(ReferenceEntity):
+    class Meta:
+        verbose_name = u"Etiquette d'un livre"
+        verbose_name_plural = u"Etiquettes d'un livre"
+
 #########
 # Model #
 #########
@@ -146,6 +152,7 @@ class Book(ModelEntity):
     audiences = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
     category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
     sub_category = models.ForeignKey(BookSubCategory, null=True, verbose_name=u'Sous-catégorie')
+    tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes')
     language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
 
     def get_nb_copy(self):
