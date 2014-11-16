@@ -96,6 +96,11 @@ class Reader(ModelEntity):
     number = models.CharField(u"Numéro", max_length=20, unique=True)
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
+    sex = models.CharField(u"Sexe", max_length=3, choices = (
+                                                    ('f', u'Femme'), 
+                                                    ('m', u'Homme'), 
+                                                  )
+    )
     addr1 = models.CharField(u"Adresse 1", max_length=30)
     addr2 = models.CharField(u"Adresse 2", null=True, max_length=30, blank=True)
     zip = models.PositiveIntegerField(u"Code postal", max_length=5)
