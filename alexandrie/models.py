@@ -184,16 +184,16 @@ class BookCopy(ModelEntity):
     is_bought = models.BooleanField(u"Acheté ?", null=False, blank=False, default=None)
     price = models.FloatField("Prix", blank=True, null=True)
     price_date = models.DateField("Date (prix)", blank=True, null=True)
-    removed_on = models.DateField("Date de retrait", blank=True, null=True)
+    disabled_on = models.DateField("Date de retrait", blank=True, null=True)
 
     def was_borrowed(self):
         return self.readerborrow_set.count() > 0
 
-    def is_removed(self):
-        return self.removed_on is not None
+    def is_disabled(self):
+        return self.disabled_on is not None
 
-    def removed_on_label(self): # Convenient function to be accessed from the template
-        return self._meta.get_field('removed_on').verbose_name
+    def disabled_on_label(self): # Convenient function to be accessed from the template
+        return self._meta.get_field('disabled_on').verbose_name
 
     def __str__(self):
         return "%s (%s)" %(self.book, self.number)

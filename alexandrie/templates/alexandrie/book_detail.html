@@ -37,7 +37,7 @@
                 {% for bookcopy in bookcopy_list %}
                     <li>
                         <a href="{% url 'alexandrie:bookcopy_update' bookcopy.id %}">
-                            {% if bookcopy.is_removed %}
+                            {% if bookcopy.is_disabled %}
                                 <del>Exemplaire {{ bookcopy }}</del>&nbsp;(Retiré)
                             {% else %}
                                 Exemplaire {{ bookcopy }}

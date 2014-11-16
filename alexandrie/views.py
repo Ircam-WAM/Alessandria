@@ -162,16 +162,16 @@ class BookCopyDeleteView(DeleteView):
     def get_success_url(self):
         return self.object.book.get_absolute_url()
 
-class BookCopyRemoveView(EntityUpdateView):
-    template_name = 'alexandrie/bookcopy_remove.html'
+class BookCopyDisableView(EntityUpdateView):
+    template_name = 'alexandrie/bookcopy_disable.html'
     model = BookCopy
-    form_class = BookCopyRemoveForm
+    form_class = BookCopyDisableForm
 
     def form_valid(self, form):
-        if self.object.removed_on < self.object.registered_on:
+        if self.object.disabled_on < self.object.registered_on:
             messages.error(self.request, u"La date de retrait ne peut etre antérieure à la date d'enregistrement.")
-            return redirect('alexandrie:bookcopy_remove', pk=self.object.id)
-        return super(BookCopyRemoveView, self).form_valid(form, u"L'exemplaire a été retiré avec succès.")
+            return redirect('alexandrie:bookcopy_disable', pk=self.object.id)
+        return super(BookCopyDisableView, self).form_valid(form, u"L'exemplaire a été retiré avec succès.")
 
     def get_success_url(self):
         return self.object.book.get_absolute_url()

@@ -39,13 +39,16 @@ class BookCopyForm(forms.ModelForm):
         label=Meta.model._meta.get_field('registered_on').verbose_name, widget=SelectDateWidget(),
         initial=datetime.date.today)
 
-class BookCopyRemoveForm(forms.ModelForm):
+class BookCopyDisableForm(forms.ModelForm):
     class Meta:
         model = BookCopy
-        fields = ('removed_on',)
+        fields = ('disabled_on',)
 
-    removed_on = forms.DateField(
-        label=Meta.model._meta.get_field('removed_on').verbose_name, required=True)
+    disabled_on = forms.DateField(
+        label=Meta.model._meta.get_field('disabled_on').verbose_name, required=True)
+    
+    def clean(self):
+        cleaned_data = super(BookCopyDisableForm, self).clean()
 
 '''
 class GameForm(forms.ModelForm):

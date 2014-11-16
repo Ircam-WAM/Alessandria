@@ -26,6 +26,6 @@ urlpatterns = patterns('',
 
     url(r'bookcopy/add/(?P<book_id>\d+)/$', views.BookCopyCreateView.as_view(), name='bookcopy_add'),
     url(r'bookcopy/(?P<pk>\d+)/$', views.BookCopyUpdateView.as_view(), name='bookcopy_update'),
-    url(r'bookcopy/(?P<pk>\d+)/remove/$', views.BookCopyRemoveView.as_view(), name='bookcopy_remove'),
+    url(r'bookcopy/(?P<pk>\d+)/disable/$', views.BookCopyDisableView.as_view(), name='bookcopy_disable'),
     url(r'bookcopy/(?P<pk>\d+)/delete/$', views.BookCopyDeleteView.as_view(), name='bookcopy_delete'),
 )
