@@ -34,6 +34,17 @@
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Emprunts<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="{% url 'alexandrie:reader_borrow_add' %}">Ajouter</a></li>
+                  <li><a href="{% url 'alexandrie:reader_borrow_list' 'current' %}">Emprunts en cours</a></li>
+                  <li><a href="{% url 'alexandrie:reader_borrow_list' 'late' %}">Emprunts en retard</a></li>
+                  <li><a href="{% url 'alexandrie:reader_borrow_list' 'all' %}">Tous les emprunts</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Auteurs<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="{% url 'alexandrie:author_add' %}">Ajouter</a></li>

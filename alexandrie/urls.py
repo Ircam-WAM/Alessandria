@@ -10,6 +10,11 @@ urlpatterns = patterns('',
 
     url(r'^home/$', views.HomeView.as_view(), name='home'),
 
+    url(r'reader_borrow/add/$', views.ReaderBorrowCreateView.as_view(), name='reader_borrow_add'),
+    url(r'reader_borrow/(?P<pk>\d+)/$', views.ReaderBorrowUpdateView.as_view(), name='reader_borrow_update'),
+    url(r'reader_borrow/list/(?P<display>\w+)/$', views.ReaderBorrowListView.as_view(), name='reader_borrow_list'),
+    url(r'reader_borrow/(?P<pk>\d+)/delete/$', views.ReaderBorrowDeleteView.as_view(), name='reader_borrow_delete'),
+
     url(r'reader/add/$', views.ReaderCreateView.as_view(), name='reader_add'),
     url(r'reader/(?P<pk>\d+)/$', views.ReaderUpdateView.as_view(), name='reader_update'),
     url(r'reader/list/$', views.ReaderListView.as_view(), name='reader_list'),

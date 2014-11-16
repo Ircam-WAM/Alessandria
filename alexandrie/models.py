@@ -1,4 +1,6 @@
 #-*- encoding:utf-8 *-*
+from datetime import datetime as stddatetime
+
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
 from django.core.urlresolvers import reverse
@@ -221,8 +223,28 @@ class BookCopy(ModelEntity):
 
 
 class ReaderBorrow(ModelEntity):
-    reader = models.ForeignKey(Reader)
-    bookcopy = models.ForeignKey(BookCopy)
+    reader = models.ForeignKey(Reader, verbose_name=u'Lecteur')
+    bookcopy = models.ForeignKey(BookCopy, verbose_name=u'Exemplaire')
     borrowed_date = models.DateField(u"Prêté le")
     borrow_due_date = models.DateField(u"Retour pour le")
-    returned_on = models.DateField(u"Retourné le")
+    returned_on = models.DateField(u"Retourné le", blank=True, null=True)
+
+    def is_returned(self):
+        return returned_on is not None
+
+    def list_all():
+        return ReaderBorrow.objects.all()
+
+    def list_current():
+        return ReaderBorrow.objects.filter(returned_on=None)
+
+    def list_late():
+        return ReaderBorrow.objects.filter(returned_on=None, borrow_due_date__lt=stddatetime.now())
+
+    def get_full_name(self):
+        if self.borrowed_date:
+            return "Emprunt du %s" % self.borrowed_date
+        return None
+
+    def get_absolute_url(self):
+        return reverse('alexandrie:reader_borrow_update', kwargs={'pk': self.pk})

@@ -2,7 +2,7 @@ from datetime import datetime as stddatetime
 
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.forms.models import inlineformset_factory
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
@@ -56,6 +56,50 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         #context['category_list'] = Category.objects.all()
         return context
+
+
+class ReaderBorrowCreateView(EntityCreateView):
+    template_name = 'alexandrie/reader_borrow_detail.html'
+    model = ReaderBorrow
+    form_class = ReaderBorrowForm
+    
+    def form_valid(self, form):
+        return super(ReaderBorrowCreateView, self).form_valid(form)
+
+class ReaderBorrowUpdateView(EntityUpdateView):
+    template_name = 'alexandrie/reader_borrow_detail.html'
+    model = ReaderBorrow
+    form_class = ReaderBorrowForm
+
+    def form_valid(self, form):
+        return super(ReaderBorrowUpdateView, self).form_valid(form)
+
+class ReaderBorrowDeleteView(DeleteView):
+    template_name = 'alexandrie/confirm_delete.html'
+    model = ReaderBorrow
+    success_url = reverse_lazy('alexandrie:reader_borrow_list')
+
+class ReaderBorrowListView(ListView):
+    template_name = 'alexandrie/reader_borrow_list.html'
+    model = ReaderBorrow
+
+    def get(self, request, **kwargs):
+        page_title = ""
+        if kwargs['display'] == 'all':
+            page_title = "Tous les emprunts"
+            reader_borrow_list = ReaderBorrow.list_all()
+        elif kwargs['display'] == 'current':
+            page_title = "Emprunts en cours"
+            reader_borrow_list = ReaderBorrow.list_current()
+        elif kwargs['display'] == 'late':
+            page_title = "Emprunts en retard"
+            reader_borrow_list = ReaderBorrow.list_late()
+        return render_to_response(self.template_name,
+                                  {
+                                    'reader_borrow_list': reader_borrow_list,
+                                    'page_title': page_title,
+                                  }
+        )
 
 
 class AuthorCreateView(EntityCreateView):

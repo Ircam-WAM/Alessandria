@@ -9,6 +9,13 @@ from django.utils.safestring import mark_safe
 
 from alexandrie.models import *
 
+
+class ReaderBorrowForm(forms.ModelForm):
+    class Meta:
+        model = ReaderBorrow
+        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')
+
+
 class ReaderForm(forms.ModelForm):
     class Meta:
         model = Reader
@@ -31,7 +38,7 @@ class BookForm(forms.ModelForm):
         model = Book
         exclude = ('created_by', 'created_on', 'modified_by', 'modified_on')
 
-    audience = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs={'class': 'list-unstyled'}),
+    audiences = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs={'class': 'list-unstyled'}),
         queryset=BookAudience.objects.all())
 
 
