@@ -1,5 +1,6 @@
 #-*- encoding:utf-8 *-*
 from datetime import datetime as stddatetime
+from datetime import date as stddate
 
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
@@ -117,6 +118,15 @@ class Reader(ModelEntity):
     def is_disabled(self):
         return self.disabled_on is not None
 
+    def list_borrow_all(self):
+        return self.readerborrow_set.all()
+
+    def list_borrow_current(self):
+        return self.readerborrow_set.filter(returned_on=None)
+
+    def list_borrow_late(self):
+        return self.readerborrow_set.filter(returned_on=None, borrow_due_date__lt=stddatetime.now())
+
     def get_full_name(self):
         if not self.first_name:
             return None
@@ -231,6 +241,9 @@ class ReaderBorrow(ModelEntity):
 
     def is_returned(self):
         return returned_on is not None
+    
+    def is_late(self):
+        return self.borrow_due_date < stddate.today()
 
     def list_all():
         return ReaderBorrow.objects.all()
