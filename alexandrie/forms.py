@@ -15,11 +15,17 @@ class ReaderBorrowForm(forms.ModelForm):
         model = ReaderBorrow
         exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')
 
+    bookcopy = forms.ModelChoiceField(queryset=BookCopy.objects.filter(disabled_on=None),
+                                      label=Meta.model._meta.get_field('bookcopy').verbose_name)
+    reader = forms.ModelChoiceField(queryset=Reader.objects.filter(disabled_on=None),
+                                      label=Meta.model._meta.get_field('reader').verbose_name)
+
 
 class ReaderForm(forms.ModelForm):
     class Meta:
         model = Reader
         exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')
+
 
 class ReaderDisableForm(forms.ModelForm):
     class Meta:
