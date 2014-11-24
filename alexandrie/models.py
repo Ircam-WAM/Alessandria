@@ -126,6 +126,9 @@ class Reader(ModelEntity):
 
     def list_borrow_late(self):
         return self.readerborrow_set.filter(returned_on=None, borrow_due_date__lt=stddatetime.now())
+    
+    def nb_borrow(self):
+        return self.readerborrow_set.count()
 
     def get_full_name(self):
         if not self.first_name:

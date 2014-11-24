@@ -12,7 +12,7 @@
         {% if form.instance.is_disabled %}
             <div class="textInfo">Ce lecteur a été désactivé le {{form.instance.disabled_on }}.</div>
         {% endif %}        
-        <div class="panel panel-info">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">{{object.get_full_name|default:"Nouveau lecteur"}}</h3>
             </div>
@@ -34,31 +34,47 @@
     {% if object.id > 0 %}
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Emprunts en cours</h3>
+                <h3 class="panel-title">Emprunts</h3>
             </div>
             <div class="panel-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Date emprunt</th>
-                            <th>Livre</th>
-                            <th>Retour pour le</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for borrow in object.list_borrow_current %}
-                        {% if borrow.is_late %}
-                            <tr class="bg-warning">
-                        {% else %}
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Résumé</h3>
+                    </div>
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>Nb d'emprunts:</dt><dd>{{ object.nb_borrow }}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Emprunts en cours</h3>
+                    </div>
+                    <table class="table">
+                        <thead>
                             <tr>
-                        {% endif %}
-                                <td><a href="{% url 'alexandrie:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date }}</a></td>
-                                <td>{{ borrow.bookcopy.book }}</td>
-                                <td>{{ borrow.borrow_due_date }}</td>
+                                <th>Date emprunt</th>
+                                <th>Livre</th>
+                                <th>Retour pour le</th>
                             </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for borrow in object.list_borrow_current %}
+                            {% if borrow.is_late %}
+                                <tr class="bg-warning">
+                            {% else %}
+                                <tr>
+                            {% endif %}
+                                    <td><a href="{% url 'alexandrie:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date }}</a></td>
+                                    <td>{{ borrow.bookcopy.book }}</td>
+                                    <td>{{ borrow.borrow_due_date }}</td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     {% endif %}
