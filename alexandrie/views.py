@@ -274,7 +274,7 @@ class ReaderUpdateView(EntityUpdateView):
         return super(ReaderUpdateView, self).form_valid(form)
 
 class ReaderListView(ListView):
-    template_name = 'alexandrie/read_list.html'
+    template_name = 'alexandrie/reader_list.html'
     model = Reader
     context_object_name = 'reader_list'
 
