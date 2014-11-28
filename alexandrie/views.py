@@ -8,6 +8,7 @@ from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib import messages
+from django.template import RequestContext
 
 from nested_formset import nestedformset_factory
 
@@ -136,6 +137,18 @@ class AuthorListView(ListView):
     template_name = 'alexandrie/author_list.html'
     model = Author
     context_object_name = 'author_list'
+
+    def search(request):
+        last_name = request.POST['last_name']
+        if (last_name != ''):
+            author_list = Author.objects.filter(last_name__istartswith = last_name)
+        else:
+            author_list = Author.objects.all()
+        return render_to_response(
+            AuthorListView.template_name,
+            {'author_list': author_list,},
+            context_instance=RequestContext(request)
+        )
 
 
 class PublisherCreateView(EntityCreateView):

@@ -7,6 +7,15 @@
 {% block content %}
 <div class="row">
     <div class="col-md-12">
+    <form class="form-horizontal" action="{% url 'alexandrie:author_search' %}" method="post" role="form">{% csrf_token %}
+        <input type="text" name="last_name" value="" />
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
         <table class="table table-striped">
             <thead>
                 <tr>
