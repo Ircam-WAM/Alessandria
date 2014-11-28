@@ -169,7 +169,10 @@ class Author(ModelEntity):
 class Publisher(ModelEntity):
     name = models.CharField(u"Nom", max_length=30)
     country = CountryField()
-    
+
+    def get_absolute_url(self):
+        return reverse('alexandrie:publisher_update', kwargs={'pk': self.pk})
+
     def __str__(self):
         return self.name
     

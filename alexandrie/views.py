@@ -138,6 +138,41 @@ class AuthorListView(ListView):
     context_object_name = 'author_list'
 
 
+class PublisherCreateView(EntityCreateView):
+    template_name = 'alexandrie/publisher_detail.html'
+    model = Publisher
+    form_class = PublisherForm
+    
+    def form_valid(self, form):
+        return super(PublisherCreateView, self).form_valid(form)
+
+class PublisherUpdateView(EntityUpdateView):
+    template_name = 'alexandrie/publisher_detail.html'
+    model = Publisher
+    form_class = PublisherForm
+
+    def form_valid(self, form):
+        return super(PublisherUpdateView, self).form_valid(form)
+
+class PublisherDeleteView(DeleteView):
+    template_name = 'alexandrie/confirm_delete.html'
+    model = Publisher
+    success_url = reverse_lazy('alexandrie:publisher_list')
+
+    def get(self, request, **kwargs):
+        # This method is called before displaying the page 'template_name'
+        publisher = Publisher.objects.get(id=kwargs['pk'])
+        if publisher.book_set.count() > 0:
+            messages.error(self.request, u"Impossible de supprimer cet éditeur car il est référencé dans un livre.")
+            return redirect('alexandrie:publisher_update', pk=publisher.id)
+        return super(PublisherDeleteView, self).get(request, kwargs)
+
+class PublisherListView(ListView):
+    template_name = 'alexandrie/publisher_list.html'
+    model = Publisher
+    context_object_name = 'publisher_list'
+
+
 class BookCreateView(EntityCreateView):
     template_name = 'alexandrie/book_detail.html'
     model = Book

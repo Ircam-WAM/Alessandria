@@ -25,6 +25,11 @@ urlpatterns = patterns('',
     url(r'author/(?P<pk>\d+)/delete/$', views.AuthorDeleteView.as_view(), name='author_delete'),
     url(r'author/list/$', views.AuthorListView.as_view(), name='author_list'),
 
+    url(r'publisher/add/$', views.PublisherCreateView.as_view(), name='publisher_add'),
+    url(r'publisher/(?P<pk>\d+)/$', views.PublisherUpdateView.as_view(), name='publisher_update'),
+    url(r'publisher/(?P<pk>\d+)/delete/$', views.PublisherDeleteView.as_view(), name='publisher_delete'),
+    url(r'publisher/list/$', views.PublisherListView.as_view(), name='publisher_list'),
+
     url(r'book/add/$', views.BookCreateView.as_view(), name='book_add'),
     url(r'book/(?P<pk>\d+)/$', views.BookUpdateView.as_view(), name='book_update'),
     url(r'book/(?P<pk>\d+)/delete/$', views.BookDeleteView.as_view(), name='book_delete'),

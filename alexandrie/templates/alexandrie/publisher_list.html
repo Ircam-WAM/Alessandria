@@ -1,0 +1,30 @@
+{% extends 'alexandrie/base_tpl.html' %}
+
+{% block title %}Liste des éditeurs{% endblock %}
+
+{% block pageTitle %}Liste des éditeurs{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Créé le</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for publisher in publisher_list %}
+                <tr>
+                    <td><a href="{% url 'alexandrie:publisher_update' publisher.id %}">{{ publisher.name }}</a></td>
+                    <td>{{ publisher.created_on}}</td>
+                </tr>
+                {% empty %}
+                    <tr><td colspan=2>Aucun éditeur.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

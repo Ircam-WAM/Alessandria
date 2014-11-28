@@ -39,6 +39,12 @@ class AuthorForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'birth_year', 'country', 'notes')
 
 
+class PublisherForm(forms.ModelForm):
+    class Meta:
+        model = Publisher
+        fields = ('name', 'country', 'notes')
+
+
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
