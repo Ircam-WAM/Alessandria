@@ -5,14 +5,10 @@
 {% block pageTitle %}Liste des auteurs{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-    <form class="form-horizontal" action="{% url 'alexandrie:author_search' %}" method="post" role="form">{% csrf_token %}
-        <input type="text" name="last_name" value="" />
-        <button type="submit" class="btn btn-primary">Rechercher</button>
-    </form>
-    </div>
-</div>
+
+<form class="form-horizontal" action="{% url 'alexandrie:author_list' %}" method="post" role="form">{% csrf_token %}
+    {% include 'alexandrie/inc_form_search_std.html' %}
+</form>
 
 <div class="row">
     <div class="col-md-12">

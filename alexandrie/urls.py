@@ -24,7 +24,6 @@ urlpatterns = patterns('',
     url(r'author/(?P<pk>\d+)/$', views.AuthorUpdateView.as_view(), name='author_update'),
     url(r'author/(?P<pk>\d+)/delete/$', views.AuthorDeleteView.as_view(), name='author_delete'),
     url(r'author/list/$', views.AuthorListView.as_view(), name='author_list'),
-    url(r'author/search/$', views.AuthorListView.search, name='author_search'),
 
     url(r'publisher/add/$', views.PublisherCreateView.as_view(), name='publisher_add'),
     url(r'publisher/(?P<pk>\d+)/$', views.PublisherUpdateView.as_view(), name='publisher_update'),

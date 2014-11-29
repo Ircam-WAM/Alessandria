@@ -38,6 +38,11 @@ class AuthorForm(forms.ModelForm):
         model = Author
         fields = ('first_name', 'last_name', 'birth_year', 'country', 'notes')
 
+class AuthorSearchForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields = ('last_name',)
+
 
 class PublisherForm(forms.ModelForm):
     class Meta:

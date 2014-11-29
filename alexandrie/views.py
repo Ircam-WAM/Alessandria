@@ -138,15 +138,29 @@ class AuthorListView(ListView):
     model = Author
     context_object_name = 'author_list'
 
-    def search(request):
+    def post(self, request):
+        search_form = AuthorSearchForm(request.POST) #, instance=training
         last_name = request.POST['last_name']
         if (last_name != ''):
-            author_list = Author.objects.filter(last_name__istartswith = last_name)
+            author_list = self.model.objects.filter(last_name__istartswith = last_name)
         else:
-            author_list = Author.objects.all()
+            author_list = self.model.objects.all()
         return render_to_response(
-            AuthorListView.template_name,
-            {'author_list': author_list,},
+            self.template_name, {
+                'author_list': author_list,
+                'search_form': search_form,
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def get(self, request, **kwargs):
+        author_list = self.model.objects.all()
+        search_form = AuthorSearchForm()
+        return render_to_response(
+            self.template_name, {
+                'author_list': author_list,
+                'search_form': search_form,
+            },
             context_instance=RequestContext(request)
         )
 
