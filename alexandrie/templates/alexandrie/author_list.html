@@ -7,7 +7,7 @@
 {% block content %}
 
 <form class="form-horizontal" action="{% url 'alexandrie:author_list' %}" method="post" role="form">{% csrf_token %}
-    {% include 'alexandrie/inc_form_search_std.html' %}
+    {% include 'alexandrie/_inc_form_search_std.html' %}
 </form>
 
 <div class="row">

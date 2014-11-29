@@ -9,7 +9,7 @@
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
-        {% include 'alexandrie/inc_form_header.html' %}
+        {% include 'alexandrie/_inc_form_edit_header.html' %}
         {% if form.instance.is_disabled %}
             <div class="textInfo">Cet exemplaire a été retiré.</div>
         {% endif %}
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </form>
-                {% include 'alexandrie/inc_form_footer.html' %}
+                {% include 'alexandrie/_inc_form_edit_footer.html' %}
             </div>
         </div>
     </div><!-- /.col-sm- -->
