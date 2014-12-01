@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-8">
         {% include 'alexandrie/_inc_form_edit_header.html' %}
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -21,6 +21,26 @@
                 {% include 'alexandrie/_inc_form_edit_footer.html' %}
             </div>
         </div>
-    </div><!-- /.col-sm-12 -->
+    </div>
+    <div class="col-sm-4">
+    {% if object.id > 0 %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Livres</h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                {% for book in object.get_books %}
+                    <li>
+                        <a href="{% url 'alexandrie:book_update' book.id %}">
+                            {{ book }}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+    </div>
 </div>
 {% endblock %}

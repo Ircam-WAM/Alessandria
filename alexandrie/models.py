@@ -157,6 +157,9 @@ class Author(ModelEntity):
             return ""
         return ' '.join([self.first_name, self.last_name])
 
+    def get_books(self):
+        return self.book_set.all()
+
     def get_absolute_url(self):
         return reverse('alexandrie:author_update', kwargs={'pk': self.pk})
 
