@@ -142,6 +142,7 @@ class Reader(ModelEntity):
         return "%s - %s %s" % (self.number, self.first_name, self.last_name)
     
     class Meta:
+        ordering = ['last_name', 'first_name']
         verbose_name = "Lecteur"
     
 
@@ -163,6 +164,7 @@ class Author(ModelEntity):
         return self.get_full_name()
 
     class Meta:
+        ordering = ['last_name', 'first_name']
         verbose_name = "Auteur"
 
 
@@ -177,6 +179,7 @@ class Publisher(ModelEntity):
         return self.name
     
     class Meta:
+        ordering = ['name']
         verbose_name = "Editeur"
 
 
@@ -208,6 +211,7 @@ class Book(ModelEntity):
         return self.title
     
     class Meta:
+        ordering = ['-created_on']
         verbose_name = "Livre"
 
 
@@ -234,6 +238,7 @@ class BookCopy(ModelEntity):
         return "%s (%s)" %(self.book, self.number)
 
     class Meta:
+        ordering = ['number']
         verbose_name = "Exemplaire d'un livre"
         verbose_name_plural = "Exemplaires d'un livre"
 
@@ -267,3 +272,6 @@ class ReaderBorrow(ModelEntity):
 
     def get_absolute_url(self):
         return reverse('alexandrie:reader_borrow_update', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['borrow_due_date']
