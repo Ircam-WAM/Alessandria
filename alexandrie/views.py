@@ -324,3 +324,31 @@ class ReaderListView(ListView):
     model = Reader
     #queryset = Training.objects.order_by('-date')
     context_object_name = 'reader_list'
+
+    def post(self, request):
+        """Method called when a search is submitted"""
+        search_form = ReaderSearchForm(request.POST)
+        last_name = request.POST['last_name']
+        if (last_name != ''):
+            reader_list = self.model.objects.filter(last_name__istartswith = last_name)
+        else:
+            reader_list = self.model.objects.all()
+        return render_to_response(
+            self.template_name, {
+                'reader_list': reader_list,
+                'search_form': search_form,
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def get(self, request, **kwargs):
+        """Method called when the page is accessed"""
+        reader_list = self.model.objects.all()
+        search_form = ReaderSearchForm()
+        return render_to_response(
+            self.template_name, {
+                'reader_list': reader_list,
+                'search_form': search_form,
+            },
+            context_instance=RequestContext(request)
+        )

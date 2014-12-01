@@ -5,6 +5,11 @@
 {% block pageTitle %}Liste des lecteurs{% endblock %}
 
 {% block content %}
+
+<form class="form-horizontal" action="{% url 'alexandrie:reader_list' %}" method="post" role="form">{% csrf_token %}
+    {% include 'alexandrie/_inc_form_search_std.html' %}
+</form>
+
 <div class="row-fluid">
     <div class="span12">
         {% if reader_list %}
