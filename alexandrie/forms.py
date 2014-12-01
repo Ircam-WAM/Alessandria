@@ -63,6 +63,11 @@ class BookForm(forms.ModelForm):
     audiences = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs={'class': 'list-unstyled'}),
         queryset=BookAudience.objects.all())
 
+class BookSearchForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ('title', 'category', 'sub_category',)
+
 
 class BookCopyForm(forms.ModelForm):
     class Meta:

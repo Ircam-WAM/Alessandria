@@ -231,7 +231,39 @@ class BookDeleteView(DeleteView):
 class BookListView(ListView):
     template_name = 'alexandrie/book_list.html'
     model = Book
-    context_object_name = 'book_list'
+
+    def post(self, request):
+        """Method called when a search is submitted"""
+        search_form = BookSearchForm(request.POST)
+        title = request.POST['title']
+        category = request.POST['category']
+        sub_category = request.POST['sub_category']
+        book_list = self.model.objects.all()
+        if (title != ''):
+            book_list = book_list.filter(title__icontains = title)
+        if (category != ''):
+            book_list = book_list.filter(category__id = category)
+        if (sub_category != ''):
+            book_list = book_list.filter(sub_category__id = sub_category)
+        return render_to_response(
+            self.template_name, {
+                'book_list': book_list,
+                'search_form': search_form,
+            },
+            context_instance=RequestContext(request)
+        )
+
+    def get(self, request, **kwargs):
+        """Method called when the page is accessed"""
+        book_list = self.model.objects.all()
+        search_form = BookSearchForm()
+        return render_to_response(
+            self.template_name, {
+                'book_list': book_list,
+                'search_form': search_form,
+            },
+            context_instance=RequestContext(request)
+        )
 
 
 class BookCopyCreateView(EntityCreateView):
