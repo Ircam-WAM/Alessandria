@@ -61,7 +61,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {% for borrow in object.list_borrow_current %}
+                        {% for borrow in object.list_borrow_current|slice:":10" %}
                             {% if borrow.is_late %}
                                 <tr class="bg-warning">
                             {% else %}
