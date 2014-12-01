@@ -1,111 +1,106 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html lang="fr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Alexandrie">
-    <meta name="author" content="Marc SCHNEIDER">
-    <link rel="icon" href="../../favicon.ico">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Alexandrie">
+        <meta name="author" content="Marc SCHNEIDER">
+        <link rel="icon" href="../../favicon.ico">
+      
+        <title>{% block title %}Alexandrie{% endblock %}</title>
+      
+        <link rel="stylesheet" href="{% static 'alexandrie/layout/bootstrap/css/bootstrap.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'alexandrie/layout/style.css' %}" />
+    </head>
 
-    <title>{% block title %}Alexandrie{% endblock %}</title>
+    <body>
+        <div class="container">
+            <!-- Static navbar -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Alexandrie</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Emprunts<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'alexandrie:reader_borrow_add' %}">Ajouter</a></li>
+                                    <li><a href="{% url 'alexandrie:reader_borrow_list' 'current' %}">Emprunts en cours</a></li>
+                                    <li><a href="{% url 'alexandrie:reader_borrow_list' 'late' %}">Emprunts en retard</a></li>
+                                    <li><a href="{% url 'alexandrie:reader_borrow_list' 'all' %}">Tous les emprunts</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Auteurs<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'alexandrie:author_add' %}">Ajouter</a></li>
+                                    <li><a href="{% url 'alexandrie:author_list' %}">Lister</a></li>
+                                    <!--li class="divider"></li>
+                                    <li class="dropdown-header">Nav header</li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#">One more separated link</a></li-->
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Editeurs<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'alexandrie:publisher_add' %}">Ajouter</a></li>
+                                    <li><a href="{% url 'alexandrie:publisher_list' %}">Lister</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Livres<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'alexandrie:book_add' %}">Ajouter</a></li>
+                                    <li><a href="{% url 'alexandrie:book_list' %}">Lister</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lecteurs<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'alexandrie:reader_add' %}">Ajouter</a></li>
+                                    <li><a href="{% url 'alexandrie:reader_list' %}">Lister</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Administration</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div><!--/.container-fluid -->
+            </div>
+          
+            <div class="container">
+                <h1>{% block pageTitle %}Alexandrie{% endblock %}</h1>
+                {% block content %}{% endblock %}
+            </div>
+        </div><!-- /.container -->
 
-    <link rel="stylesheet" href="{% static 'alexandrie/layout/bootstrap/css/bootstrap.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'alexandrie/layout/style.css' %}" />
-  </head>
-
-  <body>
-
-    <div class="container">
-
-      <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Alexandrie</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Emprunts<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="{% url 'alexandrie:reader_borrow_add' %}">Ajouter</a></li>
-                  <li><a href="{% url 'alexandrie:reader_borrow_list' 'current' %}">Emprunts en cours</a></li>
-                  <li><a href="{% url 'alexandrie:reader_borrow_list' 'late' %}">Emprunts en retard</a></li>
-                  <li><a href="{% url 'alexandrie:reader_borrow_list' 'all' %}">Tous les emprunts</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Auteurs<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="{% url 'alexandrie:author_add' %}">Ajouter</a></li>
-                  <li><a href="{% url 'alexandrie:author_list' %}">Lister</a></li>
-                  <!--li class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li-->
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Editeurs<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="{% url 'alexandrie:publisher_add' %}">Ajouter</a></li>
-                  <li><a href="{% url 'alexandrie:publisher_list' %}">Lister</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Livres<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="{% url 'alexandrie:book_add' %}">Ajouter</a></li>
-                  <li><a href="{% url 'alexandrie:book_list' %}">Lister</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lecteurs<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="{% url 'alexandrie:reader_add' %}">Ajouter</a></li>
-                  <li><a href="{% url 'alexandrie:reader_list' %}">Lister</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <!--li class="active"><a href="./">Default</a></li-->
-              <li><a href="#">Administration</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </div>
-    
-      <div class="container">
-        <h1>{% block pageTitle %}Alexandrie{% endblock %}</h1>
-        {% block content %}{% endblock %}
-      </div>
-
-    </div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
-    <script src="{% static 'alexandrie/layout/js/jquery/jquery-1.11.1.min.js' %}"></script>
-    <script src="{% static 'alexandrie/layout/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'alexandrie/layout/js/jquery/jquery.formset.js' %}"></script>
-    {% block jscript %}{% endblock %}
-  </body>
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
+        <script src="{% static 'alexandrie/layout/js/jquery/jquery-1.11.1.min.js' %}"></script>
+        <script src="{% static 'alexandrie/layout/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'alexandrie/layout/js/jquery/jquery.formset.js' %}"></script>
+        {% block jscript %}{% endblock %}
+    </body>
 </html>
