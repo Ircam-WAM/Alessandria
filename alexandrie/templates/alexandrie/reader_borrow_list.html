@@ -21,8 +21,8 @@
             {% for borrow in reader_borrow_list %}
                 <tr>
                     <td><a href="{% url 'alexandrie:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date }}</a></td>
-                    <td>{{ borrow.reader }}</td>
-                    <td>{{ borrow.bookcopy.book }}</td>
+                    <td><a href="{% url 'alexandrie:reader_update' borrow.reader.id %}">{{ borrow.reader }}</a></td>
+                    <td><a href="{% url 'alexandrie:book_update' borrow.bookcopy.book.id %}">{{ borrow.bookcopy.book }}</a></td>
                     <td>{{ borrow.borrow_due_date }}</td>
                 </tr>
             {% endfor %}
