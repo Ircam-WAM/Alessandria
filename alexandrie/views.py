@@ -139,7 +139,8 @@ class AuthorListView(ListView):
     context_object_name = 'author_list'
 
     def post(self, request):
-        search_form = AuthorSearchForm(request.POST) #, instance=training
+        """Method called when a search is submitted"""
+        search_form = AuthorSearchForm(request.POST)
         last_name = request.POST['last_name']
         if (last_name != ''):
             author_list = self.model.objects.filter(last_name__istartswith = last_name)
@@ -154,6 +155,7 @@ class AuthorListView(ListView):
         )
 
     def get(self, request, **kwargs):
+        """Method called when the page is accessed"""
         author_list = self.model.objects.all()
         search_form = AuthorSearchForm()
         return render_to_response(
