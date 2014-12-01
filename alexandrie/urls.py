@@ -3,12 +3,16 @@ from django.conf.urls import patterns, url
 
 from alexandrie import views
 
+print("=========> Hello")
+
 urlpatterns = patterns('',
     # http://127.0.0.1:8000/alexandrie/ => go to login view
-    url(r'^%s$' %settings.LOGIN_URL[1:], 'django.contrib.auth.views.login', {'template_name': 'alexandrie/login.html'}, name='login'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/alexandrie'}, name='logout'),
+    #url(r'^%s$' %settings.LOGIN_URL[1:], 'django.contrib.auth.views.login', {'template_name': 'alexandrie/login.html'}, name='login'),
+    #url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/alexandrie'}, name='logout'),
 
-    url(r'^home/$', views.HomeView.as_view(), name='home'),
+    url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^login/$', views.LoginView.as_view(), name='login'),
+    url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
 
     url(r'reader_borrow/add/$', views.ReaderBorrowCreateView.as_view(), name='reader_borrow_add'),
     url(r'reader_borrow/(?P<pk>\d+)/$', views.ReaderBorrowUpdateView.as_view(), name='reader_borrow_update'),

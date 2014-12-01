@@ -8,6 +8,9 @@ from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
 from nested_formset import nestedformset_factory
@@ -15,7 +18,16 @@ from nested_formset import nestedformset_factory
 from alexandrie.models import *
 from alexandrie.forms import *
 
-class EntityCreateView(CreateView):
+
+class ProtectedView(object):
+    login_url = reverse_lazy('alexandrie:login')
+
+    @classmethod
+    def as_view(cls, **initkwargs):
+        view = super(ProtectedView, cls).as_view(**initkwargs)
+        return login_required(view, login_url=cls.login_url)
+
+class EntityCreateView(ProtectedView, CreateView):
     def form_invalid(self, form, error_msg=u"Erreur lors de l'enregistrement."):
         messages.error(self.request, error_msg)
         return super(EntityCreateView, self).form_invalid(form)
@@ -32,7 +44,7 @@ class EntityCreateView(CreateView):
         messages.success(self.request, success_msg)
         return super(EntityCreateView, self).form_valid(form)
 
-class EntityUpdateView(UpdateView):
+class EntityUpdateView(ProtectedView, UpdateView):
     def form_invalid(self, form, error_msg=u"Erreur lors de l'enregistrement."):
         messages.error(self.request, error_msg)
         return super(EntityUpdateView, self).form_invalid(form)
@@ -49,6 +61,12 @@ class EntityUpdateView(UpdateView):
         messages.success(self.request, success_msg)
         return super(EntityUpdateView, self).form_valid(form)
 
+class EntityListView(ProtectedView, ListView):
+    pass
+
+class EntityDeleteView(ProtectedView, DeleteView):
+    pass
+
 
 class HomeView(TemplateView):
     template_name = 'alexandrie/index.html'
@@ -57,6 +75,57 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         #context['category_list'] = Category.objects.all()
         return context
+
+
+class LogoutView(TemplateView):
+    
+    def get(self, request, **kwargs):
+        logout(request)
+        return HttpResponseRedirect(reverse('alexandrie:login'))
+
+
+class LoginView(TemplateView):
+    template_name = 'alexandrie/login.html'
+
+    """
+    def get_context_data(self, **kwargs):
+        context = super(LoginView, self).get_context_data(**kwargs)
+        return context
+    """
+    
+    def login_error(self):
+        messages.error(self.request, u"Erreur de connexion - nom d'utilisateur / mot de passe incorrect.")
+        return render_to_response(
+            self.template_name, context_instance=RequestContext(request)
+        )
+
+    def post(self, request):
+        """Gather the username and password provided by the user.
+        This information is obtained from the login form.
+        """
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # Use Django's machinery to attempt to see if the username/password
+        # combination is valid - a User object is returned if it is.
+        user = authenticate(username=username, password=password)
+
+        # If we have a User object, the credentials are correct.
+        if user:
+            # Is the account active? It could have been disabled.
+            if user.is_active:
+                # If the account is valid and active, we can log the user in.
+                # We'll send the user back to the homepage.
+                login(request, user)
+                return HttpResponseRedirect(reverse('alexandrie:home'))
+            else:
+                # An inactive account was used - no logging in!
+                messages.error(self.request, u"Erreur de connexion - nom d'utilisateur / mot de passe incorrect.")
+                return self.login_error()
+        else:
+            # Bad login details were provided. So we can't log the user in.
+            messages.error(self.request, u"Erreur de connexion - nom d'utilisateur / mot de passe incorrect.")
+            return self.login_error()
 
 
 class ReaderBorrowCreateView(EntityCreateView):
@@ -75,12 +144,12 @@ class ReaderBorrowUpdateView(EntityUpdateView):
     def form_valid(self, form):
         return super(ReaderBorrowUpdateView, self).form_valid(form)
 
-class ReaderBorrowDeleteView(DeleteView):
+class ReaderBorrowDeleteView(EntityDeleteView):
     template_name = 'alexandrie/confirm_delete.html'
     model = ReaderBorrow
     success_url = reverse_lazy('alexandrie:reader_borrow_list')
 
-class ReaderBorrowListView(ListView):
+class ReaderBorrowListView(EntityListView):
     template_name = 'alexandrie/reader_borrow_list.html'
     model = ReaderBorrow
 
@@ -99,7 +168,8 @@ class ReaderBorrowListView(ListView):
                                   {
                                     'reader_borrow_list': reader_borrow_list,
                                     'page_title': page_title,
-                                  }
+                                  },
+                                  context_instance=RequestContext(request),
         )
 
 
@@ -121,7 +191,7 @@ class AuthorUpdateView(EntityUpdateView):
     def form_valid(self, form):
         return super(AuthorUpdateView, self).form_valid(form)
 
-class AuthorDeleteView(DeleteView):
+class AuthorDeleteView(EntityDeleteView):
     template_name = 'alexandrie/confirm_delete.html'
     model = Author
     success_url = reverse_lazy('alexandrie:author_list')
@@ -135,7 +205,7 @@ class AuthorDeleteView(DeleteView):
             #return redirect(author) # Call to get_absolute_url of Author model
         return super(AuthorDeleteView, self).get(request, kwargs)
 
-class AuthorListView(ListView):
+class AuthorListView(EntityListView):
     template_name = 'alexandrie/author_list.html'
     model = Author
 
@@ -184,7 +254,7 @@ class PublisherUpdateView(EntityUpdateView):
     def form_valid(self, form):
         return super(PublisherUpdateView, self).form_valid(form)
 
-class PublisherDeleteView(DeleteView):
+class PublisherDeleteView(EntityDeleteView):
     template_name = 'alexandrie/confirm_delete.html'
     model = Publisher
     success_url = reverse_lazy('alexandrie:publisher_list')
@@ -197,7 +267,7 @@ class PublisherDeleteView(DeleteView):
             return redirect('alexandrie:publisher_update', pk=publisher.id)
         return super(PublisherDeleteView, self).get(request, kwargs)
 
-class PublisherListView(ListView):
+class PublisherListView(EntityListView):
     template_name = 'alexandrie/publisher_list.html'
     model = Publisher
     context_object_name = 'publisher_list'
@@ -225,12 +295,12 @@ class BookUpdateView(EntityUpdateView):
     def form_valid(self, form):
         return super(BookUpdateView, self).form_valid(form)
 
-class BookDeleteView(DeleteView):
+class BookDeleteView(EntityDeleteView):
     template_name = 'alexandrie/confirm_delete.html'
     model = Book
     success_url = reverse_lazy('alexandrie:book_list')
 
-class BookListView(ListView):
+class BookListView(EntityListView):
     template_name = 'alexandrie/book_list.html'
     model = Book
 
@@ -311,7 +381,7 @@ class BookCopyDisableView(EntityUpdateView):
     def get_success_url(self):
         return self.object.book.get_absolute_url()
 
-class BookCopyDeleteView(DeleteView):
+class BookCopyDeleteView(EntityDeleteView):
     template_name = 'alexandrie/confirm_delete.html'
     model = BookCopy
 
@@ -337,11 +407,6 @@ class ReaderUpdateView(EntityUpdateView):
     def form_valid(self, form):
         return super(ReaderUpdateView, self).form_valid(form)
 
-class ReaderListView(ListView):
-    template_name = 'alexandrie/reader_list.html'
-    model = Reader
-    context_object_name = 'reader_list'
-
 class ReaderDisableView(EntityUpdateView):
     template_name = 'alexandrie/reader_disable.html'
     model = Reader
@@ -354,7 +419,7 @@ class ReaderDisableView(EntityUpdateView):
     def get_success_url(self):
         return self.object.get_absolute_url()
 
-class ReaderListView(ListView):
+class ReaderListView(EntityListView):
     template_name = 'alexandrie/reader_list.html'
     model = Reader
 
