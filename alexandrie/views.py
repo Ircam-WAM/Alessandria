@@ -136,7 +136,6 @@ class AuthorDeleteView(DeleteView):
 class AuthorListView(ListView):
     template_name = 'alexandrie/author_list.html'
     model = Author
-    context_object_name = 'author_list'
 
     def post(self, request):
         """Method called when a search is submitted"""
@@ -322,8 +321,6 @@ class ReaderDisableView(EntityUpdateView):
 class ReaderListView(ListView):
     template_name = 'alexandrie/reader_list.html'
     model = Reader
-    #queryset = Training.objects.order_by('-date')
-    context_object_name = 'reader_list'
 
     def post(self, request):
         """Method called when a search is submitted"""
