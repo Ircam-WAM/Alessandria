@@ -141,10 +141,9 @@ class AuthorListView(ListView):
         """Method called when a search is submitted"""
         search_form = AuthorSearchForm(request.POST)
         last_name = request.POST['last_name']
+        author_list = self.model.objects.all()
         if (last_name != ''):
-            author_list = self.model.objects.filter(last_name__istartswith = last_name)
-        else:
-            author_list = self.model.objects.all()
+            author_list = author_list.filter(last_name__istartswith = last_name)
         return render_to_response(
             self.template_name, {
                 'author_list': author_list,
@@ -358,10 +357,9 @@ class ReaderListView(ListView):
         """Method called when a search is submitted"""
         search_form = ReaderSearchForm(request.POST)
         last_name = request.POST['last_name']
+        reader_list = self.model.objects.all()
         if (last_name != ''):
-            reader_list = self.model.objects.filter(last_name__istartswith = last_name)
-        else:
-            reader_list = self.model.objects.all()
+            reader_list = reader_list.filter(last_name__istartswith = last_name)
         return render_to_response(
             self.template_name, {
                 'reader_list': reader_list,
