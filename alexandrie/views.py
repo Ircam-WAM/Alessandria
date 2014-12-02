@@ -26,6 +26,10 @@ def load_user_nav_history(request, user):
         user_nav_list.append((user_nav.url, user_nav.title))
     request.session['user_nav_list'] = user_nav_list
 
+def clear_user_nav_history(request):
+    request.session['user_nav_list'] = None
+
+
 class ProtectedView(object):
     login_url = reverse_lazy('alexandrie:login')
 
@@ -78,6 +82,7 @@ class HomeView(TemplateView):
 class LogoutView(TemplateView):
     def get(self, request, **kwargs):
         logout(request)
+        clear_user_nav_history(request)
         return HttpResponseRedirect(reverse('alexandrie:login'))
 
 
