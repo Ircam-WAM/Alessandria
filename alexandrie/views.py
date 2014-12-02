@@ -35,11 +35,6 @@ class EntityCreateView(ProtectedView, CreateView):
     def form_valid(self, form, success_msg=u"Enregistement effectué avec succès."):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
-        """
-        entity = form.save(commit=False)
-        entity.created_by = self.request.user
-        entity.save()
-        """
         form.instance.created_by = self.request.user
         messages.success(self.request, success_msg)
         return super(EntityCreateView, self).form_valid(form)
@@ -50,11 +45,6 @@ class EntityUpdateView(ProtectedView, UpdateView):
         if not UserNavigationHistory.exist_url(request.path):
             UserNavigationHistory.add(request.path, self.object._meta.verbose_name + " : " + str(self.object),
                                       self.request.user)
-            lst = UserNavigationHistory.get_list(self.request.user)
-            user_nav_list = []
-            for user_nav in lst:
-                user_nav_list.append((user_nav.url, user_nav.title))
-            request.session['user_nav_list'] = user_nav_list
         return ret
 
     def form_invalid(self, form, error_msg=u"Erreur lors de l'enregistrement."):
@@ -62,13 +52,6 @@ class EntityUpdateView(ProtectedView, UpdateView):
         return super(EntityUpdateView, self).form_invalid(form)
 
     def form_valid(self, form, success_msg=u"Enregistement effectué avec succès."):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        """
-        entity = form.save(commit=False)
-        entity.modified_by = self.request.user
-        entity.save()
-        """
         form.instance.modified_by = self.request.user
         messages.success(self.request, success_msg)
         return super(EntityUpdateView, self).form_valid(form)
@@ -82,15 +65,9 @@ class EntityDeleteView(ProtectedView, DeleteView):
 
 class HomeView(TemplateView):
     template_name = 'alexandrie/index.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        #context['category_list'] = Category.objects.all()
-        return context
 
 
 class LogoutView(TemplateView):
-    
     def get(self, request, **kwargs):
         logout(request)
         return HttpResponseRedirect(reverse('alexandrie:login'))
@@ -99,12 +76,6 @@ class LogoutView(TemplateView):
 class LoginView(TemplateView):
     template_name = 'alexandrie/login.html'
 
-    """
-    def get_context_data(self, **kwargs):
-        context = super(LoginView, self).get_context_data(**kwargs)
-        return context
-    """
-    
     def login_error(self):
         messages.error(self.request, u"Erreur de connexion - nom d'utilisateur / mot de passe incorrect.")
         return render_to_response(
