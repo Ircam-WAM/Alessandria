@@ -14,6 +14,31 @@ class GeneralConfiguration(models.Model):
         verbose_name = u"Configuration générale"
         verbose_name_plural = u"Configuration générale"
 
+
+class UserNavigationHistory(models.Model):
+    NAV_HISTORY = 10
+
+    accessed_by = models.ForeignKey(DjangoUser)
+    accessed_on = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=80)
+    url = models.CharField(max_length=255)
+
+    @staticmethod
+    def add(url, title, user):
+        lst = UserNavigationHistory.get_list(user)
+        if len(lst) >= UserNavigationHistory.NAV_HISTORY:
+            lst[0].delete()
+        h = UserNavigationHistory(url=url, title=title, accessed_by=user)
+        h.save()
+
+    @staticmethod
+    def get_list(user):
+        return UserNavigationHistory.objects.filter(accessed_by=user).order_by('accessed_by')
+
+    @staticmethod
+    def exist_url(url):
+        return UserNavigationHistory.objects.filter(url=url).count() > 0
+
 #############
 # Reference #
 #############
@@ -238,7 +263,7 @@ class BookCopy(ModelEntity):
         return self._meta.get_field('disabled_on').verbose_name
 
     def __str__(self):
-        return "%s (%s)" %(self.book, self.number)
+        return "%s (%s)" %(str(self.book), self.number)
 
     class Meta:
         ordering = ['number']
@@ -276,5 +301,9 @@ class ReaderBorrow(ModelEntity):
     def get_absolute_url(self):
         return reverse('alexandrie:reader_borrow_update', kwargs={'pk': self.pk})
 
+    def __str__(self):
+        return "%s : %s" %(str(self.reader), str(self.bookcopy.book))
+
     class Meta:
         ordering = ['borrow_due_date']
+        verbose_name = "Emprunt lecteur"

@@ -45,6 +45,18 @@ class EntityCreateView(ProtectedView, CreateView):
         return super(EntityCreateView, self).form_valid(form)
 
 class EntityUpdateView(ProtectedView, UpdateView):
+    def get(self, request, **kwargs):
+        ret = super(EntityUpdateView, self).get(request, kwargs)
+        if not UserNavigationHistory.exist_url(request.path):
+            UserNavigationHistory.add(request.path, self.object._meta.verbose_name + " : " + str(self.object),
+                                      self.request.user)
+            lst = UserNavigationHistory.get_list(self.request.user)
+            user_nav_list = []
+            for user_nav in lst:
+                user_nav_list.append((user_nav.url, user_nav.title))
+            request.session['user_nav_list'] = user_nav_list
+        return ret
+
     def form_invalid(self, form, error_msg=u"Erreur lors de l'enregistrement."):
         messages.error(self.request, error_msg)
         return super(EntityUpdateView, self).form_invalid(form)
