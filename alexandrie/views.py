@@ -19,6 +19,13 @@ from alexandrie.models import *
 from alexandrie.forms import *
 
 
+def load_user_nav_history(request, user):
+    lst = UserNavigationHistory.get_list(user)
+    user_nav_list = []
+    for user_nav in lst:
+        user_nav_list.append((user_nav.url, user_nav.title))
+    request.session['user_nav_list'] = user_nav_list
+
 class ProtectedView(object):
     login_url = reverse_lazy('alexandrie:login')
 
@@ -45,6 +52,7 @@ class EntityUpdateView(ProtectedView, UpdateView):
         if not UserNavigationHistory.exist_url(request.path):
             UserNavigationHistory.add(request.path, self.object._meta.verbose_name + " : " + str(self.object),
                                       self.request.user)
+            load_user_nav_history(self.request, self.request.user)
         return ret
 
     def form_invalid(self, form, error_msg=u"Erreur lors de l'enregistrement."):
@@ -100,6 +108,7 @@ class LoginView(TemplateView):
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 login(request, user)
+                load_user_nav_history(request, user)
                 return HttpResponseRedirect(reverse('alexandrie:home'))
             else:
                 # An inactive account was used - no logging in!
