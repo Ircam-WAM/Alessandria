@@ -7,10 +7,22 @@ from django.forms.extras.widgets import SelectDateWidget
 
 from django.utils.safestring import mark_safe
 
+import bibli.settings as settings
+
 from alexandrie.models import *
 
 
 class ReaderBorrowForm(forms.ModelForm):
+    class Meta:
+        model = ReaderBorrow
+
+    borrow_due_date = forms.DateField(
+        label=Meta.model._meta.get_field('borrow_due_date').verbose_name,
+        initial= datetime.date.today() + datetime.timedelta(
+            days=settings.GENERAL_CONFIGURATION.max_borrow_days
+        )
+    )
+
     class Meta:
         model = ReaderBorrow
         exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')

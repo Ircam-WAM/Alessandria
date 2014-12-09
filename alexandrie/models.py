@@ -7,12 +7,20 @@ from django.contrib.auth.models import User as DjangoUser
 from django.core.urlresolvers import reverse
 from django_countries.fields import CountryField
 
+
 class GeneralConfiguration(models.Model):
     max_borrow_days = models.PositiveSmallIntegerField(u"Nombre de jours maximum pour le prêt")
-    
+
+    @staticmethod
+    def get():
+        return GeneralConfiguration.objects.all()[0]
+
+    def __str__(self):
+        return "Configuration"
+
     class Meta:
-        verbose_name = u"Configuration générale"
-        verbose_name_plural = u"Configuration générale"
+        verbose_name = u"Configuration générale de l'application"
+        verbose_name_plural = u"Configuration générale de l'application"
 
 
 class UserNavigationHistory(models.Model):
