@@ -79,8 +79,10 @@ class BookForm(forms.ModelForm):
                     required=True, help_text=None,
                     plugin_options = {'autoFocus': True, 'minLength': 3}
     )
-    audiences = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs={'class': 'list-unstyled'}),
-        queryset=BookAudience.objects.all())
+    audiences = forms.ModelMultipleChoiceField(
+                    widget=forms.CheckboxSelectMultiple(attrs={'class': 'list-unstyled'}),
+                    queryset=BookAudience.objects.all()
+    )
 
 class BookSearchForm(forms.ModelForm):
     class Meta:
@@ -92,10 +94,10 @@ class BookCopyForm(forms.ModelForm):
     class Meta:
         model = BookCopy
         fields = ('number', 'registered_on', 'condition', 'is_bought', 'price', 'price_date')
-        #exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'book')
-    
+
     registered_on = forms.DateField(
-        label=Meta.model._meta.get_field('registered_on').verbose_name, initial=datetime.date.today)
+        label=Meta.model._meta.get_field('registered_on').verbose_name, initial=datetime.date.today
+    )
 
 class BookCopyDisableForm(forms.ModelForm):
     class Meta:
@@ -103,7 +105,9 @@ class BookCopyDisableForm(forms.ModelForm):
         fields = ('disabled_on',)
 
     disabled_on = forms.DateField(
-        label=Meta.model._meta.get_field('disabled_on').verbose_name, required=True)
-    
+        label=Meta.model._meta.get_field('disabled_on').verbose_name,
+        required=True
+    )
+
     def clean(self):
         cleaned_data = super(BookCopyDisableForm, self).clean()
