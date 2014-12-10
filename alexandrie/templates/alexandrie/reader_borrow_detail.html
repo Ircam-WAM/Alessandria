@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="/static/alexandrie/layout/jquery-ui/jquery-ui.min.css" />
     <link rel="stylesheet" href="/static/alexandrie/layout/jquery-ui/jquery-ui.structure.min.css" />
     <link rel="stylesheet" href="/static/alexandrie/layout/jquery-ui/jquery-ui.theme.min.css" />
+    <link rel="stylesheet" href="/static/alexandrie/layout/jquery-datepicker/jquery.datepick.css">
 {% endblock %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-sm-12">
         {% include 'alexandrie/_inc_form_edit_header.html' %}
@@ -34,4 +34,14 @@
 {% block jscript %}
 <script src="/static/alexandrie/layout/jquery-ui/jquery-ui.min.js"></script>
 <script src="/static/alexandrie/layout/ajax_select/js/ajax_select.js"></script>
+<script type="text/javascript" src="/static/alexandrie/layout/jquery-datepicker/jquery.plugin.min.js"></script> 
+<script type="text/javascript" src="/static/alexandrie/layout/jquery-datepicker/jquery.datepick.min.js"></script>
+<script type="text/javascript" src="/static/alexandrie/layout/jquery-datepicker/jquery.datepick-{{ JS_DATEPICKER_LANG }}.js"></script>
+<script>
+$(function() {
+    $('#id_borrowed_date').datepick({dateFormat: 'dd/mm/yyyy'});
+    $('#id_borrow_due_date').datepick({dateFormat: 'dd/mm/yyyy'});
+    $('#id_returned_on').datepick({dateFormat: 'dd/mm/yyyy'});
+});
+</script>
 {% endblock %}

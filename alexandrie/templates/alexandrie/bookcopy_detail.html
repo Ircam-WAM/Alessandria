@@ -6,6 +6,10 @@
 
 {% block pageTitle %}Exemplaire d'un livre{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="/static/alexandrie/layout/jquery-datepicker/jquery.datepick.css">
+{% endblock %}
+
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
@@ -58,4 +62,16 @@
         </div>
     </div><!-- /.col-sm- -->
 </div>
+{% endblock %}
+{% block jscript %}
+<script type="text/javascript" src="/static/alexandrie/layout/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/alexandrie/layout/jquery-datepicker/jquery.plugin.min.js"></script> 
+<script type="text/javascript" src="/static/alexandrie/layout/jquery-datepicker/jquery.datepick.min.js"></script>
+<script type="text/javascript" src="/static/alexandrie/layout/jquery-datepicker/jquery.datepick-{{ JS_DATEPICKER_LANG }}.js"></script>
+<script>
+$(function() {
+    $('#id_registered_on').datepick({dateFormat: 'dd/mm/yyyy'});
+    $('#id_price_date').datepick({dateFormat: 'dd/mm/yyyy'});
+});
+</script>
 {% endblock %}

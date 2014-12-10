@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load i18n %}
 {% load staticfiles %}
 <html lang="fr">
     <head>
@@ -29,6 +30,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="#">Alexandrie</a>
+                        {% get_current_language as LANGUAGE_CODE %}
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">

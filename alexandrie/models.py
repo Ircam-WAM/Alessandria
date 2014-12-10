@@ -145,6 +145,7 @@ class Reader(ModelEntity):
     inscription_date = models.DateField(u"Date d'inscription")
     email = models.EmailField(u"E-mail", unique=True, null=True, blank=True)
     phone_number = models.CharField(u"Téléphone", max_length=20, null=True, blank=True)
+    birthday = models.DateField(u"Date de naissance", blank=True, null=True)
     profession = models.ForeignKey(Profession, null=True)
     disabled_on = models.DateField("Date de désactivation", blank=True, null=True)
 

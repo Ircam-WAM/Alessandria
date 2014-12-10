@@ -24,7 +24,7 @@ class ReaderBorrowForm(forms.ModelForm):
 
     class Meta:
         model = ReaderBorrow
-        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')
+        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on',)
 
     bookcopy  = AutoCompleteSelectField('bookcopy_list', label=Meta.model._meta.get_field('bookcopy').verbose_name,
                                         required=True, help_text=None,
@@ -95,8 +95,7 @@ class BookCopyForm(forms.ModelForm):
         #exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'book')
     
     registered_on = forms.DateField(
-        label=Meta.model._meta.get_field('registered_on').verbose_name, widget=SelectDateWidget(),
-        initial=datetime.date.today)
+        label=Meta.model._meta.get_field('registered_on').verbose_name, initial=datetime.date.today)
 
 class BookCopyDisableForm(forms.ModelForm):
     class Meta:
