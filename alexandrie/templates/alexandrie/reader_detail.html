@@ -92,6 +92,7 @@
 <script type="text/javascript" src="/static/alexandrie/layout/jquery-datepicker/jquery.datepick-{{ JS_DATEPICKER_LANG }}.js"></script>
 <script>
 $(function() {
+    $('#id_birthday').datepick({dateFormat: 'dd/mm/yyyy'});
     $('#id_inscription_date').datepick({dateFormat: 'dd/mm/yyyy'});
 });
 </script>
