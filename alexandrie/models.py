@@ -13,7 +13,12 @@ class GeneralConfiguration(models.Model):
 
     @staticmethod
     def get():
-        return GeneralConfiguration.objects.all()[0]
+        if GeneralConfiguration.objects.count() > 0:
+            return GeneralConfiguration.objects.all()[0]
+        else:
+            gc = GeneralConfiguration(max_borrow_days=21)
+            gc.save()
+            return gc
 
     def __str__(self):
         return "Configuration"

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from django.conf import global_settings
+from django.db.utils import OperationalError
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -113,5 +114,9 @@ AJAX_LOOKUP_CHANNELS = {
     'author_list': ('alexandrie.views', 'AuthorLookup'),
 }
 
-from alexandrie.models import GeneralConfiguration
-GENERAL_CONFIGURATION = GeneralConfiguration.get()
+try:
+    from alexandrie.models import GeneralConfiguration
+    GENERAL_CONFIGURATION = GeneralConfiguration.get()
+except OperationalError:
+    # To prevent "django.db.utils.OperationalError" when reseting the DB
+    pass
