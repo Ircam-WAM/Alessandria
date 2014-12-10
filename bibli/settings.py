@@ -109,9 +109,9 @@ STATIC_URL = '/static/'
 
 # define the lookup channels in use on the site (autocomplete stuff)
 AJAX_LOOKUP_CHANNELS = {
-    'reader_list': ('alexandrie.views', 'ReaderLookup'),
-    'bookcopy_list': ('alexandrie.views', 'BookCopyLookup'),
-    'author_list': ('alexandrie.views', 'AuthorLookup'),
+    'reader_list': ('alexandrie.ajax_lookup', 'ReaderLookup'),
+    'bookcopy_list': ('alexandrie.ajax_lookup', 'BookCopyLookup'),
+    'author_list': ('alexandrie.ajax_lookup', 'AuthorLookup'),
 }
 
 try:
