@@ -9,14 +9,15 @@ from django_countries.fields import CountryField
 
 
 class GeneralConfiguration(models.Model):
-    max_borrow_days = models.PositiveSmallIntegerField(u"Nombre de jours maximum pour le prêt")
+    max_borrow_days = models.PositiveSmallIntegerField(u"Nombre de jours maximum pour le prêt", default=21)
+    nav_history = models.PositiveSmallIntegerField(u"Historique de navigation", default=10)
 
     @staticmethod
     def get():
         if GeneralConfiguration.objects.count() > 0:
             return GeneralConfiguration.objects.all()[0]
         else:
-            gc = GeneralConfiguration(max_borrow_days=21)
+            gc = GeneralConfiguration()
             gc.save()
             return gc
 

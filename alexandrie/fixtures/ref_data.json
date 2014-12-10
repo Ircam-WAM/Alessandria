@@ -3,7 +3,8 @@
     "model": "alexandrie.generalconfiguration",
     "pk": 1,
     "fields": {
-        "max_borrow_days": 21
+        "max_borrow_days": 21,
+        "nav_history": 10
     }
 },
 {
