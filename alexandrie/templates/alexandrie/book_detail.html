@@ -4,6 +4,13 @@
 
 {% block pageTitle %}Livre{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="/static/alexandrie/layout/ajax_select/css/ajax_select.css" />
+    <link rel="stylesheet" href="/static/alexandrie/layout/jquery-ui/jquery-ui.min.css" />
+    <link rel="stylesheet" href="/static/alexandrie/layout/jquery-ui/jquery-ui.structure.min.css" />
+    <link rel="stylesheet" href="/static/alexandrie/layout/jquery-ui/jquery-ui.theme.min.css" />
+{% endblock %}
+
 {% block content %}
 
 <div class="row">
@@ -51,4 +58,8 @@
     {% endif %}
     </div>
 </div>
+{% endblock %}
+{% block jscript %}
+<script src="/static/alexandrie/layout/jquery-ui/jquery-ui.min.js"></script>
+<script src="/static/alexandrie/layout/ajax_select/js/ajax_select.js"></script>
 {% endblock %}

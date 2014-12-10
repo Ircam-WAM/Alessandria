@@ -2,10 +2,9 @@
 import datetime
 
 from django import forms
-
 from django.forms.extras.widgets import SelectDateWidget
-
 from django.utils.safestring import mark_safe
+from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 
 import bibli.settings as settings
 
@@ -27,10 +26,13 @@ class ReaderBorrowForm(forms.ModelForm):
         model = ReaderBorrow
         exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')
 
-    bookcopy = forms.ModelChoiceField(queryset=BookCopy.objects.filter(disabled_on=None),
-                                      label=Meta.model._meta.get_field('bookcopy').verbose_name)
-    reader = forms.ModelChoiceField(queryset=Reader.objects.filter(disabled_on=None),
-                                      label=Meta.model._meta.get_field('reader').verbose_name)
+    bookcopy  = AutoCompleteSelectField('bookcopy_list', label=Meta.model._meta.get_field('bookcopy').verbose_name,
+                                        required=True, help_text=None,
+                                        plugin_options = {'autoFocus': True, 'minLength': 3})
+
+    reader  = AutoCompleteSelectField('reader_list', label=Meta.model._meta.get_field('reader').verbose_name,
+                                      required=True, help_text=None,
+                                      plugin_options = {'autoFocus': True, 'minLength': 3})
 
 
 class ReaderForm(forms.ModelForm):
@@ -72,6 +74,11 @@ class BookForm(forms.ModelForm):
         model = Book
         exclude = ('created_by', 'created_on', 'modified_by', 'modified_on')
 
+    authors  = AutoCompleteSelectMultipleField(
+                    'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
+                    required=True, help_text=None,
+                    plugin_options = {'autoFocus': True, 'minLength': 3}
+    )
     audiences = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs={'class': 'list-unstyled'}),
         queryset=BookAudience.objects.all())
 

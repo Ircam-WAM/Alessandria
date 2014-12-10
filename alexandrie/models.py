@@ -150,7 +150,7 @@ class Reader(ModelEntity):
 
     def is_disabled(self):
         return self.disabled_on is not None
-
+    
     def list_borrow_all(self):
         return self.readerborrow_set.all()
 

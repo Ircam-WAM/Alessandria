@@ -58,6 +58,7 @@ INSTALLED_APPS = (
     #'bootstrap3',
     'alexandrie',
     'alexandrie.templatetags.tag_extras',
+    'ajax_select',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -103,6 +104,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# define the lookup channels in use on the site (autocomplete stuff)
+AJAX_LOOKUP_CHANNELS = {
+    'reader_list': ('alexandrie.views', 'ReaderLookup'),
+    'bookcopy_list': ('alexandrie.views', 'BookCopyLookup'),
+    'author_list': ('alexandrie.views', 'AuthorLookup'),
+}
 
 from alexandrie.models import GeneralConfiguration
 GENERAL_CONFIGURATION = GeneralConfiguration.get()

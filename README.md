@@ -8,6 +8,7 @@ Installation
 sudo pip install django
 sudo pip install django-localflavor
 sudo pip install django-countries
+sudo pip install django-ajax-selects
 
 Administration
 --------------
