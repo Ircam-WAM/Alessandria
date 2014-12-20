@@ -79,6 +79,30 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Tous les emprunts</h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date emprunt</th>
+                                <th>Livre</th>
+                                <th>Rendu le</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for borrow in object.list_borrow_all|slice:":10" %}
+                            <tr>
+                                <td><a href="{% url 'alexandrie:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date }}</a></td>
+                                <td><a href="{% url 'alexandrie:book_update' borrow.bookcopy.book.id %}">{{ borrow.bookcopy.book }}</td>
+                                <td>{{ borrow.returned_on }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
             </div>
         </div>
     {% endif %}

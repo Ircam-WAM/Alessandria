@@ -27,22 +27,11 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    # Used to access session attributes from the templates
     "django.core.context_processors.request",
+    # Used for i18n of jquery date picker plugin (http://keith-wood.name/datepick.html)
     "alexandrie.context_processors.js_datepicker_lang",
 )
-
-"""
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.request', # Accessing session attributes from the templates
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-)
-"""
 
 ALLOWED_HOSTS = []
 
@@ -57,7 +46,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'localflavor',
-    #'bootstrap3',
     'alexandrie',
     'alexandrie.templatetags.tag_extras',
     'ajax_select',
