@@ -21,7 +21,7 @@
                 <h3 class="panel-title">{{object.title|default:"Nouveau livre"}}</h3>
             </div>
             <div class="panel-body">
-                <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
+                <form class="form-horizontal" enctype="multipart/form-data" action="" method="post" role="form">{% csrf_token %}
                     {% include 'alexandrie/_inc_form_edit_content_std.html' %}
                     {% if book.has_copies %}
                         {% include 'alexandrie/_inc_form_edit_buttons_std.html' %}
