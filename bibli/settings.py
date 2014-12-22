@@ -95,6 +95,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+####################
+# Customized stuff #
+####################
+
 # define the lookup channels in use on the site (autocomplete stuff)
 AJAX_LOOKUP_CHANNELS = {
     'reader_list': ('alexandrie.ajax_lookup', 'ReaderLookup'),
