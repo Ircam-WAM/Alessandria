@@ -77,11 +77,12 @@ class BookForm(forms.ModelForm):
 
     authors  = AutoCompleteSelectMultipleField(
                     'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
-                    required=True, help_text=None,
+                    required=True, help_text=u"Insérer les 1ères lettres du nom",
                     plugin_options = {'autoFocus': True, 'minLength': 3}
     )
     audiences = forms.ModelMultipleChoiceField(
-                    widget=forms.CheckboxSelectMultiple(attrs={'class': 'list-unstyled'}),
+                    widget=forms.CheckboxSelectMultiple(),
+                    label=Meta.model._meta.get_field('audiences').verbose_name,
                     queryset=BookAudience.objects.all()
     )
 
