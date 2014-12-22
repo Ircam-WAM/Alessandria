@@ -191,6 +191,7 @@ class Author(ModelEntity):
     last_name = models.CharField(u"Nom", max_length=30)
     birth_year = models.PositiveIntegerField(u"Année de naissance", max_length=4, null=True, blank=True)
     country = CountryField(verbose_name=u'Pays')
+    website = models.URLField(verbose_name='Site web', null=True, blank=True)
 
     def get_full_name(self):
         if not self.first_name:
