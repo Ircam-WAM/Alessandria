@@ -1,4 +1,7 @@
 # Ajax autocomplete stuff
+
+from django.db.models import Q
+
 from ajax_select import LookupChannel
 from alexandrie.models import Reader, BookCopy, Author, Publisher
 
@@ -6,7 +9,11 @@ class ReaderLookup(LookupChannel):
     model = Reader
 
     def get_query(self, q, request):
-        return Reader.objects.filter(disabled_on=None, last_name__icontains=q).order_by('last_name')
+        return Reader.objects.filter(
+            Q(last_name__icontains=q) | Q(first_name__icontains=q)
+        ).filter(
+            disabled_on=None
+        ).order_by('last_name')
 
 class BookCopyLookup(LookupChannel):
     model = BookCopy
@@ -18,7 +25,9 @@ class AuthorLookup(LookupChannel):
     model = Author
 
     def get_query(self, q, request):
-        return Author.objects.filter(last_name__icontains=q)
+        return Author.objects.filter(
+            Q(last_name__icontains=q) | Q(first_name__icontains=q)
+        ).order_by('last_name')
 
 class PublisherLookup(LookupChannel):
     model = Author
