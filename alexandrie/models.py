@@ -119,6 +119,22 @@ class BookTag(ReferenceEntity):
         verbose_name = u"Etiquette d'un livre"
         verbose_name_plural = u"Etiquettes d'un livre"
 
+
+class IsbnImportSource(ReferenceEntity):
+    code = models.CharField(u"Code", max_length=3)
+    website = models.URLField(verbose_name=u"Site web")
+
+    class Meta:
+        verbose_name = u"Source pour l'importation ISBN"
+        verbose_name_plural = u"Sources pour l'importation ISBN"
+
+
+class IsbnImport(ReferenceEntity):
+    entity_id = models.CharField(u"Identifiant", max_length=50)
+    entity_type = models.CharField(u"type", max_length=20) # Example: Author, Book, Publisher
+    source = models.ForeignKey(IsbnImportSource, verbose_name=u"Source")
+    import_url = models.URLField(verbose_name=u"URL d'import")
+
 #########
 # Model #
 #########
@@ -154,6 +170,7 @@ class Reader(ModelEntity):
     birthday = models.DateField(u"Date de naissance", blank=True, null=True)
     profession = models.ForeignKey(Profession, null=True)
     disabled_on = models.DateField("Date de désactivation", blank=True, null=True)
+    import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
 
     def is_disabled(self):
         return self.disabled_on is not None
@@ -184,13 +201,14 @@ class Reader(ModelEntity):
     class Meta:
         ordering = ['last_name', 'first_name']
         verbose_name = "Lecteur"
-    
+
 
 class Author(ModelEntity):
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
     country = CountryField(verbose_name=u'Pays')
     website = models.URLField(verbose_name='Site web', null=True, blank=True)
+    import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
 
     def get_full_name(self):
         if not self.first_name:
@@ -214,6 +232,7 @@ class Author(ModelEntity):
 class Publisher(ModelEntity):
     name = models.CharField(u"Nom", max_length=30)
     country = CountryField()
+    import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
 
     def get_absolute_url(self):
         return reverse('alexandrie:publisher_update', kwargs={'pk': self.pk})
@@ -230,7 +249,6 @@ class Book(ModelEntity):
     title = models.CharField(u"Titre", max_length=50)
     authors = models.ManyToManyField(Author, verbose_name=u'Auteurs')
     publishers = models.ManyToManyField(Publisher, verbose_name=u'Editeurs')
-    publish_date = models.I
     classif_mark = models.CharField(u"Cote", max_length=10)
     height = models.PositiveIntegerField(u"Hauteur (mm)", max_length=3)
     isbn_nb = models.CharField(u"No. ISBN", max_length=30, null=True, blank=True, unique=True)
