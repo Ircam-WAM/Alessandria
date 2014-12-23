@@ -249,6 +249,7 @@ class Book(ModelEntity):
     title = models.CharField(u"Titre", max_length=50)
     authors = models.ManyToManyField(Author, verbose_name=u'Auteurs')
     publishers = models.ManyToManyField(Publisher, verbose_name=u'Editeurs')
+    publish_date = models.DateField(u"Date de publication", null=True, blank=True)
     classif_mark = models.CharField(u"Cote", max_length=10)
     height = models.PositiveIntegerField(u"Hauteur (mm)", max_length=3)
     isbn_nb = models.CharField(u"No. ISBN", max_length=30, null=True, blank=True, unique=True)
