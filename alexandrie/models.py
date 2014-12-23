@@ -257,6 +257,7 @@ class Book(ModelEntity):
     audiences = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
     category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
     sub_category = models.ForeignKey(BookSubCategory, null=True, verbose_name=u'Sous-catégorie')
+    abstract = models.TextField(u"Résumé", null=True, blank=True)
     tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes', null=True, blank=True)
     language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
     cover_pic = models.ImageField(verbose_name=u'Couverture', upload_to='alexandrie/upload', null=True, blank=True)
