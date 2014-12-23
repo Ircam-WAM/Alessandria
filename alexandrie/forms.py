@@ -55,7 +55,7 @@ class ReaderDisableForm(forms.ModelForm):
 class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
-        fields = ('first_name', 'last_name', 'birth_year', 'country', 'website', 'notes')
+        fields = ('first_name', 'last_name', 'country', 'website', 'notes')
 
 class AuthorSearchForm(forms.ModelForm):
     class Meta:
