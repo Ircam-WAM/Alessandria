@@ -9,7 +9,7 @@
     <div class="col-sm-12">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Emprunts</h3>
+                <h3 class="panel-title">Derniers livres ajoutés</h3>
             </div>
             <div class="panel-body">
                 <table class="table">
@@ -25,7 +25,7 @@
                         <tr>
                             <td>{{ book.created_on }}</a></td>
                             <td><a href="{% url 'alexandrie:book_update' book.id %}">{{ book }}</a></td>
-                            <td><a href="{% url 'alexandrie:authord_update' book.authors[0].id %}">{{ book.authors[0] }}</a></td>
+                            <td><a href="{% url 'alexandrie:author_update' book.authors.first.id %}">{{ book.authors.first }}</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
