@@ -1,6 +1,6 @@
 # Ajax autocomplete stuff
 from ajax_select import LookupChannel
-from alexandrie.models import Reader, BookCopy, Author
+from alexandrie.models import Reader, BookCopy, Author, Publisher
 
 class ReaderLookup(LookupChannel):
     model = Reader
@@ -19,3 +19,9 @@ class AuthorLookup(LookupChannel):
 
     def get_query(self, q, request):
         return Author.objects.filter(last_name__icontains=q)
+
+class PublisherLookup(LookupChannel):
+    model = Author
+
+    def get_query(self, q, request):
+        return Publisher.objects.filter(name__icontains=q)

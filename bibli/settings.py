@@ -104,6 +104,7 @@ AJAX_LOOKUP_CHANNELS = {
     'reader_list': ('alexandrie.ajax_lookup', 'ReaderLookup'),
     'bookcopy_list': ('alexandrie.ajax_lookup', 'BookCopyLookup'),
     'author_list': ('alexandrie.ajax_lookup', 'AuthorLookup'),
+    'publisher_list': ('alexandrie.ajax_lookup', 'PublisherLookup'),
 }
 
 try:
