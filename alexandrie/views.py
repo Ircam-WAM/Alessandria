@@ -91,7 +91,7 @@ class LoginView(TemplateView):
 
     def login_error(self):
         messages.error(self.request, u"Erreur de connexion - nom d'utilisateur / mot de passe incorrect.")
-        return HttpResponseRedirect(self.template_name)
+        return HttpResponseRedirect(reverse('alexandrie:login'))
 
     def post(self, request):
         """Gather the username and password provided by the user.
@@ -119,7 +119,6 @@ class LoginView(TemplateView):
                 return self.login_error()
         else:
             # Bad login details were provided. So we can't log the user in.
-            messages.error(self.request, u"Erreur de connexion - nom d'utilisateur / mot de passe incorrect.")
             return self.login_error()
 
 
