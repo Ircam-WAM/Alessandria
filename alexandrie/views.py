@@ -91,9 +91,7 @@ class LoginView(TemplateView):
 
     def login_error(self):
         messages.error(self.request, u"Erreur de connexion - nom d'utilisateur / mot de passe incorrect.")
-        return render_to_response(
-            self.template_name, context_instance=RequestContext(request)
-        )
+        return HttpResponseRedirect(self.template_name)
 
     def post(self, request):
         """Gather the username and password provided by the user.
