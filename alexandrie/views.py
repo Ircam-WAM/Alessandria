@@ -78,6 +78,11 @@ class EntityDeleteView(ProtectedView, DeleteView):
 class HomeView(TemplateView):
     template_name = 'alexandrie/index.html'
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['last_books_list'] = Book.objects.all()[:10]
+        return context
 
 class LogoutView(TemplateView):
     def get(self, request, **kwargs):

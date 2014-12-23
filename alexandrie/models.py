@@ -268,7 +268,6 @@ class Book(ModelEntity):
     
     def has_copies(self):
         return self.get_nb_copy() > 0
-    
 
     def get_absolute_url(self):
         return reverse('alexandrie:book_update', kwargs={'pk': self.pk})

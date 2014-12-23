@@ -30,7 +30,7 @@ class AuthorLookup(LookupChannel):
         ).order_by('last_name')
 
 class PublisherLookup(LookupChannel):
-    model = Author
+    model = Publisher
 
     def get_query(self, q, request):
         return Publisher.objects.filter(name__icontains=q)
