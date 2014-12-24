@@ -22,3 +22,7 @@
     border-radius:3px;
     border-left-color: #5BC0DE;
 }
+
+.form-group ul{
+    list-style-type: none;
+}
