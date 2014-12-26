@@ -276,13 +276,6 @@ class BookCreateView(EntityCreateView):
     template_name = 'alexandrie/book_detail.html'
     model = Book
     form_class = BookForm
-    
-    def form_valid(self, form):
-        err_msg = Book.check_isbn_valid(form.instance.isbn_nb)
-        if len(err_msg) > 0:
-            messages.error(self.request, err_msg)
-            return super(BookCreateView, self).form_invalid(form)
-        return super(BookCreateView, self).form_valid(form)
 
 class BookUpdateView(EntityUpdateView):
     template_name = 'alexandrie/book_detail.html'
@@ -294,13 +287,6 @@ class BookUpdateView(EntityUpdateView):
         context = super(BookUpdateView, self).get_context_data(**kwargs)
         context['bookcopy_list'] = self.object.bookcopy_set.all()
         return context
-
-    def form_valid(self, form):
-        err_msg = Book.check_isbn_valid(form.instance.isbn_nb)
-        if len(err_msg) > 0:
-            messages.error(self.request, err_msg)
-            return super(BookUpdateView, self).form_invalid(form)
-        return super(BookUpdateView, self).form_valid(form)
 
 class BookDeleteView(EntityDeleteView):
     template_name = 'alexandrie/confirm_delete.html'

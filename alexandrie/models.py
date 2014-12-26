@@ -4,6 +4,7 @@ from datetime import date as stddate
 
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django_countries.fields import CountryField
 
@@ -261,6 +262,15 @@ class Book(ModelEntity):
     tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes', null=True, blank=True)
     language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
     cover_pic = models.ImageField(verbose_name=u'Couverture', upload_to='alexandrie/upload', null=True, blank=True)
+
+    def clean(self):
+        self.isbn_nb = Book.strip_isbn(self.isbn_nb)
+        if not self.isbn_nb:
+            self.isbn_nb = None
+        else:
+            err_msg = Book.check_isbn_valid(self.isbn_nb)
+            if len(err_msg) > 0:
+                raise ValidationError({'isbn_nb': err_msg})
 
     def get_nb_copy(self):
         return self.bookcopy_set.count()
