@@ -171,7 +171,6 @@ class Reader(ModelEntity):
     birthday = models.DateField(u"Date de naissance", blank=True, null=True)
     profession = models.ForeignKey(Profession, null=True)
     disabled_on = models.DateField("Date de désactivation", blank=True, null=True)
-    import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
 
     def is_disabled(self):
         return self.disabled_on is not None
