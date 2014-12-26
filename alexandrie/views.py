@@ -278,6 +278,10 @@ class BookCreateView(EntityCreateView):
     form_class = BookForm
     
     def form_valid(self, form):
+        err_msg = Book.check_isbn_valid(form.instance.isbn_nb)
+        if len(err_msg) > 0:
+            messages.error(self.request, err_msg)
+            return super(BookCreateView, self).form_invalid(form)
         return super(BookCreateView, self).form_valid(form)
 
 class BookUpdateView(EntityUpdateView):
@@ -292,6 +296,10 @@ class BookUpdateView(EntityUpdateView):
         return context
 
     def form_valid(self, form):
+        err_msg = Book.check_isbn_valid(form.instance.isbn_nb)
+        if len(err_msg) > 0:
+            messages.error(self.request, err_msg)
+            return super(BookUpdateView, self).form_invalid(form)
         return super(BookUpdateView, self).form_valid(form)
 
 class BookDeleteView(EntityDeleteView):

@@ -253,7 +253,7 @@ class Book(ModelEntity):
     edition_name = models.CharField(u"Edition", max_length=80, null=True, blank=True)
     classif_mark = models.CharField(u"Cote", max_length=10)
     height = models.PositiveIntegerField(u"Hauteur (mm)", max_length=3)
-    isbn_nb = models.CharField(u"No. ISBN", max_length=30, null=True, blank=True, unique=True)
+    isbn_nb = models.CharField(u"No. ISBN", max_length=20, null=True, blank=True, unique=True)
     audiences = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
     category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
     sub_category = models.ForeignKey(BookSubCategory, null=True, verbose_name=u'Sous-catégorie')
@@ -268,6 +268,36 @@ class Book(ModelEntity):
     
     def has_copies(self):
         return self.get_nb_copy() > 0
+
+    @staticmethod
+    def strip_isbn(isbn_nb):
+        return isbn_nb.replace('-', '')
+
+    @staticmethod
+    def check_isbn_valid(isbn_nb):
+        raw_isbn = Book.strip_isbn(isbn_nb)
+        if len(raw_isbn) > 0:
+            if len(raw_isbn) != 10 and len(raw_isbn) != 13:
+                return u"Le no. ISBN doit comporter 10 ou 13 chiffres"
+            if len(raw_isbn) == 10:
+                sum_pond = 0
+                for i in range(0, len(raw_isbn)-1):
+                    sum_pond = sum_pond + (i+1) * (int(raw_isbn[i]))
+                checksum = 11 - (sum_pond % 11)
+                if checksum != int(raw_isbn[-1:]):
+                    return "ISBN 10: code de controle incorrect"
+            elif len(raw_isbn) == 13:
+                sum_pond = 0
+                for i in range(0, 12, 2): # c0+c2+...+c10
+                    sum_pond = sum_pond + int(raw_isbn[i])
+                sum_pond2 = 0
+                for i in range(1, 13, 2): # c1+c3+...+c11
+                    sum_pond2 = sum_pond2 + int(raw_isbn[i])
+                sum_pond2 = sum_pond2 *3
+                sum_pond = sum_pond + sum_pond2
+                if (sum_pond + int(raw_isbn[-1:])) % 10 != 0:
+                    return "ISBN 13: code de controle incorrect"
+        return ""
 
     def get_absolute_url(self):
         return reverse('alexandrie:book_update', kwargs={'pk': self.pk})
