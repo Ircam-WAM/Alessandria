@@ -311,7 +311,7 @@ class Book(ModelEntity):
 
 
 class BookCopy(ModelEntity):
-    number = models.CharField(u"Numéro", max_length=25)
+    number = models.PositiveIntegerField(u"Numéro")
     registered_on = models.DateField(u"Date d'enregistrement")
     book = models.ForeignKey(Book)
     condition = models.ForeignKey(BookCondition)
@@ -319,6 +319,13 @@ class BookCopy(ModelEntity):
     price = models.FloatField("Prix", blank=True, null=True)
     price_date = models.DateField("Date (prix)", blank=True, null=True)
     disabled_on = models.DateField("Date de retrait", blank=True, null=True)
+
+    #Overriding
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            # Create mode => automatically generate a book copy number
+            self.number = BookCopy.objects.filter(book__id=self.book.id).count() + 1
+        super(BookCopy, self).save(*args, **kwargs)
 
     def was_borrowed(self):
         return self.readerborrow_set.count() > 0

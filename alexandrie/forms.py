@@ -100,7 +100,7 @@ class BookSearchForm(forms.ModelForm):
 class BookCopyForm(forms.ModelForm):
     class Meta:
         model = BookCopy
-        fields = ('number', 'registered_on', 'condition', 'is_bought', 'price', 'price_date')
+        fields = ('registered_on', 'condition', 'is_bought', 'price', 'price_date')
 
     registered_on = forms.DateField(
         label=Meta.model._meta.get_field('registered_on').verbose_name, initial=datetime.date.today
