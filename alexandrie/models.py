@@ -10,6 +10,7 @@ from django_countries.fields import CountryField
 
 
 class GeneralConfiguration(models.Model):
+    default_country = CountryField(verbose_name=u'Pays par défaut', default="FR")
     max_borrow_days = models.PositiveSmallIntegerField(u"Nombre de jours maximum pour le prêt", default=21)
     nav_history = models.PositiveSmallIntegerField(u"Historique de navigation", default=10)
 
@@ -164,7 +165,7 @@ class Reader(ModelEntity):
     addr2 = models.CharField(u"Adresse 2", null=True, max_length=30, blank=True)
     zip = models.PositiveIntegerField(u"Code postal", max_length=5)
     city = models.CharField(u"Ville", max_length=30)
-    country = CountryField(verbose_name=u'Pays')
+    country = CountryField(verbose_name=u'Pays', default=GeneralConfiguration.get().default_country)
     inscription_date = models.DateField(u"Date d'inscription")
     email = models.EmailField(u"E-mail", unique=True, null=True, blank=True)
     phone_number = models.CharField(u"Téléphone", max_length=20, null=True, blank=True)
@@ -206,7 +207,7 @@ class Reader(ModelEntity):
 class Author(ModelEntity):
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
-    country = CountryField(verbose_name=u'Pays')
+    country = CountryField(verbose_name=u'Pays', default=GeneralConfiguration.get().default_country)
     website = models.URLField(verbose_name='Site web', null=True, blank=True)
     import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
 
@@ -231,7 +232,7 @@ class Author(ModelEntity):
 
 class Publisher(ModelEntity):
     name = models.CharField(u"Nom", max_length=30)
-    country = CountryField(verbose_name=u'Pays')
+    country = CountryField(verbose_name=u'Pays', default=GeneralConfiguration.get().default_country)
     import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
 
     def get_absolute_url(self):
