@@ -232,7 +232,7 @@ class Author(ModelEntity):
 
 class Publisher(ModelEntity):
     name = models.CharField(u"Nom", max_length=30)
-    country = CountryField()
+    country = CountryField(verbose_name=u'Pays')
     import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
 
     def get_absolute_url(self):
