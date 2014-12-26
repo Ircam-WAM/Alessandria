@@ -182,6 +182,36 @@
                 </ul>
             </div>
         </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Emprunts</h3>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date emprunt</th>
+                        <th>Lecteur</th>
+                        <th>Retourné</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                {% for borrow in borrow_list %}
+                    {% if borrow.is_late %}
+                        <tr class="bg-warning">
+                    {% else %}
+                        <tr>
+                    {% endif %}
+                            <td><a href="{% url 'alexandrie:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date|date:"SHORT_DATE_FORMAT" }}</a></td>
+                            <td><a href="{% url 'alexandrie:reader_update' borrow.reader.id %}">{{ borrow.reader }}</td>
+                            <td>{{ borrow.is_returned_str }}</td>
+                        </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
     {% endif %}
     </div>
 </div>

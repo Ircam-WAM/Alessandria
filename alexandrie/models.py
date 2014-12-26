@@ -363,13 +363,20 @@ class ReaderBorrow(ModelEntity):
     returned_on = models.DateField(u"Retourné le", blank=True, null=True)
 
     def is_returned(self):
-        return returned_on is not None
-    
+        return self.returned_on is not None
+
+    def is_returned_str(self):
+        return "Oui" if self.returned_on is not None else "Non"
+
     def is_late(self):
         return self.borrow_due_date < stddate.today()
 
     def list_all():
         return ReaderBorrow.objects.all()
+
+    @staticmethod
+    def list_all_by_book(book_id):
+        return ReaderBorrow.objects.filter(bookcopy__book__id=book_id)
 
     def list_current():
         return ReaderBorrow.objects.filter(returned_on=None)

@@ -286,6 +286,7 @@ class BookUpdateView(EntityUpdateView):
         # Call the base implementation first to get a context
         context = super(BookUpdateView, self).get_context_data(**kwargs)
         context['bookcopy_list'] = self.object.bookcopy_set.all()
+        context['borrow_list'] = ReaderBorrow.list_all_by_book(self.object.id)
         return context
 
 class BookDeleteView(EntityDeleteView):
