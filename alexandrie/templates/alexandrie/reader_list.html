@@ -29,7 +29,7 @@
                     <td><a href="{% url 'alexandrie:reader_update' reader.id %}">{{ reader.number }}</a></td>
                     <td>{{ reader.first_name }}</td>
                     <td>{{ reader.last_name }}</td>
-                    <td>{{ reader.inscription_date }}</td>
+                    <td>{{ reader.inscription_date|date:"SHORT_DATE_FORMAT" }}</td>
                     <td>{{ reader.is_disabled|yesno:"Non,Oui" }}</td>
                 </tr>
             {% endfor %}
