@@ -5,11 +5,12 @@ How it works
 
 Installation
 ------------
+sudo apt-get install sqlite3
 sudo pip install django
 sudo pip install django-localflavor
 sudo pip install django-countries
 sudo pip install django-ajax-selects
-sudo pip install pillow
+sudo pip install pillow # To be able to upload images
 
 Administration
 --------------
