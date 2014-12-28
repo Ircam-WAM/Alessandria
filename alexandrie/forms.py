@@ -5,11 +5,13 @@ from django import forms
 from django.forms.extras.widgets import SelectDateWidget
 from django.utils.safestring import mark_safe
 from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
+from django_countries import countries
 
 import bibli.settings as settings
 
 from alexandrie.models import *
 
+_l_countries = sorted(dict(countries).items())
 
 class ReaderBorrowForm(forms.ModelForm):
     class Meta:
@@ -40,11 +42,16 @@ class ReaderForm(forms.ModelForm):
         model = Reader
         exclude = ('number', 'created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')
 
+    country = forms.ChoiceField(
+        label=Meta.model._meta.get_field('country').verbose_name,
+        choices=_l_countries,
+        initial=settings.GENERAL_CONFIGURATION.default_country
+    )
+
 class ReaderSearchForm(forms.ModelForm):
     class Meta:
         model = Reader
         fields = ('last_name',)
-
 
 class ReaderDisableForm(forms.ModelForm):
     class Meta:
@@ -57,6 +64,12 @@ class AuthorForm(forms.ModelForm):
         model = Author
         fields = ('first_name', 'last_name', 'country', 'website', 'notes')
 
+    country = forms.ChoiceField(
+        label=Meta.model._meta.get_field('country').verbose_name,
+        choices=_l_countries,
+        initial=settings.GENERAL_CONFIGURATION.default_country
+    )
+
 class AuthorSearchForm(forms.ModelForm):
     class Meta:
         model = Author
@@ -68,6 +81,11 @@ class PublisherForm(forms.ModelForm):
         model = Publisher
         fields = ('name', 'country', 'notes')
 
+    country = forms.ChoiceField(
+        label=Meta.model._meta.get_field('country').verbose_name,
+        choices=_l_countries,
+        initial=settings.GENERAL_CONFIGURATION.default_country
+    )
 
 class BookForm(forms.ModelForm):
     class Meta:
