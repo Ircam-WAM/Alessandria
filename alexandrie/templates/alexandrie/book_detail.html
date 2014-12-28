@@ -15,206 +15,217 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-sm-8">
-        {% include 'alexandrie/_inc_form_edit_header.html' %}
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{object.title|default:"Nouveau livre"}}</h3>
-            </div>
-            <div class="panel-body">
-                <form class="form-horizontal" enctype="multipart/form-data" action="" method="post" role="form">{% csrf_token %}
-                    <div class="form-group">
-                        <label for="{{ form.title.id_for_label }}" class="col-sm-2 control-label">{{ form.title.label }}</label>
-                        <div class="col-sm-4">
-                            {{ form.title|addcss:"form-control" }}
-                            {% if form.title.errors %}
-                                <div class="text-danger">{{ form.title.errors }}</div>
-                            {% endif %}
-                        </div>
-                        <label for="{{ form.language.id_for_label }}" class="col-sm-2 control-label">{{ form.language.label }}</label>
-                        <div class="col-sm-4">
-                            {{ form.language|addcss:"form-control" }}
-                            {% if form.language.errors %}
-                                <div class="text-danger">{{ form.language.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.authors.id_for_label }}" class="col-sm-2 control-label">{{ form.authors.label }}</label>
-                        <div class="col-sm-4">
-                            {{ form.authors|addcss:"form-control" }}
-                            {% if form.authors.errors %}
-                                <div class="text-danger">{{ form.authors.errors }}</div>
-                            {% endif %}
-                        </div>
-
-                        <label for="{{ form.publishers.id_for_label }}" class="col-sm-2 control-label">{{ form.publishers.label }}</label>
-                        <div class="col-sm-4">
-                            {{ form.publishers|addcss:"form-control" }}
-                            {% if form.publishers.errors %}
-                                <div class="text-danger">{{ form.publishers.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.classif_mark.id_for_label }}" class="col-sm-2 control-label">{{ form.classif_mark.label }}</label>
-                        <div class="col-sm-4">
-                            {{ form.classif_mark|addcss:"form-control" }}
-                            {% if form.classif_mark.errors %}
-                                <div class="text-danger">{{ form.classif_mark.errors }}</div>
-                            {% endif %}
-                        </div>
-                        <label for="{{ form.audiences.id_for_label }}" class="col-sm-2 control-label">{{ form.audiences.label }}</label>
-                        <div class="col-sm-4">
-                            {{ form.audiences }}
-                            {% if form.audiences.errors %}
-                                <div class="text-danger">{{ form.audiences.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.category.id_for_label }}" class="col-sm-2 control-label">{{ form.category.label }}</label>
-                        <div class="col-sm-4">
-                            {{ form.category|addcss:"form-control" }}
-                            {% if form.category.errors %}
-                                <div class="text-danger">{{ form.category.errors }}</div>
-                            {% endif %}
-                        </div>
-                        <label for="{{ form.sub_category.id_for_label }}" class="col-sm-2 control-label">{{ form.sub_category.label }}</label>
-                        <div class="col-sm-4">
-                            {{ form.sub_category|addcss:"form-control" }}
-                            {% if form.sub_category.errors %}
-                                <div class="text-danger">{{ form.sub_category.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.height.id_for_label }}" class="col-sm-2 control-label">{{ form.height.label }}</label>
-                        <div class="col-sm-10">
-                            {{ form.height|addcss:"form-control" }}
-                            {% if form.height.errors %}
-                                <div class="text-danger">{{ form.height.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.publish_date.id_for_label }}" class="col-sm-2 control-label">{{ form.publish_date.label }}</label>
-                        <div class="col-sm-4">
-                            {{ form.publish_date|addcss:"form-control" }}
-                            {% if form.publish_date.errors %}
-                                <div class="text-danger">{{ form.publish_date.errors }}</div>
-                            {% endif %}
-                        </div>
-                        <label for="{{ form.edition_name.id_for_label }}" class="col-sm-2 control-label">{{ form.edition_name.label }}</label>
-                        <div class="col-sm-4">
-                            {{ form.edition_name|addcss:"form-control" }}
-                            {% if form.edition_name.errors %}
-                                <div class="text-danger">{{ form.edition_name.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.isbn_nb.id_for_label }}" class="col-sm-2 control-label">{{ form.isbn_nb.label }}</label>
-                        <div class="col-sm-10">
-                            {{ form.isbn_nb|addcss:"form-control" }}
-                            {% if form.isbn_nb.errors %}
-                                <div class="text-danger">{{ form.isbn_nb.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.abstract.id_for_label }}" class="col-sm-2 control-label">{{ form.abstract.label }}</label>
-                        <div class="col-sm-10">
-                            {{ form.abstract|addcss:"form-control" }}
-                            {% if form.abstract.errors %}
-                                <div class="text-danger">{{ form.abstract.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.notes.id_for_label }}" class="col-sm-2 control-label">{{ form.notes.label }}</label>
-                        <div class="col-sm-10">
-                            {{ form.notes|addcss:"form-control" }}
-                            {% if form.notes.errors %}
-                                <div class="text-danger">{{ form.notes.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    
-                    {% if book.has_copies %}
-                        {% include 'alexandrie/_inc_form_edit_buttons_std.html' %}
-                    {% else %} {% comment %}Only allow book deletion if there are no copies linked to it{% endcomment %}
-                        {% include 'alexandrie/_inc_form_edit_buttons_std.html' with delete_url='alexandrie:book_delete' %}
-                    {% endif %}
-                </form>
-                {% include 'alexandrie/_inc_form_edit_footer.html' %}
-            </div>
-        </div>
-    </div><!-- /.col-sm- -->
-    <div class="col-sm-4">
-    {% if object.id > 0 %}
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Exemplaires</h3><a href="{% url 'alexandrie:bookcopy_add' object.id %}">Ajouter</a>
-            </div>
-            <div class="panel-body">
-                <ul>
-                {% for bookcopy in bookcopy_list %}
-                    <li>
-                        <a href="{% url 'alexandrie:bookcopy_update' bookcopy.id %}">
-                            {% if bookcopy.is_disabled %}
-                                <del>Exemplaire {{ bookcopy }}</del>&nbsp;(Retiré)
-                            {% else %}
-                                Exemplaire {{ bookcopy }}
-                            {% endif %}
-                        </a>
-                    </li>
-                {% endfor %}
-                </ul>
-            </div>
-        </div>
-
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Emprunts</h3>
-            </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Date emprunt</th>
-                        <th>Lecteur</th>
-                        <th>Retourné</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                {% for borrow in borrow_list %}
-                    {% if borrow.is_late %}
-                        <tr class="bg-warning">
-                    {% else %}
-                        <tr>
-                    {% endif %}
-                            <td><a href="{% url 'alexandrie:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date|date:"SHORT_DATE_FORMAT" }}</a></td>
-                            <td><a href="{% url 'alexandrie:reader_update' borrow.reader.id %}">{{ borrow.reader }}</td>
-                            <td>{{ borrow.is_returned_str }}</td>
-                        </tr>
-                {% endfor %}
-
-                </tbody>
-            </table>
-        </div>
-    {% endif %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{object.title|default:"Nouveau livre"}}</h3>
     </div>
-</div>
+    <div class="panel-body">
+        {% if object.id > 0 %}
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation" class="active"><a href="#mainForm" aria-controls="mainForm" role="tab" data-toggle="tab">Fiche</a></li>
+            <li role="presentation"><a href="#borrows" aria-controls="borrows" role="tab" data-toggle="tab">Emprunts</a></li>
+        </ul>
+        {% endif %}
+        <div class="tab-content">
+            <div role="tabpanel" class="row tab-pane active" id="mainForm">
+                <div class="col-sm-8">
+                    {% include 'alexandrie/_inc_form_edit_header.html' %}
+                    <div class="panel panel-info">
+                        <div class="panel-body">
+                            <form class="form-horizontal" enctype="multipart/form-data" action="" method="post" role="form">{% csrf_token %}
+                                <div class="form-group">
+                                    <label for="{{ form.title.id_for_label }}" class="col-sm-2 control-label">{{ form.title.label }}</label>
+                                    <div class="col-sm-4">
+                                        {{ form.title|addcss:"form-control" }}
+                                        {% if form.title.errors %}
+                                            <div class="text-danger">{{ form.title.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <label for="{{ form.language.id_for_label }}" class="col-sm-2 control-label">{{ form.language.label }}</label>
+                                    <div class="col-sm-4">
+                                        {{ form.language|addcss:"form-control" }}
+                                        {% if form.language.errors %}
+                                            <div class="text-danger">{{ form.language.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="{{ form.authors.id_for_label }}" class="col-sm-2 control-label">{{ form.authors.label }}</label>
+                                    <div class="col-sm-4">
+                                        {{ form.authors|addcss:"form-control" }}
+                                        {% if form.authors.errors %}
+                                            <div class="text-danger">{{ form.authors.errors }}</div>
+                                        {% endif %}
+                                    </div>
+            
+                                    <label for="{{ form.publishers.id_for_label }}" class="col-sm-2 control-label">{{ form.publishers.label }}</label>
+                                    <div class="col-sm-4">
+                                        {{ form.publishers|addcss:"form-control" }}
+                                        {% if form.publishers.errors %}
+                                            <div class="text-danger">{{ form.publishers.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="{{ form.classif_mark.id_for_label }}" class="col-sm-2 control-label">{{ form.classif_mark.label }}</label>
+                                    <div class="col-sm-4">
+                                        {{ form.classif_mark|addcss:"form-control" }}
+                                        {% if form.classif_mark.errors %}
+                                            <div class="text-danger">{{ form.classif_mark.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <label for="{{ form.audiences.id_for_label }}" class="col-sm-2 control-label">{{ form.audiences.label }}</label>
+                                    <div class="col-sm-4">
+                                        {{ form.audiences }}
+                                        {% if form.audiences.errors %}
+                                            <div class="text-danger">{{ form.audiences.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="{{ form.category.id_for_label }}" class="col-sm-2 control-label">{{ form.category.label }}</label>
+                                    <div class="col-sm-4">
+                                        {{ form.category|addcss:"form-control" }}
+                                        {% if form.category.errors %}
+                                            <div class="text-danger">{{ form.category.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <label for="{{ form.sub_category.id_for_label }}" class="col-sm-2 control-label">{{ form.sub_category.label }}</label>
+                                    <div class="col-sm-4">
+                                        {{ form.sub_category|addcss:"form-control" }}
+                                        {% if form.sub_category.errors %}
+                                            <div class="text-danger">{{ form.sub_category.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="{{ form.height.id_for_label }}" class="col-sm-2 control-label">{{ form.height.label }}</label>
+                                    <div class="col-sm-10">
+                                        {{ form.height|addcss:"form-control" }}
+                                        {% if form.height.errors %}
+                                            <div class="text-danger">{{ form.height.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="{{ form.publish_date.id_for_label }}" class="col-sm-2 control-label">{{ form.publish_date.label }}</label>
+                                    <div class="col-sm-4">
+                                        {{ form.publish_date|addcss:"form-control" }}
+                                        {% if form.publish_date.errors %}
+                                            <div class="text-danger">{{ form.publish_date.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <label for="{{ form.edition_name.id_for_label }}" class="col-sm-2 control-label">{{ form.edition_name.label }}</label>
+                                    <div class="col-sm-4">
+                                        {{ form.edition_name|addcss:"form-control" }}
+                                        {% if form.edition_name.errors %}
+                                            <div class="text-danger">{{ form.edition_name.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="{{ form.isbn_nb.id_for_label }}" class="col-sm-2 control-label">{{ form.isbn_nb.label }}</label>
+                                    <div class="col-sm-10">
+                                        {{ form.isbn_nb|addcss:"form-control" }}
+                                        {% if form.isbn_nb.errors %}
+                                            <div class="text-danger">{{ form.isbn_nb.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="{{ form.abstract.id_for_label }}" class="col-sm-2 control-label">{{ form.abstract.label }}</label>
+                                    <div class="col-sm-10">
+                                        {{ form.abstract|addcss:"form-control" }}
+                                        {% if form.abstract.errors %}
+                                            <div class="text-danger">{{ form.abstract.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="{{ form.notes.id_for_label }}" class="col-sm-2 control-label">{{ form.notes.label }}</label>
+                                    <div class="col-sm-10">
+                                        {{ form.notes|addcss:"form-control" }}
+                                        {% if form.notes.errors %}
+                                            <div class="text-danger">{{ form.notes.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                {% if book.has_copies %}
+                                    {% include 'alexandrie/_inc_form_edit_buttons_std.html' %}
+                                {% else %} {% comment %}Only allow book deletion if there are no copies linked to it{% endcomment %}
+                                    {% include 'alexandrie/_inc_form_edit_buttons_std.html' with delete_url='alexandrie:book_delete' %}
+                                {% endif %}
+                            </form>
+                            {% include 'alexandrie/_inc_form_edit_footer.html' %}
+                        </div>
+                    </div>
+                </div><!-- /.col-sm- -->
+                <div class="col-sm-4">
+                {% if object.id > 0 %}
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Exemplaires</h3><a href="{% url 'alexandrie:bookcopy_add' object.id %}">Ajouter</a>
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                            {% for bookcopy in bookcopy_list %}
+                                <li>
+                                    <a href="{% url 'alexandrie:bookcopy_update' bookcopy.id %}">
+                                        {% if bookcopy.is_disabled %}
+                                            <del>Exemplaire {{ bookcopy }}</del>&nbsp;(Retiré)
+                                        {% else %}
+                                            Exemplaire {{ bookcopy }}
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+            {% if object.id > 0 %}
+            <div role="tabpanel" class="row tab-pane" id="borrows">
+                <div class="col-sm-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date emprunt</th>
+                                <th>Lecteur</th>
+                                <th>Retourné</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for borrow in borrow_list %}
+                            {% if borrow.is_late %}
+                                <tr class="bg-warning">
+                            {% else %}
+                                <tr>
+                            {% endif %}
+                                    <td><a href="{% url 'alexandrie:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date|date:"SHORT_DATE_FORMAT" }}</a></td>
+                                    <td><a href="{% url 'alexandrie:reader_update' borrow.reader.id %}">{{ borrow.reader }}</td>
+                                    <td>{{ borrow.is_returned_str }}</td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+        </div> <!-- end div class tab-content-->
+    </div> <!-- end div class panel-body-->
+</div> <!-- end div class panel panel-primary -->
+
 {% endblock %}
 {% block jscript %}
 <script src="/static/alexandrie/layout/jquery-ui/jquery-ui.min.js"></script>

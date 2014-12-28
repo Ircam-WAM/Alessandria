@@ -6,41 +6,53 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-sm-8">
-        {% include 'alexandrie/_inc_form_edit_header.html' %}
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{object.get_full_name|default:"Nouvel auteur"}}</h3>
-            </div>
-            <div class="panel-body">
-                <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
-                    {% include 'alexandrie/_inc_form_edit_content_std.html' %}
-                    {% include 'alexandrie/_inc_form_edit_buttons_std.html' with delete_url='alexandrie:author_delete' %}
-                </form>
-                {% include 'alexandrie/_inc_form_edit_footer.html' %}
-            </div>
-        </div>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{object.get_full_name|default:"Nouvel auteur"}}</h3>
     </div>
-    <div class="col-sm-4">
-    {% if object.id > 0 %}
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Livres</h3>
+    <div class="panel-body">
+        {% if object.id > 0 %}
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation" class="active"><a href="#mainForm" aria-controls="mainForm" role="tab" data-toggle="tab">Fiche</a></li>
+            <li role="presentation"><a href="#books" aria-controls="books" role="tab" data-toggle="tab">Livres</a></li>
+        </ul>
+        {% endif %}
+        <div class="tab-content">
+            <div role="tabpanel" class="row tab-pane active" id="mainForm">
+                <div class="col-sm-12">
+                    {% include 'alexandrie/_inc_form_edit_header.html' %}
+                    <div class="panel panel-info">
+                        <div class="panel-body">
+                            <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
+                                {% include 'alexandrie/_inc_form_edit_content_std.html' %}
+                                {% include 'alexandrie/_inc_form_edit_buttons_std.html' with delete_url='alexandrie:author_delete' %}
+                            </form>
+                            {% include 'alexandrie/_inc_form_edit_footer.html' %}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                <ul>
-                {% for book in object.get_books %}
-                    <li>
-                        <a href="{% url 'alexandrie:book_update' book.id %}">
-                            {{ book }}
-                        </a>
-                    </li>
-                {% endfor %}
-                </ul>
+
+            {% if object.id > 0 %}
+            <div role="tabpanel" class="row tab-pane" id="books">
+                <div class="col-sm-12">
+                    <div class="panel panel-info">
+                        <div class="panel-body">
+                            <ul>
+                            {% for book in object.get_books %}
+                                <li>
+                                    <a href="{% url 'alexandrie:book_update' book.id %}">
+                                        {{ book }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
+            {% endif %}
         </div>
-    {% endif %}
     </div>
 </div>
 {% endblock %}
