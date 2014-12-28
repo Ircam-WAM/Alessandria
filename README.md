@@ -10,12 +10,14 @@ sudo pip install django
 sudo pip install django-countries
 sudo pip install django-ajax-selects
 sudo pip install pillow # To be able to upload images
+mkdir db
 
 Administration
 --------------
-1. Run the app : ./manage.py runserver
-2. Go to the Django Admin page (e.g. http://127.0.0.1:8000/admin)
-3. Set up initial data
+1. Initialize database: ./manage.py migrate
+2. Run the app : ./manage.py runserver
+3. Go to the Django Admin page (e.g. http://127.0.0.1:8000/admin)
+4. Set up initial data
 
 Usage
 -----
