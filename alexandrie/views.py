@@ -2,7 +2,7 @@ from datetime import datetime as stddatetime
 
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect, render_to_response
+from django.shortcuts import render, redirect, render_to_response
 from django.forms.models import inlineformset_factory
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
@@ -12,8 +12,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-
-from nested_formset import nestedformset_factory
 
 from alexandrie.models import *
 from alexandrie.forms import *
