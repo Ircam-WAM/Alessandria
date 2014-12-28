@@ -269,6 +269,7 @@ class Book(ModelEntity):
     tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes', null=True, blank=True)
     language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
     cover_pic = models.ImageField(verbose_name=u'Couverture', upload_to='alexandrie/upload', null=True, blank=True)
+    related_to = models.ForeignKey('Book', null=True, verbose_name=u"Apparenté à")
 
     def clean(self):
         self.isbn_nb = Book.strip_isbn(self.isbn_nb)
