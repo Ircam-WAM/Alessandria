@@ -153,7 +153,7 @@ class ModelEntity(models.Model):
 
 
 class Reader(ModelEntity):
-    number = models.CharField(u"Numéro", max_length=20, unique=True)
+    number = models.PositiveIntegerField(u"Numéro", unique=True)
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
     sex = models.CharField(u"Sexe", max_length=3, choices = (
@@ -172,6 +172,13 @@ class Reader(ModelEntity):
     birthday = models.DateField(u"Date de naissance", blank=True, null=True)
     profession = models.ForeignKey(Profession, null=True)
     disabled_on = models.DateField("Date de désactivation", blank=True, null=True)
+
+    #Overriding
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            # Create mode => automatically generate a reader number
+            self.number = Reader.objects.count() + 1
+        super(Reader, self).save(*args, **kwargs)
 
     def is_disabled(self):
         return self.disabled_on is not None

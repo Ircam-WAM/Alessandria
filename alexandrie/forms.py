@@ -38,7 +38,7 @@ class ReaderBorrowForm(forms.ModelForm):
 class ReaderForm(forms.ModelForm):
     class Meta:
         model = Reader
-        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')
+        exclude = ('number', 'created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')
 
 class ReaderSearchForm(forms.ModelForm):
     class Meta:
