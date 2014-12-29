@@ -109,8 +109,14 @@
             </div>
           
             <div class="container">
-                <h1>{% block pageTitle %}Alexandrie{% endblock %}</h1>
-                {% block content %}{% endblock %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{% block pageTitle %}Alexandrie{% endblock %}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% block content %}{% endblock %}
+                    </div>
+                </div>
             </div>
         </div><!-- /.container -->
 
