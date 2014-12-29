@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/static/alexandrie/layout/jquery-datepicker/jquery.datepick.css">
 {% endblock %}
 
-{% block pageTitle %}{{form.instance.number|default:"Nouvel exemplaire"}} ({{ form.instance.book }}){% endblock %}
+{% block pageTitle %}Exemplaire:&nbsp;{{form.instance.number|default:"nouveau"}} ({{ form.instance.book }}){% endblock %}
 
 {% block content %}
 <div class="row">

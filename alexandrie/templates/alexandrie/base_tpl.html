@@ -30,7 +30,6 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="{% url 'alexandrie:home' %}">Alexandrie</a>
-                        {% get_current_language as LANGUAGE_CODE %}
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
@@ -84,14 +83,17 @@
                                 </ul>
                             </li>
                         </ul>
+
+                        {% if user.is_authenticated %}
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="{% url 'alexandrie:logout' %}">Déconnexion {{ user.first_name }}</a></li>
+                            </ul>
+                        {% endif %}
+
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="/admin">Administration</a></li>
                         </ul>
-                        {% if user.is_authenticated %}
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="{% url 'alexandrie:logout' %}">Déconnexion</a></li>
-                            </ul>
-                        {% endif %}
+
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Historique<span class="caret"></span></a>
