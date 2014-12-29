@@ -13,11 +13,12 @@ import bibli.settings as settings
 from alexandrie.models import *
 
 _l_countries = sorted(dict(countries).items())
+_l_default_exclude_fields = ['created_by', 'created_on', 'modified_by', 'modified_on']
 
 class ReaderBorrowForm(forms.ModelForm):
     class Meta:
         model = ReaderBorrow
-        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on',)
+        exclude = _l_default_exclude_fields
 
     borrow_due_date = forms.DateField(
         label=Meta.model._meta.get_field('borrow_due_date').verbose_name,
@@ -36,7 +37,7 @@ class ReaderBorrowForm(forms.ModelForm):
 class ReaderForm(forms.ModelForm):
     class Meta:
         model = Reader
-        exclude = ('number', 'created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on')
+        exclude = _l_default_exclude_fields + ['number', 'disabled_on']
 
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
@@ -58,7 +59,7 @@ class ReaderDisableForm(forms.ModelForm):
 class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
-        fields = ('first_name', 'last_name', 'country', 'website', 'notes')
+        exclude = _l_default_exclude_fields + ['import_source']
 
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
@@ -75,7 +76,7 @@ class AuthorSearchForm(forms.ModelForm):
 class PublisherForm(forms.ModelForm):
     class Meta:
         model = Publisher
-        fields = ('name', 'country', 'notes')
+        exclude = _l_default_exclude_fields + ['import_source']
 
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
@@ -87,7 +88,7 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         # TODO: enable cover_pic again
-        exclude = ('cover_pic', 'created_by', 'created_on', 'modified_by', 'modified_on')
+        exclude = _l_default_exclude_fields + ['cover_pic']
 
     authors  = AutoCompleteSelectMultipleField(
                     'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
@@ -114,7 +115,7 @@ class BookSearchForm(forms.ModelForm):
 class BookCopyForm(forms.ModelForm):
     class Meta:
         model = BookCopy
-        fields = ('registered_on', 'condition', 'is_bought', 'price', 'price_date')
+        exclude =  _l_default_exclude_fields
 
     registered_on = forms.DateField(
         label=Meta.model._meta.get_field('registered_on').verbose_name, initial=datetime.date.today
