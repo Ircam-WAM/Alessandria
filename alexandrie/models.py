@@ -181,6 +181,10 @@ class Reader(ModelEntity):
             self.number = Reader.objects.count() + 1
         super(Reader, self).save(*args, **kwargs)
 
+    def clean(self):
+        if not self.email: # Force empty string to be 'None'
+            self.email = None
+
     def is_disabled(self):
         return self.disabled_on is not None
     
@@ -277,7 +281,7 @@ class Book(ModelEntity):
 
     def clean(self):
         self.isbn_nb = Book.strip_isbn(self.isbn_nb)
-        if not self.isbn_nb:
+        if not self.isbn_nb: # Force empty string to be 'None'
             self.isbn_nb = None
         else:
             err_msg = Book.check_isbn_valid(self.isbn_nb)
