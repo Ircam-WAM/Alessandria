@@ -170,7 +170,7 @@ class Reader(ModelEntity):
     country = CountryField(verbose_name=u'Pays')
     email = models.EmailField(u"E-mail", unique=True, null=True, blank=True)
     phone_number = models.CharField(u"Téléphone", max_length=20, null=True, blank=True)
-    profession = models.ForeignKey(Profession, null=True)
+    profession = models.ForeignKey(Profession, null=True, blank=True)
     disabled_on = models.DateField("Date de désactivation", blank=True, null=True)
     notes = models.TextField(u"Notes", null=True, blank=True)
 
