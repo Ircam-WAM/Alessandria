@@ -240,7 +240,7 @@ class Author(ModelEntity):
 
 
 class Publisher(ModelEntity):
-    name = models.CharField(u"Nom", max_length=30)
+    name = models.CharField(u"Nom", max_length=30, unique=True)
     country = CountryField(verbose_name=u'Pays')
     notes = models.TextField(u"Notes", null=True, blank=True)
     import_source = models.ForeignKey(IsbnImport, null=True, blank=True, verbose_name="Import")
