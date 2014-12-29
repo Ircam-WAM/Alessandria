@@ -155,6 +155,7 @@ class ModelEntity(models.Model):
 
 class Reader(ModelEntity):
     number = models.PositiveIntegerField(u"Numéro", unique=True)
+    inscription_date = models.DateField(u"Date d'inscription")
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
     sex = models.CharField(u"Sexe", max_length=3, choices = (
@@ -162,15 +163,14 @@ class Reader(ModelEntity):
                                                     ('m', u'Homme'), 
                                                   )
     )
+    birthday = models.DateField(u"Date de naissance")
     addr1 = models.CharField(u"Adresse 1", max_length=30)
     addr2 = models.CharField(u"Adresse 2", null=True, max_length=30, blank=True)
     zip = models.PositiveIntegerField(u"Code postal", max_length=5)
     city = models.CharField(u"Ville", max_length=30)
     country = CountryField(verbose_name=u'Pays')
-    inscription_date = models.DateField(u"Date d'inscription")
     email = models.EmailField(u"E-mail", unique=True, null=True, blank=True)
     phone_number = models.CharField(u"Téléphone", max_length=20, null=True, blank=True)
-    birthday = models.DateField(u"Date de naissance", blank=True, null=True)
     profession = models.ForeignKey(Profession, null=True)
     disabled_on = models.DateField("Date de désactivation", blank=True, null=True)
 
