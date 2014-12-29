@@ -179,8 +179,8 @@ class AuthorCreateView(EntityCreateView):
     form_class = AuthorForm
     
     def form_valid(self, form):
-        form.instance.last_name = form.instance.last_name.upper()
-        form.instance.first_name = form.instance.first_name.capitalize()
+        form.instance.last_name = form.instance.last_name.strip().upper()
+        form.instance.first_name = form.instance.first_name.strip().capitalize()
         return super(AuthorCreateView, self).form_valid(form)
 
 class AuthorUpdateView(EntityUpdateView):
@@ -243,7 +243,7 @@ class PublisherCreateView(EntityCreateView):
     form_class = PublisherForm
     
     def form_valid(self, form):
-        form.instance.name = form.instance.name.upper()
+        form.instance.name = form.instance.name.strip().upper()
         return super(PublisherCreateView, self).form_valid(form)
 
 class PublisherUpdateView(EntityUpdateView):
@@ -390,8 +390,8 @@ class ReaderCreateView(EntityCreateView):
     form_class = ReaderForm
     
     def form_valid(self, form):
-        form.instance.last_name = form.instance.last_name.upper()
-        form.instance.first_name = form.instance.first_name.capitalize()
+        form.instance.last_name = form.instance.last_name.strip().upper()
+        form.instance.first_name = form.instance.first_name.strip().capitalize()
         return super(ReaderCreateView, self).form_valid(form)
 
 class ReaderUpdateView(EntityUpdateView):
