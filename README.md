@@ -15,9 +15,10 @@ mkdir db
 Administration
 --------------
 1. Initialize database: ./manage.py migrate
-2. Run the app : ./manage.py runserver
-3. Go to the Django Admin page (e.g. http://127.0.0.1:8000/admin)
-4. Set up initial data
+2. ./manage.py loaddata --app alexandrie ref_data
+3. Run the app : ./manage.py runserver
+4. Go to the Django Admin page (e.g. http://127.0.0.1:8000/admin)
+5. Set up initial data
 
 Usage
 -----
