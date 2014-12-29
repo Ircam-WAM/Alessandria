@@ -17,6 +17,7 @@ _l_countries = sorted(dict(countries).items())
 class ReaderBorrowForm(forms.ModelForm):
     class Meta:
         model = ReaderBorrow
+        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on',)
 
     borrow_due_date = forms.DateField(
         label=Meta.model._meta.get_field('borrow_due_date').verbose_name,
@@ -24,15 +25,9 @@ class ReaderBorrowForm(forms.ModelForm):
             days=settings.GENERAL_CONFIGURATION.max_borrow_days
         )
     )
-
-    class Meta:
-        model = ReaderBorrow
-        exclude = ('created_by', 'created_on', 'modified_by', 'modified_on', 'disabled_on',)
-
     bookcopy  = AutoCompleteSelectField('bookcopy_list', label=Meta.model._meta.get_field('bookcopy').verbose_name,
                                         required=True, help_text=None,
                                         plugin_options = {'autoFocus': True, 'minLength': 3})
-
     reader  = AutoCompleteSelectField('reader_list', label=Meta.model._meta.get_field('reader').verbose_name,
                                       required=True, help_text=None,
                                       plugin_options = {'autoFocus': True, 'minLength': 3})
