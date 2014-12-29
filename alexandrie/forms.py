@@ -87,8 +87,7 @@ class PublisherForm(forms.ModelForm):
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        # TODO: enable cover_pic again
-        exclude = _l_default_exclude_fields + ['cover_pic']
+        exclude = _l_default_exclude_fields
 
     authors  = AutoCompleteSelectMultipleField(
                     'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
