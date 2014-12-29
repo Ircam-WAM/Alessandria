@@ -147,8 +147,7 @@ class ModelEntity(models.Model):
     created_on = models.DateTimeField(verbose_name=u"Créé le", auto_now_add=True)
     modified_by = models.ForeignKey(DjangoUser, related_name="%(app_label)s_%(class)s_update", null=True)
     modified_on = models.DateTimeField(verbose_name=u"Modifié le", auto_now=True, null=True)
-    notes = models.TextField(u"Notes", null=True, blank=True)
-    
+
     class Meta:
         abstract = True
 
@@ -173,6 +172,7 @@ class Reader(ModelEntity):
     phone_number = models.CharField(u"Téléphone", max_length=20, null=True, blank=True)
     profession = models.ForeignKey(Profession, null=True)
     disabled_on = models.DateField("Date de désactivation", blank=True, null=True)
+    notes = models.TextField(u"Notes", null=True, blank=True)
 
     #Overriding
     def save(self, *args, **kwargs):
@@ -217,6 +217,7 @@ class Author(ModelEntity):
     last_name = models.CharField(u"Nom", max_length=30)
     country = CountryField(verbose_name=u'Pays')
     website = models.URLField(verbose_name='Site web', null=True, blank=True)
+    notes = models.TextField(u"Notes", null=True, blank=True)
     import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
 
     def get_full_name(self):
@@ -241,6 +242,7 @@ class Author(ModelEntity):
 class Publisher(ModelEntity):
     name = models.CharField(u"Nom", max_length=30)
     country = CountryField(verbose_name=u'Pays')
+    notes = models.TextField(u"Notes", null=True, blank=True)
     import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
 
     def get_absolute_url(self):
@@ -271,6 +273,7 @@ class Book(ModelEntity):
     language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
     cover_pic = models.ImageField(verbose_name=u'Couverture', upload_to='alexandrie/upload', null=True, blank=True)
     related_to = models.ForeignKey('Book', null=True, verbose_name=u"Apparenté à")
+    notes = models.TextField(u"Notes", null=True, blank=True)
 
     def clean(self):
         self.isbn_nb = Book.strip_isbn(self.isbn_nb)
@@ -338,6 +341,7 @@ class BookCopy(ModelEntity):
     price = models.FloatField("Prix", blank=True, null=True)
     price_date = models.DateField("Date (prix)", blank=True, null=True)
     disabled_on = models.DateField("Date de retrait", blank=True, null=True)
+    notes = models.TextField(u"Notes", null=True, blank=True)
 
     #Overriding
     def save(self, *args, **kwargs):
@@ -370,6 +374,7 @@ class ReaderBorrow(ModelEntity):
     borrowed_date = models.DateField(u"Prêté le")
     borrow_due_date = models.DateField(u"Retour pour le")
     returned_on = models.DateField(u"Retourné le", blank=True, null=True)
+    notes = models.TextField(u"Notes", null=True, blank=True)
 
     def is_returned(self):
         return self.returned_on is not None
