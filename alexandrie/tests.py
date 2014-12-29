@@ -45,6 +45,7 @@ class ReaderTest(GenericTest):
         r.city = "city%s" % inst_nb
         r.country = "FR"
         r.inscription_date = datetime.today()
+        r.birthday = '1971-03-24'
         r.profession = profession
         r.created_by = self.user
         r.created_on = datetime.today()
