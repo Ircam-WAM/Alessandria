@@ -123,6 +123,12 @@ class BookTag(ReferenceEntity):
         verbose_name_plural = u"Etiquettes d'un livre"
 
 
+class BookCopyOrigin(ReferenceEntity):
+    class Meta:
+        verbose_name = u"Origine d'un livre"
+        verbose_name_plural = u"Origines d'un livre"
+
+
 class IsbnImportSource(ReferenceEntity):
     code = models.CharField(u"Code", max_length=3)
     website = models.URLField(verbose_name=u"Site web")
@@ -362,7 +368,7 @@ class BookCopy(ModelEntity):
     registered_on = models.DateField(u"Date d'enregistrement")
     book = models.ForeignKey(Book, verbose_name=u"Livre")
     condition = models.ForeignKey(BookCondition, verbose_name=u"Etat")
-    is_bought = models.BooleanField(u"Acheté ?", null=False, blank=False, default=None)
+    origin = models.ForeignKey(BookCopyOrigin, verbose_name=u"Origine")
     price = models.FloatField("Prix", blank=True, null=True)
     price_date = models.DateField("Date (prix)", blank=True, null=True)
     disabled_on = models.DateField("Date de retrait", blank=True, null=True)
