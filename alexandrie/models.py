@@ -218,7 +218,7 @@ class Author(ModelEntity):
     country = CountryField(verbose_name=u'Pays')
     website = models.URLField(verbose_name='Site web', null=True, blank=True)
     notes = models.TextField(u"Notes", null=True, blank=True)
-    import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
+    import_source = models.ForeignKey(IsbnImport, null=True, blank=True, verbose_name="Import")
 
     def get_full_name(self):
         if not self.first_name:
@@ -243,7 +243,7 @@ class Publisher(ModelEntity):
     name = models.CharField(u"Nom", max_length=30)
     country = CountryField(verbose_name=u'Pays')
     notes = models.TextField(u"Notes", null=True, blank=True)
-    import_source = models.ForeignKey(IsbnImport, null=True, verbose_name="Import")
+    import_source = models.ForeignKey(IsbnImport, null=True, blank=True, verbose_name="Import")
 
     def get_absolute_url(self):
         return reverse('alexandrie:publisher_update', kwargs={'pk': self.pk})
