@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.conf import settings # import the settings file
 
 def js_datepicker_lang(request):

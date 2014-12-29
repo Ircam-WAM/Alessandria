@@ -1,4 +1,7 @@
-# Ajax autocomplete stuff
+# -*- coding: utf-8 -*-
+"""
+Ajax autocomplete stuff
+"""
 
 from django.db.models import Q
 
