@@ -83,6 +83,7 @@ class HomeView(ProtectedView, TemplateView):
         # Call the base implementation first to get a context
         context = super(HomeView, self).get_context_data(**kwargs)
         context['last_books_list'] = Book.objects.all()[:10]
+        context['last_appli_news_list'] = AppliNews.list()[:3]
         return context
 
 class LogoutView(TemplateView):

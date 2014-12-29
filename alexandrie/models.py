@@ -138,6 +138,7 @@ class IsbnImport(ReferenceEntity):
     source = models.ForeignKey(IsbnImportSource, verbose_name=u"Source")
     import_url = models.URLField(verbose_name=u"URL d'import")
 
+
 #########
 # Model #
 #########
@@ -150,6 +151,26 @@ class ModelEntity(models.Model):
 
     class Meta:
         abstract = True
+
+
+class AppliNews(models.Model):
+    publish_date = models.DateField(verbose_name=u"Date de publication")
+    news = models.TextField(verbose_name=u"Info")
+
+    @staticmethod
+    def get_last():
+        return AppliNews.objects.filter(publish_date__lte=stddate.today()).last()
+
+    @staticmethod
+    def list():
+        return AppliNews.objects.filter(publish_date__lte=stddate.today())
+
+    def __str__(self):
+        return "%s - %s" % (self.publish_date, self.news)
+
+    class Meta:
+        verbose_name = u"Info de l'application"
+        verbose_name_plural = u"Infos de l'application"
 
 
 class Reader(ModelEntity):

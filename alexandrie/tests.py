@@ -4,12 +4,12 @@
 Tests of the software
 """
 
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from alexandrie.models import Book, Reader, Profession
+from alexandrie.models import AppliNews, Book, Reader, Profession
 
 class GenericTest(TestCase):
     def setUp(self):
@@ -68,3 +68,21 @@ class ReaderTest(GenericTest):
         r2.save()
         r2_mod = Reader.objects.filter(number=2).first()
         self.assertEqual(r2_mod.addr2, r2.addr2)
+
+class AppliNewsTest(GenericTest):
+    def setUp(self):
+        pass
+    
+    def test_create_and_list(self):
+        n1 = AppliNews(publish_date=date.today(), news="Hello1")
+        n1.save()
+        n2 = AppliNews(publish_date=date.today(), news="Hello2")
+        n2.save()
+        self.assertEqual(AppliNews.objects.count(), 2)
+        self.assertEqual(AppliNews.get_last().news, "Hello2")
+        n_future = AppliNews(publish_date=date.today() + timedelta(days=2), news="Hello future")
+        n_future.save()
+        self.assertEqual(AppliNews.objects.count(), 3)
+        # Make sure we don't retrieve news that will be published in the future
+        self.assertEqual(len(AppliNews.list()), 2)
+        self.assertEqual(AppliNews.get_last().news, "Hello2")
