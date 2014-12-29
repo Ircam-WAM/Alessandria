@@ -38,6 +38,7 @@ class ProtectedView(object):
         view = super(ProtectedView, cls).as_view(**initkwargs)
         return login_required(view, login_url=cls.login_url)
 
+
 class EntityCreateView(ProtectedView, CreateView):
     def form_invalid(self, form, error_msg=u"Erreur lors de l'enregistrement."):
         messages.error(self.request, error_msg)
@@ -75,7 +76,7 @@ class EntityDeleteView(ProtectedView, DeleteView):
     pass
 
 
-class HomeView(TemplateView):
+class HomeView(ProtectedView, TemplateView):
     template_name = 'alexandrie/index.html'
 
     def get_context_data(self, **kwargs):
