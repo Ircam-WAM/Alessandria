@@ -335,8 +335,8 @@ class Book(ModelEntity):
 class BookCopy(ModelEntity):
     number = models.PositiveIntegerField(u"Numéro")
     registered_on = models.DateField(u"Date d'enregistrement")
-    book = models.ForeignKey(Book)
-    condition = models.ForeignKey(BookCondition)
+    book = models.ForeignKey(Book, verbose_name=u"Livre")
+    condition = models.ForeignKey(BookCondition, verbose_name=u"Etat")
     is_bought = models.BooleanField(u"Acheté ?", null=False, blank=False, default=None)
     price = models.FloatField("Prix", blank=True, null=True)
     price_date = models.DateField("Date (prix)", blank=True, null=True)
