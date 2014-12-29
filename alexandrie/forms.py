@@ -114,7 +114,7 @@ class BookSearchForm(forms.ModelForm):
 class BookCopyForm(forms.ModelForm):
     class Meta:
         model = BookCopy
-        exclude =  _l_default_exclude_fields
+        exclude =  _l_default_exclude_fields + ['number', 'book', 'disabled_on']
 
     registered_on = forms.DateField(
         label=Meta.model._meta.get_field('registered_on').verbose_name, initial=datetime.date.today
