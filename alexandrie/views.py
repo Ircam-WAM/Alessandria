@@ -156,15 +156,18 @@ class ReaderBorrowListView(EntityListView):
 
     def get(self, request, **kwargs):
         page_title = ""
-        if kwargs['display'] == 'all':
-            page_title = "Tous les emprunts"
-            reader_borrow_list = ReaderBorrow.list_all()
-        elif kwargs['display'] == 'current':
+
+        if kwargs.get('display') == 'current':
             page_title = "Emprunts en cours"
             reader_borrow_list = ReaderBorrow.list_current()
-        elif kwargs['display'] == 'late':
+        elif kwargs.get('display') == 'late':
             page_title = "Emprunts en retard"
             reader_borrow_list = ReaderBorrow.list_late()
+        else:
+            page_title = "Tous les emprunts"
+            reader_borrow_list = ReaderBorrow.list_all()
+
+
         return render_to_response(self.template_name,
                                   {
                                     'reader_borrow_list': reader_borrow_list,
