@@ -11,6 +11,25 @@ from django.contrib.auth.models import User
 
 from alexandrie.models import AppliNews, Book, Reader, Profession
 
+
+def create_reader(user, inst_nb, profession=None):
+    r = Reader()
+    r.first_name = "fn%s" % inst_nb
+    r.last_name = "ln%s" % inst_nb
+    r.addr1 = "addr%s" % inst_nb
+    r.zip = "%s" % inst_nb
+    r.city = "city%s" % inst_nb
+    r.country = "FR"
+    r.inscription_date = datetime.today()
+    r.birthday = '1971-03-24'
+    if profession is None:
+        profession = Profession(label='p%s' % inst_nb)
+    r.profession = profession
+    r.created_by = user
+    r.created_on = datetime.today()
+    r.save()
+    return r
+
 class GenericTest(TestCase):
     def setUp(self):
         pass
@@ -36,31 +55,15 @@ class ReaderTest(GenericTest):
     def setUp(self):
         self.user = User.objects.create_user('lucie', 'lucie@hell.com', 'luciefer')
 
-    def _create_reader(self, inst_nb, profession):
-        r = Reader()
-        r.first_name = "fn%s" % inst_nb
-        r.last_name = "ln%s" % inst_nb
-        r.addr1 = "addr%s" % inst_nb
-        r.zip = "%s" % inst_nb
-        r.city = "city%s" % inst_nb
-        r.country = "FR"
-        r.inscription_date = datetime.today()
-        r.birthday = '1971-03-24'
-        r.profession = profession
-        r.created_by = self.user
-        r.created_on = datetime.today()
-        r.save()
-        return r
-
     def test_create(self):
         prof1 = Profession(label='p1')
         prof2 = Profession(label='p2')
 
-        r1 = self._create_reader(1, prof1)
+        r1 = create_reader(self.user, 1, prof1)
         self.assertEqual(r1.number, 1)
         self.assertEqual(Reader.objects.filter(last_name='ln1').count(), 1)
 
-        r2 = self._create_reader(2, prof2)
+        r2 = create_reader(self.user, 2, prof2)
         self.assertEqual(r2.number, 2)
         self.assertEqual(Reader.objects.filter(first_name='fn2').count(), 1)
 
