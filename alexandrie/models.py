@@ -11,6 +11,7 @@ from django_countries.fields import CountryField
 
 
 class GeneralConfiguration(models.Model):
+    appli_name = models.TextField(verbose_name=u"Nom de l'application", default=u"Alexandrie")
     default_country = CountryField(verbose_name=u'Pays par défaut', default="FR")
     max_borrow_days = models.PositiveSmallIntegerField(u"Nombre de jours maximum pour le prêt", default=21)
     nav_history = models.PositiveSmallIntegerField(u"Historique de navigation", default=10)
