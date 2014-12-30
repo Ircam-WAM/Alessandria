@@ -423,7 +423,8 @@ class ReaderBorrow(ModelEntity):
                 error = True
             if error:
                 raise ValidationError(
-                    {'bookcopy': u"Cet exemplaire a été déjà emprunté par %s %s" % (already_borrowed.reader.first_name, already_borrowed.reader.last_name)}
+                    {'bookcopy': u"Cet exemplaire a été déjà emprunté par %s %s"
+                                 % (already_borrowed.reader.first_name, already_borrowed.reader.last_name)}
                 )
 
     def is_returned(self):
