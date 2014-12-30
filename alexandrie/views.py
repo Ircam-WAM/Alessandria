@@ -184,7 +184,7 @@ class AuthorCreateView(EntityCreateView):
     
     def form_valid(self, form):
         form.instance.last_name = form.instance.last_name.strip().upper()
-        form.instance.first_name = form.instance.first_name.strip().capitalize()
+        form.instance.first_name = form.instance.first_name.strip().title()
         return super(AuthorCreateView, self).form_valid(form)
 
 class AuthorUpdateView(EntityUpdateView):
@@ -281,6 +281,10 @@ class BookCreateView(EntityCreateView):
     template_name = 'alexandrie/book_detail.html'
     model = Book
     form_class = BookForm
+
+    def form_valid(self, form):
+        form.instance.title = form.instance.title.strip().capitalize()
+        return super(BookCreateView, self).form_valid(form)
 
 class BookUpdateView(EntityUpdateView):
     template_name = 'alexandrie/book_detail.html'
@@ -395,7 +399,7 @@ class ReaderCreateView(EntityCreateView):
     
     def form_valid(self, form):
         form.instance.last_name = form.instance.last_name.strip().upper()
-        form.instance.first_name = form.instance.first_name.strip().capitalize()
+        form.instance.first_name = form.instance.first_name.strip().title()
         return super(ReaderCreateView, self).form_valid(form)
 
 class ReaderUpdateView(EntityUpdateView):
