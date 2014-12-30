@@ -408,6 +408,24 @@ class ReaderBorrow(ModelEntity):
     returned_on = models.DateField(u"Retourné le", blank=True, null=True)
     notes = models.TextField(u"Notes", null=True, blank=True)
 
+    def clean(self):
+        already_borrowed = ReaderBorrow.objects.filter(
+            bookcopy__id=self.bookcopy.id
+        ).filter(
+            returned_on=None
+        ).first()
+        error = False
+        if already_borrowed is not None:
+            if self.id: # Update mode
+                if already_borrowed.id != self.id: # Not updating the current record
+                    error = True
+            else: # Create mode
+                error = True
+            if error:
+                raise ValidationError(
+                    {'bookcopy': u"Cet exemplaire a été déjà emprunté par %s %s" % (already_borrowed.reader.first_name, already_borrowed.reader.last_name)}
+                )
+
     def is_returned(self):
         return self.returned_on is not None
 
