@@ -16,6 +16,7 @@
             <thead>
                 <tr>
                     <th>Titre</th>
+                    <th>No. ISBN</th>
                     <th># Exemplaires</th>
                     <th>Créé le</th>
                 </tr>
@@ -24,6 +25,7 @@
                 {% for book in book_list %}
                 <tr>
                     <td><a href="{% url 'alexandrie:book_update' book.id %}">{{ book.title }}</a></td>
+                    <td>{{ book.isbn_nb|default:"Aucun" }}</td>
                     <td>{{ book.get_nb_copy }}</td>
                     <td>{{ book.created_on }}</td>
                 </tr>
