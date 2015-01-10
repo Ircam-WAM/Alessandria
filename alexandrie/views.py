@@ -285,7 +285,7 @@ class BookCreateView(EntityCreateView):
     def form_valid(self, form):
         form.instance.title = form.instance.title.strip().capitalize()
         super(BookCreateView, self).form_valid(form)
-        book_id = form.instance.id
+        book_id = self.object.id
         # Automatically propose to create the first copy of the book
         return HttpResponseRedirect(reverse('alexandrie:bookcopy_add', args=[book_id]))
 
