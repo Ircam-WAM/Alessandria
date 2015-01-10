@@ -284,7 +284,10 @@ class BookCreateView(EntityCreateView):
 
     def form_valid(self, form):
         form.instance.title = form.instance.title.strip().capitalize()
-        return super(BookCreateView, self).form_valid(form)
+        super(BookCreateView, self).form_valid(form)
+        book_id = form.instance.id
+        # Automatically propose to create the first copy of the book
+        return HttpResponseRedirect(reverse('alexandrie:bookcopy_add', args=[book_id]))
 
 class BookUpdateView(EntityUpdateView):
     template_name = 'alexandrie/book_detail.html'
