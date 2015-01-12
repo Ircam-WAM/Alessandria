@@ -299,7 +299,7 @@ class Book(ModelEntity):
     isbn_nb = models.CharField(u"No. ISBN", max_length=20, null=True, blank=True, unique=True)
     audiences = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
     category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
-    sub_category = models.ForeignKey(BookSubCategory, null=True, verbose_name=u'Sous-catégorie')
+    sub_category = models.ForeignKey(BookSubCategory, null=True, blank=True, verbose_name=u'Sous-catégorie')
     abstract = models.TextField(u"Résumé", null=True, blank=True)
     tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes', null=True, blank=True)
     language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
