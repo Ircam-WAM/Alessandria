@@ -178,6 +178,7 @@ class AppliNews(models.Model):
     class Meta:
         verbose_name = u"Info de l'application"
         verbose_name_plural = u"Infos de l'application"
+        ordering = ['-publish_date']
 
 
 class Reader(ModelEntity):
