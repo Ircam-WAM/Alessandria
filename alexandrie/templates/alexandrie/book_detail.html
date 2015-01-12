@@ -224,4 +224,34 @@
 {% block jscript %}
 <script src="/static/alexandrie/layout/jquery-ui/jquery-ui.min.js"></script>
 <script src="/static/alexandrie/layout/ajax_select/js/ajax_select.js"></script>
+<script>
+    function get_sub_categories(){
+        jQuery.ajax({
+            async: false,
+            type: "POST",
+            url: "{% url 'alexandrie:get_book_sub_categories' %}",
+            data: "category_id=" + $('#id_category').val(),
+            success: function(response) {
+                result = JSON.parse(response);
+                if (result) {
+                    $('#id_sub_category').empty() // Use to empty the select
+                    // Now we append the sector options we've received
+                    for(var i=0;i < result.item_list.length;i++){
+                        $('#id_sub_category').append($('<option>', { 
+                            value: result.item_list[i]['id'],
+                            text: result.item_list[i]['name'] 
+                        }));
+                    }
+      
+                } else {
+                    console.log('error');
+                }
+            }
+        });
+    }
+
+    $("#id_category").change(function(){
+        get_sub_categories();  // AJAX function call when industry is selected             
+    });
+</script>
 {% endblock %}
