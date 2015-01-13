@@ -26,3 +26,5 @@
 .form-group ul{
     list-style-type: none;
 }
+
+label.required:after { color: red; content:" *"; }

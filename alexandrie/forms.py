@@ -14,8 +14,14 @@ from alexandrie.models import *
 
 _l_countries = sorted(dict(countries).items())
 _l_default_exclude_fields = ['created_by', 'created_on', 'modified_by', 'modified_on']
+_css_class_required_field = 'required'
 
-class ReaderBorrowForm(forms.ModelForm):
+
+class CommonForm(forms.ModelForm):
+    required_css_class = 'required'
+
+
+class ReaderBorrowForm(CommonForm):
     class Meta:
         model = ReaderBorrow
         exclude = _l_default_exclude_fields
@@ -34,7 +40,7 @@ class ReaderBorrowForm(forms.ModelForm):
                                       plugin_options = {'autoFocus': True, 'minLength': 3})
 
 
-class ReaderForm(forms.ModelForm):
+class ReaderForm(CommonForm):
     class Meta:
         model = Reader
         exclude = _l_default_exclude_fields + ['number', 'disabled_on']
@@ -50,13 +56,13 @@ class ReaderSearchForm(forms.ModelForm):
         model = Reader
         fields = ('last_name',)
 
-class ReaderDisableForm(forms.ModelForm):
+class ReaderDisableForm(CommonForm):
     class Meta:
         model = Reader
         fields = ()
 
 
-class AuthorForm(forms.ModelForm):
+class AuthorForm(CommonForm):
     class Meta:
         model = Author
         exclude = _l_default_exclude_fields + ['import_source']
@@ -73,7 +79,7 @@ class AuthorSearchForm(forms.ModelForm):
         fields = ('last_name',)
 
 
-class PublisherForm(forms.ModelForm):
+class PublisherForm(CommonForm):
     class Meta:
         model = Publisher
         exclude = _l_default_exclude_fields + ['import_source']
@@ -84,7 +90,7 @@ class PublisherForm(forms.ModelForm):
         initial=settings.GENERAL_CONFIGURATION.default_country
     )
 
-class BookForm(forms.ModelForm):
+class BookForm(CommonForm):
     class Meta:
         model = Book
         exclude = _l_default_exclude_fields
@@ -111,7 +117,7 @@ class BookSearchForm(forms.ModelForm):
         fields = ('title', 'category', 'sub_category',)
 
 
-class BookCopyForm(forms.ModelForm):
+class BookCopyForm(CommonForm):
     class Meta:
         model = BookCopy
         exclude =  _l_default_exclude_fields + ['number', 'book', 'disabled_on']
@@ -120,7 +126,7 @@ class BookCopyForm(forms.ModelForm):
         label=Meta.model._meta.get_field('registered_on').verbose_name, initial=datetime.date.today
     )
 
-class BookCopyDisableForm(forms.ModelForm):
+class BookCopyDisableForm(CommonForm):
     class Meta:
         model = BookCopy
         fields = ('disabled_on',)
