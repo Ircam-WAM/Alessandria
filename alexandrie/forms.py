@@ -18,7 +18,7 @@ _css_class_required_field = 'required'
 
 
 class CommonForm(forms.ModelForm):
-    required_css_class = 'required'
+    required_css_class = 'required' # Used in the template
 
 
 class ReaderBorrowForm(CommonForm):
