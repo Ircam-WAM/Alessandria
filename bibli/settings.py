@@ -33,6 +33,7 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     "django.core.context_processors.request",
     # Used for i18n of jquery date picker plugin (http://keith-wood.name/datepick.html)
     "alexandrie.context_processors.js_datepicker_lang",
+    "alexandrie.context_processors.app_version",
 )
 
 ALLOWED_HOSTS = []
