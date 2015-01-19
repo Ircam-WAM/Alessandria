@@ -28,12 +28,6 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    # Used to access session attributes from the templates
-    "django.core.context_processors.request",
-    # Used for i18n of jquery date picker plugin (http://keith-wood.name/datepick.html)
-    "alexandrie.context_processors.js_datepicker_lang",
-)
 
 ALLOWED_HOSTS = []
 
@@ -96,21 +90,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-####################
-# Customized stuff #
-####################
-
-# define the lookup channels in use on the site (autocomplete stuff)
-AJAX_LOOKUP_CHANNELS = {
-    'reader_list': ('alexandrie.ajax_lookup', 'ReaderLookup'),
-    'bookcopy_list': ('alexandrie.ajax_lookup', 'BookCopyLookup'),
-    'author_list': ('alexandrie.ajax_lookup', 'AuthorLookup'),
-    'publisher_list': ('alexandrie.ajax_lookup', 'PublisherLookup'),
-}
-
-try:
-    from alexandrie.models import GeneralConfiguration
-    GENERAL_CONFIGURATION = GeneralConfiguration.get()
-except OperationalError:
-    # To prevent "django.db.utils.OperationalError" when reseting the DB
-    pass
+from alexandrie.local_settings import *
