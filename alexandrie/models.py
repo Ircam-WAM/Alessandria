@@ -187,8 +187,8 @@ class Reader(ModelEntity):
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
     sex = models.CharField(u"Sexe", max_length=3, choices = (
-                                                    ('f', u'Femme'), 
-                                                    ('m', u'Homme'), 
+                                                    ('f', u'Féminin'), 
+                                                    ('m', u'Masculin'), 
                                                   )
     )
     birthday = models.DateField(u"Date de naissance")
