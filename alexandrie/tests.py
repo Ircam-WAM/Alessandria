@@ -77,7 +77,7 @@ class AppliNewsTest(GenericTest):
         pass
     
     def test_create_and_list(self):
-        n1 = AppliNews(publish_date=date.today(), news="Hello1")
+        n1 = AppliNews(publish_date=date.today() + timedelta(days=-1), news="Hello1")
         n1.save()
         n2 = AppliNews(publish_date=date.today(), news="Hello2")
         n2.save()
