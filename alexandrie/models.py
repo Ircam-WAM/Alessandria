@@ -166,7 +166,8 @@ class AppliNews(models.Model):
 
     @staticmethod
     def get_last():
-        return AppliNews.objects.filter(publish_date__lte=stddate.today()).last()
+        # We use first, because of the default ordering
+        return AppliNews.objects.filter(publish_date__lte=stddate.today()).first()
 
     @staticmethod
     def list():
