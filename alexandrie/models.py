@@ -9,6 +9,8 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django_countries.fields import CountryField
 
+import isbnlib
+
 
 class GeneralConfiguration(models.Model):
     appli_name = models.TextField(verbose_name=u"Nom de l'application", default=u"Alexandrie")
@@ -320,10 +322,9 @@ class Book(ModelEntity):
         if not self.isbn_nb: # Force empty string to be 'None'
             self.isbn_nb = None
         else:
-            self.isbn_nb = Book.strip_isbn(self.isbn_nb)
-            err_msg = Book.check_isbn_valid(self.isbn_nb)
-            if len(err_msg) > 0:
-                raise ValidationError({'isbn_nb': err_msg})
+            self.isbn_nb = isbnlib.get_canonical_isbn(self.isbn_nb)
+            if not self.isbn_nb:
+                raise ValidationError({'isbn_nb': u"No. ISBN invalide"})
         super(Book, self).clean(*args, **kwargs)
 
     def save(self, *args, **kwargs):
@@ -336,36 +337,6 @@ class Book(ModelEntity):
     
     def has_copies(self):
         return self.get_nb_copy() > 0
-
-    @staticmethod
-    def strip_isbn(isbn_nb):
-        return isbn_nb.replace('-', '')
-
-    @staticmethod
-    def check_isbn_valid(isbn_nb):
-        raw_isbn = Book.strip_isbn(isbn_nb)
-        if len(raw_isbn) > 0:
-            if len(raw_isbn) != 10 and len(raw_isbn) != 13:
-                return u"Le no. ISBN doit comporter 10 ou 13 chiffres"
-            if len(raw_isbn) == 10:
-                sum_pond = 0
-                for i in range(0, len(raw_isbn)-1):
-                    sum_pond = sum_pond + (i+1) * (int(raw_isbn[i]))
-                checksum = 11 - (sum_pond % 11)
-                if checksum != int(raw_isbn[-1:]):
-                    return "ISBN 10: code de controle incorrect"
-            elif len(raw_isbn) == 13:
-                sum_pond = 0
-                for i in range(0, 12, 2): # c0+c2+...+c10
-                    sum_pond = sum_pond + int(raw_isbn[i])
-                sum_pond2 = 0
-                for i in range(1, 13, 2): # c1+c3+...+c11
-                    sum_pond2 = sum_pond2 + int(raw_isbn[i])
-                sum_pond2 = sum_pond2 *3
-                sum_pond = sum_pond + sum_pond2
-                if (sum_pond + int(raw_isbn[-1:])) % 10 != 0:
-                    return "ISBN 13: code de controle incorrect"
-        return ""
 
     def get_absolute_url(self):
         return reverse('alexandrie:book_update', kwargs={'pk': self.pk})

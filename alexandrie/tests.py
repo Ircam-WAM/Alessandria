@@ -6,8 +6,11 @@ Tests of the software
 
 from datetime import date, datetime, timedelta
 
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.contrib.auth.models import User
+
+import isbnlib
 
 from alexandrie.models import *
 
@@ -28,14 +31,15 @@ class GenericTest(TestCase):
             category = category1,
             sub_category = sub_category1,
             classif_mark="abc%s" % inst_nb,
-            height=21
+            height=21,
+            isbn_nb = isbn_nb
         )
         book.created_by = self.user
         book.created_on = datetime.today()
         book.save()
         book.audiences.add(audience1)
-        book.authors.add(self.create_author('1'))
-        book.publishers.add(self.create_publisher('1'))
+        book.authors.add(self.create_author(inst_nb))
+        book.publishers.add(self.create_publisher(inst_nb))
         book.save()
         return book
     
@@ -52,6 +56,7 @@ class GenericTest(TestCase):
         if profession is None:
             profession = Profession(label='p%s' % inst_nb)
         r.profession = profession
+        r.sex = 'm'
         r.created_by = self.user
         r.created_on = datetime.today()
         r.save()
@@ -86,22 +91,39 @@ class BookTest(GenericTest):
     def tearDown(self):
         pass
 
-    def test_create_book(self):
+    def test_create_update_book(self):
+        # Test create
+        b_count = Book.objects.count()
         b1 = self.create_book('1')
-        self.assertEqual(Book.objects.count(), 1)
+        self.assertEqual(Book.objects.count(), b_count + 1)
 
-    def test_isbn_strip(self):
-        self.assertEqual(Book.strip_isbn('2-266-11156-5'), '2266111565')
+        # Test update
+        b_u = Book.objects.filter(id=b1.id).first()
+        b_u.classif_mark = 'm_classif'
+        b_u.save()
+        self.assertTrue(len(Book.objects.filter(classif_mark='m_classif')) > 0)
 
-    def test_check_isbn_valid(self):
-        self.assertEqual(Book.check_isbn_valid(''), '')
-        self.assertEqual(Book.check_isbn_valid('2-266-11156-5'), '')
-        self.assertEqual(Book.check_isbn_valid('2266111565'), '')
-        self.assertEqual(Book.check_isbn_valid('978-2-86889-006-1'), '')
-        self.assertEqual(Book.check_isbn_valid('9782868890061'), '')
-        self.assertEqual(Book.check_isbn_valid('978-2-10-058178-8'), '')
-        self.assertEqual(Book.check_isbn_valid('978-2-258-07349-4'), '')
-        self.assertNotEqual(Book.check_isbn_valid('978-2'), '')
+    def test_isbn(self):
+        b2 = self.create_book('2', isbn_nb='9783037680582')
+        self.assertIsNot(b2, None)
+        
+        b2.isbn_nb = 'wrong_isbn'
+        with self.assertRaises(ValidationError):
+            b2.save()
+
+    def test_isbn_lib(self):
+        """Ensure the isbnlib works but also show use cases"""
+        isbn_nb = '978-3-03768-058-2'
+        self.assertTrue(isbnlib.is_isbn13(isbn_nb))
+        self.assertEqual(isbnlib.get_canonical_isbn(isbn_nb), '9783037680582')
+        self.assertIsNone(isbnlib.get_canonical_isbn('notisbn'))
+        self.assertIsNone(isbnlib.get_canonical_isbn('12345'))
+        isbn_meta = isbnlib.meta(isbn_nb)
+        self.assertTrue(isbn_meta['Title'].startswith('The Tourist City Berlin'))
+        self.assertEqual(isbn_meta['Publisher'], 'Braun')
+        self.assertEqual(isbn_meta['Authors'][0], 'Jana Richter')
+        self.assertEqual(isbn_meta['Language'], 'eng')
+        self.assertEqual(isbn_meta['Year'], '2010')
 
 class ReaderTest(GenericTest):
     def setUp(self):
@@ -123,6 +145,7 @@ class ReaderTest(GenericTest):
         self.assertEqual(Reader.objects.filter(first_name='fn2').count(), 1)
 
         r2.addr2 = 'addr2 added'
+        r2.modified_by = self.user
         r2.save()
         r2_mod = Reader.objects.filter(number=2).first()
         self.assertEqual(r2_mod.addr2, r2.addr2)
