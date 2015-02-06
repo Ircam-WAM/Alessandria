@@ -90,26 +90,6 @@ class BookTest(GenericTest):
         b1 = self.create_book('1')
         self.assertEqual(Book.objects.count(), 1)
 
-    """
-    title = models.CharField(u"Titre", max_length=50)
-    authors = models.ManyToManyField(Author, verbose_name=u'Auteurs')
-    publishers = models.ManyToManyField(Publisher, verbose_name=u'Editeurs')
-    publish_date = models.DateField(u"Date d'édition")
-    edition_name = models.CharField(u"Titre édition", max_length=80, null=True, blank=True)
-    classif_mark = models.CharField(u"Cote", max_length=10)
-    height = models.PositiveIntegerField(u"Hauteur (cm)", max_length=3)
-    isbn_nb = models.CharField(u"No. ISBN", max_length=20, null=True, blank=True, unique=True)
-    audiences = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
-    category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
-    sub_category = models.ForeignKey(BookSubCategory, null=True, blank=True, verbose_name=u'Sous-catégorie')
-    abstract = models.TextField(u"Résumé", null=True, blank=True)
-    tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes', null=True, blank=True)
-    language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
-    cover_pic = models.ImageField(verbose_name=u'Couverture', upload_to='alexandrie/upload', null=True, blank=True)
-    related_to = models.ForeignKey('Book', null=True, blank=True, verbose_name=u"Apparenté à")
-    notes = models.TextField(u"Notes", null=True, blank=True)
-    """
-
     def test_isbn_strip(self):
         self.assertEqual(Book.strip_isbn('2-266-11156-5'), '2266111565')
 
