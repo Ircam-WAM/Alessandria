@@ -153,8 +153,15 @@ class IsbnImport(ReferenceEntity):
 class ModelEntity(models.Model):
     created_by = models.ForeignKey(DjangoUser, related_name="%(app_label)s_%(class)s_add")
     created_on = models.DateTimeField(verbose_name=u"Créé le", auto_now_add=True)
-    modified_by = models.ForeignKey(DjangoUser, related_name="%(app_label)s_%(class)s_update", null=True)
-    modified_on = models.DateTimeField(verbose_name=u"Modifié le", auto_now=True, null=True)
+    modified_by = models.ForeignKey(DjangoUser, related_name="%(app_label)s_%(class)s_update", null=True, blank=True)
+    modified_on = models.DateTimeField(verbose_name=u"Modifié le", auto_now=True, null=True, blank=True)
+
+    def clean(self, *args, **kwargs):
+        super(ModelEntity, self).clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(ModelEntity, self).save(*args, **kwargs)
 
     class Meta:
         abstract = True
@@ -309,14 +316,19 @@ class Book(ModelEntity):
     related_to = models.ForeignKey('Book', null=True, blank=True, verbose_name=u"Apparenté à")
     notes = models.TextField(u"Notes", null=True, blank=True)
 
-    def clean(self):
-        self.isbn_nb = Book.strip_isbn(self.isbn_nb)
+    def clean(self, *args, **kwargs):
         if not self.isbn_nb: # Force empty string to be 'None'
             self.isbn_nb = None
         else:
+            self.isbn_nb = Book.strip_isbn(self.isbn_nb)
             err_msg = Book.check_isbn_valid(self.isbn_nb)
             if len(err_msg) > 0:
                 raise ValidationError({'isbn_nb': err_msg})
+        super(Book, self).clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(Book, self).save(*args, **kwargs)
 
     def get_nb_copy(self):
         return self.bookcopy_set.count()
