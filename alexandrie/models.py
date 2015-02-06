@@ -166,7 +166,8 @@ class AppliNews(models.Model):
 
     @staticmethod
     def get_last():
-        return AppliNews.objects.filter(publish_date__lte=stddate.today()).last()
+        # We use first, because of the default ordering
+        return AppliNews.objects.filter(publish_date__lte=stddate.today()).first()
 
     @staticmethod
     def list():
@@ -187,8 +188,8 @@ class Reader(ModelEntity):
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
     sex = models.CharField(u"Sexe", max_length=3, choices = (
-                                                    ('f', u'Femme'), 
-                                                    ('m', u'Homme'), 
+                                                    ('f', u'Féminin'), 
+                                                    ('m', u'Masculin'), 
                                                   )
     )
     birthday = models.DateField(u"Date de naissance")
