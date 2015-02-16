@@ -1,0 +1,166 @@
+{% extends 'alexandrie/base_tpl.html' %}
+
+{% load tag_extras %}
+
+{% block title %}Import ISBN d'un livre{% endblock %}
+
+{% block pageTitle %}Import ISBN d'un livre{% endblock %}
+
+{% block content %}
+
+<form class="form-horizontal" action="{% url 'alexandrie:book_isbn_import' %}" method="post" role="form">{% csrf_token %}
+    <input type="hidden" name="cmd" value="search_isbn" />
+    <div class="row">
+        <div class="form-group">
+            <label for="isbn_nb" class="col-sm-2 control-label">No. ISBN</label>
+            <div class="col-sm-10">
+                <input id="isbn_nb" name="isbn_nb" type="text" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-11">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% if book_form and book_form.instance.id %}
+    <div class="row">
+        <div class="alert alert-success">
+            <p>Ce livre <a href="{% url 'alexandrie:book_update' book_form.instance.id %}">existe déjà dans la base de données.</a></p>
+        </div>
+    </div>
+{% else %}
+    {% if book_form %}
+        <form class="form-horizontal" action="{% url 'alexandrie:book_isbn_import' %}" method="post" role="form">{% csrf_token %}
+            <input type="hidden" name="cmd" value="import_isbn" />
+            <div class="row">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Livre</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% for field in book_form %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}" class="col-sm-2 control-label {{ field.css_classes }}">{{ field.label }}</label>
+                                <div class="col-sm-10">
+                                    {{ field|addcss:"form-control" }}
+                                    {% if field.errors %}
+                                        <div class="text-danger">{{ field.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% for author_form in authors_form %}
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Auteur&nbsp;n°.{{ forloop.counter }}&nbsp;:
+                                <input name="author-link_book" type="hidden" value="{{ forloop.counter0 }}" />
+                                {% if not author_form.instance.id %}
+                                    cet auteur n'existe pas dans la base, il sera créé et associé au livre.
+                                {% else %}
+                                    <input name="author-id_{{ forloop.counter0 }}" type="hidden" value="{{ author_form.instance.id }}" />
+                                    cet auteur existe déjà la base, il sera associé au livre.
+                                {% endif %}
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            {% for field in author_form %}
+                                <div class="form-group">
+                                    <label for="{{ field.id_for_label }}" class="col-sm-2 control-label {{ field.css_classes }}">{{ field.label }}</label>
+                                    <div class="col-sm-10">
+                                        {{ field|addcss:"form-control" }}
+                                        {% if field.errors %}
+                                            <div class="text-danger">{{ field.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Editeur&nbsp;n°:
+                            {% if not publisher_form.instance.id %}
+                                cet éditeur n'existe pas dans la base, il sera créé et associé au livre.
+                            {% else %}
+                                <input name="publisher-id" type="hidden" value="{{ publisher_form.instance.id }}" />
+                                cet éditeur existe déjà dans la base, il sera associé au livre.
+                            {% endif %}
+                         </h3>
+                    </div>
+                    <div class="panel-body">
+                        {% for field in publisher_form %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}" class="col-sm-2 control-label {{ field.css_classes }}">{{ field.label }}</label>
+                                <div class="col-sm-10">
+                                    {{ field|addcss:"form-control" }}
+                                    {% if field.errors %}
+                                        <div class="text-danger">{{ field.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Importer</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {% else %}
+        {% if search %}
+            <div class="row">
+                <div class="col-md-12">
+                    No. ISBN inconnu
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block jscript %}
+<script src="/static/alexandrie/layout/jquery-ui/jquery-ui.min.js"></script>
+<script src="/static/alexandrie/layout/ajax_select/js/ajax_select.js"></script>
+<script>
+    function get_sub_categories(){
+        jQuery.ajax({
+            async: false,
+            type: "POST",
+            url: "{% url 'alexandrie:get_book_sub_categories' %}",
+            data: "category_id=" + $('#id_book_create-category').val(),
+            success: function(response) {
+                result = JSON.parse(response);
+                if (result) {
+                    $('#id_book_create-sub_category').empty() // Use to empty the select
+                    // Now we append the sector options we've received
+                    for(var i=0;i < result.item_list.length;i++){
+                        $('#id_book_create-sub_category').append($('<option>', { 
+                            value: result.item_list[i]['id'],
+                            text: result.item_list[i]['name'] 
+                        }));
+                    }
+      
+                } else {
+                    console.log('error');
+                }
+            }
+        });
+    }
+
+    $("#id_book_create-category").change(function(){
+        get_sub_categories();  // AJAX function call when industry is selected             
+    });
+</script>
+{% endblock %}

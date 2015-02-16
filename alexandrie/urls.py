@@ -36,6 +36,8 @@ urlpatterns = patterns('',
     url(r'book/(?P<pk>\d+)/$', views.BookUpdateView.as_view(), name='book_update'),
     url(r'book/(?P<pk>\d+)/delete/$', views.BookDeleteView.as_view(), name='book_delete'),
     url(r'book/list/$', views.BookListView.as_view(), name='book_list'),
+    
+    url(r'book/isbn/import/$', views.BookIsbnImportView.as_view(), name='book_isbn_import'),
 
     url(r'bookcopy/add/(?P<book_id>\d+)/$', views.BookCopyCreateView.as_view(), name='bookcopy_add'),
     url(r'bookcopy/(?P<pk>\d+)/$', views.BookCopyUpdateView.as_view(), name='bookcopy_update'),

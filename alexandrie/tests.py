@@ -13,19 +13,22 @@ from django.contrib.auth.models import User
 import isbnlib
 
 from alexandrie.models import *
+from alexandrie.utils import IsbnUtils, MyString
 
 
 class GenericTest(TestCase):
     def setUp(self):
         self.user = self.create_user()
 
-    def create_book(self, inst_nb, isbn_nb=None):
+    def create_book(self, inst_nb, title=None, isbn_nb=None):
         language = Language.objects.create(label='FR')
         category1 = BookCategory.objects.create(label="cat%s" % inst_nb)
         sub_category1 = BookSubCategory.objects.create(label="s_cat%s" % inst_nb, parent_category=category1)
         audience1 = BookAudience.objects.create(label="Children%s" % inst_nb)
+        if not title:
+            title="Hello world%s" % inst_nb
         book = Book(
-            title="Hello world%s" % inst_nb,
+            title=title,
             language = language,
             publish_date=datetime.today(),
             category = category1,
@@ -43,10 +46,14 @@ class GenericTest(TestCase):
         book.save()
         return book
     
-    def create_reader(self, inst_nb, profession=None):
+    def create_reader(self, inst_nb, first_name=None, last_name=None, profession=None):
         r = Reader()
-        r.first_name = "fn%s" % inst_nb
-        r.last_name = "ln%s" % inst_nb
+        if not first_name:
+            first_name = "fn%s" % inst_nb
+        r.first_name = first_name
+        if not last_name:
+            last_name = "ln%s" % inst_nb
+        r.last_name = last_name
         r.addr1 = "addr%s" % inst_nb
         r.zip = "%s" % inst_nb
         r.city = "city%s" % inst_nb
@@ -62,19 +69,25 @@ class GenericTest(TestCase):
         r.save()
         return r
     
-    def create_author(self, inst_nb):
+    def create_author(self, inst_nb, first_name=None, last_name=None):
         a = Author()
-        a.first_name = "fn%s" % inst_nb
-        a.last_name = "ln%s" % inst_nb
+        if not first_name:
+            first_name = "fn%s" % inst_nb
+        a.first_name = first_name
+        if not last_name:
+            last_name = "ln%s" % inst_nb
+        a.last_name = last_name
         a.country = 'FR'
         a.created_by = self.user
         a.created_on = datetime.today()
         a.save()
         return a
     
-    def create_publisher(self, inst_nb):
+    def create_publisher(self, inst_nb, name=None):
         p = Publisher()
-        p.name = "n%s" % inst_nb
+        if not name:
+            name = "n%s" % inst_nb
+        p.name = name
         p.country = 'FR'
         p.created_by = self.user
         p.created_on = datetime.today()
@@ -83,6 +96,35 @@ class GenericTest(TestCase):
     
     def create_user(self, first_name='lucie', last_name='fer', username='luciefer', email='lucie@hell.com'):
         return User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email)
+
+
+class PublisherTest(GenericTest):
+    def setUp(self):
+        super(PublisherTest, self).setUp()
+
+    def test_create(self):
+        p = self.create_publisher(1, name='pub à')
+        p_r = Publisher.objects.get(id=p.id)
+        self.assertEqual('PUB À', p_r.name)
+        
+        self.assertIsNotNone(Publisher.get_by_name('pub à'))
+        self.assertIsNotNone(Publisher.get_by_name('PUB À'))
+
+
+class AuthorTest(GenericTest):
+    def setUp(self):
+        super(AuthorTest, self).setUp()
+
+    def test_create(self):
+        a = self.create_author(1, first_name='jean-marc', last_name='farà')
+
+        a_r = Author.objects.get(id=a.id)
+        self.assertEqual('Jean-Marc', a_r.first_name)
+        self.assertEqual('FARÀ', a_r.last_name)
+
+        self.assertIsNotNone(Author.get_by_first_and_last_name('jean-marc', 'farà'))
+        self.assertIsNotNone(Author.get_by_first_and_last_name('JEAN-MARC', 'FARÀ'))
+
 
 class BookTest(GenericTest):
     def setUp(self):
@@ -94,8 +136,10 @@ class BookTest(GenericTest):
     def test_create_update_book(self):
         # Test create
         b_count = Book.objects.count()
-        b1 = self.create_book('1')
+        title='la dolce vita del papà öttinger'
+        b1 = self.create_book('1', title=title)
         self.assertEqual(Book.objects.count(), b_count + 1)
+        self.assertEqual(title.capitalize(), b1.title)
 
         # Test update
         b_u = Book.objects.filter(id=b1.id).first()
@@ -113,17 +157,25 @@ class BookTest(GenericTest):
 
     def test_isbn_lib(self):
         """Ensure the isbnlib works but also show use cases"""
+        self.assertIsNone(isbnlib.get_canonical_isbn('notisbn'))
+        self.assertIsNone(isbnlib.get_canonical_isbn('12345'))
+
         isbn_nb = '978-3-03768-058-2'
         self.assertTrue(isbnlib.is_isbn13(isbn_nb))
         self.assertEqual(isbnlib.get_canonical_isbn(isbn_nb), '9783037680582')
-        self.assertIsNone(isbnlib.get_canonical_isbn('notisbn'))
-        self.assertIsNone(isbnlib.get_canonical_isbn('12345'))
         isbn_meta = isbnlib.meta(isbn_nb)
         self.assertTrue(isbn_meta['Title'].startswith('The Tourist City Berlin'))
         self.assertEqual(isbn_meta['Publisher'], 'Braun')
         self.assertEqual(isbn_meta['Authors'][0], 'Jana Richter')
         self.assertEqual(isbn_meta['Language'], 'eng')
         self.assertEqual(isbn_meta['Year'], '2010')
+
+    def test_isbn_utils(self):
+        self.assertEqual(IsbnUtils.author_unpack(''), ('', ''))
+        self.assertEqual(IsbnUtils.author_unpack('Doe'), ('', 'Doe'))
+        self.assertEqual(IsbnUtils.author_unpack('John Doe'), ('John', 'Doe'))
+        self.assertEqual(IsbnUtils.author_unpack('John Henry Doe'), ('John Henry', 'Doe'))
+
 
 class ReaderTest(GenericTest):
     def setUp(self):
@@ -133,22 +185,14 @@ class ReaderTest(GenericTest):
         pass
 
     def test_create(self):
-        prof1 = Profession(label='p1')
-        prof2 = Profession(label='p2')
+        r = self.create_reader(1, first_name='jean-marc', last_name='pelè')
 
-        r1 = self.create_reader(1, prof1)
-        self.assertEqual(r1.number, 1)
-        self.assertEqual(Reader.objects.filter(last_name='ln1').count(), 1)
+        r_r = Reader.objects.get(id=r.id)
+        self.assertEqual('Jean-Marc', r_r.first_name)
+        self.assertEqual('PELÈ', r_r.last_name)
 
-        r2 = self.create_reader(2, prof2)
-        self.assertEqual(r2.number, 2)
-        self.assertEqual(Reader.objects.filter(first_name='fn2').count(), 1)
-
-        r2.addr2 = 'addr2 added'
-        r2.modified_by = self.user
-        r2.save()
-        r2_mod = Reader.objects.filter(number=2).first()
-        self.assertEqual(r2_mod.addr2, r2.addr2)
+        self.assertIsNotNone(Reader.get_by_first_and_last_name('jean-marc', 'pelè'))
+        self.assertIsNotNone(Reader.get_by_first_and_last_name('JEAN-MARC', 'PELÈ'))   
 
 class AppliNewsTest(GenericTest):
     def setUp(self):
@@ -167,3 +211,12 @@ class AppliNewsTest(GenericTest):
         # Make sure we don't retrieve news that will be published in the future
         self.assertEqual(len(AppliNews.list()), 2)
         self.assertEqual(AppliNews.get_last().news, "Hello2")
+
+
+class UtilsTest(TestCase):
+    def test_my_string(self):
+        self.assertIsNone(MyString.remove_accents(None))
+        self.assertEqual("", MyString.remove_accents(""))
+        self.assertEqual("Hello", MyString.remove_accents("Hello"))
+        self.assertEqual("parentheses", MyString.remove_accents("parenthèses"))
+        self.assertEqual("PARENTHESES", MyString.remove_accents("PARENTHÈSES"))

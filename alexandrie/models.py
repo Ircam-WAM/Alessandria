@@ -1,6 +1,8 @@
 #-*- encoding:utf-8 *-*
 
+import isbnlib
 from datetime import datetime as stddatetime
+from datetime import datetime as stddate
 from datetime import date as stddate
 
 from django.db import models
@@ -9,7 +11,7 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django_countries.fields import CountryField
 
-import isbnlib
+from alexandrie.utils import MyString, IsbnUtils
 
 
 class GeneralConfiguration(models.Model):
@@ -220,9 +222,19 @@ class Reader(ModelEntity):
             self.number = Reader.objects.count() + 1
         super(Reader, self).save(*args, **kwargs)
 
-    def clean(self):
+    def clean(self, *args, **kwargs):
+        self.last_name = self.last_name.strip().upper()
+        self.first_name = self.first_name.strip().title()
         if not self.email: # Force empty string to be 'None'
             self.email = None
+        super(Reader, self).clean(*args, **kwargs)
+
+    @staticmethod
+    def get_by_first_and_last_name(first_name, last_name):
+        return Reader.objects.filter(
+            first_name=first_name.title(),
+            last_name=last_name.upper()
+        ).first()
 
     def is_disabled(self):
         return self.disabled_on is not None
@@ -262,6 +274,12 @@ class Author(ModelEntity):
     website = models.URLField(verbose_name='Site web', null=True, blank=True)
     notes = models.TextField(u"Notes", null=True, blank=True)
     import_source = models.ForeignKey(IsbnImport, null=True, blank=True, verbose_name="Import")
+    is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
+
+    def clean(self, *args, **kwargs):
+        self.last_name = self.last_name.strip().upper()
+        self.first_name = self.first_name.strip().title()
+        super(Author, self).clean(*args, **kwargs)
 
     def get_full_name(self):
         if not self.first_name:
@@ -270,6 +288,29 @@ class Author(ModelEntity):
 
     def get_books(self):
         return self.book_set.all()
+
+    @staticmethod
+    def get_by_first_and_last_name(first_name, last_name):
+        return Author.objects.filter(
+            first_name=first_name.title(),
+            last_name=last_name.upper(),
+        ).first()
+
+    @staticmethod
+    def init_from_isbn(isbn_meta):
+        authors = []
+        for author in isbn_meta['Authors']:
+            # Example of author : "John Doe", "John Henry Doe"
+            first_name, last_name = IsbnUtils.author_unpack(author)
+            author = Author.objects.filter(first_name__iexact=first_name, last_name__iexact=last_name).first()
+            if author is None:
+                author = Author(
+                    first_name=first_name,
+                    last_name=last_name,
+                    country=IsbnUtils.get_country_code(isbn_meta)
+                )
+            authors.append(author)
+        return authors
 
     def get_absolute_url(self):
         return reverse('alexandrie:author_update', kwargs={'pk': self.pk})
@@ -287,6 +328,27 @@ class Publisher(ModelEntity):
     country = CountryField(verbose_name=u'Pays')
     notes = models.TextField(u"Notes", null=True, blank=True)
     import_source = models.ForeignKey(IsbnImport, null=True, blank=True, verbose_name="Import")
+    is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
+
+    def clean(self, *args, **kwargs):
+        self.name = self.name.strip().upper()
+        super(Publisher, self).clean(*args, **kwargs)
+
+    @staticmethod
+    def get_by_name(name):
+        return Publisher.objects.filter(
+            name=name.upper()
+        ).first()
+
+    @staticmethod
+    def init_from_isbn(isbn_meta):
+        publisher = Publisher.objects.filter(name__iexact=isbn_meta['Publisher']).first()
+        if publisher is None:
+            publisher = Publisher(
+                name=isbn_meta['Publisher'],
+                country=IsbnUtils.get_country_code(isbn_meta)
+            )
+        return publisher
 
     def get_absolute_url(self):
         return reverse('alexandrie:publisher_update', kwargs={'pk': self.pk})
@@ -317,6 +379,7 @@ class Book(ModelEntity):
     cover_pic = models.ImageField(verbose_name=u'Couverture', upload_to='alexandrie/upload', null=True, blank=True)
     related_to = models.ForeignKey('Book', null=True, blank=True, verbose_name=u"Apparenté à")
     notes = models.TextField(u"Notes", null=True, blank=True)
+    is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
 
     def clean(self, *args, **kwargs):
         if not self.isbn_nb: # Force empty string to be 'None'
@@ -325,11 +388,35 @@ class Book(ModelEntity):
             self.isbn_nb = isbnlib.get_canonical_isbn(self.isbn_nb)
             if not self.isbn_nb:
                 raise ValidationError({'isbn_nb': u"No. ISBN invalide"})
+        self.title = self.title.strip().capitalize()
         super(Book, self).clean(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         self.full_clean()
         super(Book, self).save(*args, **kwargs)
+
+    @staticmethod
+    def get_by_title(title):
+        return Book.objects.filter(
+            name=name.capitalize()
+        ).first()
+
+    @staticmethod
+    def init_from_isbn(isbn_meta):
+        book = None
+        if isbn_meta:
+            book = Book()
+            book.title = isbn_meta['Title']
+            book.isbn_nb = isbn_meta['ISBN-13'] if isbn_meta.get('ISBN-13') else isbn_meta['ISBN-10']
+            #language_code = isbn_meta['Language'][:2].upper()
+            #self.language = isbn_meta['Language'][:2].upper()
+            if isbn_meta['Year']:
+                book.publish_date = stddate(year=int(isbn_meta['Year']), month=1, day=1)
+            r_book = Book.objects.filter(isbn_nb=book.isbn_nb).first()
+            if r_book:
+                # The book already exists in the database
+                book.id = r_book.id
+        return book
 
     def get_nb_copy(self):
         return self.bookcopy_set.count()
