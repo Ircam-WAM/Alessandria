@@ -30,17 +30,10 @@
                     <form class="form-horizontal" enctype="multipart/form-data" action="" method="post" role="form">{% csrf_token %}
                         <div class="form-group">
                             <label for="{{ form.title.id_for_label }}" class="col-sm-2 control-label {{ form.title.css_classes }}">{{ form.title.label }}</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-8">
                                 {{ form.title|addcss:"form-control" }}
                                 {% if form.title.errors %}
                                     <div class="text-danger">{{ form.title.errors }}</div>
-                                {% endif %}
-                            </div>
-                            <label for="{{ form.language.id_for_label }}" class="col-sm-2 control-label {{ form.language.css_classes }}">{{ form.language.label }}</label>
-                            <div class="col-sm-4">
-                                {{ form.language|addcss:"form-control" }}
-                                {% if form.language.errors %}
-                                    <div class="text-danger">{{ form.language.errors }}</div>
                                 {% endif %}
                             </div>
                         </div>
@@ -98,8 +91,15 @@
                         </div>
     
                         <div class="form-group">
+                            <label for="{{ form.language.id_for_label }}" class="col-sm-2 control-label {{ form.language.css_classes }}">{{ form.language.label }}</label>
+                            <div class="col-sm-4">
+                                {{ form.language|addcss:"form-control" }}
+                                {% if form.language.errors %}
+                                    <div class="text-danger">{{ form.language.errors }}</div>
+                                {% endif %}
+                            </div>
                             <label for="{{ form.height.id_for_label }}" class="col-sm-2 control-label {{ form.height.css_classes }}">{{ form.height.label }}</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-4">
                                 {{ form.height|addcss:"form-control" }}
                                 {% if form.height.errors %}
                                     <div class="text-danger">{{ form.height.errors }}</div>

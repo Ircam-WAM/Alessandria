@@ -5,7 +5,6 @@ from datetime import datetime as stddatetime
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, render_to_response
-from django.forms.models import inlineformset_factory
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -15,9 +14,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
+import isbnlib
+
 from alexandrie.models import *
 from alexandrie.forms import *
-
+from alexandrie.utils import IsbnUtils
 
 def load_user_nav_history(request, user):
     lst = UserNavigationHistory.get_list(user)
@@ -181,11 +182,6 @@ class AuthorCreateView(EntityCreateView):
     template_name = 'alexandrie/author_detail.html'
     model = Author
     form_class = AuthorForm
-    
-    def form_valid(self, form):
-        form.instance.last_name = form.instance.last_name.strip().upper()
-        form.instance.first_name = form.instance.first_name.strip().title()
-        return super(AuthorCreateView, self).form_valid(form)
 
 class AuthorUpdateView(EntityUpdateView):
     template_name = 'alexandrie/author_detail.html'
@@ -245,10 +241,6 @@ class PublisherCreateView(EntityCreateView):
     template_name = 'alexandrie/publisher_detail.html'
     model = Publisher
     form_class = PublisherForm
-    
-    def form_valid(self, form):
-        form.instance.name = form.instance.name.strip().upper()
-        return super(PublisherCreateView, self).form_valid(form)
 
 class PublisherUpdateView(EntityUpdateView):
     template_name = 'alexandrie/publisher_detail.html'
@@ -283,10 +275,13 @@ class BookCreateView(EntityCreateView):
     form_class = BookForm
 
     def form_valid(self, form):
-        form.instance.title = form.instance.title.strip().capitalize()
         super(BookCreateView, self).form_valid(form)
         book_id = self.object.id
         # Automatically propose to create the first copy of the book
+        return BookCreateView.toBookCopyCreation(book_id)
+
+    @staticmethod
+    def toBookCopyCreation(book_id):
         return HttpResponseRedirect(reverse('alexandrie:bookcopy_add', args=[book_id]))
 
 class BookUpdateView(EntityUpdateView):
@@ -344,6 +339,164 @@ class BookListView(EntityListView):
         )
 
 
+class BookIsbnImportView(ProtectedView, TemplateView):
+    template_name = 'alexandrie/book_isbn_import.html'
+
+    def post(self, request):
+        cmd = request.POST['cmd']
+        if cmd == 'search_isbn':
+            book = None
+            authors_form = None
+            publisher_form = None
+            book_form = None
+            # Search ISBN info
+            isbn_nb = request.POST['isbn_nb']
+            isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
+            isbn_meta = None
+            if isbn_nb:
+                isbn_meta = isbnlib.meta(isbn_nb)
+            if isbn_meta:
+                book = Book.init_from_isbn(isbn_meta)
+                book_form = self._create_book_form(instance=book)
+                country_code = IsbnUtils.get_country_code(isbn_meta)
+                authors_form = []
+                i=0
+                authors = Author.init_from_isbn(isbn_meta)
+                for author in authors:
+                    author_form = self._create_author_form(prefix='author_create_%s' %i, instance=author)
+                    authors_form.append(author_form)
+                    i += 1
+
+                publisher = Publisher.init_from_isbn(isbn_meta)
+                publisher_form = self._create_publisher_form(instance=publisher)
+
+            return render_to_response(
+                self.template_name, {
+                    'book_form': book_form,
+                    'search': True,
+                    'authors_form': authors_form,
+                    'publisher_form': publisher_form,
+                },
+                context_instance=RequestContext(request)
+            )
+        elif cmd == 'import_isbn':
+            # After submit button to import has been pressed
+            print(request.POST)
+
+            lst_author_create_ok = request.POST.getlist('author-link_book')
+            authors_form = []
+            publisher_form = None
+            is_error_in_form = False
+            for s_i in lst_author_create_ok:
+                i = int(s_i)
+                author_id_fieldname = 'author-id_%s' % i
+                if not request.POST.get(author_id_fieldname):
+                    form_post = request.POST.copy()
+                    for field_name in request.POST:
+                        if not field_name.startswith('author_create_%s' % i):
+                            form_post.pop(field_name)
+                    author_form = self._create_author_form(form_post=form_post, prefix='author_create_%s' %i)
+                    if not is_error_in_form:
+                        is_error_in_form = not author_form.is_valid()
+                else:
+                    author_form = self._create_author_form(
+                        instance=Author.objects.get(id=request.POST[author_id_fieldname]),
+                        prefix='author_create_%s' %i
+                    )
+                authors_form.append(author_form)
+
+            if not request.POST.get('publisher-id'):
+                form_post = request.POST.copy()
+                for field_name in request.POST:
+                    if not field_name.startswith('publisher_create'):
+                        form_post.pop(field_name)
+                publisher_form = self._create_publisher_form(form_post=form_post)
+                if not is_error_in_form:
+                    is_error_in_form = not publisher_form.is_valid()
+            else:
+                publisher_form = self._create_publisher_form(
+                    instance=Publisher.objects.get(id=request.POST['publisher-id'])
+                )
+
+            form_post = request.POST.copy()
+            for field_name in request.POST:
+                if not field_name.startswith('book_create'):
+                    form_post.pop(field_name)
+            book_form = self._create_book_form(form_post=form_post)
+            if not is_error_in_form:
+                is_error_in_form = not book_form.is_valid()
+
+            if not is_error_in_form:
+                book_form.instance.created_by = request.user
+                book_form.instance.is_isbn_import = True
+                book = book_form.save()
+                for author_form in authors_form:
+                    if not author_form.instance.id:
+                        author_form.instance.created_by = request.user
+                        author_form.instance.is_isbn_import = True
+                        author_form.save()
+                    book.authors.add(author_form.instance)
+                if not publisher_form.instance.id:
+                    publisher_form.instance.created_by = request.user
+                    publisher_form.instance.is_isbn_import = True
+                    publisher_form.save()
+                book.publishers.add(publisher_form.instance)
+                # Automatically propose to create the first copy of the book
+                return BookCreateView.toBookCopyCreation(book.id)
+            else:
+                return render_to_response(
+                    self.template_name, {
+                        'book_form': book_form,
+                        'authors_form': authors_form,
+                        'publisher_form': publisher_form,
+                    },
+                    context_instance=RequestContext(request)
+                )
+
+    def _create_book_form(self, instance=None, form_post=None):
+        book_form = None
+        if instance:
+            book_form = BookForm(prefix='book_create', instance=instance)
+        if form_post:
+            book_form = BookForm(form_post, prefix='book_create')
+        book_form.fields['isbn_nb'].widget.attrs['readonly'] = True
+        # Remove useless fields
+        book_form.fields.pop(key='authors')
+        book_form.fields.pop(key='publishers')
+        return book_form
+
+    def _create_author_form(self, prefix, instance=None, form_post=None):
+        author_form = None
+        if instance:
+            author_form = AuthorForm(prefix=prefix, instance=instance)
+        if form_post:
+            author_form = AuthorForm(form_post, prefix=prefix)
+        # Remove useless fields
+        author_form.fields.pop(key='notes')
+        author_form.fields.pop(key='website')
+        return author_form
+
+    def _create_publisher_form(self, instance=None, form_post=None):
+        publisher_form = None
+        if instance:
+            publisher_form = PublisherForm(prefix='publisher_create', instance=instance)
+        if form_post:
+            publisher_form = PublisherForm(form_post, prefix='publisher_create')
+        # Remove useless fields
+        publisher_form.fields.pop(key='notes')
+        return publisher_form
+
+    """
+    def _remove_book_useless_fields(self, book_form):
+        book_form.fields.pop(key='authors')
+        book_form.fields.pop(key='publishers')
+    def _remove_author_useless_fields(self, author_form):
+        author_form.fields.pop(key='notes')
+        author_form.fields.pop(key='website')
+    def _remove_publisher_useless_fields(self, publisher_form):
+        publisher_form.fields.pop(key='notes')
+    """
+
 class BookCopyCreateView(EntityCreateView):
     template_name = 'alexandrie/bookcopy_detail.html'
     model = BookCopy
@@ -399,11 +552,6 @@ class ReaderCreateView(EntityCreateView):
     template_name = 'alexandrie/reader_detail.html'
     model = Reader
     form_class = ReaderForm
-    
-    def form_valid(self, form):
-        form.instance.last_name = form.instance.last_name.strip().upper()
-        form.instance.first_name = form.instance.first_name.strip().title()
-        return super(ReaderCreateView, self).form_valid(form)
 
 class ReaderUpdateView(EntityUpdateView):
     template_name = 'alexandrie/reader_detail.html'

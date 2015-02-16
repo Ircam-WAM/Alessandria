@@ -65,7 +65,7 @@ class ReaderDisableForm(CommonForm):
 class AuthorForm(CommonForm):
     class Meta:
         model = Author
-        exclude = _l_default_exclude_fields + ['import_source']
+        exclude = _l_default_exclude_fields + ['is_isbn_import', 'import_source']
 
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
@@ -82,7 +82,7 @@ class AuthorSearchForm(forms.ModelForm):
 class PublisherForm(CommonForm):
     class Meta:
         model = Publisher
-        exclude = _l_default_exclude_fields + ['import_source']
+        exclude = _l_default_exclude_fields + ['is_isbn_import', 'import_source']
 
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
@@ -91,9 +91,10 @@ class PublisherForm(CommonForm):
     )
 
 class BookForm(CommonForm):
+    title = forms.CharField(widget=forms.TextInput(attrs={'size': '40'}))
     class Meta:
         model = Book
-        exclude = _l_default_exclude_fields
+        exclude = _l_default_exclude_fields + ['related_to', 'cover_pic', 'is_isbn_import']
 
     authors  = AutoCompleteSelectMultipleField(
                     'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
