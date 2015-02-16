@@ -91,6 +91,7 @@ class PublisherForm(CommonForm):
     )
 
 class BookForm(CommonForm):
+    title = forms.CharField(widget=forms.TextInput(attrs={'size': '40'}))
     class Meta:
         model = Book
         exclude = _l_default_exclude_fields + ['related_to', 'cover_pic', 'is_isbn_import']
