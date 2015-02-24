@@ -356,19 +356,21 @@ class BookIsbnImportView(ProtectedView, TemplateView):
             if isbn_nb:
                 isbn_meta = isbnlib.meta(isbn_nb)
             if isbn_meta:
-                book = Book.init_from_isbn(isbn_meta)
-                book_form = self._create_book_form(instance=book)
-                country_code = IsbnUtils.get_country_code(isbn_meta)
-                authors_form = []
-                i=0
-                authors = Author.init_from_isbn(isbn_meta)
-                for author in authors:
-                    author_form = self._create_author_form(prefix='author_create_%s' %i, instance=author)
-                    authors_form.append(author_form)
-                    i += 1
-
-                publisher = Publisher.init_from_isbn(isbn_meta)
-                publisher_form = self._create_publisher_form(instance=publisher)
+                isbn_meta_nb = IsbnUtils.get_isbn_nb_from_meta(isbn_meta)
+                if isbn_meta_nb == isbn_nb: # Just to make sure there is no bug in isbn lib
+                    book = Book.init_from_isbn(isbn_meta)
+                    book_form = self._create_book_form(instance=book)
+                    country_code = IsbnUtils.get_country_code(isbn_meta)
+                    authors_form = []
+                    i=0
+                    authors = Author.init_from_isbn(isbn_meta)
+                    for author in authors:
+                        author_form = self._create_author_form(prefix='author_create_%s' %i, instance=author)
+                        authors_form.append(author_form)
+                        i += 1
+    
+                    publisher = Publisher.init_from_isbn(isbn_meta)
+                    publisher_form = self._create_publisher_form(instance=publisher)
 
             return render_to_response(
                 self.template_name, {
