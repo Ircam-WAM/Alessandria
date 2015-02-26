@@ -1,0 +1,36 @@
+{% if object_list_p.paginator.count > 0 %}
+    <nav>
+        <ul class="pagination">
+            <li><span aria-hidden="true">{{ object_list_p.paginator.count }} enregistrements</span></li>
+            <li><span aria-hidden="true">Pages</span></li>
+            <li>
+                {% if object_list_p.has_previous %}
+                    <a href="?page={{ object_list_p.previous_page_number }}" aria-label="Précédent">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+            {% for p in range_pages_before_and_current %}
+                <li>
+                    {% if p != object_list_p.number %}
+                        <a href="?page={{ p }}">{{ p }}</a>
+                    {% else %}
+                        <span aria-hidden="true"><font color="red">{{ p }}</font></span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            {% for p in range_pages_after %}
+                <li>
+                    <a href="?page={{ p }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+            <li>
+                {% if object_list_p.has_next %}
+                    <a href="?page={{ object_list_p.next_page_number }}" aria-label="Suivant">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+{% endif %}

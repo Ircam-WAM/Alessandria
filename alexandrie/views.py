@@ -3,6 +3,7 @@
 from datetime import datetime as stddatetime
 
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.base import TemplateView, View
@@ -70,8 +71,34 @@ class EntityUpdateView(ProtectedView, UpdateView):
         messages.success(self.request, success_msg)
         return super(EntityUpdateView, self).form_valid(form)
 
+
 class EntityListView(ProtectedView, ListView):
-    pass
+    def get_paginator(self, object_list):
+        paginator = Paginator(object_list, 15) # Nb of items per page to show
+        page = self.request.GET.get('page')
+        try:
+            items_paginator = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            items_paginator = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            items_paginator = paginator.page(paginator.num_pages)
+
+        return {
+            'items_paginator': items_paginator,
+            'range_pages_before_and_current':
+                range(
+                    max(1, items_paginator.number-5),
+                    items_paginator.number + 1
+                ),
+            'range_pages_after':
+                range(
+                    min(paginator.num_pages + 1, items_paginator.number + 1),
+                    min(paginator.num_pages, items_paginator.number + 5 ) + 1
+                ),
+        }
+
 
 class EntityDeleteView(ProtectedView, DeleteView):
     pass
@@ -168,13 +195,15 @@ class ReaderBorrowListView(EntityListView):
             page_title = "Tous les emprunts"
             reader_borrow_list = ReaderBorrow.list_all()
 
-
-        return render_to_response(self.template_name,
-                                  {
-                                    'reader_borrow_list': reader_borrow_list,
-                                    'page_title': page_title,
-                                  },
-                                  context_instance=RequestContext(request),
+        p = self.get_paginator(reader_borrow_list)
+        return render_to_response(
+            self.template_name, {
+                'object_list_p': p['items_paginator'],
+                'range_pages_before_and_current': p['range_pages_before_and_current'],
+                'range_pages_after': p['range_pages_after'],
+                'page_title': page_title,
+            },
+            context_instance=RequestContext(request),
         )
 
 
@@ -216,9 +245,12 @@ class AuthorListView(EntityListView):
         author_list = self.model.objects.all()
         if (last_name != ''):
             author_list = author_list.filter(last_name__istartswith = last_name)
+        p = self.get_paginator(author_list)
         return render_to_response(
             self.template_name, {
-                'author_list': author_list,
+                'object_list_p': p['items_paginator'],
+                'range_pages_before_and_current': p['range_pages_before'],
+                'range_pages_after': p['range_pages_after'],
                 'search_form': search_form,
             },
             context_instance=RequestContext(request)
@@ -228,9 +260,12 @@ class AuthorListView(EntityListView):
         """Method called when the page is accessed"""
         author_list = self.model.objects.all()
         search_form = AuthorSearchForm()
+        p = self.get_paginator(author_list)
         return render_to_response(
             self.template_name, {
-                'author_list': author_list,
+                'object_list_p': p['items_paginator'],
+                'range_pages_before_and_current': p['range_pages_before_and_current'],
+                'range_pages_after': p['range_pages_after'],
                 'search_form': search_form,
             },
             context_instance=RequestContext(request)
@@ -268,6 +303,18 @@ class PublisherListView(EntityListView):
     model = Publisher
     context_object_name = 'publisher_list'
 
+    def get(self, request, **kwargs):
+        """Method called when the page is accessed"""
+        publisher_list = self.model.objects.all()
+        p = self.get_paginator(publisher_list)
+        return render_to_response(
+            self.template_name, {
+                'object_list_p': p['items_paginator'],
+                'range_pages_before_and_current': p['range_pages_before_and_current'],
+                'range_pages_after': p['range_pages_after'],
+            },
+            context_instance=RequestContext(request)
+        )
 
 class BookCreateView(EntityCreateView):
     template_name = 'alexandrie/book_detail.html'
@@ -318,9 +365,14 @@ class BookListView(EntityListView):
             book_list = book_list.filter(category__id = category)
         if (sub_category != ''):
             book_list = book_list.filter(sub_category__id = sub_category)
+
+        p = self.get_paginator(book_list)
+
         return render_to_response(
             self.template_name, {
-                'book_list': book_list,
+                'object_list_p': p['items_paginator'],
+                'range_pages_before_and_current': p['range_pages_before_and_current'],
+                'range_pages_after': p['range_pages_after'],
                 'search_form': search_form,
             },
             context_instance=RequestContext(request)
@@ -329,10 +381,13 @@ class BookListView(EntityListView):
     def get(self, request, **kwargs):
         """Method called when the page is accessed"""
         book_list = self.model.objects.all()
+        p = self.get_paginator(book_list)
         search_form = BookSearchForm()
         return render_to_response(
             self.template_name, {
-                'book_list': book_list,
+                'object_list_p': p['items_paginator'],
+                'range_pages_before_and_current': p['range_pages_before_and_current'],
+                'range_pages_after': p['range_pages_after'],
                 'search_form': search_form,
             },
             context_instance=RequestContext(request)
@@ -356,19 +411,21 @@ class BookIsbnImportView(ProtectedView, TemplateView):
             if isbn_nb:
                 isbn_meta = isbnlib.meta(isbn_nb)
             if isbn_meta:
-                book = Book.init_from_isbn(isbn_meta)
-                book_form = self._create_book_form(instance=book)
-                country_code = IsbnUtils.get_country_code(isbn_meta)
-                authors_form = []
-                i=0
-                authors = Author.init_from_isbn(isbn_meta)
-                for author in authors:
-                    author_form = self._create_author_form(prefix='author_create_%s' %i, instance=author)
-                    authors_form.append(author_form)
-                    i += 1
-
-                publisher = Publisher.init_from_isbn(isbn_meta)
-                publisher_form = self._create_publisher_form(instance=publisher)
+                isbn_meta_nb = IsbnUtils.get_isbn_nb_from_meta(isbn_meta)
+                if isbn_meta_nb == isbn_nb: # Just to make sure there is no bug in isbn lib
+                    book = Book.init_from_isbn(isbn_meta)
+                    book_form = self._create_book_form(instance=book)
+                    country_code = IsbnUtils.get_country_code(isbn_meta)
+                    authors_form = []
+                    i=0
+                    authors = Author.init_from_isbn(isbn_meta)
+                    for author in authors:
+                        author_form = self._create_author_form(prefix='author_create_%s' %i, instance=author)
+                        authors_form.append(author_form)
+                        i += 1
+    
+                    publisher = Publisher.init_from_isbn(isbn_meta)
+                    publisher_form = self._create_publisher_form(instance=publisher)
 
             return render_to_response(
                 self.template_name, {
@@ -584,9 +641,14 @@ class ReaderListView(EntityListView):
         reader_list = self.model.objects.all()
         if (last_name != ''):
             reader_list = reader_list.filter(last_name__istartswith = last_name)
+
+        p = self.get_paginator(reader_list)
+
         return render_to_response(
             self.template_name, {
-                'reader_list': reader_list,
+                'object_list_p': p['items_paginator'],
+                'range_pages_before_and_current': p['range_pages_before_and_current'],
+                'range_pages_after': p['range_pages_after'],
                 'search_form': search_form,
             },
             context_instance=RequestContext(request)
@@ -596,9 +658,12 @@ class ReaderListView(EntityListView):
         """Method called when the page is accessed"""
         reader_list = self.model.objects.all()
         search_form = ReaderSearchForm()
+        p = self.get_paginator(reader_list)
         return render_to_response(
             self.template_name, {
-                'reader_list': reader_list,
+                'object_list_p': p['items_paginator'],
+                'range_pages_before_and_current': p['range_pages_before_and_current'],
+                'range_pages_after': p['range_pages_after'],
                 'search_form': search_form,
             },
             context_instance=RequestContext(request)

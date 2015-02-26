@@ -17,6 +17,15 @@ class IsbnUtils(object):
         if isbn_meta['Language']:
             return isbn_meta['Language'][:2].upper()
         return None
+    
+    @staticmethod
+    def get_isbn_nb_from_meta(isbn_meta):
+        if isbn_meta is not None:
+            if isbn_meta.get('ISBN-13'):
+                return isbn_meta['ISBN-13']
+            if isbn_meta.get('ISBN-10'):
+                return isbn_meta['ISBN-10']
+        return None
 
 class MyString(object):
     @staticmethod

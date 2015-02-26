@@ -171,6 +171,8 @@ class BookTest(GenericTest):
         self.assertEqual(isbn_meta['Year'], '2010')
 
     def test_isbn_utils(self):
+        self.assertEqual(IsbnUtils.get_isbn_nb_from_meta(isbnlib.meta('978-3-03768-058-2')), '9783037680582')
+
         self.assertEqual(IsbnUtils.author_unpack(''), ('', ''))
         self.assertEqual(IsbnUtils.author_unpack('Doe'), ('', 'Doe'))
         self.assertEqual(IsbnUtils.author_unpack('John Doe'), ('John', 'Doe'))
