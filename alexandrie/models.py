@@ -189,7 +189,7 @@ class Reader(ModelEntity):
     birthday = models.DateField(u"Date de naissance")
     addr1 = models.CharField(u"Adresse 1", max_length=30)
     addr2 = models.CharField(u"Adresse 2", null=True, max_length=30, blank=True)
-    zip = models.PositiveIntegerField(u"Code postal", max_length=5)
+    zip = models.CharField(u"Code postal", max_length=10)
     city = models.CharField(u"Ville", max_length=30)
     country = CountryField(verbose_name=u'Pays')
     email = models.EmailField(u"E-mail", unique=True, null=True, blank=True)
