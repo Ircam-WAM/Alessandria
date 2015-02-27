@@ -133,23 +133,6 @@ class BookCopyOrigin(ReferenceEntity):
         verbose_name = u"Origine d'un livre"
         verbose_name_plural = u"Origines d'un livre"
 
-
-class IsbnImportSource(ReferenceEntity):
-    code = models.CharField(u"Code", max_length=3)
-    website = models.URLField(verbose_name=u"Site web")
-
-    class Meta:
-        verbose_name = u"Source pour l'importation ISBN"
-        verbose_name_plural = u"Sources pour l'importation ISBN"
-
-
-class IsbnImport(ReferenceEntity):
-    entity_id = models.CharField(u"Identifiant", max_length=50)
-    entity_type = models.CharField(u"type", max_length=20) # Example: Author, Book, Publisher
-    source = models.ForeignKey(IsbnImportSource, verbose_name=u"Source")
-    import_url = models.URLField(verbose_name=u"URL d'import")
-
-
 #########
 # Model #
 #########
@@ -273,7 +256,6 @@ class Author(ModelEntity):
     country = CountryField(verbose_name=u'Pays')
     website = models.URLField(verbose_name='Site web', null=True, blank=True)
     notes = models.TextField(u"Notes", null=True, blank=True)
-    import_source = models.ForeignKey(IsbnImport, null=True, blank=True, verbose_name="Import")
     is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
 
     def clean(self, *args, **kwargs):
@@ -327,7 +309,6 @@ class Publisher(ModelEntity):
     name = models.CharField(u"Nom", max_length=30, unique=True)
     country = CountryField(verbose_name=u'Pays')
     notes = models.TextField(u"Notes", null=True, blank=True)
-    import_source = models.ForeignKey(IsbnImport, null=True, blank=True, verbose_name="Import")
     is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
 
     def clean(self, *args, **kwargs):
