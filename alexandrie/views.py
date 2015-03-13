@@ -438,8 +438,6 @@ class BookIsbnImportView(ProtectedView, TemplateView):
             )
         elif cmd == 'import_isbn':
             # After submit button to import has been pressed
-            print(request.POST)
-
             lst_author_create_ok = request.POST.getlist('author-link_book')
             authors_form = []
             publisher_form = None
