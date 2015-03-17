@@ -91,6 +91,10 @@ class PublisherForm(CommonForm):
     )
 
 class BookForm(CommonForm):
+    def __init__(self, *args, **kwargs):
+        super(BookForm, self).__init__(*args, **kwargs)
+        self.initial['language'] = Language.get_default_language()
+
     title = forms.CharField(widget=forms.TextInput(attrs={'size': '40'}))
     class Meta:
         model = Book
