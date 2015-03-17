@@ -82,12 +82,12 @@ class Language(ReferenceEntity):
     class Meta:
         verbose_name = "Langue"
 
-
-def get_default_language():
-    if Language.objects.count() > 0:
-        return Language.objects.filter(is_default=True)[0]
-    else:
-        return None
+    @staticmethod
+    def get_default_language():
+        if Language.objects.count() > 0:
+            return Language.objects.filter(is_default=True)[0]
+        else:
+            return None
 
 
 class Profession(ReferenceEntity):
@@ -356,7 +356,7 @@ class Book(ModelEntity):
     sub_category = models.ForeignKey(BookSubCategory, null=True, blank=True, verbose_name=u'Sous-catégorie')
     abstract = models.TextField(u"Résumé", null=True, blank=True)
     tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes', null=True, blank=True)
-    language = models.ForeignKey(Language, default=get_default_language, verbose_name=u'Langue')
+    language = models.ForeignKey(Language, verbose_name=u'Langue')
     cover_pic = models.ImageField(verbose_name=u'Couverture', upload_to='alexandrie/upload', null=True, blank=True)
     related_to = models.ForeignKey('Book', null=True, blank=True, verbose_name=u"Apparenté à")
     notes = models.TextField(u"Notes", null=True, blank=True)
