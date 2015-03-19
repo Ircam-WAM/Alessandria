@@ -125,7 +125,7 @@ class BookForm(CommonForm):
 class BookSearchForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ('title', 'category', 'sub_category',)
+        fields = ('isbn_nb', 'title', 'category', 'sub_category',)
 
 
 class BookCopyForm(CommonForm):

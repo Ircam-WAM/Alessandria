@@ -379,7 +379,11 @@ class BookListView(EntityListView):
         title = request.POST['title']
         category = request.POST['category']
         sub_category = request.POST['sub_category']
+        isbn_nb = request.POST['isbn_nb']
         book_list = self.model.objects.all()
+        if (isbn_nb != ''):
+            isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
+            book_list = book_list.filter(isbn_nb = isbn_nb)
         if (title != ''):
             book_list = book_list.filter(title__icontains = title)
         if (category != ''):
