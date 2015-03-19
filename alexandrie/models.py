@@ -323,7 +323,8 @@ class Publisher(ModelEntity):
 
     @staticmethod
     def init_from_isbn(isbn_meta):
-        publisher = Publisher.objects.filter(name__iexact=isbn_meta['Publisher']).first()
+        publisher_name = isbn_meta['Publisher'].strip() if isbn_meta['Publisher'] else ""
+        publisher = Publisher.objects.filter(name__iexact=publisher_name).first()
         if publisher is None:
             publisher = Publisher(
                 name=isbn_meta['Publisher'],
@@ -387,7 +388,7 @@ class Book(ModelEntity):
         book = None
         if isbn_meta:
             book = Book()
-            book.title = isbn_meta['Title']
+            book.title = isbn_meta['Title'].strip()
             book.isbn_nb = isbn_meta['ISBN-13'] if isbn_meta.get('ISBN-13') else isbn_meta['ISBN-10']
             #language_code = isbn_meta['Language'][:2].upper()
             #self.language = isbn_meta['Language'][:2].upper()

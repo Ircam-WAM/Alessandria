@@ -8,8 +8,8 @@ class IsbnUtils(object):
         if not author:
             return '', ''
         items = author.split    (' ')
-        last_name = items[-1:][0]
-        first_name = " ".join(items[:-1])
+        last_name = items[-1:][0].strip()
+        first_name = " ".join(items[:-1]).strip()
         return first_name, last_name
     
     @staticmethod
