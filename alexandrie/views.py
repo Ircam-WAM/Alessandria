@@ -244,12 +244,12 @@ class AuthorListView(EntityListView):
         last_name = request.POST['last_name']
         author_list = self.model.objects.all()
         if (last_name != ''):
-            author_list = author_list.filter(last_name__istartswith = last_name)
+            author_list = author_list.filter(last_name__istartswith = last_name.upper())
         p = self.get_paginator(author_list)
         return render_to_response(
             self.template_name, {
                 'object_list_p': p['items_paginator'],
-                'range_pages_before_and_current': p['range_pages_before'],
+                'range_pages_before_and_current': p['range_pages_before_and_current'],
                 'range_pages_after': p['range_pages_after'],
                 'search_form': search_form,
             },
@@ -305,6 +305,7 @@ class PublisherListView(EntityListView):
 
     def get(self, request, **kwargs):
         """Method called when the page is accessed"""
+        search_form = PublisherSearchForm()
         publisher_list = self.model.objects.all()
         p = self.get_paginator(publisher_list)
         return render_to_response(
@@ -312,9 +313,29 @@ class PublisherListView(EntityListView):
                 'object_list_p': p['items_paginator'],
                 'range_pages_before_and_current': p['range_pages_before_and_current'],
                 'range_pages_after': p['range_pages_after'],
+                'search_form': search_form,
             },
             context_instance=RequestContext(request)
         )
+
+    def post(self, request, **kwargs):
+        """Method called when a search is submited"""
+        search_form = PublisherSearchForm(request.POST)
+        publisher_list = self.model.objects.all()
+        name = request.POST['name']
+        if name != '':
+            publisher_list = publisher_list.filter(name__istartswith = name.upper())
+        p = self.get_paginator(publisher_list)
+        return render_to_response(
+            self.template_name, {
+                'object_list_p': p['items_paginator'],
+                'range_pages_before_and_current': p['range_pages_before_and_current'],
+                'range_pages_after': p['range_pages_after'],
+                'search_form': search_form,
+            },
+            context_instance=RequestContext(request)
+        )
+
 
 class BookCreateView(EntityCreateView):
     template_name = 'alexandrie/book_detail.html'
@@ -358,7 +379,11 @@ class BookListView(EntityListView):
         title = request.POST['title']
         category = request.POST['category']
         sub_category = request.POST['sub_category']
+        isbn_nb = request.POST['isbn_nb']
         book_list = self.model.objects.all()
+        if (isbn_nb != ''):
+            isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
+            book_list = book_list.filter(isbn_nb = isbn_nb)
         if (title != ''):
             book_list = book_list.filter(title__icontains = title)
         if (category != ''):
@@ -638,7 +663,7 @@ class ReaderListView(EntityListView):
         last_name = request.POST['last_name']
         reader_list = self.model.objects.all()
         if (last_name != ''):
-            reader_list = reader_list.filter(last_name__istartswith = last_name)
+            reader_list = reader_list.filter(last_name__istartswith = last_name.upper())
 
         p = self.get_paginator(reader_list)
 

@@ -90,6 +90,12 @@ class PublisherForm(CommonForm):
         initial=settings.GENERAL_CONFIGURATION.default_country
     )
 
+class PublisherSearchForm(forms.ModelForm):
+    class Meta:
+        model = Publisher
+        fields = ('name',)
+
+
 class BookForm(CommonForm):
     def __init__(self, *args, **kwargs):
         super(BookForm, self).__init__(*args, **kwargs)
@@ -119,7 +125,7 @@ class BookForm(CommonForm):
 class BookSearchForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ('title', 'category', 'sub_category',)
+        fields = ('isbn_nb', 'title', 'category', 'sub_category',)
 
 
 class BookCopyForm(CommonForm):

@@ -5,6 +5,11 @@
 {% block pageTitle %}Liste des éditeurs{% endblock %}
 
 {% block content %}
+
+<form class="form-horizontal" action="{% url 'alexandrie:publisher_list' %}" method="post" role="form">{% csrf_token %}
+    {% include 'alexandrie/_inc_form_search_std.html' %}
+</form>
+
 <div class="row">
     <div class="col-md-12">
         {% include 'alexandrie/_inc_paginator_list.html' %}
