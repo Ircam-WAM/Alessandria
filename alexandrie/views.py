@@ -249,7 +249,7 @@ class AuthorListView(EntityListView):
         return render_to_response(
             self.template_name, {
                 'object_list_p': p['items_paginator'],
-                'range_pages_before_and_current': p['range_pages_before'],
+                'range_pages_before_and_current': p['range_pages_before_and_current'],
                 'range_pages_after': p['range_pages_after'],
                 'search_form': search_form,
             },
