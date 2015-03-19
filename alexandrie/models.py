@@ -284,7 +284,7 @@ class Author(ModelEntity):
         for author in isbn_meta['Authors']:
             # Example of author : "John Doe", "John Henry Doe"
             first_name, last_name = IsbnUtils.author_unpack(author)
-            author = Author.objects.filter(first_name__iexact=first_name, last_name__iexact=last_name).first()
+            author = Author.get_by_first_and_last_name(first_name, last_name)
             if author is None:
                 author = Author(
                     first_name=first_name,
@@ -323,11 +323,11 @@ class Publisher(ModelEntity):
 
     @staticmethod
     def init_from_isbn(isbn_meta):
-        publisher_name = isbn_meta['Publisher'].strip() if isbn_meta['Publisher'] else ""
-        publisher = Publisher.objects.filter(name__iexact=publisher_name).first()
+        name = isbn_meta['Publisher'].strip() if isbn_meta['Publisher'] else ""
+        publisher = Publisher.get_by_name(name)
         if publisher is None:
             publisher = Publisher(
-                name=isbn_meta['Publisher'],
+                name=name,
                 country=IsbnUtils.get_country_code(isbn_meta)
             )
         return publisher
