@@ -159,6 +159,7 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {{ form.is_isbn_import.as_hidden }}
 
                         {% if book.has_copies %}
                             {% include 'alexandrie/_inc_form_edit_buttons_std.html' %}
