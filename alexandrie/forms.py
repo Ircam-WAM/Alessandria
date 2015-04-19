@@ -101,10 +101,14 @@ class BookForm(CommonForm):
         super(BookForm, self).__init__(*args, **kwargs)
         self.initial['language'] = Language.get_default_language()
 
-    title = forms.CharField(widget=forms.TextInput(attrs={'size': '40'}))
     class Meta:
         model = Book
-        exclude = _l_default_exclude_fields + ['related_to', 'cover_pic', 'is_isbn_import']
+        exclude = _l_default_exclude_fields + ['related_to', 'cover_pic']
+
+    title = forms.CharField(
+        label=Meta.model._meta.get_field('title').verbose_name,
+        widget=forms.TextInput(attrs={'size': '40'})
+    )
 
     authors  = AutoCompleteSelectMultipleField(
                     'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
