@@ -27,7 +27,7 @@
             {% include 'alexandrie/_inc_form_edit_header.html' %}
             <div class="panel panel-info">
                 <div class="panel-body">
-                    <form class="form-horizontal" enctype="multipart/form-data" action="" method="post" role="form">{% csrf_token %}
+                    <form class="form-horizontal" enctype="multipart/form-data" action="{% url 'alexandrie:book_add' %}" method="post" role="form">{% csrf_token %}
                         <div class="form-group">
                             <label for="{{ form.title.id_for_label }}" class="col-sm-2 control-label {{ form.title.css_classes }}">{{ form.title.label }}</label>
                             <div class="col-sm-8">
@@ -153,7 +153,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                        
+
                         {% if book.has_copies %}
                             {% include 'alexandrie/_inc_form_edit_buttons_std.html' %}
                         {% else %} {% comment %}Only allow book deletion if there are no copies linked to it{% endcomment %}
