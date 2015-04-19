@@ -435,7 +435,6 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                 isbn_meta_nb = IsbnUtils.get_isbn_nb_from_meta(isbn_meta)
                 #if isbn_meta_nb == isbn_nb: # Just to make sure there is no bug in isbn lib
                 book = Book.init_from_isbn(isbn_meta)
-                print(">>>>>>>>>> d = %s" % book.publish_date)
                 book_form = BookForm(instance=book)
                 if book_form.instance.id:
                     return render_to_response(
