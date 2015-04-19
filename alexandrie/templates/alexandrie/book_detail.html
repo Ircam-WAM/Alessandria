@@ -116,7 +116,7 @@
                         <div class="form-group">
                             <label for="{{ form.publish_date.id_for_label }}" class="col-sm-2 control-label {{ form.publish_date.css_classes }}">{{ form.publish_date.label }}</label>
                             <div class="col-sm-4">
-                                {{ form.publish_date|addcss:"form-control" }}
+                                {{ form.publish_date }}
                                 {% if form.publish_date.errors %}
                                     <div class="text-danger">{{ form.publish_date.errors }}</div>
                                 {% endif %}

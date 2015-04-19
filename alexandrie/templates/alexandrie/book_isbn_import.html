@@ -46,17 +46,17 @@
                             <div class="form-group">
                                 <div class="col-sm-2">{{ book_form.isbn_nb.label }}:</div>
                                 <div class="col-sm-10">{{ book_form.isbn_nb.value }}</div>
-                                <input type="hidden" name="isbn_nb" value="{{ book_form.isbn_nb.value }}"/>
+                                {{ book_form.isbn_nb.as_hidden }}
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2">{{ book_form.title.label }}:</div>
                                 <div class="col-sm-10">{{ book_form.title.value }}</div>
-                                <input type="hidden" name="title" value="{{ book_form.title.value }}"/>
+                                {{ book_form.title.as_hidden }}
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2">{{ book_form.publish_date.label }}:</div>
                                 <div class="col-sm-10">{{ book_form.publish_date.value }}</div>
-                                <input type="hidden" name="publish_date" value="{{ book_form.publish_date.value }}"/>
+                                {{ book_form.publish_date.as_hidden }}
                             </div>
                         </div>
                     </div>
