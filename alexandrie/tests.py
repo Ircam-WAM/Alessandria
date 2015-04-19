@@ -62,6 +62,7 @@ class GenericTest(TestCase):
         r.birthday = '1971-03-24'
         if profession is None:
             profession = Profession(label='p%s' % inst_nb)
+            profession.save()
         r.profession = profession
         r.sex = 'm'
         r.created_by = self.user
