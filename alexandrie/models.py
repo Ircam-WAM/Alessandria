@@ -361,7 +361,7 @@ class Book(ModelEntity):
     cover_pic = models.ImageField(verbose_name=u'Couverture', upload_to='alexandrie/upload', null=True, blank=True)
     related_to = models.ForeignKey('Book', null=True, blank=True, verbose_name=u"Apparenté à")
     notes = models.TextField(u"Notes", null=True, blank=True)
-    is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
+    is_isbn_import = models.BooleanField(u"Import ISBN", default=False)
 
     def clean(self, *args, **kwargs):
         if not self.isbn_nb: # Force empty string to be 'None'
