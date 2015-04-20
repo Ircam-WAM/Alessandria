@@ -342,6 +342,14 @@ class BookCreateView(EntityCreateView):
     model = Book
     form_class = BookForm
 
+    def get_context_data(self, **kwargs):
+        # Called after the get method
+        # Call the base implementation first to get a context
+        context = super(BookCreateView, self).get_context_data(**kwargs)
+        book_form = context.get('form')
+        book_form.initial['language'] = Language.get_default_language()
+        return context
+
     def form_valid(self, form):
         super(BookCreateView, self).form_valid(form)
         book_id = self.object.id

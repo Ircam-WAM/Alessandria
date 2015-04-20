@@ -99,7 +99,6 @@ class PublisherSearchForm(forms.ModelForm):
 class BookForm(CommonForm):
     def __init__(self, *args, **kwargs):
         super(BookForm, self).__init__(*args, **kwargs)
-        self.initial['language'] = Language.get_default_language()
 
     class Meta:
         model = Book
