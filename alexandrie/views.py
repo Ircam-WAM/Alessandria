@@ -92,7 +92,7 @@ class EntityListView(ProtectedView, ListView):
                     max(1, items_paginator.number-5),
                     items_paginator.number + 1
                 ),
-            'range_pages_after':
+            'range_pages_after':  * Gestion des langues : changer (prise en compte de l'internationalisation)
                 range(
                     min(paginator.num_pages + 1, items_paginator.number + 1),
                     min(paginator.num_pages, items_paginator.number + 5 ) + 1
@@ -343,7 +343,7 @@ class BookCreateView(EntityCreateView):
     form_class = BookForm
 
     def get_context_data(self, **kwargs):
-        # Called after the get method
+        """Called after the get method"""
         # Call the base implementation first to get a context
         context = super(BookCreateView, self).get_context_data(**kwargs)
         book_form = context.get('form')
@@ -442,6 +442,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
             if isbn_meta:
                 isbn_meta_nb = IsbnUtils.get_isbn_nb_from_meta(isbn_meta)
                 #if isbn_meta_nb == isbn_nb: # Just to make sure there is no bug in isbn lib
+                # Initialize book form from isbn meta data
                 book = Book.init_from_isbn(isbn_meta)
                 book_form = BookForm(instance=book)
                 if book_form.instance.id:
@@ -453,6 +454,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                         context_instance=RequestContext(request)
                     )
                 country_code = IsbnUtils.get_country_code(isbn_meta)
+                # Initialize authors forms from isbn meta data
                 authors_form = []
                 i=0
                 authors = Author.init_from_isbn(isbn_meta)
@@ -461,6 +463,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                     authors_form.append(author_form)
                     i+=1
 
+                # Initialize publisher form from isbn meta data
                 publisher = Publisher.init_from_isbn(isbn_meta)
                 publisher_form = self._create_publisher_form(instance=publisher)
 
@@ -473,7 +476,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                     },
                     context_instance=RequestContext(request)
                 )
-            else:
+            else: # ISBN not found
                 return render_to_response(
                     self.template_name, {
                         'search': True,
