@@ -529,6 +529,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                         'publish_date': request.POST.get('publish_date'),
                         'authors': authors_ids,
                         'publishers': [publisher_id],
+                        'language': Language.get_default_language(), # TODO: Change me, use isbn_meta['Language']
                         'is_isbn_import': True
                     }
                 )
