@@ -350,7 +350,7 @@ class Book(ModelEntity):
     publish_date = models.DateField(u"Date d'édition")
     edition_name = models.CharField(u"Titre édition", max_length=80, null=True, blank=True)
     classif_mark = models.CharField(u"Cote", max_length=10)
-    height = models.PositiveIntegerField(u"Hauteur (cm)", max_length=3)
+    height = models.PositiveIntegerField(u"Hauteur (cm)")
     isbn_nb = models.CharField(u"No. ISBN", max_length=20, null=True, blank=True, unique=True)
     audiences = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
     category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
