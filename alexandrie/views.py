@@ -441,7 +441,6 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                 isbn_meta = isbnlib.meta(isbn_nb)
             if isbn_meta:
                 isbn_meta_nb = IsbnUtils.get_isbn_nb_from_meta(isbn_meta)
-                #if isbn_meta_nb == isbn_nb: # Just to make sure there is no bug in isbn lib
                 # Initialize book form from isbn meta data
                 book = Book.init_from_isbn(isbn_meta)
                 book_form = BookForm(instance=book)
