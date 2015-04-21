@@ -92,7 +92,7 @@ class EntityListView(ProtectedView, ListView):
                     max(1, items_paginator.number-5),
                     items_paginator.number + 1
                 ),
-            'range_pages_after':  * Gestion des langues : changer (prise en compte de l'internationalisation)
+            'range_pages_after':
                 range(
                     min(paginator.num_pages + 1, items_paginator.number + 1),
                     min(paginator.num_pages, items_paginator.number + 5 ) + 1
