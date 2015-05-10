@@ -350,18 +350,18 @@ class Book(ModelEntity):
     publish_date = models.DateField(u"Date d'édition")
     edition_name = models.CharField(u"Titre édition", max_length=80, null=True, blank=True)
     classif_mark = models.CharField(u"Cote", max_length=10)
-    height = models.PositiveIntegerField(u"Hauteur (cm)", max_length=3)
+    height = models.PositiveIntegerField(u"Hauteur (cm)")
     isbn_nb = models.CharField(u"No. ISBN", max_length=20, null=True, blank=True, unique=True)
     audiences = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
     category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
     sub_category = models.ForeignKey(BookSubCategory, null=True, blank=True, verbose_name=u'Sous-catégorie')
     abstract = models.TextField(u"Résumé", null=True, blank=True)
-    tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes', null=True, blank=True)
+    tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes', blank=True)
     language = models.ForeignKey(Language, verbose_name=u'Langue')
     cover_pic = models.ImageField(verbose_name=u'Couverture', upload_to='alexandrie/upload', null=True, blank=True)
     related_to = models.ForeignKey('Book', null=True, blank=True, verbose_name=u"Apparenté à")
     notes = models.TextField(u"Notes", null=True, blank=True)
-    is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
+    is_isbn_import = models.BooleanField(u"Import ISBN", default=False)
 
     def clean(self, *args, **kwargs):
         if not self.isbn_nb: # Force empty string to be 'None'

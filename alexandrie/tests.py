@@ -62,6 +62,7 @@ class GenericTest(TestCase):
         r.birthday = '1971-03-24'
         if profession is None:
             profession = Profession(label='p%s' % inst_nb)
+            profession.save()
         r.profession = profession
         r.sex = 'm'
         r.created_by = self.user
@@ -150,6 +151,10 @@ class BookTest(GenericTest):
     def test_isbn(self):
         b2 = self.create_book('2', isbn_nb='9783037680582')
         self.assertIsNot(b2, None)
+
+        # Make sure we don't have an error 'isbn nb already exists' when updating
+        b_u = Book.objects.filter(isbn_nb='9783037680582').first()
+        b_u.save()
         
         b2.isbn_nb = 'wrong_isbn'
         with self.assertRaises(ValidationError):
