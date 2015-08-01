@@ -27,6 +27,16 @@
     </div>
 </form>
 {% if search %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endif %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     {% if book_form and book_form.instance.id %}
         <div class="row">
             <div class="alert alert-success">
