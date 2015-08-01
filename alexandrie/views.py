@@ -384,6 +384,7 @@ class BookListView(EntityListView):
         category = request.POST['category']
         sub_category = request.POST['sub_category']
         isbn_nb = request.POST['isbn_nb']
+        author_last_name = request.POST['author_last_name']
         book_list = self.model.objects.all()
         if (isbn_nb != ''):
             isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
@@ -394,6 +395,8 @@ class BookListView(EntityListView):
             book_list = book_list.filter(category__id = category)
         if (sub_category != ''):
             book_list = book_list.filter(sub_category__id = sub_category)
+        if (author_last_name != ''):
+            book_list = book_list.filter(authors__last_name__icontains=author_last_name)
 
         p = self.get_paginator(book_list)
 
