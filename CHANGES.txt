@@ -1,0 +1,10 @@
+Version 0.6
+===========
+2609285 Ensure Django 1.8 compatibility
+3c74975 Display birthday in author list
+9017138 Check for duplicate authors
+19c37a2 Add field birthdate for author
+15e525e Specify author nb when error in isbn import
+d579bf1 Possibility to search a book by author
+32d8466 Improve title of reader borrow page
+63b322d Properly handle ISBN import errors
