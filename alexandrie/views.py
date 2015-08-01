@@ -384,6 +384,7 @@ class BookListView(EntityListView):
         category = request.POST['category']
         sub_category = request.POST['sub_category']
         isbn_nb = request.POST['isbn_nb']
+        author_last_name = request.POST['author_last_name']
         book_list = self.model.objects.all()
         if (isbn_nb != ''):
             isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
@@ -394,6 +395,8 @@ class BookListView(EntityListView):
             book_list = book_list.filter(category__id = category)
         if (sub_category != ''):
             book_list = book_list.filter(sub_category__id = sub_category)
+        if (author_last_name != ''):
+            book_list = book_list.filter(authors__last_name__icontains=author_last_name)
 
         p = self.get_paginator(book_list)
 
@@ -440,41 +443,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
             if isbn_nb:
                 isbn_meta = isbnlib.meta(isbn_nb)
             if isbn_meta:
-                isbn_meta_nb = IsbnUtils.get_isbn_nb_from_meta(isbn_meta)
-                # Initialize book form from isbn meta data
-                book = Book.init_from_isbn(isbn_meta)
-                book_form = BookForm(instance=book)
-                if book_form.instance.id:
-                    return render_to_response(
-                        self.template_name, {
-                            'book_form': book_form,
-                            'search': True,
-                        },
-                        context_instance=RequestContext(request)
-                    )
-                country_code = IsbnUtils.get_country_code(isbn_meta)
-                # Initialize authors forms from isbn meta data
-                authors_form = []
-                i=0
-                authors = Author.init_from_isbn(isbn_meta)
-                for author in authors:
-                    author_form = self._create_author_form(prefix='author_create_%s' %i, instance=author)
-                    authors_form.append(author_form)
-                    i+=1
-
-                # Initialize publisher form from isbn meta data
-                publisher = Publisher.init_from_isbn(isbn_meta)
-                publisher_form = self._create_publisher_form(instance=publisher)
-
-                return render_to_response(
-                    self.template_name, {
-                        'book_form': book_form,
-                        'search': True,
-                        'authors_form': authors_form,
-                        'publisher_form': publisher_form,
-                    },
-                    context_instance=RequestContext(request)
-                )
+                return self._init_isbn_import(isbn_meta, request)
             else: # ISBN not found
                 return render_to_response(
                     self.template_name, {
@@ -498,6 +467,8 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                         author_form = self._create_author_form(form_post=request.POST, prefix='author_create_%s' %i)
                         if not is_error_in_form:
                             is_error_in_form = not author_form.is_valid()
+                            if is_error_in_form:
+                                messages.error(self.request, u"Auteur n°. %s invalide." % (i+1))
                         authors_form.append(author_form)
                 else: # The author already exists in the DB
                     authors_ids.append(Author.objects.get(id=request.POST[author_id_fieldname]).id)
@@ -507,6 +478,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                     publisher_form = self._create_publisher_form(form_post=request.POST)
                     if not is_error_in_form:
                         is_error_in_form = not publisher_form.is_valid()
+                        messages.error(self.request, u"Editeur invalide.")
             else: # The publisher already exists in the DB
                 publisher_id = Publisher.objects.get(id=request.POST['publisher_id']).id
 
@@ -543,14 +515,9 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                     context_instance=RequestContext(request)
                 )
             else: # Error in one of the forms => display the import page again
-                return render_to_response(
-                    self.template_name, {
-                        'book_form': book_form,
-                        'authors_form': authors_form,
-                        'publisher_form': publisher_form,
-                    },
-                    context_instance=RequestContext(request)
-                )
+                isbn_nb = isbnlib.get_canonical_isbn(request.POST.get('isbn_nb'))
+                isbn_meta = isbnlib.meta(isbn_nb)
+                return self._init_isbn_import(isbn_meta, request)
 
     def _create_author_form(self, prefix, instance=None, form_post=None):
         author_form = None
@@ -572,6 +539,43 @@ class BookIsbnImportView(ProtectedView, TemplateView):
         # Remove useless fields
         publisher_form.fields.pop(key='notes')
         return publisher_form
+
+    def _init_isbn_import(self, isbn_meta, request):
+                isbn_meta_nb = IsbnUtils.get_isbn_nb_from_meta(isbn_meta)
+                # Initialize book form from isbn meta data
+                book = Book.init_from_isbn(isbn_meta)
+                book_form = BookForm(instance=book)
+                if book_form.instance.id:
+                    return render_to_response(
+                        self.template_name, {
+                            'book_form': book_form,
+                            'search': True,
+                        },
+                        context_instance=RequestContext(request)
+                    )
+                country_code = IsbnUtils.get_country_code(isbn_meta)
+                # Initialize authors forms from isbn meta data
+                authors_form = []
+                i=0
+                authors = Author.init_from_isbn(isbn_meta)
+                for author in authors:
+                    author_form = self._create_author_form(prefix='author_create_%s' %i, instance=author)
+                    authors_form.append(author_form)
+                    i+=1
+
+                # Initialize publisher form from isbn meta data
+                publisher = Publisher.init_from_isbn(isbn_meta)
+                publisher_form = self._create_publisher_form(instance=publisher)
+
+                return render_to_response(
+                    self.template_name, {
+                        'book_form': book_form,
+                        'search': True,
+                        'authors_form': authors_form,
+                        'publisher_form': publisher_form,
+                    },
+                    context_instance=RequestContext(request)
+                )
 
 
 class BookCopyCreateView(EntityCreateView):

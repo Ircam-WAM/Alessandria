@@ -253,12 +253,19 @@ class Reader(ModelEntity):
 class Author(ModelEntity):
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
+    birthday = models.DateField(u"Date de naissance", null=True, blank=True)
     country = CountryField(verbose_name=u'Pays')
     website = models.URLField(verbose_name='Site web', null=True, blank=True)
     notes = models.TextField(u"Notes", null=True, blank=True)
     is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
 
     def clean(self, *args, **kwargs):
+        homonyms = Author.objects.filter(first_name__iexact=self.first_name
+            ).filter(last_name__iexact=self.last_name
+            ).filter(birthday=self.birthday
+        )
+        if len(homonyms) > 0:
+            raise ValidationError({'last_name': u"Cet auteur existe déjà."})
         self.last_name = self.last_name.strip().upper()
         self.first_name = self.first_name.strip().title()
         super(Author, self).clean(*args, **kwargs)
