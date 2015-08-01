@@ -253,6 +253,7 @@ class Reader(ModelEntity):
 class Author(ModelEntity):
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
+    birthday = models.DateField(u"Date de naissance", null=True, blank=True)
     country = CountryField(verbose_name=u'Pays')
     website = models.URLField(verbose_name='Site web', null=True, blank=True)
     notes = models.TextField(u"Notes", null=True, blank=True)
