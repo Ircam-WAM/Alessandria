@@ -260,6 +260,12 @@ class Author(ModelEntity):
     is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
 
     def clean(self, *args, **kwargs):
+        homonyms = Author.objects.filter(first_name__iexact=self.first_name
+            ).filter(last_name__iexact=self.last_name
+            ).filter(birthday=self.birthday
+        )
+        if len(homonyms) > 0:
+            raise ValidationError({'last_name': u"Cet auteur existe déjà."})
         self.last_name = self.last_name.strip().upper()
         self.first_name = self.first_name.strip().title()
         super(Author, self).clean(*args, **kwargs)
