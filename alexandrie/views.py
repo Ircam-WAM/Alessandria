@@ -468,7 +468,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                         if not is_error_in_form:
                             is_error_in_form = not author_form.is_valid()
                             if is_error_in_form:
-                                messages.error(self.request, u"Auteur invalide.")
+                                messages.error(self.request, u"Auteur n°. %s invalide." % (i+1))
                         authors_form.append(author_form)
                 else: # The author already exists in the DB
                     authors_ids.append(Author.objects.get(id=request.POST[author_id_fieldname]).id)
