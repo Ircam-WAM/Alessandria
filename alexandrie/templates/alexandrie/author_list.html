@@ -17,6 +17,7 @@
             <thead>
                 <tr>
                     <th>Nom</th>
+                    <th>Date de naissance</th>
                     <th>Créé le</th>
                 </tr>
             </thead>
@@ -24,10 +25,11 @@
                 {% for author in object_list_p %}
                 <tr>
                     <td><a href="{% url 'alexandrie:author_update' author.id %}">{{ author.first_name }}&nbsp;{{ author.last_name }}</a></td>
-                    <td>{{ author.created_on}}</td>
+                    <td>{{ author.birthday|default:"" }}</td>
+                    <td>{{ author.created_on }}</td>
                 </tr>
                 {% empty %}
-                    <tr><td colspan="2">Aucun auteur.</td></tr>
+                    <tr><td colspan="3">Aucun auteur.</td></tr>
                 {% endfor %}
             </tbody>
         </table>
