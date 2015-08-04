@@ -1,32 +1,27 @@
-{% if object_list_p.paginator.count > 0 %}
+{% if paginator.count > 0 %}
     <nav>
         <ul class="pagination">
-            <li><span aria-hidden="true">{{ object_list_p.paginator.count }} enregistrements</span></li>
+            <li><span aria-hidden="true">{{ paginator.count }} enregistrements</span></li>
             <li><span aria-hidden="true">Pages</span></li>
             <li>
-                {% if object_list_p.has_previous %}
-                    <a href="?page={{ object_list_p.previous_page_number }}" aria-label="Précédent">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" aria-label="Précédent">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 {% endif %}
             </li>
-            {% for p in range_pages_before_and_current %}
+            {% for page_number in paginator.page_range %}
                 <li>
-                    {% if p != object_list_p.number %}
-                        <a href="?page={{ p }}">{{ p }}</a>
+                    {% if page_number != page_obj.number %}
+                        <a href="?page={{ page_number }}">{{ page_number }}</a>
                     {% else %}
-                        <span aria-hidden="true"><font color="red">{{ p }}</font></span>
+                        <span aria-hidden="true"><font color="red">{{ page_number }}</font></span>
                     {% endif %}
                 </li>
             {% endfor %}
-            {% for p in range_pages_after %}
-                <li>
-                    <a href="?page={{ p }}">{{ p }}</a>
-                </li>
-            {% endfor %}
             <li>
-                {% if object_list_p.has_next %}
-                    <a href="?page={{ object_list_p.next_page_number }}" aria-label="Suivant">
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" aria-label="Suivant">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 {% endif %}

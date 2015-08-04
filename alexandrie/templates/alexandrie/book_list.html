@@ -59,7 +59,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for book in object_list_p %}
+                {% for book in object_list %}
                 <tr>
                     <td><a href="{% url 'alexandrie:book_update' book.id %}">{{ book.title }}</a></td>
                     <td><a href="{% url 'alexandrie:author_update' book.authors.first.id %}">{{ book.authors.first }}</td>
