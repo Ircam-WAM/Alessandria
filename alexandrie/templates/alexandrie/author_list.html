@@ -16,9 +16,9 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Nom</th>
+                    <th><a href="{% url 'alexandrie:author_list' %}?order_field=last_name">Nom</a></th>
                     <th>Date de naissance</th>
-                    <th>Créé le</th>
+                    <th><a href="{% url 'alexandrie:author_list' %}?order_field=created_on">Créé le</a></th>
                 </tr>
             </thead>
             <tbody>

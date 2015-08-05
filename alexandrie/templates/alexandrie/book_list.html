@@ -51,11 +51,11 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Titre</th>
+                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=title">Titre</a></th>
                     <th>Auteur</th>
-                    <th>No. ISBN</th>
+                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=isbn_nb">No. ISBN</a></th>
                     <th># Exemplaires</th>
-                    <th>Créé le</th>
+                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=created_on">Créé le</a></th>
                 </tr>
             </thead>
             <tbody>

@@ -90,19 +90,47 @@ class EntityListView(ProtectedView, ListView):
         return context
 
     def get(self, request, **kwargs):
-        if self.object_list == None:
-            if request.GET.get('page') != None:
+        order_field = request.GET.get('order_field')
+        if request.GET.get('page') != None or order_field != None:
+            if request.session.get('search_fields') != None:
                 # Rebuild the query upon the search terms entered by the user
                 self._build_query(request.session.get('search_fields'))
             else:
+                if self.object_list == None: # Make sure the subclass didn't already create self.object_list
+                    self.object_list = self.model.objects.all()
+        else:
+            # First time we arrive on a list page
+            if self.object_list == None: # Make sure the subclass didn't already create self.object_list
                 self.object_list = self.model.objects.all()
+            request.session['order_field'] = None
+            request.session['search_fields'] = None
+        if order_field != None:
+            # Sorting request
+            if request.session.get('order_field') != None: # A previous sorting request was done on this page
+                # Check if the sorting field changed in relation to the last sorting request
+                stored_field = request.session.get('order_field')[1:] if request.session.get('order_field').startswith('-') else request.session.get('order_field')
+                if order_field == stored_field:
+                    # Invert sort order
+                    if request.session.get('order_field').startswith('-'):
+                        request.session['order_field'] = request.session.get('order_field')[1:]
+                    else:
+                        request.session['order_field'] = '-' + request.session.get('order_field')
+                else:
+                    # Sorting request on a new field
+                    request.session['order_field'] = order_field
+            else:
+                # First time sorting request for this page
+                request.session['order_field'] = order_field
+        if request.session.get('order_field') != None:
+            self.object_list = self.object_list.order_by(request.session.get('order_field'))
+
         context = self.get_context_data()
-        print(self.render_to_response(context))
         return self.render_to_response(context)
 
     def post(self, request):
         self._build_query(request.POST)
         request.session['search_fields'] = request.POST
+        request.session['order_field'] = None
         context = self.get_context_data()
         if self.form_class != None:
             context['search_form'] = self.form_class(request.POST)
@@ -210,6 +238,7 @@ class ReaderBorrowListView(EntityListView):
             self.object_list = ReaderBorrow.list_all()
         template_response = super(ReaderBorrowListView, self).get(request, **kwargs)
         template_response.context_data['page_title'] = page_title
+        template_response.context_data['display'] = kwargs.get('display')
         return template_response
 
 

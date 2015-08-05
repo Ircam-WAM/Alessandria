@@ -11,10 +11,10 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Emprunt du</th>
-                    <th>Lecteur</th>
-                    <th>Livre</th>
-                    <th>Retour pour le</th>
+                    <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=borrowed_date">Emprunt du</a></th>
+                    <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=reader__last_name">Lecteur</a></th>
+                    <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=bookcopy__book__title">Livre</a></th>
+                    <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=borrow_due_date">Retour pour le</a></th>
                 </tr>
             </thead>
             <tbody>
