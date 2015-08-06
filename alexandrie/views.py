@@ -276,11 +276,7 @@ class AuthorListView(EntityListView):
     form_class = AuthorSearchForm
 
     def _build_query(self, search_fields):
-        self.object_list = self.model.objects.all()
-
-        last_name = search_fields['last_name']
-        if (last_name != ''):
-            self.object_list = self.object_list.filter(last_name__istartswith = last_name.upper())
+        self.object_list = self.model.objects.search(last_name=search_fields['last_name'])
 
 
 class PublisherCreateView(EntityCreateView):
@@ -316,10 +312,7 @@ class PublisherListView(EntityListView):
     form_class = PublisherSearchForm
 
     def _build_query(self, search_fields):
-        self.object_list = self.model.objects.all()
-        name = search_fields['name']
-        if (name != ''):
-            self.object_list = self.object_list.filter(name__istartswith = name.upper())
+        self.object_list = self.model.objects.search(name=search_fields['name'])
 
 
 class BookCreateView(EntityCreateView):
@@ -365,25 +358,10 @@ class BookListView(EntityListView):
     form_class = BookSearchForm
 
     def _build_query(self, search_fields):
-        self.object_list = self.model.objects.all()
-
-        title = search_fields['title']
-        category = search_fields['category']
-        sub_category = search_fields['sub_category']
-        isbn_nb = search_fields['isbn_nb']
-        author_last_name = search_fields['author_last_name']
-
-        if (isbn_nb != ''):
-            isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
-            self.object_list = self.object_list.filter(isbn_nb = isbn_nb)
-        if (title != ''):
-            self.object_list = self.object_list.filter(title__icontains = title)
-        if (category != ''):
-            self.object_list = self.object_list.filter(category__id = category)
-        if (sub_category != ''):
-            self.object_list = self.object_list.filter(sub_category__id = sub_category)
-        if (author_last_name != ''):
-            self.object_list = self.object_list.filter(authors__last_name__icontains=author_last_name)
+        self.object_list = Book.objects.search(
+            isbn_nb=search_fields['isbn_nb'], title=search_fields['title'], category=search_fields['category'],
+            sub_category=search_fields['sub_category'], author_last_name=search_fields['author_last_name']
+    )
 
 
 class BookIsbnImportView(ProtectedView, TemplateView):
@@ -622,7 +600,4 @@ class ReaderListView(EntityListView):
     form_class = ReaderSearchForm
 
     def _build_query(self, search_fields):
-        self.object_list = self.model.objects.all()
-        last_name = search_fields['last_name']
-        if (last_name != ''):
-            self.object_list = self.object_list.filter(last_name__istartswith = last_name.upper())
+        self.object_list = self.model.objects.search(last_name=search_fields['last_name'])

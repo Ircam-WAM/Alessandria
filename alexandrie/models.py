@@ -186,6 +186,12 @@ class ReaderQuerySet(models.QuerySet):
             last_name=last_name.upper()
         ).first()
 
+    def search(self, last_name=''):
+        r_list = self.all()
+        if last_name != '':
+            r_list = r_list.filter(last_name__istartswith = last_name.upper())
+        return r_list
+
 class Reader(ModelEntity):
     number = models.PositiveIntegerField(u"Numéro", unique=True)
     inscription_date = models.DateField(u"Date d'inscription")
@@ -261,6 +267,12 @@ class AuthorQuerySet(models.QuerySet):
             last_name=last_name.upper(),
         ).first()
 
+    def search(self, last_name=''):
+        r_list = self.all()
+        if last_name != '':
+            r_list = r_list.filter(last_name__istartswith = last_name)
+        return r_list
+
 class Author(ModelEntity):
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
@@ -322,6 +334,12 @@ class PublisherQuerySet(models.QuerySet):
     def get_by_name(self, name):
         return self.filter(name=name.upper()).first()
 
+    def search(self, name=''):
+        r_list = self.all()
+        if name != '':
+            r_list = r_list.filter(name__istartswith = name.upper())
+        return r_list
+
 class Publisher(ModelEntity):
     name = models.CharField(u"Nom", max_length=30, unique=True)
     country = CountryField(verbose_name=u'Pays')
@@ -359,6 +377,21 @@ class Publisher(ModelEntity):
 class BookQuerySet(models.QuerySet):
     def get_by_title(self, title):
         return self.filter(name=name.capitalize()).first()
+
+    def search(self, isbn_nb='', title='', category='', sub_category='', author_last_name=''):
+        r_list = self.all()
+        if (isbn_nb != ''):
+            isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
+            r_list = r_list.filter(isbn_nb = isbn_nb)
+        if (title != ''):
+            r_list = r_list.filter(title__icontains = title)
+        if (category != ''):
+            r_list = r_list.filter(category__id = category)
+        if (sub_category != ''):
+            r_list = r_list.filter(sub_category__id = sub_category)
+        if (author_last_name != ''):
+            r_list = r_list.filter(authors__last_name__icontains=author_last_name)
+        return r_list
 
 class Book(ModelEntity):
     title = models.CharField(u"Titre", max_length=50)
