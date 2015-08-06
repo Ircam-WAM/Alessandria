@@ -134,6 +134,7 @@ class EntityListView(ProtectedView, ListView):
         context = self.get_context_data()
         if self.form_class != None:
             context['search_form'] = self.form_class(request.POST)
+            context['author_name'] = request.POST['author_name']
         context['object_list'] = self.object_list
         return self.render_to_response(context)
 
@@ -360,7 +361,7 @@ class BookListView(EntityListView):
     def _build_query(self, search_fields):
         self.object_list = Book.objects.search(
             isbn_nb=search_fields['isbn_nb'], title=search_fields['title'], category=search_fields['category'],
-            sub_category=search_fields['sub_category'], author_name=search_fields['author_last_name']
+            sub_category=search_fields['sub_category'], author_name=search_fields['author_name']
     )
 
 
