@@ -478,7 +478,8 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                     publisher_form = self._create_publisher_form(form_post=request.POST)
                     if not is_error_in_form:
                         is_error_in_form = not publisher_form.is_valid()
-                        messages.error(self.request, u"Editeur invalide.")
+                        if is_error_in_form:
+                            messages.error(self.request, u"Editeur invalide.")
             else: # The publisher already exists in the DB
                 publisher_id = Publisher.objects.get(id=request.POST['publisher_id']).id
 
