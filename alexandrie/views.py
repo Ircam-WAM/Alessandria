@@ -24,7 +24,7 @@ from alexandrie.utils import IsbnUtils
 PAGINATION_SIZE = 15
 
 def load_user_nav_history(request, user):
-    lst = UserNavigationHistory.get_list(user)
+    lst = UserNavigationHistory.objects.get_list(user)
     user_nav_list = []
     for user_nav in lst:
         user_nav_list.append((user_nav.url, user_nav.title))
@@ -148,7 +148,7 @@ class HomeView(ProtectedView, TemplateView):
         # Call the base implementation first to get a context
         context = super(HomeView, self).get_context_data(**kwargs)
         context['last_books_list'] = Book.objects.all()[:10]
-        context['last_appli_news_list'] = AppliNews.list()[:3]
+        context['last_appli_news_list'] = AppliNews.objects.list()[:3]
         return context
 
 class LogoutView(TemplateView):
@@ -229,10 +229,10 @@ class ReaderBorrowListView(EntityListView):
         page_title = ""
         if kwargs.get('display') == 'current':
             page_title = "Emprunts en cours"
-            self.object_list = ReaderBorrow.list_current()
+            self.object_list = ReaderBorrow.objects.list_current()
         elif kwargs.get('display') == 'late':
             page_title = "Emprunts en retard"
-            self.object_list = ReaderBorrow.list_late()
+            self.object_list = ReaderBorrow.objects.list_late()
         else:
             page_title = "Tous les emprunts"
             self.object_list = ReaderBorrow.list_all()
@@ -350,7 +350,7 @@ class BookUpdateView(EntityUpdateView):
         # Call the base implementation first to get a context
         context = super(BookUpdateView, self).get_context_data(**kwargs)
         context['bookcopy_list'] = self.object.bookcopy_set.all()
-        context['borrow_list'] = ReaderBorrow.list_all_by_book(self.object.id)
+        context['borrow_list'] = ReaderBorrow.objects.list_all_by_book(self.object.id)
         return context
 
 class BookDeleteView(EntityDeleteView):

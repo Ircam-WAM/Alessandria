@@ -37,6 +37,10 @@ class GeneralConfiguration(models.Model):
         verbose_name_plural = u"Configuration générale de l'application"
 
 
+class UserNavigationHistoryQuerySet(models.QuerySet):
+    def get_list(self, user):
+        return self.filter(accessed_by=user).order_by('accessed_by')
+
 class UserNavigationHistory(models.Model):
     NAV_HISTORY = 10
 
@@ -45,17 +49,15 @@ class UserNavigationHistory(models.Model):
     title = models.CharField(max_length=80)
     url = models.CharField(max_length=255)
 
+    objects = UserNavigationHistoryQuerySet.as_manager()
+
     @staticmethod
     def add(url, title, user):
-        lst = UserNavigationHistory.get_list(user)
+        lst = UserNavigationHistory.objects.get_list(user)
         if len(lst) >= UserNavigationHistory.NAV_HISTORY:
             lst[0].delete()
         h = UserNavigationHistory(url=url, title=title, accessed_by=user)
         h.save()
-
-    @staticmethod
-    def get_list(user):
-        return UserNavigationHistory.objects.filter(accessed_by=user).order_by('accessed_by')
 
     @staticmethod
     def exist_url(url):
@@ -154,18 +156,19 @@ class ModelEntity(models.Model):
         abstract = True
 
 
+class AppliNewsQuerySet(models.QuerySet):
+    def list(self):
+        return self.filter(publish_date__lte=stddate.today())
+
+    def get_last(self):
+        # We use first, because of the default ordering
+        return self.filter(publish_date__lte=stddate.today()).first()
+
 class AppliNews(models.Model):
     publish_date = models.DateField(verbose_name=u"Date de publication")
     news = models.TextField(verbose_name=u"Info")
 
-    @staticmethod
-    def get_last():
-        # We use first, because of the default ordering
-        return AppliNews.objects.filter(publish_date__lte=stddate.today()).first()
-
-    @staticmethod
-    def list():
-        return AppliNews.objects.filter(publish_date__lte=stddate.today())
+    objects = AppliNewsQuerySet.as_manager()
 
     def __str__(self):
         return "%s - %s" % (self.publish_date, self.news)
@@ -175,6 +178,13 @@ class AppliNews(models.Model):
         verbose_name_plural = u"Infos de l'application"
         ordering = ['-publish_date']
 
+
+class ReaderQuerySet(models.QuerySet):
+    def get_by_first_and_last_name(self, first_name, last_name):
+        return self.filter(
+            first_name=first_name.title(),
+            last_name=last_name.upper()
+        ).first()
 
 class Reader(ModelEntity):
     number = models.PositiveIntegerField(u"Numéro", unique=True)
@@ -198,6 +208,8 @@ class Reader(ModelEntity):
     disabled_on = models.DateField("Date de désactivation", blank=True, null=True)
     notes = models.TextField(u"Notes", null=True, blank=True)
 
+    objects = ReaderQuerySet.as_manager()
+
     #Overriding
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -211,13 +223,6 @@ class Reader(ModelEntity):
         if not self.email: # Force empty string to be 'None'
             self.email = None
         super(Reader, self).clean(*args, **kwargs)
-
-    @staticmethod
-    def get_by_first_and_last_name(first_name, last_name):
-        return Reader.objects.filter(
-            first_name=first_name.title(),
-            last_name=last_name.upper()
-        ).first()
 
     def is_disabled(self):
         return self.disabled_on is not None
@@ -249,6 +254,12 @@ class Reader(ModelEntity):
         ordering = ['last_name', 'first_name']
         verbose_name = "Lecteur"
 
+class AuthorQuerySet(models.QuerySet):
+    def get_by_first_and_last_name(self, first_name, last_name):
+        return self.filter(
+            first_name=first_name.title(),
+            last_name=last_name.upper(),
+        ).first()
 
 class Author(ModelEntity):
     first_name = models.CharField(u"Prénom", max_length=20)
@@ -258,6 +269,8 @@ class Author(ModelEntity):
     website = models.URLField(verbose_name='Site web', null=True, blank=True)
     notes = models.TextField(u"Notes", null=True, blank=True)
     is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
+
+    objects = AuthorQuerySet.as_manager()
 
     def clean(self, *args, **kwargs):
         homonyms = Author.objects.filter(first_name__iexact=self.first_name
@@ -279,19 +292,12 @@ class Author(ModelEntity):
         return self.book_set.all()
 
     @staticmethod
-    def get_by_first_and_last_name(first_name, last_name):
-        return Author.objects.filter(
-            first_name=first_name.title(),
-            last_name=last_name.upper(),
-        ).first()
-
-    @staticmethod
     def init_from_isbn(isbn_meta):
         authors = []
         for author in isbn_meta['Authors']:
             # Example of author : "John Doe", "John Henry Doe"
             first_name, last_name = IsbnUtils.author_unpack(author)
-            author = Author.get_by_first_and_last_name(first_name, last_name)
+            author = Author.objects.get_by_first_and_last_name(first_name, last_name)
             if author is None:
                 author = Author(
                     first_name=first_name,
@@ -312,26 +318,26 @@ class Author(ModelEntity):
         verbose_name = "Auteur"
 
 
+class PublisherQuerySet(models.QuerySet):
+    def get_by_name(self, name):
+        return self.filter(name=name.upper()).first()
+
 class Publisher(ModelEntity):
     name = models.CharField(u"Nom", max_length=30, unique=True)
     country = CountryField(verbose_name=u'Pays')
     notes = models.TextField(u"Notes", null=True, blank=True)
     is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
 
+    objects = PublisherQuerySet.as_manager()
+
     def clean(self, *args, **kwargs):
         self.name = self.name.strip().upper()
         super(Publisher, self).clean(*args, **kwargs)
 
     @staticmethod
-    def get_by_name(name):
-        return Publisher.objects.filter(
-            name=name.upper()
-        ).first()
-
-    @staticmethod
     def init_from_isbn(isbn_meta):
         name = isbn_meta['Publisher'].strip() if isbn_meta['Publisher'] else ""
-        publisher = Publisher.get_by_name(name)
+        publisher = Publisher.objects.get_by_name(name)
         if publisher is None:
             publisher = Publisher(
                 name=name,
@@ -349,6 +355,10 @@ class Publisher(ModelEntity):
         ordering = ['name']
         verbose_name = "Editeur"
 
+
+class BookQuerySet(models.QuerySet):
+    def get_by_title(self, title):
+        return self.filter(name=name.capitalize()).first()
 
 class Book(ModelEntity):
     title = models.CharField(u"Titre", max_length=50)
@@ -370,6 +380,8 @@ class Book(ModelEntity):
     notes = models.TextField(u"Notes", null=True, blank=True)
     is_isbn_import = models.BooleanField(u"Import ISBN", default=False)
 
+    objects = BookQuerySet.as_manager()
+
     def clean(self, *args, **kwargs):
         if not self.isbn_nb: # Force empty string to be 'None'
             self.isbn_nb = None
@@ -383,12 +395,6 @@ class Book(ModelEntity):
     def save(self, *args, **kwargs):
         self.full_clean()
         super(Book, self).save(*args, **kwargs)
-
-    @staticmethod
-    def get_by_title(title):
-        return Book.objects.filter(
-            name=name.capitalize()
-        ).first()
 
     @staticmethod
     def init_from_isbn(isbn_meta):
@@ -461,6 +467,16 @@ class BookCopy(ModelEntity):
         verbose_name_plural = "Exemplaires d'un livre"
 
 
+class ReaderBorrowQuerySet(models.QuerySet):
+    def list_all_by_book(self, book_id):
+        return self.filter(bookcopy__book__id=book_id)
+
+    def list_current(self):
+        return self.filter(returned_on=None)
+
+    def list_late(self):
+        return self.filter(returned_on=None, borrow_due_date__lt=stddatetime.now())
+
 class ReaderBorrow(ModelEntity):
     reader = models.ForeignKey(Reader, verbose_name=u'Lecteur')
     bookcopy = models.ForeignKey(BookCopy, verbose_name=u'Exemplaire')
@@ -468,6 +484,8 @@ class ReaderBorrow(ModelEntity):
     borrow_due_date = models.DateField(u"Retour pour le")
     returned_on = models.DateField(u"Retourné le", blank=True, null=True)
     notes = models.TextField(u"Notes", null=True, blank=True)
+
+    objects = ReaderBorrowQuerySet.as_manager()
 
     def clean(self):
         already_borrowed = ReaderBorrow.objects.filter(
@@ -499,16 +517,6 @@ class ReaderBorrow(ModelEntity):
 
     def list_all():
         return ReaderBorrow.objects.all()
-
-    @staticmethod
-    def list_all_by_book(book_id):
-        return ReaderBorrow.objects.filter(bookcopy__book__id=book_id)
-
-    def list_current():
-        return ReaderBorrow.objects.filter(returned_on=None)
-
-    def list_late():
-        return ReaderBorrow.objects.filter(returned_on=None, borrow_due_date__lt=stddatetime.now())
 
     def get_full_name(self):
         if self.borrowed_date:
