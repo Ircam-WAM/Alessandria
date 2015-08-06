@@ -170,8 +170,8 @@ class BookTest(GenericTest):
         self.assertEqual(isbnlib.get_canonical_isbn(isbn_nb), '9783037680582')
         isbn_meta = isbnlib.meta(isbn_nb)
         self.assertTrue(isbn_meta['Title'].startswith('The Tourist City Berlin'))
-        self.assertEqual(isbn_meta['Publisher'], 'Braun')
-        self.assertEqual(isbn_meta['Authors'][0], 'Jana Richter')
+        self.assertIn('Braun', isbn_meta['Publisher'])
+        self.assertIn('Jana Richter', isbn_meta['Authors'][0])
         self.assertEqual(isbn_meta['Language'], 'eng')
         self.assertEqual(isbn_meta['Year'], '2010')
 
