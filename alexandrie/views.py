@@ -276,7 +276,7 @@ class AuthorListView(EntityListView):
     form_class = AuthorSearchForm
 
     def _build_query(self, search_fields):
-        self.object_list = self.model.objects.search(last_name=search_fields['last_name'])
+        self.object_list = self.model.objects.search(name=search_fields['last_name'])
 
 
 class PublisherCreateView(EntityCreateView):
@@ -360,7 +360,7 @@ class BookListView(EntityListView):
     def _build_query(self, search_fields):
         self.object_list = Book.objects.search(
             isbn_nb=search_fields['isbn_nb'], title=search_fields['title'], category=search_fields['category'],
-            sub_category=search_fields['sub_category'], author_last_name=search_fields['author_last_name']
+            sub_category=search_fields['sub_category'], author_name=search_fields['author_last_name']
     )
 
 

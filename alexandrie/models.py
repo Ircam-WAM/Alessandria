@@ -6,6 +6,7 @@ from datetime import datetime as stddate
 from datetime import date as stddate
 
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User as DjangoUser
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
@@ -267,15 +268,16 @@ class AuthorQuerySet(models.QuerySet):
             last_name=last_name.upper(),
         ).first()
 
-    def search(self, last_name=''):
+    def search(self, name=''):
         r_list = self.all()
-        if last_name != '':
-            r_list = r_list.filter(last_name__istartswith = last_name)
+        if name != '':
+            r_list = r_list.filter(Q(last_name__istartswith = name) | Q(alias__istartswith = name))
         return r_list
 
 class Author(ModelEntity):
     first_name = models.CharField(u"Prénom", max_length=20)
     last_name = models.CharField(u"Nom", max_length=30)
+    alias = models.CharField(u"Nom d'emprunt", max_length=20, null=True, blank=True)
     birthday = models.DateField(u"Date de naissance", null=True, blank=True)
     country = CountryField(verbose_name=u'Pays')
     website = models.URLField(verbose_name='Site web', null=True, blank=True)
@@ -293,12 +295,17 @@ class Author(ModelEntity):
             raise ValidationError({'last_name': u"Cet auteur existe déjà."})
         self.last_name = self.last_name.strip().upper()
         self.first_name = self.first_name.strip().title()
+        if self.alias:
+            self.alias = self.alias.strip().title()
         super(Author, self).clean(*args, **kwargs)
 
     def get_full_name(self):
         if not self.first_name:
             return ""
-        return ' '.join([self.first_name, self.last_name])
+        full_name = ' '.join([self.first_name, self.last_name])
+        if self.alias:
+            full_name += ' (' + self.alias + ')'
+        return full_name
 
     def get_books(self):
         return self.book_set.all()
@@ -378,7 +385,7 @@ class BookQuerySet(models.QuerySet):
     def get_by_title(self, title):
         return self.filter(name=name.capitalize()).first()
 
-    def search(self, isbn_nb='', title='', category='', sub_category='', author_last_name=''):
+    def search(self, isbn_nb='', title='', category='', sub_category='', author_name=''):
         r_list = self.all()
         if (isbn_nb != ''):
             isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
@@ -389,8 +396,8 @@ class BookQuerySet(models.QuerySet):
             r_list = r_list.filter(category__id = category)
         if (sub_category != ''):
             r_list = r_list.filter(sub_category__id = sub_category)
-        if (author_last_name != ''):
-            r_list = r_list.filter(authors__last_name__icontains=author_last_name)
+        if (author_name != ''):
+            r_list = r_list.filter(Q(authors__last_name__icontains=author_name) | Q(authors__alias__icontains=author_name))
         return r_list
 
 class Book(ModelEntity):
