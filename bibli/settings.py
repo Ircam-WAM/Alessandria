@@ -69,6 +69,7 @@ TEMPLATES = [
                 # Used for i18n of jquery date picker plugin (http://keith-wood.name/datepick.html)
                 "alexandrie.context_processors.js_datepicker_lang",
                 "alexandrie.context_processors.app_version",
+                "alexandrie.context_processors.library_infos",
             ],
         },
     },
