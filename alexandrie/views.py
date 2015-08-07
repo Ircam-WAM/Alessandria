@@ -15,12 +15,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
-import isbnlib
+import isbnlib, logging
 
 from alexandrie.models import *
 from alexandrie.forms import *
 from alexandrie.utils import IsbnUtils
 
+logger = logging.getLogger(__name__)
 PAGINATION_SIZE = 15
 
 def load_user_nav_history(request, user):
