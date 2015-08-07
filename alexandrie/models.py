@@ -20,6 +20,15 @@ class GeneralConfiguration(models.Model):
     default_country = CountryField(verbose_name=u'Pays par défaut', default="FR")
     max_borrow_days = models.PositiveSmallIntegerField(u"Nombre de jours maximum pour le prêt", default=21)
     nav_history = models.PositiveSmallIntegerField(u"Historique de navigation", default=10)
+    library_name = models.CharField(u"Nom bibliothèque", max_length=80)
+    library_addr1 = models.CharField(u"Adresse 1 bibliothèque", max_length=30)
+    library_addr2 = models.CharField(u"Adresse 2 bibliothèque", max_length=30, null=True, blank=True)
+    library_zip = models.CharField(u"Code postal bibliothèque", max_length=10)
+    library_city = models.CharField(u"Ville bibliothèque", max_length=30)
+    library_country = CountryField(verbose_name=u'Pays bibliothèque')
+    library_phone_number = models.CharField(u"Téléphone bibliothèque", max_length=20, null=True, blank=True)
+    library_email = models.EmailField(u"E-mail bibliothèque", unique=True, null=True, blank=True)
+    library_website = models.URLField(verbose_name='Site web bibliothèque', null=True, blank=True)
 
     @staticmethod
     def get():

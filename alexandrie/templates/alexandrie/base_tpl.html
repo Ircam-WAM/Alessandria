@@ -9,7 +9,7 @@
         <meta name="author" content="Marc SCHNEIDER">
         <!--link rel="icon" href="../../favicon.ico" -->
       
-        <title>{% block title %}Alexandrie{% endblock %}</title>
+        <title>{% block title %}Alexandrie - {{ LIBRARY_NAME }}{% endblock %}</title>
       
         <link rel="stylesheet" href="{% static 'alexandrie/layout/bootstrap/css/bootstrap.min.css' %}" />
         <link rel="stylesheet" href="{% static 'alexandrie/layout/style.css' %}" />
@@ -126,7 +126,7 @@
             </div>
         </div><!-- /.container -->
         <div align="center">
-            Alexandrie - License GNU GPLv3 - {{ VERSION|safe }}
+            Alexandrie - Licence GNU GPLv3 - {{ VERSION|safe }} - {{ LIBRARY_NAME }}
         </div>
         <!-- Bootstrap core JavaScript
         ================================================== -->

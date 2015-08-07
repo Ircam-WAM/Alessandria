@@ -7,3 +7,6 @@ def js_datepicker_lang(request):
 
 def app_version(request):
     return {'VERSION': __version__}
+
+def library_infos(request):
+    return {'LIBRARY_NAME': settings.LIBRARY_INFOS['name']}
