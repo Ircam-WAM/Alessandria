@@ -134,7 +134,6 @@ class EntityListView(ProtectedView, ListView):
         context = self.get_context_data()
         if self.form_class != None:
             context['search_form'] = self.form_class(request.POST)
-            context['author_name'] = request.POST['author_name']
         context['object_list'] = self.object_list
         return self.render_to_response(context)
 
@@ -363,6 +362,11 @@ class BookListView(EntityListView):
             isbn_nb=search_fields['isbn_nb'], title=search_fields['title'], category=search_fields['category'],
             sub_category=search_fields['sub_category'], author_name=search_fields['author_name']
     )
+
+    def post(self, request):
+        template_response = super(self.__class__, self).post(request)
+        template_response.context_data['author_name'] = request.POST['author_name']
+        return template_response
 
 
 class BookIsbnImportView(ProtectedView, TemplateView):
