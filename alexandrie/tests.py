@@ -108,8 +108,8 @@ class PublisherTest(GenericTest):
         p_r = Publisher.objects.get(id=p.id)
         self.assertEqual('PUB À', p_r.name)
         
-        self.assertIsNotNone(Publisher.get_by_name('pub à'))
-        self.assertIsNotNone(Publisher.get_by_name('PUB À'))
+        self.assertIsNotNone(Publisher.objects.get_by_name('pub à'))
+        self.assertIsNotNone(Publisher.objects.get_by_name('PUB À'))
 
 
 class AuthorTest(GenericTest):
@@ -123,8 +123,8 @@ class AuthorTest(GenericTest):
         self.assertEqual('Jean-Marc', a_r.first_name)
         self.assertEqual('FARÀ', a_r.last_name)
 
-        self.assertIsNotNone(Author.get_by_first_and_last_name('jean-marc', 'farà'))
-        self.assertIsNotNone(Author.get_by_first_and_last_name('JEAN-MARC', 'FARÀ'))
+        self.assertIsNotNone(Author.objects.get_by_first_and_last_name('jean-marc', 'farà'))
+        self.assertIsNotNone(Author.objects.get_by_first_and_last_name('JEAN-MARC', 'FARÀ'))
 
 
 class BookTest(GenericTest):
@@ -163,15 +163,15 @@ class BookTest(GenericTest):
     def test_isbn_lib(self):
         """Ensure the isbnlib works but also show use cases"""
         self.assertIsNone(isbnlib.get_canonical_isbn('notisbn'))
-        self.assertIsNone(isbnlib.get_canonical_isbn('12345'))
+        self.assertIsNone(isbnlib.get_canonical_isbn('345'))
 
         isbn_nb = '978-3-03768-058-2'
         self.assertTrue(isbnlib.is_isbn13(isbn_nb))
         self.assertEqual(isbnlib.get_canonical_isbn(isbn_nb), '9783037680582')
         isbn_meta = isbnlib.meta(isbn_nb)
         self.assertTrue(isbn_meta['Title'].startswith('The Tourist City Berlin'))
-        self.assertEqual(isbn_meta['Publisher'], 'Braun')
-        self.assertEqual(isbn_meta['Authors'][0], 'Jana Richter')
+        self.assertIn('Braun', isbn_meta['Publisher'])
+        self.assertIn('Jana Richter', isbn_meta['Authors'][0])
         self.assertEqual(isbn_meta['Language'], 'eng')
         self.assertEqual(isbn_meta['Year'], '2010')
 
@@ -198,8 +198,8 @@ class ReaderTest(GenericTest):
         self.assertEqual('Jean-Marc', r_r.first_name)
         self.assertEqual('PELÈ', r_r.last_name)
 
-        self.assertIsNotNone(Reader.get_by_first_and_last_name('jean-marc', 'pelè'))
-        self.assertIsNotNone(Reader.get_by_first_and_last_name('JEAN-MARC', 'PELÈ'))   
+        self.assertIsNotNone(Reader.objects.get_by_first_and_last_name('jean-marc', 'pelè'))
+        self.assertIsNotNone(Reader.objects.get_by_first_and_last_name('JEAN-MARC', 'PELÈ'))   
 
 class AppliNewsTest(GenericTest):
     def setUp(self):
@@ -211,13 +211,13 @@ class AppliNewsTest(GenericTest):
         n2 = AppliNews(publish_date=date.today(), news="Hello2")
         n2.save()
         self.assertEqual(AppliNews.objects.count(), 2)
-        self.assertEqual(AppliNews.get_last().news, "Hello2")
+        self.assertEqual(AppliNews.objects.get_last().news, "Hello2")
         n_future = AppliNews(publish_date=date.today() + timedelta(days=2), news="Hello future")
         n_future.save()
         self.assertEqual(AppliNews.objects.count(), 3)
         # Make sure we don't retrieve news that will be published in the future
-        self.assertEqual(len(AppliNews.list()), 2)
-        self.assertEqual(AppliNews.get_last().news, "Hello2")
+        self.assertEqual(len(AppliNews.objects.list()), 2)
+        self.assertEqual(AppliNews.objects.get_last().news, "Hello2")
 
 
 class UtilsTest(TestCase):

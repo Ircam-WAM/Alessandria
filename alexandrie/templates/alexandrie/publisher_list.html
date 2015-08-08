@@ -16,12 +16,12 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Créé le</th>
+                    <th><a href="{% url 'alexandrie:publisher_list' %}?order_field=name">Nom</a></th>
+                    <th><a href="{% url 'alexandrie:publisher_list' %}?order_field=created_on">Créé le</a></th>
                 </tr>
             </thead>
             <tbody>
-                {% for publisher in object_list_p %}
+                {% for publisher in object_list %}
                 <tr>
                     <td><a href="{% url 'alexandrie:publisher_update' publisher.id %}">{{ publisher.name }}</a></td>
                     <td>{{ publisher.created_on}}</td>

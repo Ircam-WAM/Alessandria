@@ -16,15 +16,15 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Nom</th>
+                    <th><a href="{% url 'alexandrie:author_list' %}?order_field=last_name">Nom</a></th>
                     <th>Date de naissance</th>
-                    <th>Créé le</th>
+                    <th><a href="{% url 'alexandrie:author_list' %}?order_field=created_on">Créé le</a></th>
                 </tr>
             </thead>
             <tbody>
-                {% for author in object_list_p %}
+                {% for author in object_list %}
                 <tr>
-                    <td><a href="{% url 'alexandrie:author_update' author.id %}">{{ author.first_name }}&nbsp;{{ author.last_name }}</a></td>
+                    <td><a href="{% url 'alexandrie:author_update' author.id %}">{{ author }}</a></td>
                     <td>{{ author.birthday|default:"" }}</td>
                     <td>{{ author.created_on }}</td>
                 </tr>

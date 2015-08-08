@@ -24,7 +24,10 @@ class ReaderBorrowForm(CommonForm):
     class Meta:
         model = ReaderBorrow
         exclude = _l_default_exclude_fields
-
+    borrowed_date = forms.DateField(
+        label=Meta.model._meta.get_field('borrowed_date').verbose_name,
+        initial= datetime.date.today()
+    )
     borrow_due_date = forms.DateField(
         label=Meta.model._meta.get_field('borrow_due_date').verbose_name,
         initial= datetime.date.today() + datetime.timedelta(

@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label for="author_last_name" class="col-sm-2 control-label">Nom auteur</label>
                         <div class="col-sm-10">
-                            <input type="text" id="author_last_name" name="author_last_name"/>
+                            <input type="text" id="author_name" name="author_name" value="{{ author_name }}"/>
                         </div>
                     </div>
                 </div>
@@ -51,15 +51,15 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Titre</th>
+                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=title">Titre</a></th>
                     <th>Auteur</th>
-                    <th>No. ISBN</th>
+                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=isbn_nb">No. ISBN</a></th>
                     <th># Exemplaires</th>
-                    <th>Créé le</th>
+                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=created_on">Créé le</a></th>
                 </tr>
             </thead>
             <tbody>
-                {% for book in object_list_p %}
+                {% for book in object_list %}
                 <tr>
                     <td><a href="{% url 'alexandrie:book_update' book.id %}">{{ book.title }}</a></td>
                     <td><a href="{% url 'alexandrie:author_update' book.authors.first.id %}">{{ book.authors.first }}</td>
