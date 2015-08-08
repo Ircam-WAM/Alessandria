@@ -353,7 +353,7 @@ class PublisherQuerySet(models.QuerySet):
     def search(self, name=''):
         r_list = self.all()
         if name != '':
-            r_list = r_list.filter(name__istartswith = name.upper())
+            r_list = r_list.filter(name__icontains = name.upper())
         return r_list
 
 class Publisher(ModelEntity):
