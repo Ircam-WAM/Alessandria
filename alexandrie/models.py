@@ -159,7 +159,6 @@ class ModelEntity(models.Model):
         super(ModelEntity, self).clean(*args, **kwargs)
 
     def save(self, *args, **kwargs):
-        self.full_clean()
         super(ModelEntity, self).save(*args, **kwargs)
 
     class Meta:
