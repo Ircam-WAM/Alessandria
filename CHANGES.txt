@@ -1,3 +1,18 @@
+Version 0.7
+===========
+b8dc07e Set default borrowed date to today
+8f46bef Publisher search: search in the whole name and not only at the beginning
+b758598 Fixes issue #7 (Setup logging)
+0e62f48 Fixes issue #3 (Possibility to set library infos)
+920e4b8 Fixes issue #8 (Search for books: author name not kept)
+72f7646 Fixes issue #5 (Add 'alias' field for Author)
+df8a66d Use __str__ to display the author's information
+a84e95e Use querysets when searching for entities
+c40a021 Use querysets when possible
+e1ee357 ISBN unit test more flexible for the content
+4430c18 Fixes issue #2 (Enable sorting on column in list pages )
+27a54a4 Fixes #1 (refactor list pagination)
+
 Version 0.6
 ===========
 2609285 Ensure Django 1.8 compatibility
@@ -8,3 +23,4 @@ Version 0.6
 d579bf1 Possibility to search a book by author
 32d8466 Improve title of reader borrow page
 63b322d Properly handle ISBN import errors
+
