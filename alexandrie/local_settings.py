@@ -30,7 +30,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'logs/alexandrie.log',
+            'filename': 'alexandrie/logs/alexandrie.log',
             'formatter': 'verbose'
         },
     },
