@@ -18,9 +18,12 @@ This is an application to manage a book library.
     </pre>
   * At the end of the file, add:<pre>
     from alexandrie.local_settings import *</pre>
-* Open the file *urls.py* of your django project and add to *urls_patterns*:<pre>urlpatterns = patterns('',
+* Open the file *urls.py* of your django project
+  * Add this import at the beginning of the file:<pre>from ajax_select import urls as ajax_select_urls</pre>
+  * Add to *urls_patterns*:<pre>urlpatterns = patterns('',
     ...
     url(r'^alexandrie/', include('alexandrie.urls', namespace='alexandrie')),
+    url(r'^alexandrie/ajax_lookups/', include(ajax_select_urls)),
 )</pre>
 * Initialize database:<pre>./manage.py migrate
 ./manage.py loaddata --app alexandrie ref_data</pre>
@@ -29,7 +32,7 @@ This is an application to manage a book library.
 
 * Run the app:<pre>./manage.py runserver</pre>
 * Go to the Django Admin page (e.g. http://127.0.0.1:8000/admin)
-* Enter initial data (general configuration, book categories, ...)
+* Adapt configuration data to your needs (general configuration, book categories, ...)
 
 # Usage
 
