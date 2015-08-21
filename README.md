@@ -31,7 +31,7 @@ This is an application to manage a book library.
 ## First run
 
 * Run the app:<pre>./manage.py runserver</pre>
-* Go to the Django Admin page (e.g. http://127.0.0.1:8000/admin)
+* Go to the Django Admin page (e.g. http://127.0.0.1:8000/admin) and log in as admin/admin
 * Adapt configuration data to your needs (general configuration, book categories, ...)
 
 # Usage
