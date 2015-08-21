@@ -30,7 +30,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'alexandrie/logs/alexandrie.log',
+            'filename': 'alexandrie.log',
             'formatter': 'verbose'
         },
     },
@@ -47,7 +47,8 @@ LOGGING = {
     }
 }
 
-# define the lookup channels in use on the site (autocomplete stuff)
+# Define the lookup channels in use on the site (autocomplete stuff)
+# Used in forms.py
 AJAX_LOOKUP_CHANNELS = {
     'reader_list': ('alexandrie.ajax_lookup', 'ReaderLookup'),
     'bookcopy_list': ('alexandrie.ajax_lookup', 'BookCopyLookup'),
