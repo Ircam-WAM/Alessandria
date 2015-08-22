@@ -108,13 +108,13 @@
                     {% endfor %}
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Editeur&nbsp;n°:
+                            <h3 class="panel-title">
                                 {% if not publisher_form.instance.id %}
-                                    cet éditeur n'existe pas dans la base, le créer?
+                                    Cet éditeur n'existe pas dans la base, le créer?
                                     <input name="publisher_to_create" type="checkbox" value="publisher" checked/>
                                 {% else %}
                                     <input name="publisher_id" type="hidden" value="{{ publisher_form.instance.id }}" />
-                                    cet éditeur existe déjà dans la base, il sera associé au livre.
+                                    Cet éditeur existe déjà dans la base, il sera associé au livre.
                                 {% endif %}
                              </h3>
                         </div>
