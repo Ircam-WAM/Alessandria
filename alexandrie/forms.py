@@ -34,6 +34,8 @@ class ReaderBorrowForm(CommonForm):
             days=settings.GENERAL_CONFIGURATION.max_borrow_days
         )
     )
+
+    # 'bookcopy_list' and 'reader_list' are defined in local_settings.py (dict AJAX_LOOKUP_CHANNELS)
     bookcopy  = AutoCompleteSelectField('bookcopy_list', label=Meta.model._meta.get_field('bookcopy').verbose_name,
                                         required=True, help_text=None,
                                         plugin_options = {'autoFocus': True, 'minLength': 3})
@@ -111,6 +113,7 @@ class BookForm(CommonForm):
         widget=forms.TextInput(attrs={'size': '40'})
     )
 
+    # 'author_list' and 'publisher_list' are defined in local_settings.py (dict AJAX_LOOKUP_CHANNELS)
     authors  = AutoCompleteSelectMultipleField(
                     'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
                     required=True, help_text=u"Insérer les 1ères lettres du nom",

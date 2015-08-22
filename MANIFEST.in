@@ -1,0 +1,3 @@
+# Other files and directories are automatically included in setup.py (package_data)
+include LICENSE
+include README.md
