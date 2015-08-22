@@ -62,7 +62,7 @@ setup(
     ],
     install_requires=[
         'django>=1.7',
-        'django-countries>=2.1.2',
+        'django-countries>=3.3',
         'django-ajax-selects>=1.3.6',
         'simplejson>=3.8.0',
         'pillow>=2.9.0',
