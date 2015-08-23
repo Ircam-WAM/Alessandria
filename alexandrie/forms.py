@@ -115,12 +115,12 @@ class BookForm(CommonForm):
     # 'author_list' and 'publisher_list' are defined in local_settings.py (dict AJAX_LOOKUP_CHANNELS)
     authors  = AutoCompleteSelectMultipleField(
                     'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
-                    required=True, help_text=u"Insérer les 1ères lettres du nom",
+                    required=True, help_text=None,
                     plugin_options = {'autoFocus': True, 'minLength': 3}
     )
     publishers  = AutoCompleteSelectMultipleField(
                     'publisher_list', label=Meta.model._meta.get_field('publishers').verbose_name,
-                    required=True, help_text=u"Insérer les 1ères lettres du nom",
+                    required=True, help_text=None,
                     plugin_options = {'autoFocus': True, 'minLength': 3}
     )
     audiences = forms.ModelMultipleChoiceField(
