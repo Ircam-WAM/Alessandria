@@ -16,7 +16,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-8">
         {% include 'alexandrie/_inc_form_edit_header.html' %}
         <div class="panel panel-info">
             <div class="panel-body">
@@ -27,6 +27,28 @@
                 {% include 'alexandrie/_inc_form_edit_footer.html' %}
             </div>
         </div>
+    </div>
+    <div class="col-sm-4">
+    {% if object.id > 0 %}
+        {% for author in object.bookcopy.book.authors.all %}
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Autres livres de <a href="{% url 'alexandrie:author_update' author.id %}">{{ author }}</a></h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                    {% for book in author.book_set.all %}
+                        {% if book.id != object.bookcopy.book.id %}
+                            <li>
+                                <a href="{% url 'alexandrie:book_update' book.id %}">{{ book }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
     </div>
 </div>
 {% endblock %}

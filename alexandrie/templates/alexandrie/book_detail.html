@@ -193,6 +193,24 @@
                     </ul>
                 </div>
             </div>
+            {% for author in object.authors.all %}
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Autres livres de <a href="{% url 'alexandrie:author_update' author.id %}">{{ author }}</a></h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                        {% for book in author.book_set.all %}
+                            {% if book.id != object.id %}
+                                <li>
+                                    <a href="{% url 'alexandrie:book_update' book.id %}">{{ book }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
         {% endif %}
         </div>
     </div>
