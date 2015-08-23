@@ -1,0 +1,381 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-23 23:41+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: models.py:22
+msgid "Software name"
+msgstr "Nom de l'application"
+
+#: models.py:23
+msgid "Default country"
+msgstr "Pays par défaut"
+
+#: models.py:24
+msgid "Maximal borrowing days"
+msgstr "Nombre de jours maximum d'un emprunt"
+
+#: models.py:25
+msgid "Navigation history"
+msgstr "Historique de navigation"
+
+#: models.py:26
+msgid "Library name"
+msgstr "Nom de la bibliothèque"
+
+#: models.py:27
+msgid "Library address 1"
+msgstr "Adresse 1 de la bibliothèque"
+
+#: models.py:28
+msgid "Library address 2"
+msgstr "Adresse 2 de la bibliothèque"
+
+#: models.py:29
+msgid "Library zip code"
+msgstr "Code postal de la bibliothèque"
+
+#: models.py:30
+msgid "Library city"
+msgstr "Ville de la bibliothèque"
+
+#: models.py:31
+msgid "Library country"
+msgstr "Pays de la bibliothèque"
+
+#: models.py:32
+msgid "Library phone"
+msgstr "Téléphone de la bibliothèque"
+
+#: models.py:33
+msgid "Library e-mail"
+msgstr "E-mail de la bibliothèque"
+
+#: models.py:34
+msgid "Library website"
+msgstr "Site web de la bibliothèque"
+
+#: models.py:46
+msgid "Configuration"
+msgstr "Configuration"
+
+#: models.py:49
+msgid "Global settings of the software"
+msgstr "Paramètres globaux de l'application"
+
+#: models.py:95
+msgid "Default language"
+msgstr "Langue par défaut"
+
+#: models.py:98 models.py:432
+msgid "Language"
+msgstr "Langue"
+
+#: models.py:99
+msgid "Languages"
+msgstr "Langues"
+
+#: models.py:111
+msgid "Job"
+msgstr "Profession"
+
+#: models.py:112
+msgid "Jobs"
+msgstr "Professions"
+
+#: models.py:116 models.py:427
+msgid "Audience"
+msgstr "Public cible"
+
+#: models.py:117
+msgid "Audiences"
+msgstr "Publics cibles"
+
+#: models.py:122
+msgid "Book condition"
+msgstr "Etat d'un livre"
+
+#: models.py:123
+msgid "Book conditions"
+msgstr "Etats d'un livre"
+
+#: models.py:129
+msgid "Book category"
+msgstr "Catégorie d'un livre"
+
+#: models.py:130
+msgid "Book categories"
+msgstr "Catégories d'un livre"
+
+#: models.py:137
+msgid "Book sub-category"
+msgstr "Sous-catégorie d'un livre"
+
+#: models.py:138
+msgid "Book sub-categories"
+msgstr "Sous-catégories d'un livre"
+
+#: models.py:143
+msgid "Book tag"
+msgstr "Etiquette d'un livre"
+
+#: models.py:144
+msgid "Book tags"
+msgstr "Etiquettes d'un livre"
+
+#: models.py:149
+msgid "Book origin"
+msgstr "Origine d'un livre"
+
+#: models.py:150
+msgid "Book origins"
+msgstr "Origines d'un livre"
+
+#: models.py:190
+msgid "Software news (item)"
+msgstr "Nouveauté de l'application"
+
+#: models.py:191
+msgid "Software news"
+msgstr "Nouveautés de l'application"
+
+#: models.py:209 models.py:490
+msgid "Number"
+msgstr "Numéro"
+
+#: models.py:210 models.py:491
+msgid "Registration date"
+msgstr "Date d'enregistrement"
+
+#: models.py:211 models.py:291
+msgid "First name"
+msgstr "Prénom"
+
+#: models.py:212 models.py:292
+msgid "Last name"
+msgstr "Nom"
+
+#: models.py:213
+msgid "Gender"
+msgstr "Sexe"
+
+#: models.py:214
+msgid "Female"
+msgstr "Femme"
+
+#: models.py:215
+msgid "Male"
+msgstr "Homme"
+
+#: models.py:218 models.py:294
+msgid "Birthdate"
+msgstr "Date de naissance"
+
+#: models.py:219
+msgid "Address 1"
+msgstr "Adresse 1"
+
+#: models.py:220
+msgid "Address 2"
+msgstr "Adresse 2"
+
+#: models.py:221
+msgid "Zip code"
+msgstr "Code postal"
+
+#: models.py:222
+msgid "City"
+msgstr "Ville"
+
+#: models.py:223 models.py:295 models.py:366
+msgid "Country"
+msgstr "Pays"
+
+#: models.py:224
+msgid "E-mail"
+msgstr "E-mail"
+
+#: models.py:225
+msgid "Phone"
+msgstr "Tél."
+
+#: models.py:227 models.py:497
+msgid "Disabled on"
+msgstr "Désactivé le"
+
+#: models.py:228 models.py:297 models.py:367 models.py:435 models.py:498
+#: models.py:541
+msgid "Notes"
+msgstr "Notes"
+
+#: models.py:274 models.py:536
+msgid "Reader"
+msgstr "Lecteur"
+
+#: models.py:275
+msgid "Readers"
+msgstr "Lecteurs"
+
+#: models.py:293
+msgid "Alias"
+msgstr "Nom d'emprunt"
+
+#: models.py:296
+msgid "Website"
+msgstr "Site web"
+
+#: models.py:298 models.py:368 models.py:436
+msgid "ISBN import"
+msgstr "Import ISBN"
+
+#: models.py:308
+msgid "This author already exists."
+msgstr "Cet auteur existe déjà."
+
+#: models.py:350
+msgid "Author"
+msgstr "Auteur"
+
+#: models.py:351 models.py:420
+msgid "Authors"
+msgstr "Auteurs"
+
+#: models.py:365
+msgid "Name"
+msgstr "Nom"
+
+#: models.py:419
+msgid "Title"
+msgstr "Titre"
+
+#: models.py:421
+msgid "Publishers"
+msgstr "Editeurs"
+
+#: models.py:422
+msgid "Publishing date"
+msgstr "Date de publication"
+
+#: models.py:423
+msgid "Title edition"
+msgstr "Titre de l'édition"
+
+#: models.py:424
+msgid "Classification mark"
+msgstr "Cote"
+
+#: models.py:425
+msgid "Height (inches)"
+msgstr "Hauteur (cm)"
+
+#: models.py:426
+msgid "ISBN number"
+msgstr "No. ISBN"
+
+#: models.py:428
+msgid "Category"
+msgstr "Catégorie"
+
+#: models.py:429
+msgid "Sub-category"
+msgstr "Sous-catégorie"
+
+#: models.py:430
+msgid "Abstract"
+msgstr "Résumé"
+
+#: models.py:431
+msgid "Tags"
+msgstr "Etiquettes"
+
+#: models.py:433
+msgid "Cover"
+msgstr "Couverture"
+
+#: models.py:434
+msgid "Linked to"
+msgstr "Est lié à"
+
+#: models.py:446
+msgid "Invalid ISBN number."
+msgstr "No. ISBN invalide."
+
+#: models.py:473
+msgid "Number of samples"
+msgstr "Nombre d'exemplaires"
+
+#: models.py:485 models.py:492
+msgid "Book"
+msgstr "Livre"
+
+#: models.py:486
+msgid "Books"
+msgstr "Livres"
+
+#: models.py:493
+msgid "Condition"
+msgstr "Etat"
+
+#: models.py:494
+msgid "Origin"
+msgstr "Origine"
+
+#: models.py:495
+msgid "Price"
+msgstr "Prix"
+
+#: models.py:496
+msgid "Date (price)"
+msgstr "Date (prix)"
+
+#: models.py:521
+msgid "Book sample"
+msgstr "Exemplaire d'un livre"
+
+#: models.py:522
+msgid "Book samples"
+msgstr "Exemplaires des livre"
+
+#: models.py:537
+msgid "Sample"
+msgstr "Exemplaire"
+
+#: models.py:538
+msgid "Borrowed on"
+msgstr "Emprunté le"
+
+#: models.py:539
+msgid "Due date"
+msgstr "Date d'échéance"
+
+#: models.py:540
+msgid "Returned on"
+msgstr "Retourné le"
+
+#: models.py:578
+#, python-format
+msgid "Borrowed on %s"
+msgstr "Emprunté le %s"
+
+#: models.py:589
+msgid "Reader borrowing"
+msgstr "Emprunt d'un lecteur"
+
+#: models.py:590
+msgid "Reader borrowings"
+msgstr "Emprunts des lecteurs"
