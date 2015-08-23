@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block pageTitle %}
-    {% if object.id %}Emprunt de {{ object.bookcopy }} par {{ object.reader }} ({{ object.borrowed_date}}){% else %}Nouvel emprunt{% endif %}
+    {% if object.id %}Emprunt de <a href="{% url 'alexandrie:book_update' object.bookcopy.book.id %}">{{ object.bookcopy }}</a> par <a href="{% url 'alexandrie:reader_update' object.reader.id %}">{{ object.reader }}</a> ({{ object.borrowed_date}}){% else %}Nouvel emprunt{% endif %}
 {% endblock %}
 
 {% block content %}
