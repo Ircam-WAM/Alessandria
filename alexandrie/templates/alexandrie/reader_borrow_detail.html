@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block pageTitle %}
-    {% if object.id %}Emprunt du {{ object.borrowed_date}} ({{ object.reader }}){% else %}Nouvel emprunt{% endif %}
+    {% if object.id %}Emprunt de {{ object.bookcopy }} par {{ object.reader }} ({{ object.borrowed_date}}){% else %}Nouvel emprunt{% endif %}
 {% endblock %}
 
 {% block content %}
