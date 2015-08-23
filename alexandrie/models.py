@@ -263,7 +263,7 @@ class Reader(ModelEntity):
         return reverse('alexandrie:reader_update', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return "%s - %s %s" % (self.number, self.first_name, self.last_name)
+        return "%s %s" % (self.first_name, self.last_name)
     
     class Meta:
         ordering = ['last_name', 'first_name']
