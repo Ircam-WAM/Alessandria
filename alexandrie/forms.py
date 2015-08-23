@@ -3,7 +3,6 @@
 import datetime
 
 from django import forms
-from django.utils.safestring import mark_safe
 from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 from django_countries import countries
 
