@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 13:00+0200\n"
+"POT-Creation-Date: 2015-08-25 15:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,7 +224,8 @@ msgstr "Désactivé le"
 msgid "Notes"
 msgstr "Notes"
 
-#: models.py:274 models.py:536 templates/alexandrie/reader_borrow_list.html:16
+#: models.py:274 models.py:536 templates/alexandrie/book_detail.html:225
+#: templates/alexandrie/reader_borrow_list.html:16
 #: templates/alexandrie/reader_detail.html:4
 #: templates/alexandrie/reader_detail.html:10
 msgid "Reader"
@@ -251,7 +252,8 @@ msgstr "Import ISBN"
 msgid "This author already exists."
 msgstr "Cet auteur existe déjà."
 
-#: models.py:350 templates/alexandrie/index.html:52
+#: models.py:350 templates/alexandrie/book_isbn_import.html:77
+#: templates/alexandrie/book_list.html:30 templates/alexandrie/index.html:52
 msgid "Author"
 msgstr "Auteur"
 
@@ -259,12 +261,14 @@ msgstr "Auteur"
 msgid "Authors"
 msgstr "Auteurs"
 
-#: models.py:365 templates/alexandrie/publisher_list.html:22
+#: models.py:365 templates/alexandrie/book_isbn_import.html:103
+#: templates/alexandrie/book_isbn_import.html:137
+#: templates/alexandrie/publisher_list.html:22
 #: templates/alexandrie/reader_list.html:22
 msgid "Name"
 msgstr "Nom"
 
-#: models.py:419
+#: models.py:419 templates/alexandrie/book_list.html:55
 msgid "Title"
 msgstr "Titre"
 
@@ -288,7 +292,7 @@ msgstr "Cote"
 msgid "Height (inches)"
 msgstr "Hauteur (cm)"
 
-#: models.py:426
+#: models.py:426 templates/alexandrie/book_list.html:57
 msgid "ISBN number"
 msgstr "No. ISBN"
 
@@ -324,7 +328,8 @@ msgstr "No. ISBN invalide."
 msgid "Number of samples"
 msgstr "Nombre d'exemplaires"
 
-#: models.py:485 models.py:492 templates/alexandrie/index.html:51
+#: models.py:485 models.py:492 templates/alexandrie/book_detail.html:5
+#: templates/alexandrie/book_detail.html:14 templates/alexandrie/index.html:51
 #: templates/alexandrie/reader_borrow_list.html:17
 #: templates/alexandrie/reader_detail.html:89
 msgid "Book"
@@ -362,7 +367,8 @@ msgstr "Exemplaire d'un livre"
 msgid "Book samples"
 msgstr "Exemplaires des livre"
 
-#: models.py:537
+#: models.py:537 templates/alexandrie/book_detail.html:187
+#: templates/alexandrie/book_detail.html:189
 msgid "Sample"
 msgstr "Exemplaire"
 
@@ -401,6 +407,7 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: templates/alexandrie/_inc_form_edit_footer.html:3
+#: templates/alexandrie/book_list.html:59
 #: templates/alexandrie/publisher_list.html:23
 msgid "Created on"
 msgstr "Créé le"
@@ -416,10 +423,13 @@ msgid "Updated on"
 msgstr "Modifié le"
 
 #: templates/alexandrie/_inc_form_search_std.html:4
+#: templates/alexandrie/book_list.html:13
 msgid "Search page"
 msgstr "Page de recherche"
 
 #: templates/alexandrie/_inc_form_search_std.html:20
+#: templates/alexandrie/book_isbn_import.html:25
+#: templates/alexandrie/book_list.html:41
 msgid "Search"
 msgstr "Rechercher"
 
@@ -448,6 +458,7 @@ msgid "Home"
 msgstr "Accueil"
 
 #: templates/alexandrie/base_tpl.html:36
+#: templates/alexandrie/book_detail.html:21
 #: templates/alexandrie/reader_detail.html:17
 msgid "Borrowings"
 msgstr "Emprunts"
@@ -455,6 +466,7 @@ msgstr "Emprunts"
 #: templates/alexandrie/base_tpl.html:38 templates/alexandrie/base_tpl.html:49
 #: templates/alexandrie/base_tpl.html:59 templates/alexandrie/base_tpl.html:68
 #: templates/alexandrie/base_tpl.html:81
+#: templates/alexandrie/book_detail.html:179
 msgid "Add"
 msgstr "Ajouter"
 
@@ -496,6 +508,87 @@ msgstr "Historique"
 #: templates/alexandrie/base_tpl.html:108
 msgid "Empty"
 msgstr "Vide"
+
+#: templates/alexandrie/book_detail.html:14
+#: templates/alexandrie/publisher_detail.html:6
+#: templates/alexandrie/reader_detail.html:10
+msgid "New"
+msgstr "Nouveau"
+
+#: templates/alexandrie/book_detail.html:179
+msgid "Samples"
+msgstr "Exemplaires"
+
+#: templates/alexandrie/book_detail.html:187
+msgid "removed"
+msgstr "retiré"
+
+#: templates/alexandrie/book_detail.html:200
+#: templates/alexandrie/reader_borrow_detail.html:41
+msgid "Other books of"
+msgstr "Autres emprunts de"
+
+#: templates/alexandrie/book_detail.html:224
+#: templates/alexandrie/reader_detail.html:88
+msgid "Borrowing date"
+msgstr "Date d'emprunt"
+
+#: templates/alexandrie/book_detail.html:226
+msgid "Returned"
+msgstr "Retourné"
+
+#: templates/alexandrie/book_isbn_import.html:6
+#: templates/alexandrie/book_isbn_import.html:8
+msgid "ISBN import of a book"
+msgstr "Import ISBN d'un livre"
+
+#: templates/alexandrie/book_isbn_import.html:16
+msgid "ISBN nb"
+msgstr "No. ISBN"
+
+#: templates/alexandrie/book_isbn_import.html:44
+msgid "This book"
+msgstr "Ce livre"
+
+#: templates/alexandrie/book_isbn_import.html:44
+msgid "already exists."
+msgstr "existe déjà."
+
+#: templates/alexandrie/book_isbn_import.html:54
+msgid "Book found"
+msgstr "Livre trouvé"
+
+#: templates/alexandrie/book_isbn_import.html:80
+msgid "This author doesn't exist, create it?"
+msgstr "Cet auteur n'existe pas, le créer ?"
+
+#: templates/alexandrie/book_isbn_import.html:84
+msgid "This author already exists, it will be linked to the book."
+msgstr "Cet auteur existe déjà, il sera associé au livre."
+
+#: templates/alexandrie/book_isbn_import.html:114
+msgid "This publisher doesn't exist, create it?"
+msgstr "Cet éditeur n'existe pas, le créer ?"
+
+#: templates/alexandrie/book_isbn_import.html:118
+msgid "This publisher already exists, it will be linked to the book."
+msgstr "Cet éditeur existe, il sera associé au livre."
+
+#: templates/alexandrie/book_isbn_import.html:147
+msgid "Import"
+msgstr "Importer"
+
+#: templates/alexandrie/book_isbn_import.html:155
+msgid "Unknown ISBN number."
+msgstr "Numéro ISBN inconnu."
+
+#: templates/alexandrie/book_list.html:4 templates/alexandrie/book_list.html:6
+msgid "Book list"
+msgstr "Liste des livres"
+
+#: templates/alexandrie/book_list.html:72
+msgid "No book."
+msgstr "Aucun livre."
 
 #: templates/alexandrie/confirm_delete.html:4
 #: templates/alexandrie/confirm_delete.html:6
@@ -551,11 +644,6 @@ msgstr "Mot de passe"
 msgid "Publisher"
 msgstr "Editeur"
 
-#: templates/alexandrie/publisher_detail.html:6
-#: templates/alexandrie/reader_detail.html:10
-msgid "New"
-msgstr "Nouveau"
-
 #: templates/alexandrie/publisher_list.html:4
 msgid "Publisher list"
 msgstr "Liste des éditeurs"
@@ -576,10 +664,6 @@ msgstr "Emprunt de"
 msgid "New borrowing"
 msgstr "Nouvel emprunt."
 
-#: templates/alexandrie/reader_borrow_detail.html:41
-msgid "Other books of"
-msgstr "Autres emprunts de"
-
 #: templates/alexandrie/reader_borrow_list.html:31
 msgid "No borrowing."
 msgstr "Aucun emprunt."
@@ -592,10 +676,6 @@ msgstr "Désactiver"
 #: templates/alexandrie/reader_detail.html:46
 msgid "Summary"
 msgstr "Résumé"
-
-#: templates/alexandrie/reader_detail.html:88
-msgid "Borrowing date"
-msgstr "Date d'emprunt"
 
 #: templates/alexandrie/reader_disable.html:4
 msgid "Disabling a reader"

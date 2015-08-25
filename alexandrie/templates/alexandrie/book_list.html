@@ -1,15 +1,16 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
-{% block title %}Liste des livres{% endblock %}
+{% block title %}{% trans "Book list" %}{% endblock %}
 
-{% block pageTitle %}Liste des livres{% endblock %}
+{% block pageTitle %}{% trans "Book list" %}{% endblock %}
 
 {% block content %}
 
 <form class="form-horizontal" action="{% url 'alexandrie:book_list' %}" method="post" role="form">{% csrf_token %}
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">Recherche</h3>
+        <h3 class="panel-title">{% trans "Search page" %}</h3>
     </div>
     <div class="panel-body">
         <div class="row">
@@ -26,7 +27,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="author_last_name" class="col-sm-2 control-label">Nom auteur</label>
+                        <label for="author_last_name" class="col-sm-2 control-label">{% trans "Author" %}</label>
                         <div class="col-sm-10">
                             <input type="text" id="author_name" name="author_name" value="{{ author_name }}"/>
                         </div>
@@ -37,7 +38,7 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-11">
-                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                    <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
                 </div>
             </div>
         </div>
@@ -51,11 +52,11 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=title">Titre</a></th>
+                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=title">{% trans "Title" %}</a></th>
                     <th>Auteur</th>
-                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=isbn_nb">No. ISBN</a></th>
+                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=isbn_nb">{% trans "ISBN number" %}</a></th>
                     <th># Exemplaires</th>
-                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=created_on">Créé le</a></th>
+                    <th><a href="{% url 'alexandrie:book_list' %}?order_field=created_on">{% trans "Created on" %}</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -63,12 +64,12 @@
                 <tr>
                     <td><a href="{% url 'alexandrie:book_update' book.id %}">{{ book.title }}</a></td>
                     <td><a href="{% url 'alexandrie:author_update' book.authors.first.id %}">{{ book.authors.first }}</td>
-                    <td>{{ book.isbn_nb|default:"Aucun" }}</td>
+                    <td>{{ book.isbn_nb|default:"-" }}</td>
                     <td>{{ book.get_nb_copy }}</td>
                     <td>{{ book.created_on }}</td>
                 </tr>
                 {% empty %}
-                    <tr><td colspan="5">Aucun livre.</td></tr>
+                    <tr><td colspan="5">{% trans "No book." %}</td></tr>
                 {% endfor %}
             </tbody>
         </table>
