@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 11:09+0200\n"
+"POT-Creation-Date: 2015-08-25 12:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -223,7 +223,8 @@ msgstr "Désactivé le"
 msgid "Notes"
 msgstr "Notes"
 
-#: models.py:274 models.py:536
+#: models.py:274 models.py:536 templates/alexandrie/reader_detail.html:4
+#: templates/alexandrie/reader_detail.html:10
 msgid "Reader"
 msgstr "Lecteur"
 
@@ -320,7 +321,7 @@ msgstr "No. ISBN invalide."
 msgid "Number of samples"
 msgstr "Nombre d'exemplaires"
 
-#: models.py:485 models.py:492
+#: models.py:485 models.py:492 templates/alexandrie/reader_detail.html:89
 msgid "Book"
 msgstr "Livre"
 
@@ -368,7 +369,7 @@ msgstr "Emprunté le"
 msgid "Due date"
 msgstr "Date d'échéance"
 
-#: models.py:540
+#: models.py:540 templates/alexandrie/reader_detail.html:90
 msgid "Returned on"
 msgstr "Retourné le"
 
@@ -394,6 +395,7 @@ msgid "Home"
 msgstr "Accueil"
 
 #: templates/alexandrie/base_tpl.html:36
+#: templates/alexandrie/reader_detail.html:17
 msgid "Borrowings"
 msgstr "Emprunts"
 
@@ -404,6 +406,7 @@ msgid "Add"
 msgstr "Ajouter"
 
 #: templates/alexandrie/base_tpl.html:39
+#: templates/alexandrie/reader_detail.html:56
 msgid "Current borrowings"
 msgstr "Emprunts en cours"
 
@@ -412,6 +415,7 @@ msgid "Late borrowings"
 msgstr "Emprunts en retard"
 
 #: templates/alexandrie/base_tpl.html:41
+#: templates/alexandrie/reader_detail.html:83
 msgid "All borrowings"
 msgstr "Tous les emprunts"
 
@@ -440,7 +444,44 @@ msgstr "Historique"
 msgid "Empty"
 msgstr "Vide"
 
-#: templates/alexandrie/reader_list.html:37
+#: templates/alexandrie/reader_detail.html:10
+msgid "New reader"
+msgstr "Nouveau lecteur."
+
+#: templates/alexandrie/reader_detail.html:29
+msgid "Save"
+msgstr "Enregistrer le"
+
+#: templates/alexandrie/reader_detail.html:32
+#: templates/alexandrie/reader_disable.html:22
+msgid "Disable"
+msgstr "Désactiver"
+
+#: templates/alexandrie/reader_detail.html:46
+msgid "Summary"
+msgstr "Résumé"
+
+#: templates/alexandrie/reader_detail.html:88
+msgid "Borrowing date"
+msgstr "Date d'emprunt"
+
+#: templates/alexandrie/reader_disable.html:4
+msgid "Disabling a reader"
+msgstr "Désactiver un lecteur"
+
+#: templates/alexandrie/reader_disable.html:13
+msgid ""
+"Disabling a reader means that he won't be able to borrow books anymore. "
+"However he will be kept in the system history."
+msgstr ""
+"Désactiver un lecteur signifie qu'il ne pourra plus emprunter de livres. "
+"Toutefois il sera conservé dans l'historique du système."
+
+#: templates/alexandrie/reader_disable.html:23
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/alexandrie/reader_list.html:35
 msgid "No reader."
 msgstr "Aucun lecteur."
 
@@ -462,7 +503,8 @@ msgstr "Impossible de supprimer cet auteur car il est référencé dans un livre
 
 #: views.py:307
 msgid "Unable to remove this publisher because it is referenced in a book."
-msgstr "Impossible de supprimer cet éditeur car il est référencé dans un livre."
+msgstr ""
+"Impossible de supprimer cet éditeur car il est référencé dans un livre."
 
 #: views.py:417
 #, python-format

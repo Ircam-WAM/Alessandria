@@ -1,19 +1,20 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
-{% block title %}Lecteur{% endblock %}
+{% block title %}{% trans "Reader" %}{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="/static/alexandrie/layout/jquery-datepicker/jquery.datepick.css">
 {% endblock %}
 
-{% block pageTitle %}Lecteur:&nbsp;{{object.get_full_name|default:"nouveau"}}{% endblock %}
+{% block pageTitle %}{% trans "Reader" %}:&nbsp;{{ object.get_full_name|default:_("New reader") }}{% endblock %}
 
 {% block content %}
 
 {% if object.id > 0 %}
 <ul class="nav nav-pills" role="tablist">
     <li role="presentation" class="active"><a href="#mainForm" aria-controls="mainForm" role="tab" data-toggle="tab">Fiche</a></li>
-    <li role="presentation"><a href="#borrows" aria-controls="borrows" role="tab" data-toggle="tab">Emprunts</a></li>
+    <li role="presentation"><a href="#borrows" aria-controls="borrows" role="tab" data-toggle="tab">{% trans "Borrowings" %}</a></li>
 </ul>
 {% endif %}
 
@@ -25,10 +26,10 @@
                 <div class="panel-body">
                     <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
                         {% include 'alexandrie/_inc_form_edit_content_std.html' %}
-                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
                         {% if form.instance.id > 0 %}
                             {% if not form.instance.is_disabled %}
-                                <a class="btn btn-warning" href="{% url 'alexandrie:reader_disable' form.instance.id %}">Désactiver</a>
+                                <a class="btn btn-warning" href="{% url 'alexandrie:reader_disable' form.instance.id %}">{% trans "Disable" %}</a>
                             {% endif %}
                         {% endif %}
                     </form>
@@ -42,7 +43,7 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Résumé</h3>
+                    <h3 class="panel-title">{% trans "Summary" %}</h3>
                 </div>
                 <div class="panel-body">
                     <dl class="dl-horizontal">
@@ -52,7 +53,7 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Emprunts en cours</h3>
+                    <h3 class="panel-title">{% trans "Current borrowings" %}</h3>
                 </div>
                 <table class="table">
                     <thead>
@@ -79,14 +80,14 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Tous les emprunts</h3>
+                    <h3 class="panel-title">{% trans "All borrowings" %}</h3>
                 </div>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Date emprunt</th>
-                            <th>Livre</th>
-                            <th>Rendu le</th>
+                            <th>{% trans "Borrowing date" %}</th>
+                            <th>{% trans "Book" %}</th>
+                            <th>{% trans "Returned on" %}</th>
                         </tr>
                     </thead>
                     <tbody>

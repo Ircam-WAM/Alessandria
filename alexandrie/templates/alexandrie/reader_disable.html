@@ -1,14 +1,16 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
-{% block title %}Désactivation d'un auteur{% endblock %}
+{% trans "Disabling a reader" as disabling_a_reader %}
 
-{% block pageTitle %}Désactivation d'un auteur{% endblock %}
+{% block title %}{{ disabling_a_reader }}{% endblock %}
+
+{% block pageTitle %}{{ disabling_a_reader }}{% endblock %}
 
 {% block content %}
 
 <div class="textWarning">
-    <p>Désactiver un lecteur signifie qu'il ne pourra plus emprunter de livres.&nbsp;
-    Toutefois il sera conservé dans l'historique du système.</p>
+    <p>{% trans "Disabling a reader means that he won't be able to borrow books anymore. However he will be kept in the system history." %}</p>
 </div>
 <div class="row">
     <div class="col-sm-12">
@@ -17,8 +19,8 @@
             {% include 'alexandrie/_inc_form_edit_content_std.html' %}
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-warning">Désactiver</button>
-                    <a class="btn" href="{% url 'alexandrie:reader_update' form.instance.id %}">Annuler</a>
+                    <button type="submit" class="btn btn-warning">{% trans "Disable" %}</button>
+                    <a class="btn" href="{% url 'alexandrie:reader_update' form.instance.id %}">{% trans "Cancel" %}</a>
                 </div>
             </div>
         </form>
