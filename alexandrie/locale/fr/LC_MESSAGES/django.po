@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 12:26+0200\n"
+"POT-Creation-Date: 2015-08-25 12:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -453,6 +453,7 @@ msgid "Publisher"
 msgstr "Editeure"
 
 #: templates/alexandrie/publisher_detail.html:6
+#: templates/alexandrie/reader_detail.html:10
 msgid "New"
 msgstr "Nouveau"
 
@@ -491,10 +492,6 @@ msgstr "Autres emprunts de"
 #: templates/alexandrie/reader_borrow_list.html:31
 msgid "No borrowing."
 msgstr "Aucun emprunt."
-
-#: templates/alexandrie/reader_detail.html:10
-msgid "New reader"
-msgstr "Nouveau lecteur."
 
 #: templates/alexandrie/reader_detail.html:29
 msgid "Save"
