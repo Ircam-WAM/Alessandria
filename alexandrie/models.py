@@ -494,7 +494,7 @@ class BookCopy(ModelEntity):
     origin = models.ForeignKey(BookCopyOrigin, verbose_name=_("Origin"))
     price = models.FloatField(_("Price"), blank=True, null=True)
     price_date = models.DateField(_("Date (price)"), blank=True, null=True)
-    disabled_on = models.DateField(_("Disabled on"), blank=True, null=True)
+    disabled_on = models.DateField(_("Took out on"), blank=True, null=True)
     notes = models.TextField(_("Notes"), null=True, blank=True)
 
     #Overriding
