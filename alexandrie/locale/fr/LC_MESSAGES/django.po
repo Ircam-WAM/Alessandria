@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 11:07+0200\n"
+"POT-Creation-Date: 2015-08-25 11:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -462,8 +462,7 @@ msgstr "Impossible de supprimer cet auteur car il est référencé dans un livre
 
 #: views.py:307
 msgid "Unable to remove this publisher because it is referenced in a book."
-msgstr ""
-"Impossible de supprimer cet éditeur car il est référencé dans un livre."
+msgstr "Impossible de supprimer cet éditeur car il est référencé dans un livre."
 
 #: views.py:417
 #, python-format
