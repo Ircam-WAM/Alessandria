@@ -564,9 +564,6 @@ class ReaderBorrow(ModelEntity):
     def is_returned(self):
         return self.returned_on is not None
 
-    def is_returned_str(self):
-        return "Oui" if self.returned_on is not None else "Non"
-
     def is_late(self):
         return self.borrow_due_date < stddate.today() and not self.is_returned()
 
