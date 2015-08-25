@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 12:14+0200\n"
+"POT-Creation-Date: 2015-08-25 12:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -258,7 +258,8 @@ msgstr "Auteur"
 msgid "Authors"
 msgstr "Auteurs"
 
-#: models.py:365 templates/alexandrie/reader_list.html:22
+#: models.py:365 templates/alexandrie/publisher_list.html:22
+#: templates/alexandrie/reader_list.html:22
 msgid "Name"
 msgstr "Nom"
 
@@ -445,6 +446,27 @@ msgstr "Historique"
 #: templates/alexandrie/base_tpl.html:108
 msgid "Empty"
 msgstr "Vide"
+
+#: templates/alexandrie/publisher_detail.html:4
+#: templates/alexandrie/publisher_detail.html:6
+msgid "Publisher"
+msgstr "Editeure"
+
+#: templates/alexandrie/publisher_detail.html:6
+msgid "New"
+msgstr "Nouveau"
+
+#: templates/alexandrie/publisher_list.html:4
+msgid "Publisher list"
+msgstr "Liste des éditeurs"
+
+#: templates/alexandrie/publisher_list.html:23
+msgid "Created on"
+msgstr "Créé le"
+
+#: templates/alexandrie/publisher_list.html:33
+msgid "No publisher."
+msgstr "Aucun éditeur."
 
 #: templates/alexandrie/reader_borrow_detail.html:4
 msgid "Borrowing"
