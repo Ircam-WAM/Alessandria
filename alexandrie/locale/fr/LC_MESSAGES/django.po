@@ -466,7 +466,7 @@ msgstr "Mot de passe"
 #: templates/alexandrie/publisher_detail.html:4
 #: templates/alexandrie/publisher_detail.html:6
 msgid "Publisher"
-msgstr "Editeure"
+msgstr "Editeur"
 
 #: templates/alexandrie/publisher_detail.html:6
 #: templates/alexandrie/reader_detail.html:10
