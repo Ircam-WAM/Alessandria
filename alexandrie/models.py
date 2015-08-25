@@ -568,7 +568,7 @@ class ReaderBorrow(ModelEntity):
         return "Oui" if self.returned_on is not None else "Non"
 
     def is_late(self):
-        return self.borrow_due_date < stddate.today()
+        return self.borrow_due_date < stddate.today() and not self.is_returned()
 
     def list_all():
         return ReaderBorrow.objects.all()
