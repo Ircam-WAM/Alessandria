@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 15:02+0200\n"
+"POT-Creation-Date: 2015-08-25 15:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -359,7 +359,8 @@ msgstr "Date (prix)"
 msgid "Took out on"
 msgstr "Retiré le"
 
-#: models.py:521
+#: models.py:521 templates/alexandrie/bookcopy_detail.html:5
+#: templates/alexandrie/bookcopy_detail.html:11
 msgid "Book sample"
 msgstr "Exemplaire d'un livre"
 
@@ -398,11 +399,13 @@ msgid "Reader borrowings"
 msgstr "Emprunts des lecteurs"
 
 #: templates/alexandrie/_inc_form_edit_buttons_std.html:4
+#: templates/alexandrie/bookcopy_detail.html:44
 #: templates/alexandrie/reader_detail.html:29
 msgid "Save"
 msgstr "Enregistrer"
 
 #: templates/alexandrie/_inc_form_edit_buttons_std.html:6
+#: templates/alexandrie/bookcopy_detail.html:50
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -510,6 +513,7 @@ msgid "Empty"
 msgstr "Vide"
 
 #: templates/alexandrie/book_detail.html:14
+#: templates/alexandrie/bookcopy_detail.html:11
 #: templates/alexandrie/publisher_detail.html:6
 #: templates/alexandrie/reader_detail.html:10
 msgid "New"
@@ -589,6 +593,37 @@ msgstr "Liste des livres"
 #: templates/alexandrie/book_list.html:72
 msgid "No book."
 msgstr "Aucun livre."
+
+#: templates/alexandrie/bookcopy_detail.html:18
+msgid "This sample was removed."
+msgstr "Cet exemplaire a été retiré."
+
+#: templates/alexandrie/bookcopy_detail.html:47
+msgid "Take out"
+msgstr "Retirer"
+
+#: templates/alexandrie/bookcopy_detail.html:53
+#: templates/alexandrie/bookcopy_disable.html:21
+#: templates/alexandrie/reader_disable.html:23
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/alexandrie/bookcopy_disable.html:4
+#: templates/alexandrie/bookcopy_disable.html:6
+msgid "Removing the sample"
+msgstr "Retrait de l'exemplaire"
+
+#: templates/alexandrie/bookcopy_disable.html:11
+msgid ""
+"Removing a sample means that it won't be part of the samples to be borrowed. "
+"However it will be kept in the system history."
+msgstr ""
+"Retirer un exemplaire signifie qu'il ne fera plus partie des exemplaires à "
+"emprunter. Toutefois il sera conservé dans l'historique du système."
+
+#: templates/alexandrie/bookcopy_disable.html:20
+msgid "Remove"
+msgstr "Retirer"
 
 #: templates/alexandrie/confirm_delete.html:4
 #: templates/alexandrie/confirm_delete.html:6
@@ -688,10 +723,6 @@ msgid ""
 msgstr ""
 "Désactiver un lecteur signifie qu'il ne pourra plus emprunter de livres. "
 "Toutefois il sera conservé dans l'historique du système."
-
-#: templates/alexandrie/reader_disable.html:23
-msgid "Cancel"
-msgstr "Annuler"
 
 #: templates/alexandrie/reader_list.html:35
 msgid "No reader."

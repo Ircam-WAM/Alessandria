@@ -1,21 +1,21 @@
 {% extends 'alexandrie/base_tpl.html' %}
-
+{% load i18n %}
 {% load tag_extras %}
 
-{% block title %}Exemplaire d'un livre{% endblock %}
+{% block title %}{% trans "Book sample" %}{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="/static/alexandrie/layout/jquery-datepicker/jquery.datepick.css">
 {% endblock %}
 
-{% block pageTitle %}Exemplaire:&nbsp;{{form.instance.number|default:"nouveau"}} ({{ form.instance.book }}){% endblock %}
+{% block pageTitle %}{% trans "Book sample" %}:&nbsp;{{ form.instance.number|default:_("New") }} ({{ form.instance.book }}){% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
         {% include 'alexandrie/_inc_form_edit_header.html' %}
         {% if form.instance.is_disabled %}
-            <div class="textInfo">Cet exemplaire a été retiré.</div>
+            <div class="textInfo">{% trans "This sample was removed." %}</div>
         {% endif %}
         <div class="panel panel-info">
             <div class="panel-body">
@@ -41,16 +41,16 @@
                     {% endif %}
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
                             {% if form.instance.id > 0 %}
                                 {% if not form.instance.is_disabled %}
-                                    <a class="btn btn-warning" href="{% url 'alexandrie:bookcopy_disable' form.instance.id %}">Retirer</a>
+                                    <a class="btn btn-warning" href="{% url 'alexandrie:bookcopy_disable' form.instance.id %}">{% trans "Take out" %}</a>
                                 {% endif %}
                                 {% if not form.instance.was_borrowed %}
-                                    <a class="btn btn-danger" href="{% url 'alexandrie:bookcopy_delete' form.instance.id %}">Supprimer</a>
+                                    <a class="btn btn-danger" href="{% url 'alexandrie:bookcopy_delete' form.instance.id %}">{% trans "Delete" %}</a>
                                 {% endif %}
                             {% endif %}
-                            <a class="btn" href="{% url 'alexandrie:book_update' form.instance.book.id %}">Annuler</a>
+                            <a class="btn" href="{% url 'alexandrie:book_update' form.instance.book.id %}">{% trans "Cancel" %}</a>
                         </div>
                     </div>
                 </form>
