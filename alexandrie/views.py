@@ -66,7 +66,7 @@ class EntityUpdateView(ProtectedView, UpdateView):
             load_user_nav_history(self.request, self.request.user)
         return ret
 
-    def form_invalid(self, form, error_msg=_("Error when saving the record."):
+    def form_invalid(self, form, error_msg=_("Error when saving the record.")):
         messages.error(self.request, error_msg)
         return super(EntityUpdateView, self).form_invalid(form)
 
