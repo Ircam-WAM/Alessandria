@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 12:47+0200\n"
+"POT-Creation-Date: 2015-08-25 12:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -390,6 +390,14 @@ msgstr "Emprunt d'un lecteur"
 #: models.py:590
 msgid "Reader borrowings"
 msgstr "Emprunts des lecteurs"
+
+#: templates/alexandrie/_inc_form_search_std.html:4
+msgid "Search page"
+msgstr "Page de recherche"
+
+#: templates/alexandrie/_inc_form_search_std.html:20
+msgid "Search"
+msgstr "Rechercher"
 
 #: templates/alexandrie/_inc_paginator_list.html:5
 msgid "records"
