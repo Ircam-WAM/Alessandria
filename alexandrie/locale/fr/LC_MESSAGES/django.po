@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-23 23:41+0200\n"
+"POT-Creation-Date: 2015-08-25 09:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,7 +227,7 @@ msgstr "Notes"
 msgid "Reader"
 msgstr "Lecteur"
 
-#: models.py:275
+#: models.py:275 templates/alexandrie/base_tpl.html:57
 msgid "Readers"
 msgstr "Lecteurs"
 
@@ -240,6 +240,7 @@ msgid "Website"
 msgstr "Site web"
 
 #: models.py:298 models.py:368 models.py:436
+#: templates/alexandrie/base_tpl.html:50
 msgid "ISBN import"
 msgstr "Import ISBN"
 
@@ -251,7 +252,7 @@ msgstr "Cet auteur existe déjà."
 msgid "Author"
 msgstr "Auteur"
 
-#: models.py:351 models.py:420
+#: models.py:351 models.py:420 templates/alexandrie/base_tpl.html:66
 msgid "Authors"
 msgstr "Auteurs"
 
@@ -263,7 +264,7 @@ msgstr "Nom"
 msgid "Title"
 msgstr "Titre"
 
-#: models.py:421
+#: models.py:421 templates/alexandrie/base_tpl.html:79
 msgid "Publishers"
 msgstr "Editeurs"
 
@@ -323,7 +324,7 @@ msgstr "Nombre d'exemplaires"
 msgid "Book"
 msgstr "Livre"
 
-#: models.py:486
+#: models.py:486 templates/alexandrie/base_tpl.html:47
 msgid "Books"
 msgstr "Livres"
 
@@ -379,3 +380,58 @@ msgstr "Emprunt d'un lecteur"
 #: models.py:590
 msgid "Reader borrowings"
 msgstr "Emprunts des lecteurs"
+
+#: templates/alexandrie/base_tpl.html:26
+msgid "Toggle navigation"
+msgstr "Basculer la navigation"
+
+#: templates/alexandrie/base_tpl.html:31
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/alexandrie/base_tpl.html:36
+msgid "Borrowings"
+msgstr "Emprunts"
+
+#: templates/alexandrie/base_tpl.html:38 templates/alexandrie/base_tpl.html:49
+#: templates/alexandrie/base_tpl.html:59 templates/alexandrie/base_tpl.html:68
+#: templates/alexandrie/base_tpl.html:81
+msgid "Add"
+msgstr "Ajouter"
+
+#: templates/alexandrie/base_tpl.html:39
+msgid "Current borrowings"
+msgstr "Emprunts en cours"
+
+#: templates/alexandrie/base_tpl.html:40
+msgid "Late borrowings"
+msgstr "Emprunts en retard"
+
+#: templates/alexandrie/base_tpl.html:41
+msgid "All borrowings"
+msgstr "Tous les emprunts"
+
+#: templates/alexandrie/base_tpl.html:51 templates/alexandrie/base_tpl.html:60
+#: templates/alexandrie/base_tpl.html:69 templates/alexandrie/base_tpl.html:82
+msgid "List"
+msgstr "Liste"
+
+#: templates/alexandrie/base_tpl.html:90
+msgid "Log out"
+msgstr "Déconnexion"
+
+#: templates/alexandrie/base_tpl.html:92
+msgid "Log in"
+msgstr "Connexion"
+
+#: templates/alexandrie/base_tpl.html:98
+msgid "Administration"
+msgstr "Administration"
+
+#: templates/alexandrie/base_tpl.html:103
+msgid "History"
+msgstr "Historique"
+
+#: templates/alexandrie/base_tpl.html:108
+msgid "Empty"
+msgstr "Vide"
