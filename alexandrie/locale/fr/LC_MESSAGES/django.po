@@ -370,7 +370,7 @@ msgstr "Exemplaire d'un livre"
 
 #: models.py:522
 msgid "Book samples"
-msgstr "Exemplaires des livre"
+msgstr "Exemplaires des livres"
 
 #: models.py:537 templates/alexandrie/book_detail.html:187
 #: templates/alexandrie/book_detail.html:189
