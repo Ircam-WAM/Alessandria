@@ -1,11 +1,12 @@
+{% load i18n %}
 {% if paginator.count > 0 %}
     <nav>
         <ul class="pagination">
-            <li><span aria-hidden="true">{{ paginator.count }} enregistrements</span></li>
-            <li><span aria-hidden="true">Pages</span></li>
+            <li><span aria-hidden="true">{{ paginator.count }} {% trans "records" %}</span></li>
+            <li><span aria-hidden="true">{% trans "Pages" %}</span></li>
             <li>
                 {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}" aria-label="Précédent">
+                    <a href="?page={{ page_obj.previous_page_number }}" aria-label="{% trans "Previous" %}">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 {% endif %}
@@ -21,7 +22,7 @@
             {% endfor %}
             <li>
                 {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" aria-label="Suivant">
+                    <a href="?page={{ page_obj.next_page_number }}" aria-label="{% trans "Next" %}">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 {% endif %}
