@@ -12,6 +12,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th></th>
                     <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=borrowed_date">{% trans "Borrowed on" %}</a></th>
                     <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=reader__last_name">{% trans "Reader" %}</a></th>
                     <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=bookcopy__book__title">{% trans "Book" %}</a></th>
@@ -21,6 +22,13 @@
             <tbody>
             {% for borrow in object_list %}
                 <tr>
+                    <td>
+                        {% if borrow.is_late %}
+                        <button type="button" class="btn btn-default" aria-label="{% trans "Late" %}">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        </button>
+                        {% endif %}
+                    </td>
                     <td><a href="{% url 'alexandrie:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date|date:"SHORT_DATE_FORMAT" }}</a></td>
                     <td><a href="{% url 'alexandrie:reader_update' borrow.reader.id %}">{{ borrow.reader }}</a></td>
                     <td><a href="{% url 'alexandrie:book_update' borrow.bookcopy.book.id %}">{{ borrow.bookcopy.book }}</a></td>

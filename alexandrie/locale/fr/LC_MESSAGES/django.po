@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 15:59+0200\n"
+"POT-Creation-Date: 2015-08-25 16:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc Schneider <marc@mirelsol.org>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
@@ -224,7 +224,7 @@ msgid "Notes"
 msgstr "Notes"
 
 #: models.py:274 models.py:536 templates/alexandrie/book_detail.html:225
-#: templates/alexandrie/reader_borrow_list.html:16
+#: templates/alexandrie/reader_borrow_list.html:17
 #: templates/alexandrie/reader_detail.html:4
 #: templates/alexandrie/reader_detail.html:10
 msgid "Reader"
@@ -333,7 +333,7 @@ msgstr "Nombre d'exemplaires"
 
 #: models.py:485 models.py:492 templates/alexandrie/book_detail.html:5
 #: templates/alexandrie/book_detail.html:14 templates/alexandrie/index.html:51
-#: templates/alexandrie/reader_borrow_list.html:17
+#: templates/alexandrie/reader_borrow_list.html:18
 #: templates/alexandrie/reader_detail.html:89
 msgid "Book"
 msgstr "Livre"
@@ -377,11 +377,11 @@ msgstr "Exemplaires des livres"
 msgid "Sample"
 msgstr "Exemplaire"
 
-#: models.py:538 templates/alexandrie/reader_borrow_list.html:15
+#: models.py:538 templates/alexandrie/reader_borrow_list.html:16
 msgid "Borrowed on"
 msgstr "Emprunté le"
 
-#: models.py:539 templates/alexandrie/reader_borrow_list.html:18
+#: models.py:539 templates/alexandrie/reader_borrow_list.html:19
 msgid "Due date"
 msgstr "Date d'échéance"
 
@@ -716,7 +716,11 @@ msgstr "Emprunt de"
 msgid "New borrowing"
 msgstr "Nouvel emprunt."
 
-#: templates/alexandrie/reader_borrow_list.html:31
+#: templates/alexandrie/reader_borrow_list.html:27
+msgid "Late"
+msgstr "En retard"
+
+#: templates/alexandrie/reader_borrow_list.html:39
 msgid "No borrowing."
 msgstr "Aucun emprunt."
 
