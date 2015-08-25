@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 10:05+0200\n"
+"POT-Creation-Date: 2015-08-25 11:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,11 +154,11 @@ msgstr "Nouveauté de l'application"
 msgid "Software news"
 msgstr "Nouveautés de l'application"
 
-#: models.py:209 models.py:490
+#: models.py:209 models.py:490 templates/alexandrie/reader_list.html:20
 msgid "Number"
 msgstr "Numéro"
 
-#: models.py:210 models.py:491
+#: models.py:210 models.py:491 templates/alexandrie/reader_list.html:23
 msgid "Registration date"
 msgstr "Date d'enregistrement"
 
@@ -256,7 +256,7 @@ msgstr "Auteur"
 msgid "Authors"
 msgstr "Auteurs"
 
-#: models.py:365
+#: models.py:365 templates/alexandrie/reader_list.html:22
 msgid "Name"
 msgstr "Nom"
 
@@ -439,6 +439,10 @@ msgstr "Historique"
 #: templates/alexandrie/base_tpl.html:108
 msgid "Empty"
 msgstr "Vide"
+
+#: templates/alexandrie/reader_list.html:37
+msgid "No reader."
+msgstr "Aucun lecteur."
 
 #: views.py:49 views.py:69
 msgid "Error when saving the record."

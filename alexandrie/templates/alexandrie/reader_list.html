@@ -1,4 +1,5 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
 {% block title %}Liste des lecteurs{% endblock %}
 
@@ -16,10 +17,10 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th><a href="{% url 'alexandrie:reader_list' %}?order_field=number">Numéro</a></th>
+                    <th><a href="{% url 'alexandrie:reader_list' %}?order_field=number">{% trans "Number" %}</a></th>
                     <th>Prénom</th>
-                    <th><a href="{% url 'alexandrie:reader_list' %}?order_field=last_name">Nom</a></th>
-                    <th><a href="{% url 'alexandrie:reader_list' %}?order_field=inscription_date">Date d'inscription</a></th>
+                    <th><a href="{% url 'alexandrie:reader_list' %}?order_field=last_name">{% trans "Name" %}</a></th>
+                    <th><a href="{% url 'alexandrie:reader_list' %}?order_field=inscription_date">{% trans "Registration date" %}</a></th>
                     <th>Actif</th>
                 </tr>
             </thead>
@@ -33,7 +34,7 @@
                     <td>{{ reader.is_disabled|yesno:"Non,Oui" }}</td>
                 </tr>
             {% empty %}
-                    <tr><td colspan="5">Aucun lecteur.</td></tr>
+                    <tr><td colspan="5">{% trans "No reader." %}</td></tr>
             {% endfor %}
             </tbody>
         </table>
