@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 15:26+0200\n"
+"POT-Creation-Date: 2015-08-25 15:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -466,6 +466,8 @@ msgid "New"
 msgstr "Nouveau"
 
 #: templates/alexandrie/author_detail.html:12
+#: templates/alexandrie/book_detail.html:20
+#: templates/alexandrie/reader_detail.html:16
 msgid "Form"
 msgstr "Fiche"
 
