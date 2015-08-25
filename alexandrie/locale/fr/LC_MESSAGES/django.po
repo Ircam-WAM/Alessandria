@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 15:38+0200\n"
+"POT-Creation-Date: 2015-08-25 15:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -433,8 +433,8 @@ msgstr "Modifié le"
 
 #: templates/alexandrie/_inc_form_search_std.html:4
 #: templates/alexandrie/book_list.html:13
-msgid "Search page"
-msgstr "Page de recherche"
+msgid "Search form"
+msgstr "Formulaire de recherche"
 
 #: templates/alexandrie/_inc_form_search_std.html:20
 #: templates/alexandrie/book_isbn_import.html:25
