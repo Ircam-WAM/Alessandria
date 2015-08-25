@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 15:35+0200\n"
+"POT-Creation-Date: 2015-08-25 15:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -295,7 +295,8 @@ msgstr "Cote"
 msgid "Height (inches)"
 msgstr "Hauteur (cm)"
 
-#: models.py:426 templates/alexandrie/book_list.html:57
+#: models.py:426 templates/alexandrie/book_isbn_import.html:16
+#: templates/alexandrie/book_list.html:57
 msgid "ISBN number"
 msgstr "No. ISBN"
 
@@ -566,10 +567,6 @@ msgstr "Retourné"
 #: templates/alexandrie/book_isbn_import.html:8
 msgid "ISBN import of a book"
 msgstr "Import ISBN d'un livre"
-
-#: templates/alexandrie/book_isbn_import.html:16
-msgid "ISBN nb"
-msgstr "No. ISBN"
 
 #: templates/alexandrie/book_isbn_import.html:44
 msgid "This book"
