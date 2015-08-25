@@ -43,6 +43,7 @@ class GenericTest(TestCase):
         book.audiences.add(audience1)
         book.authors.add(self.create_author(inst_nb))
         book.publishers.add(self.create_publisher(inst_nb))
+        book.clean()
         book.save()
         return book
     
@@ -67,6 +68,7 @@ class GenericTest(TestCase):
         r.sex = 'm'
         r.created_by = self.user
         r.created_on = datetime.today()
+        r.clean()
         r.save()
         return r
     
@@ -81,6 +83,7 @@ class GenericTest(TestCase):
         a.country = 'FR'
         a.created_by = self.user
         a.created_on = datetime.today()
+        a.clean()
         a.save()
         return a
     
@@ -92,6 +95,7 @@ class GenericTest(TestCase):
         p.country = 'FR'
         p.created_by = self.user
         p.created_on = datetime.today()
+        p.clean()
         p.save()
         return p
     
