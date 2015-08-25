@@ -1,8 +1,9 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
 {% block title %}{{ LIBRARY_NAME }}{% endblock %}
 
-{% block pageTitle %}Bonjour, {{ user.first_name }}{% endblock %}
+{% block pageTitle %}{% trans "Hello" %}, {{ user.first_name }}{% endblock %}
 
 {% block content %}
 
@@ -10,14 +11,14 @@
     <div class="col-sm-12">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Infos</h3>
+                <h3 class="panel-title">{% trans "News" %}</h3>
             </div>
             <div class="panel-body">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th width="15%">Date</th>
-                            <th width="85%">Info</th>
+                            <th width="15%">{% trans "Date" %}</th>
+                            <th width="85%">{% trans "News" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,7 +28,7 @@
                             <td>{{ appli_news.news|linebreaksbr }}</td>
                         </tr>
                     {% empty %}
-                        <tr><td colspan="2">Aucune information n'a été saisie.</td></tr>
+                        <tr><td colspan="2">{% trans "No news." %}.</td></tr>
                     {% endfor %}
                     </tbody>
                 </table>
@@ -40,15 +41,15 @@
     <div class="col-sm-12">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Derniers livres ajoutés</h3>
+                <h3 class="panel-title">{% trans "Last books registered" %}</h3>
             </div>
             <div class="panel-body">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Date enregistrement</th>
-                            <th>Livre</th>
-                            <th>Auteur</th>
+                            <th>{% trans "Registration date" %}</th>
+                            <th>{% trans "Book" %}</th>
+                            <th>{% trans "Author" %}</th>
                         </tr>
                     </thead>
                     <tbody>

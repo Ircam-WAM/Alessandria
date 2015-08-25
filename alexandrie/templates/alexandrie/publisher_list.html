@@ -1,8 +1,11 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
-{% block title %}Liste des éditeurs{% endblock %}
+{% trans "Publisher list" as publisher_list %}
 
-{% block pageTitle %}Liste des éditeurs{% endblock %}
+{% block title %}{{ publisher_list }}{% endblock %}
+
+{% block pageTitle %}{{ publisher_list }}{% endblock %}
 
 {% block content %}
 
@@ -16,8 +19,8 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th><a href="{% url 'alexandrie:publisher_list' %}?order_field=name">Nom</a></th>
-                    <th><a href="{% url 'alexandrie:publisher_list' %}?order_field=created_on">Créé le</a></th>
+                    <th><a href="{% url 'alexandrie:publisher_list' %}?order_field=name">{% trans "Name" %}</a></th>
+                    <th><a href="{% url 'alexandrie:publisher_list' %}?order_field=created_on">{% trans "Created on" %}</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +30,7 @@
                     <td>{{ publisher.created_on}}</td>
                 </tr>
                 {% empty %}
-                    <tr><td colspan="2">Aucun éditeur.</td></tr>
+                    <tr><td colspan="2">{% trans "No publisher." %}</td></tr>
                 {% endfor %}
             </tbody>
         </table>

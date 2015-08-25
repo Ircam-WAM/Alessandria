@@ -1,6 +1,7 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
-{% block title %}Emprunt{% endblock %}
+{% block title %}{% trans "Borrowing" %}{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="/static/alexandrie/layout/ajax_select/css/ajax_select.css" />
@@ -11,7 +12,11 @@
 {% endblock %}
 
 {% block pageTitle %}
-    {% if object.id %}Emprunt de <a href="{% url 'alexandrie:book_update' object.bookcopy.book.id %}">{{ object.bookcopy }}</a> par <a href="{% url 'alexandrie:reader_update' object.reader.id %}">{{ object.reader }}</a> ({{ object.borrowed_date}}){% else %}Nouvel emprunt{% endif %}
+    {% if object.id %}
+        {% trans "Borrowing of" %}&nbsp;<a href="{% url 'alexandrie:book_update' object.bookcopy.book.id %}">{{ object.bookcopy }}</a> {% trans "by" %} <a href="{% url 'alexandrie:reader_update' object.reader.id %}">{{ object.reader }}</a> ({{ object.borrowed_date}})
+    {% else %}
+        {% trans "New borrowing" %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -33,7 +38,7 @@
         {% for author in object.bookcopy.book.authors.all %}
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Autres livres de <a href="{% url 'alexandrie:author_update' author.id %}">{{ author }}</a></h3>
+                    <h3 class="panel-title">{% trans "Other books of" %}&nbsp;<a href="{% url 'alexandrie:author_update' author.id %}">{{ author }}</a></h3>
                 </div>
                 <div class="panel-body">
                     <ul>

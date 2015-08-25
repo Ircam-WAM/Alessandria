@@ -1,8 +1,9 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
-{% block title %}Liste des auteurs{% endblock %}
+{% block title %}{% trans "Author list" %}{% endblock %}
 
-{% block pageTitle %}Liste des auteurs{% endblock %}
+{% block pageTitle %}{% trans "Author list" %}{% endblock %}
 
 {% block content %}
 
@@ -16,9 +17,9 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th><a href="{% url 'alexandrie:author_list' %}?order_field=last_name">Nom</a></th>
+                    <th><a href="{% url 'alexandrie:author_list' %}?order_field=last_name">{% trans "Name" %}</a></th>
                     <th>Date de naissance</th>
-                    <th><a href="{% url 'alexandrie:author_list' %}?order_field=created_on">Créé le</a></th>
+                    <th><a href="{% url 'alexandrie:author_list' %}?order_field=created_on">{% trans "Created on" %}</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +30,7 @@
                     <td>{{ author.created_on }}</td>
                 </tr>
                 {% empty %}
-                    <tr><td colspan="3">Aucun auteur.</td></tr>
+                    <tr><td colspan="3">{% trans "No author." %}</td></tr>
                 {% endfor %}
             </tbody>
         </table>

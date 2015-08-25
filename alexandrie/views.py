@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.utils.translation import ugettext as _
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -45,11 +46,11 @@ class ProtectedView(object):
 
 
 class EntityCreateView(ProtectedView, CreateView):
-    def form_invalid(self, form, error_msg=u"Erreur lors de l'enregistrement."):
+    def form_invalid(self, form, error_msg=_("Error when saving the record.")):
         messages.error(self.request, error_msg)
         return super(EntityCreateView, self).form_invalid(form)
 
-    def form_valid(self, form, success_msg=u"Enregistement effectué avec succès."):
+    def form_valid(self, form, success_msg=_("Record successful saved.")):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         form.instance.created_by = self.request.user
@@ -65,11 +66,11 @@ class EntityUpdateView(ProtectedView, UpdateView):
             load_user_nav_history(self.request, self.request.user)
         return ret
 
-    def form_invalid(self, form, error_msg=u"Erreur lors de l'enregistrement."):
+    def form_invalid(self, form, error_msg=_("Error when saving the record.")):
         messages.error(self.request, error_msg)
         return super(EntityUpdateView, self).form_invalid(form)
 
-    def form_valid(self, form, success_msg=u"Enregistement effectué avec succès."):
+    def form_valid(self, form, success_msg=_("Record successful saved.")):
         form.instance.modified_by = self.request.user
         messages.success(self.request, success_msg)
         return super(EntityUpdateView, self).form_valid(form)
@@ -161,9 +162,10 @@ class LogoutView(TemplateView):
 
 class LoginView(TemplateView):
     template_name = 'alexandrie/login.html'
+    logging_error_msg = _("Login error - wrong username or password.")
 
     def login_error(self):
-        messages.error(self.request, u"Erreur de connexion - nom d'utilisateur / mot de passe incorrect.")
+        messages.error(self.request, logging_error_msg)
         return HttpResponseRedirect(reverse('alexandrie:login'))
 
     def post(self, request):
@@ -188,7 +190,7 @@ class LoginView(TemplateView):
                 return HttpResponseRedirect(reverse('alexandrie:home'))
             else:
                 # An inactive account was used - no logging in!
-                messages.error(self.request, u"Erreur de connexion - nom d'utilisateur / mot de passe incorrect.")
+                messages.error(self.request, logging_error_msg)
                 return self.login_error()
         else:
             # Bad login details were provided. So we can't log the user in.
@@ -265,7 +267,7 @@ class AuthorDeleteView(EntityDeleteView):
         # This method is called before displaying the page 'template_name'
         author = Author.objects.get(id=kwargs['pk'])
         if author.book_set.count() > 0:
-            messages.error(self.request, u"Impossible de supprimer cet auteur car il est référencé dans un livre.")
+            messages.error(self.request, _("Unable to remove this author because it is referenced in a book."))
             return redirect('alexandrie:author_update', pk=author.id)
             #return redirect(author) # Call to get_absolute_url of Author model
         return super(AuthorDeleteView, self).get(request, kwargs)
@@ -302,7 +304,7 @@ class PublisherDeleteView(EntityDeleteView):
         # This method is called before displaying the page 'template_name'
         publisher = Publisher.objects.get(id=kwargs['pk'])
         if publisher.book_set.count() > 0:
-            messages.error(self.request, u"Impossible de supprimer cet éditeur car il est référencé dans un livre.")
+            messages.error(self.request, _("Unable to remove this publisher because it is referenced in a book."))
             return redirect('alexandrie:publisher_update', pk=publisher.id)
         return super(PublisherDeleteView, self).get(request, kwargs)
 
@@ -412,7 +414,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                         if not is_error_in_form:
                             is_error_in_form = not author_form.is_valid()
                             if is_error_in_form:
-                                messages.error(self.request, u"Auteur n°. %s invalide." % (i+1))
+                                messages.error(self.request, _("Invalid author nb %s." % (i+1)))
                         authors_form.append(author_form)
                 else: # The author already exists in the DB
                     authors_ids.append(Author.objects.get(id=request.POST[author_id_fieldname]).id)
@@ -423,7 +425,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                     if not is_error_in_form:
                         is_error_in_form = not publisher_form.is_valid()
                         if is_error_in_form:
-                            messages.error(self.request, u"Editeur invalide.")
+                            messages.error(self.request, _("Invalid publisher."))
             else: # The publisher already exists in the DB
                 publisher_id = Publisher.objects.get(id=request.POST['publisher_id']).id
 
@@ -559,9 +561,9 @@ class BookCopyDisableView(EntityUpdateView):
 
     def form_valid(self, form):
         if self.object.disabled_on < self.object.registered_on:
-            messages.error(self.request, u"La date de retrait ne peut etre antérieure à la date d'enregistrement.")
+            messages.error(self.request, _("The removing date can't be prior to the registring date."))
             return redirect('alexandrie:bookcopy_disable', pk=self.object.id)
-        return super(BookCopyDisableView, self).form_valid(form, u"L'exemplaire a été retiré avec succès.")
+        return super(BookCopyDisableView, self).form_valid(form, _("Sample successfully removed."))
 
     def get_success_url(self):
         return self.object.book.get_absolute_url()
@@ -594,7 +596,7 @@ class ReaderDisableView(EntityUpdateView):
 
     def form_valid(self, form):
         self.object.disabled_on = stddatetime.now()
-        return super(ReaderDisableView, self).form_valid(form, u"Le lecteur a été désactivé avec succès.")
+        return super(ReaderDisableView, self).form_valid(form, _("Reader successfully disabled."))
 
     def get_success_url(self):
         return self.object.get_absolute_url()

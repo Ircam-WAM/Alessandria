@@ -1,10 +1,11 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
 {% load tag_extras %}
 
-{% block title %}Import ISBN d'un livre{% endblock %}
+{% block title %}{% trans "ISBN import of a book" %}{% endblock %}
 
-{% block pageTitle %}Import ISBN d'un livre{% endblock %}
+{% block pageTitle %}{% trans "ISBN import of a book" %}{% endblock %}
 
 {% block content %}
 
@@ -12,7 +13,7 @@
     <input type="hidden" name="cmd" value="search_isbn" />
     <div class="row">
         <div class="form-group">
-            <label for="isbn_nb" class="col-sm-2 control-label">No. ISBN</label>
+            <label for="isbn_nb" class="col-sm-2 control-label">{% trans "ISBN number" %}</label>
             <div class="col-sm-10">
                 <input id="isbn_nb" name="isbn_nb" type="text" />
             </div>
@@ -21,7 +22,7 @@
     <div class="row">
         <div class="form-group">
             <div class="col-sm-offset-1 col-sm-11">
-                <button type="submit" class="btn btn-primary">Rechercher</button>
+                <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
             </div>
         </div>
     </div>
@@ -40,7 +41,7 @@
     {% if book_form and book_form.instance.id %}
         <div class="row">
             <div class="alert alert-success">
-                <p>Ce livre <a href="{% url 'alexandrie:book_update' book_form.instance.id %}">existe déjà dans la base de données.</a></p>
+                <p>{% trans "This book" %} <a href="{% url 'alexandrie:book_update' book_form.instance.id %}">{% trans "already exists." %}</a></p>
             </div>
         </div>
     {% else %}
@@ -50,7 +51,7 @@
                 <div class="row">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Livre trouvé</h3>
+                            <h3 class="panel-title">{% trans "Book found" %}</h3>
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
@@ -73,14 +74,14 @@
                     {% for author_form in authors_form %}
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Auteur&nbsp;n°.{{ forloop.counter }}&nbsp;:
+                                <h3 class="panel-title">{% trans "Author" %}&nbsp;n°.{{ forloop.counter }}&nbsp;:
                                     <input name="author_nb" type="hidden" value="{{ forloop.counter0 }}"/>
                                     {% if not author_form.instance.id %}
-                                        cet auteur n'existe pas dans la base, le créer?
+                                        {% trans "This author doesn't exist, create it?" %}
                                         <input name="author_to_create_{{ forloop.counter0 }}" type="checkbox" value="{{ forloop.counter0 }}" checked/>
                                     {% else %}
                                         <input name="author_id_{{ forloop.counter0 }}" type="hidden" value="{{ author_form.instance.id }}" />
-                                        cet auteur existe déjà la base, il sera associé au livre.
+                                        {% trans "This author already exists, it will be linked to the book." %}
                                     {% endif %}
                                 </h3>
                             </div>
@@ -99,7 +100,7 @@
                                     {% endfor %}
                                 {% else %}
                                     <div class="form-group">
-                                        <div class="col-sm-2">Nom:</div>
+                                        <div class="col-sm-2">{% trans "Name" %}:</div>
                                         <div class="col-sm-10">{{ author_form.first_name.value }}&nbsp;{{ author_form.last_name.value }}</div>
                                     </div>
                                 {% endif %}
@@ -110,11 +111,11 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">
                                 {% if not publisher_form.instance.id %}
-                                    Cet éditeur n'existe pas dans la base, le créer?
+                                    {% trans "This publisher doesn't exist, create it?" %}
                                     <input name="publisher_to_create" type="checkbox" value="publisher" checked/>
                                 {% else %}
                                     <input name="publisher_id" type="hidden" value="{{ publisher_form.instance.id }}" />
-                                    Cet éditeur existe déjà dans la base, il sera associé au livre.
+                                    {% trans "This publisher already exists, it will be linked to the book." %}
                                 {% endif %}
                              </h3>
                         </div>
@@ -133,7 +134,7 @@
                                 {% endfor %}
                             {% else %}
                                 <div class="form-group">
-                                    <div class="col-sm-2">Nom:</div>
+                                    <div class="col-sm-2">{% trans "Name" %}:</div>
                                     <div class="col-sm-10">{{ publisher_form.name.value }}</div>
                                 </div>
                             {% endif %}
@@ -143,7 +144,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Importer</button>
+                            <button type="submit" class="btn btn-primary">{% trans "Import" %}</button>
                         </div>
                     </div>
                 </div>
@@ -151,7 +152,7 @@
         {% else %}
             <div class="row">
                 <div class="col-md-12">
-                    No. ISBN inconnu
+                    {% trans "Unknown ISBN number." %}
                 </div>
             </div>
         {% endif %}
