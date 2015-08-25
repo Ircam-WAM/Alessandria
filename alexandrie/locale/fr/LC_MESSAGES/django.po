@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 12:50+0200\n"
+"POT-Creation-Date: 2015-08-25 12:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -391,6 +391,21 @@ msgstr "Emprunt d'un lecteur"
 msgid "Reader borrowings"
 msgstr "Emprunts des lecteurs"
 
+#: templates/alexandrie/_inc_form_edit_footer.html:3
+#: templates/alexandrie/publisher_list.html:23
+msgid "Created on"
+msgstr "Créé le"
+
+#: templates/alexandrie/_inc_form_edit_footer.html:3
+#: templates/alexandrie/_inc_form_edit_footer.html:4
+#: templates/alexandrie/reader_borrow_detail.html:16
+msgid "by"
+msgstr "par"
+
+#: templates/alexandrie/_inc_form_edit_footer.html:4
+msgid "Updated on"
+msgstr "Modifié le"
+
 #: templates/alexandrie/_inc_form_search_std.html:4
 msgid "Search page"
 msgstr "Page de recherche"
@@ -523,10 +538,6 @@ msgstr "Nouveau"
 msgid "Publisher list"
 msgstr "Liste des éditeurs"
 
-#: templates/alexandrie/publisher_list.html:23
-msgid "Created on"
-msgstr "Créé le"
-
 #: templates/alexandrie/publisher_list.html:33
 msgid "No publisher."
 msgstr "Aucun éditeur."
@@ -538,10 +549,6 @@ msgstr "Emprunt"
 #: templates/alexandrie/reader_borrow_detail.html:16
 msgid "Borrowing of"
 msgstr "Emprunt de"
-
-#: templates/alexandrie/reader_borrow_detail.html:16
-msgid "by"
-msgstr "par"
 
 #: templates/alexandrie/reader_borrow_detail.html:18
 msgid "New borrowing"
