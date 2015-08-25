@@ -1,16 +1,17 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
-{% block title %}Confirmation de suppression{% endblock %}
+{% block title %}{% trans "Confirm suppression" %}{% endblock %}
 
-{% block pageTitle %}Confirmation de suppression{% endblock %}
+{% block pageTitle %}{% trans "Confirm suppression" %}{% endblock %}
 
 {% block content %}
 
 <div class="row">
     <div class="col-sm-12">
         <form action="" method="post">{% csrf_token %}
-            <p>Etes-vous sur de vouloir supprimer "{{ object }}" ?</p>
-            <button type="submit" class="btn btn-danger">Confirmer</button>
+            <p>{% trans "Do you really want to delete" %} "{{ object }}" ?</p>
+            <button type="submit" class="btn btn-danger">{% trans "Confirm" %}</button>
         </form>
     </div><!-- /.col-sm-12 -->
 </div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 12:55+0200\n"
+"POT-Creation-Date: 2015-08-25 13:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -496,6 +496,19 @@ msgstr "Historique"
 #: templates/alexandrie/base_tpl.html:108
 msgid "Empty"
 msgstr "Vide"
+
+#: templates/alexandrie/confirm_delete.html:4
+#: templates/alexandrie/confirm_delete.html:6
+msgid "Confirm suppression"
+msgstr "Confirmer la suppression"
+
+#: templates/alexandrie/confirm_delete.html:13
+msgid "Do you really want to delete"
+msgstr "Est-ce que vous souhaitez réellement supprimer"
+
+#: templates/alexandrie/confirm_delete.html:14
+msgid "Confirm"
+msgstr "Confirmer"
 
 #: templates/alexandrie/index.html:6
 msgid "Hello"
