@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 12:29+0200\n"
+"POT-Creation-Date: 2015-08-25 12:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -431,7 +431,7 @@ msgstr "Liste"
 msgid "Log out"
 msgstr "Déconnexion"
 
-#: templates/alexandrie/base_tpl.html:92
+#: templates/alexandrie/base_tpl.html:92 templates/alexandrie/login.html:31
 msgid "Log in"
 msgstr "Connexion"
 
@@ -446,6 +446,22 @@ msgstr "Historique"
 #: templates/alexandrie/base_tpl.html:108
 msgid "Empty"
 msgstr "Vide"
+
+#: templates/alexandrie/login.html:4 templates/alexandrie/login.html.py:6
+msgid "Authentication"
+msgstr "Authentification"
+
+#: templates/alexandrie/login.html:15
+msgid "Login"
+msgstr "Connexion"
+
+#: templates/alexandrie/login.html:20
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: templates/alexandrie/login.html:24
+msgid "Password"
+msgstr "Mot de passe"
 
 #: templates/alexandrie/publisher_detail.html:4
 #: templates/alexandrie/publisher_detail.html:6
