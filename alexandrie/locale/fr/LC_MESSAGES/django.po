@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 12:00+0200\n"
+"POT-Creation-Date: 2015-08-25 12:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -223,7 +223,8 @@ msgstr "Désactivé le"
 msgid "Notes"
 msgstr "Notes"
 
-#: models.py:274 models.py:536 templates/alexandrie/reader_detail.html:4
+#: models.py:274 models.py:536 templates/alexandrie/reader_borrow_list.html:16
+#: templates/alexandrie/reader_detail.html:4
 #: templates/alexandrie/reader_detail.html:10
 msgid "Reader"
 msgstr "Lecteur"
@@ -321,7 +322,8 @@ msgstr "No. ISBN invalide."
 msgid "Number of samples"
 msgstr "Nombre d'exemplaires"
 
-#: models.py:485 models.py:492 templates/alexandrie/reader_detail.html:89
+#: models.py:485 models.py:492 templates/alexandrie/reader_borrow_list.html:17
+#: templates/alexandrie/reader_detail.html:89
 msgid "Book"
 msgstr "Livre"
 
@@ -361,11 +363,11 @@ msgstr "Exemplaires des livre"
 msgid "Sample"
 msgstr "Exemplaire"
 
-#: models.py:538
+#: models.py:538 templates/alexandrie/reader_borrow_list.html:15
 msgid "Borrowed on"
 msgstr "Emprunté le"
 
-#: models.py:539
+#: models.py:539 templates/alexandrie/reader_borrow_list.html:18
 msgid "Due date"
 msgstr "Date d'échéance"
 
@@ -443,6 +445,30 @@ msgstr "Historique"
 #: templates/alexandrie/base_tpl.html:108
 msgid "Empty"
 msgstr "Vide"
+
+#: templates/alexandrie/reader_borrow_detail.html:4
+msgid "Borrowing"
+msgstr "Emprunt"
+
+#: templates/alexandrie/reader_borrow_detail.html:16
+msgid "Borrowing of"
+msgstr "Emprunt de"
+
+#: templates/alexandrie/reader_borrow_detail.html:16
+msgid "by"
+msgstr "par"
+
+#: templates/alexandrie/reader_borrow_detail.html:18
+msgid "New borrowing"
+msgstr "Nouvel emprunt."
+
+#: templates/alexandrie/reader_borrow_detail.html:41
+msgid "Other books of"
+msgstr "Autres emprunts de"
+
+#: templates/alexandrie/reader_borrow_list.html:31
+msgid "No borrowing."
+msgstr "Aucun emprunt."
 
 #: templates/alexandrie/reader_detail.html:10
 msgid "New reader"
