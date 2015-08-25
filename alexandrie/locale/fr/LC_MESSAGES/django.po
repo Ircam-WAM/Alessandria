@@ -388,7 +388,7 @@ msgstr "Date d'échéance"
 #: models.py:540 templates/alexandrie/reader_borrow_list.html:20
 #: templates/alexandrie/reader_detail.html:90
 msgid "Returned on"
-msgstr "Retourné le"
+msgstr "Rendu le"
 
 #: models.py:578
 #, python-format
@@ -561,7 +561,7 @@ msgstr "Date d'emprunt"
 
 #: templates/alexandrie/book_detail.html:226
 msgid "Returned"
-msgstr "Retourné"
+msgstr "Rendu"
 
 #: templates/alexandrie/book_isbn_import.html:6
 #: templates/alexandrie/book_isbn_import.html:8
