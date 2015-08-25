@@ -17,6 +17,7 @@
                     <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=reader__last_name">{% trans "Reader" %}</a></th>
                     <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=bookcopy__book__title">{% trans "Book" %}</a></th>
                     <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=borrow_due_date">{% trans "Due date" %}</a></th>
+                    <th><a href="{% url 'alexandrie:reader_borrow_list' display %}?order_field=returned_on">{% trans "Returned on" %}</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
                     <td><a href="{% url 'alexandrie:reader_update' borrow.reader.id %}">{{ borrow.reader }}</a></td>
                     <td><a href="{% url 'alexandrie:book_update' borrow.bookcopy.book.id %}">{{ borrow.bookcopy.book }}</a></td>
                     <td>{{ borrow.borrow_due_date|date:"SHORT_DATE_FORMAT" }}</td>
+                    <td>{{ borrow.returned_on|default:"" }}</td>
                 </tr>
             {% empty %}
                 <tr>

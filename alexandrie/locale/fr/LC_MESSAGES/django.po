@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 16:48+0200\n"
+"POT-Creation-Date: 2015-08-25 17:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc Schneider <marc@mirelsol.org>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
@@ -385,7 +385,8 @@ msgstr "Emprunté le"
 msgid "Due date"
 msgstr "Date d'échéance"
 
-#: models.py:540 templates/alexandrie/reader_detail.html:90
+#: models.py:540 templates/alexandrie/reader_borrow_list.html:20
+#: templates/alexandrie/reader_detail.html:90
 msgid "Returned on"
 msgstr "Retourné le"
 
@@ -716,11 +717,11 @@ msgstr "Emprunt de"
 msgid "New borrowing"
 msgstr "Nouvel emprunt."
 
-#: templates/alexandrie/reader_borrow_list.html:27
+#: templates/alexandrie/reader_borrow_list.html:28
 msgid "Late"
 msgstr "En retard"
 
-#: templates/alexandrie/reader_borrow_list.html:39
+#: templates/alexandrie/reader_borrow_list.html:41
 msgid "No borrowing."
 msgstr "Aucun emprunt."
 
