@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 17:41+0200\n"
+"POT-Creation-Date: 2015-09-14 08:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc Schneider <marc@mirelsol.org>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: forms.py:59
+msgid "Readers enabled"
+msgstr "Lecteurs actifs"
 
 #: models.py:22
 msgid "Software name"
@@ -621,17 +625,17 @@ msgid "Take out"
 msgstr "Retirer"
 
 #: templates/alexandrie/bookcopy_detail.html:53
-#: templates/alexandrie/bookcopy_disable.html:21
+#: templates/alexandrie/bookcopy_disable.html:25
 #: templates/alexandrie/reader_disable.html:23
 msgid "Cancel"
 msgstr "Annuler"
 
 #: templates/alexandrie/bookcopy_disable.html:4
-#: templates/alexandrie/bookcopy_disable.html:6
+#: templates/alexandrie/bookcopy_disable.html:10
 msgid "Removing the sample"
 msgstr "Retrait de l'exemplaire"
 
-#: templates/alexandrie/bookcopy_disable.html:11
+#: templates/alexandrie/bookcopy_disable.html:15
 msgid ""
 "Removing a sample means that it won't be part of the samples to be borrowed. "
 "However it will be kept in the system history."
@@ -639,7 +643,7 @@ msgstr ""
 "Retirer un exemplaire signifie qu'il ne fera plus partie des exemplaires à "
 "emprunter. Toutefois il sera conservé dans l'historique du système."
 
-#: templates/alexandrie/bookcopy_disable.html:20
+#: templates/alexandrie/bookcopy_disable.html:24
 msgid "Remove"
 msgstr "Retirer"
 

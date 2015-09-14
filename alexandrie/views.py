@@ -609,3 +609,7 @@ class ReaderListView(EntityListView):
 
     def _build_query(self, search_fields):
         self.object_list = self.model.objects.search(last_name=search_fields['last_name'])
+        if search_fields.get('reader_enabled') != None:
+            self.object_list = self.object_list.filter(disabled_on__isnull=True)
+        else:
+            self.object_list = self.object_list.filter(disabled_on__isnull=False)

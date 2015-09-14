@@ -3,6 +3,7 @@
 import datetime
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 from django_countries import countries
 
@@ -55,6 +56,7 @@ class ReaderForm(CommonForm):
     )
 
 class ReaderSearchForm(forms.ModelForm):
+    reader_enabled = forms.BooleanField(label=_("Readers enabled"), initial=True)
     class Meta:
         model = Reader
         fields = ('last_name',)
