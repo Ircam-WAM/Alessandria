@@ -136,7 +136,6 @@ class EntityListView(ProtectedView, ListView):
         context = self.get_context_data()
         if self.form_class != None:
             context['search_form'] = self.form_class(request.POST)
-        context['object_list'] = self.object_list
         return self.render_to_response(context)
 
 class EntityDeleteView(ProtectedView, DeleteView):
