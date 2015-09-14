@@ -364,7 +364,9 @@ class BookListView(EntityListView):
         self.object_list = Book.objects.search(
             isbn_nb=search_fields['isbn_nb'], title=search_fields['title'], category=search_fields['category'],
             sub_category=search_fields['sub_category'], author_name=search_fields['author_name']
-    )
+        )
+        self.object_list = self.object_list.filter(bookcopy__isnull=(search_fields.get('has_copy') == None))
+        self.object_list = self.object_list.filter(bookcopy__disabled_on__isnull=(search_fields.get('took_away') == None))
 
     def post(self, request):
         template_response = super(self.__class__, self).post(request)
