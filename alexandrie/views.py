@@ -368,11 +368,6 @@ class BookListView(EntityListView):
         self.object_list = self.object_list.filter(bookcopy__isnull=(search_fields.get('has_copy') == None))
         self.object_list = self.object_list.filter(bookcopy__disabled_on__isnull=(search_fields.get('took_away') == None))
 
-    def post(self, request):
-        template_response = super(self.__class__, self).post(request)
-        template_response.context_data['author_name'] = request.POST['author_name']
-        return template_response
-
 
 class BookIsbnImportView(ProtectedView, TemplateView):
     template_name = 'alexandrie/book_isbn_import.html'

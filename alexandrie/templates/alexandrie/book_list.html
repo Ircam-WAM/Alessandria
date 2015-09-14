@@ -8,42 +8,7 @@
 {% block content %}
 
 <form class="form-horizontal" action="{% url 'alexandrie:book_list' %}" method="post" role="form">{% csrf_token %}
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title">{% trans "Search form" %}</h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="row">
-                <div class="col-sm-6">
-                    {% for field in search_form %}
-                    <div class="form-group">
-                        <label for="{{ field.id_for_label }}" class="col-sm-4 control-label">{{ field.label }}</label>
-                        <div class="col-sm-8">
-                            {{ field }}
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="author_last_name" class="col-sm-2 control-label">{% trans "Author" %}</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="author_name" name="author_name" value="{{ author_name }}"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-11">
-                    <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    {% include 'alexandrie/_inc_form_search_std.html' %}
 </form>
 
 <div class="row">

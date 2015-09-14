@@ -132,6 +132,7 @@ class BookForm(CommonForm):
     )
 
 class BookSearchForm(forms.ModelForm):
+    author_name = forms.CharField(label=_('Author'))
     has_copy = forms.BooleanField(label=_('Has copy'), initial=True)
     took_away = forms.BooleanField(label=_('Took away'), initial=False)
     class Meta:
