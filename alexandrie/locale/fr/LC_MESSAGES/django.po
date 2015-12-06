@@ -564,7 +564,7 @@ msgstr "retiré"
 #: templates/alexandrie/book_detail.html:200
 #: templates/alexandrie/reader_borrow_detail.html:41
 msgid "Other books of"
-msgstr "Autres emprunts de"
+msgstr "Autres livres de"
 
 #: templates/alexandrie/book_detail.html:224
 #: templates/alexandrie/reader_detail.html:88
