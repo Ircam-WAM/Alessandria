@@ -1,10 +1,17 @@
 This is an application to manage a book library.
 
-
 # Installation
+
 ## Prerequisites
 * Django >= 1.7
 * Python 3
+
+## Get the sources and install alexandrie
+<pre>git clone https://gitlab.com/openlabmatera/alexandrie.git
+cd alexandrie
+python setup.py sdist
+pip install dist/django-alexandrie-<version>.tar.gz</pre>
+
 ## Django app - configuration
 * Open the file *settings.py*
   * Add to your *INSTALLED_APPS* settings:
