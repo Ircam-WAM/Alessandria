@@ -439,13 +439,14 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                     publisher_form.save()
                     publisher_id = publisher_form.instance.id
                 # Initialize the book with the values that have been entered
+                publisher_ids = [publisher_id] if publisher_id is not None else []
                 book_form = BookForm(
                     initial={
                         'title': request.POST.get('title'),
                         'isbn_nb': request.POST.get('isbn_nb'),
                         'publish_date': request.POST.get('publish_date'),
                         'authors': authors_ids,
-                        'publishers': [publisher_id],
+                        'publishers': publisher_ids,
                         'language': Language.get_default_language(), # TODO: Change me, use isbn_meta['Language']
                         'is_isbn_import': True
                     }
