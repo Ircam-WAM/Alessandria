@@ -4,8 +4,15 @@
 Django settings for the alexandrie app.
 """
 
-from django.conf import global_settings
+#from bibli import settings
+from django.conf import settings
 from django.db.utils import OperationalError
+
+context_processors = settings.TEMPLATES[0]['OPTIONS']['context_processors']
+# Used for i18n of jquery date picker plugin (http://keith-wood.name/datepick.html)
+context_processors.append("alexandrie.context_processors.js_datepicker_lang")
+context_processors.append("alexandrie.context_processors.app_version")
+context_processors.append("alexandrie.context_processors.library_infos")
 
 LOGGING = {
     'version': 1,
@@ -23,7 +30,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'logs/alexandrie.log',
+            'filename': 'alexandrie.log',
             'formatter': 'verbose'
         },
     },
@@ -40,7 +47,8 @@ LOGGING = {
     }
 }
 
-# define the lookup channels in use on the site (autocomplete stuff)
+# Define the lookup channels in use on the site (autocomplete stuff)
+# Used in forms.py
 AJAX_LOOKUP_CHANNELS = {
     'reader_list': ('alexandrie.ajax_lookup', 'ReaderLookup'),
     'bookcopy_list': ('alexandrie.ajax_lookup', 'BookCopyLookup'),

@@ -10,25 +10,28 @@ from django.db.models import Q
 from django.contrib.auth.models import User as DjangoUser
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
+from django.utils.translation import pgettext_lazy as pgettext_lazy
 from django_countries.fields import CountryField
 
 from alexandrie.utils import MyString, IsbnUtils
 
 
 class GeneralConfiguration(models.Model):
-    appli_name = models.TextField(verbose_name=u"Nom de l'application", default=u"Alexandrie")
-    default_country = CountryField(verbose_name=u'Pays par défaut', default="FR")
-    max_borrow_days = models.PositiveSmallIntegerField(u"Nombre de jours maximum pour le prêt", default=21)
-    nav_history = models.PositiveSmallIntegerField(u"Historique de navigation", default=10)
-    library_name = models.CharField(u"Nom bibliothèque", max_length=80)
-    library_addr1 = models.CharField(u"Adresse 1 bibliothèque", max_length=30)
-    library_addr2 = models.CharField(u"Adresse 2 bibliothèque", max_length=30, null=True, blank=True)
-    library_zip = models.CharField(u"Code postal bibliothèque", max_length=10)
-    library_city = models.CharField(u"Ville bibliothèque", max_length=30)
-    library_country = CountryField(verbose_name=u'Pays bibliothèque')
-    library_phone_number = models.CharField(u"Téléphone bibliothèque", max_length=20, null=True, blank=True)
-    library_email = models.EmailField(u"E-mail bibliothèque", unique=True, null=True, blank=True)
-    library_website = models.URLField(verbose_name='Site web bibliothèque', null=True, blank=True)
+    appli_name = models.TextField(verbose_name=_("Software name"), default=u"Alexandrie")
+    default_country = CountryField(verbose_name=_("Default country"), default="FR")
+    max_borrow_days = models.PositiveSmallIntegerField(_("Maximal borrowing days"), default=21)
+    nav_history = models.PositiveSmallIntegerField(_("Navigation history"), default=10)
+    library_name = models.CharField(_("Library name"), max_length=80)
+    library_addr1 = models.CharField(_("Library address 1"), max_length=30)
+    library_addr2 = models.CharField(_("Library address 2"), max_length=30, null=True, blank=True)
+    library_zip = models.CharField(_("Library zip code"), max_length=10)
+    library_city = models.CharField(_("Library city"), max_length=30)
+    library_country = CountryField(verbose_name=_("Library country"))
+    library_phone_number = models.CharField(_("Library phone"), max_length=20, null=True, blank=True)
+    library_email = models.EmailField(_("Library e-mail"), unique=True, null=True, blank=True)
+    library_website = models.URLField(verbose_name=_("Library website"), null=True, blank=True)
 
     @staticmethod
     def get():
@@ -40,11 +43,11 @@ class GeneralConfiguration(models.Model):
             return gc
 
     def __str__(self):
-        return "Configuration"
+        return ugettext("Configuration") # TODO: check if it could be lazy
 
     class Meta:
-        verbose_name = u"Configuration générale de l'application"
-        verbose_name_plural = u"Configuration générale de l'application"
+        verbose_name = _("Global settings of the software")
+        verbose_name_plural = verbose_name
 
 
 class UserNavigationHistoryQuerySet(models.QuerySet):
@@ -89,10 +92,11 @@ class ReferenceEntity(models.Model):
 
 class Language(ReferenceEntity):
     #code = models.CharField(u"Code", max_length=5) # Internationalization https://docs.djangoproject.com/en/1.7/topics/i18n/
-    is_default = models.BooleanField(u"Langue par défaut", default=False)
+    is_default = models.BooleanField(_("Default language"), default=False)
 
     class Meta:
-        verbose_name = "Langue"
+        verbose_name = _("Language")
+        verbose_name_plural = _("Languages")
 
     @staticmethod
     def get_default_language():
@@ -104,46 +108,46 @@ class Language(ReferenceEntity):
 
 class Profession(ReferenceEntity):
     class Meta:
-        verbose_name = u"Profession"
-
+        verbose_name = _("Job")
+        verbose_name_plural = _("Jobs")
 
 class BookAudience(ReferenceEntity):
     class Meta:
-        verbose_name = u"Public cible"
-        verbose_name_plural = u"Publics cible"
+        verbose_name = _("Audience")
+        verbose_name_plural = _("Audiences")
 
 
 class BookCondition(ReferenceEntity):
     class Meta:
-        verbose_name = u"Etat d'un livre"
-        verbose_name_plural = u"Etats d'un livre"
+        verbose_name = _("Book condition")
+        verbose_name_plural = _("Book conditions")
 
 
 class BookCategory(ReferenceEntity):
-    # For example : roman, documentaire, magazine, bd
+    # For example : novel, documentary, magazine, cartoon
     class Meta:
-        verbose_name = u"Catégorie du livre"
-        verbose_name_plural = u"Catégories d'un livre"
+        verbose_name = _("Book category")
+        verbose_name_plural = _("Book categories")
 
 
 class BookSubCategory(ReferenceEntity):
-    # For example : histoire / géographie (=> documentaire, magazine), policier / aventure (roman)
+    # For example : history / geography (=> sub-category of documentary, magazine), detective / adventure (=> novel)
     parent_category = models.ForeignKey(BookCategory)
     class Meta:
-        verbose_name = u"Sous-catégorie d'un livre"
-        verbose_name_plural = u"Sous-catégories d'un livre"
+        verbose_name = _("Book sub-category")
+        verbose_name_plural = _("Book sub-categories")
 
 
 class BookTag(ReferenceEntity):
     class Meta:
-        verbose_name = u"Etiquette d'un livre"
-        verbose_name_plural = u"Etiquettes d'un livre"
+        verbose_name = _("Book tag")
+        verbose_name_plural = _("Book tags")
 
 
 class BookCopyOrigin(ReferenceEntity):
     class Meta:
-        verbose_name = u"Origine d'un livre"
-        verbose_name_plural = u"Origines d'un livre"
+        verbose_name = _("Book origin")
+        verbose_name_plural = _("Book origins")
 
 #########
 # Model #
@@ -159,7 +163,6 @@ class ModelEntity(models.Model):
         super(ModelEntity, self).clean(*args, **kwargs)
 
     def save(self, *args, **kwargs):
-        self.full_clean()
         super(ModelEntity, self).save(*args, **kwargs)
 
     class Meta:
@@ -184,8 +187,8 @@ class AppliNews(models.Model):
         return "%s - %s" % (self.publish_date, self.news)
 
     class Meta:
-        verbose_name = u"Info de l'application"
-        verbose_name_plural = u"Infos de l'application"
+        verbose_name = _("Software news (item)")
+        verbose_name_plural = _("Software news")
         ordering = ['-publish_date']
 
 
@@ -203,26 +206,26 @@ class ReaderQuerySet(models.QuerySet):
         return r_list
 
 class Reader(ModelEntity):
-    number = models.PositiveIntegerField(u"Numéro", unique=True)
-    inscription_date = models.DateField(u"Date d'inscription")
-    first_name = models.CharField(u"Prénom", max_length=20)
-    last_name = models.CharField(u"Nom", max_length=30)
-    sex = models.CharField(u"Sexe", max_length=3, choices = (
-                                                    ('f', u'Féminin'), 
-                                                    ('m', u'Masculin'), 
+    number = models.PositiveIntegerField(_("Number"), unique=True)
+    inscription_date = models.DateField(_("Registration date"))
+    first_name = models.CharField(_("First name"), max_length=20)
+    last_name = models.CharField(_("Last name"), max_length=30)
+    sex = models.CharField(_("Gender"), max_length=3, choices = (
+                                                    ('f', _("Female")), 
+                                                    ('m', _("Male")), 
                                                   )
     )
-    birthday = models.DateField(u"Date de naissance")
-    addr1 = models.CharField(u"Adresse 1", max_length=30)
-    addr2 = models.CharField(u"Adresse 2", null=True, max_length=30, blank=True)
-    zip = models.CharField(u"Code postal", max_length=10)
-    city = models.CharField(u"Ville", max_length=30)
-    country = CountryField(verbose_name=u'Pays')
-    email = models.EmailField(u"E-mail", unique=True, null=True, blank=True)
-    phone_number = models.CharField(u"Téléphone", max_length=20, null=True, blank=True)
+    birthday = models.DateField(_("Birthdate"))
+    addr1 = models.CharField(_("Address 1"), max_length=30)
+    addr2 = models.CharField(_("Address 2"), null=True, max_length=30, blank=True)
+    zip = models.CharField(_("Zip code"), max_length=10)
+    city = models.CharField(_("City"), max_length=30)
+    country = CountryField(verbose_name=_("Country"))
+    email = models.EmailField(_("E-mail"), unique=True, null=True, blank=True)
+    phone_number = models.CharField(_("Phone"), max_length=20, null=True, blank=True)
     profession = models.ForeignKey(Profession, null=True, blank=True)
-    disabled_on = models.DateField("Date de désactivation", blank=True, null=True)
-    notes = models.TextField(u"Notes", null=True, blank=True)
+    disabled_on = models.DateField(_("Disabled on"), blank=True, null=True)
+    notes = models.TextField(_("Notes"), null=True, blank=True)
 
     objects = ReaderQuerySet.as_manager()
 
@@ -264,11 +267,12 @@ class Reader(ModelEntity):
         return reverse('alexandrie:reader_update', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return "%s - %s %s" % (self.number, self.first_name, self.last_name)
+        return "%s %s" % (self.first_name, self.last_name)
     
     class Meta:
         ordering = ['last_name', 'first_name']
-        verbose_name = "Lecteur"
+        verbose_name = _("Reader")
+        verbose_name_plural = _("Readers")
 
 class AuthorQuerySet(models.QuerySet):
     def get_by_first_and_last_name(self, first_name, last_name):
@@ -284,14 +288,14 @@ class AuthorQuerySet(models.QuerySet):
         return r_list
 
 class Author(ModelEntity):
-    first_name = models.CharField(u"Prénom", max_length=20)
-    last_name = models.CharField(u"Nom", max_length=30)
-    alias = models.CharField(u"Nom d'emprunt", max_length=20, null=True, blank=True)
-    birthday = models.DateField(u"Date de naissance", null=True, blank=True)
-    country = CountryField(verbose_name=u'Pays')
-    website = models.URLField(verbose_name='Site web', null=True, blank=True)
-    notes = models.TextField(u"Notes", null=True, blank=True)
-    is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
+    first_name = models.CharField(_("First name"), max_length=20)
+    last_name = models.CharField(_("Last name"), max_length=30)
+    alias = models.CharField(_("Alias"), max_length=20, null=True, blank=True)
+    birthday = models.DateField(_("Birthdate"), null=True, blank=True)
+    country = CountryField(verbose_name=_("Country"))
+    website = models.URLField(verbose_name=_("Website"), null=True, blank=True)
+    notes = models.TextField(_("Notes"), null=True, blank=True)
+    is_isbn_import = models.BooleanField(_("ISBN import"), default=False)
 
     objects = AuthorQuerySet.as_manager()
 
@@ -301,7 +305,7 @@ class Author(ModelEntity):
             ).filter(birthday=self.birthday
         )
         if len(homonyms) > 0:
-            raise ValidationError({'last_name': u"Cet auteur existe déjà."})
+            raise ValidationError({'last_name': ugettext("This author already exists.")})
         self.last_name = self.last_name.strip().upper()
         self.first_name = self.first_name.strip().title()
         if self.alias:
@@ -343,7 +347,8 @@ class Author(ModelEntity):
 
     class Meta:
         ordering = ['last_name', 'first_name']
-        verbose_name = "Auteur"
+        verbose_name = _("Author")
+        verbose_name_plural = _("Authors")
 
 
 class PublisherQuerySet(models.QuerySet):
@@ -357,10 +362,10 @@ class PublisherQuerySet(models.QuerySet):
         return r_list
 
 class Publisher(ModelEntity):
-    name = models.CharField(u"Nom", max_length=30, unique=True)
-    country = CountryField(verbose_name=u'Pays')
-    notes = models.TextField(u"Notes", null=True, blank=True)
-    is_isbn_import = models.BooleanField(u"Importé ISBN", default=False)
+    name = models.CharField(_("Name"), max_length=30, unique=True)
+    country = CountryField(verbose_name=_("Country"))
+    notes = models.TextField(_("Notes"), null=True, blank=True)
+    is_isbn_import = models.BooleanField(_("ISBN import"), default=False)
 
     objects = PublisherQuerySet.as_manager()
 
@@ -387,7 +392,8 @@ class Publisher(ModelEntity):
     
     class Meta:
         ordering = ['name']
-        verbose_name = "Editeur"
+        verbose_name = "Publisher"
+        verbose_name_plural = "Publishers"
 
 
 class BookQuerySet(models.QuerySet):
@@ -410,24 +416,24 @@ class BookQuerySet(models.QuerySet):
         return r_list
 
 class Book(ModelEntity):
-    title = models.CharField(u"Titre", max_length=50)
-    authors = models.ManyToManyField(Author, verbose_name=u'Auteurs')
-    publishers = models.ManyToManyField(Publisher, verbose_name=u'Editeurs')
-    publish_date = models.DateField(u"Date d'édition")
-    edition_name = models.CharField(u"Titre édition", max_length=80, null=True, blank=True)
-    classif_mark = models.CharField(u"Cote", max_length=10)
-    height = models.PositiveIntegerField(u"Hauteur (cm)")
-    isbn_nb = models.CharField(u"No. ISBN", max_length=20, null=True, blank=True, unique=True)
-    audiences = models.ManyToManyField(BookAudience, verbose_name=u'Public cible')
-    category = models.ForeignKey(BookCategory, verbose_name=u'Catégorie')
-    sub_category = models.ForeignKey(BookSubCategory, null=True, blank=True, verbose_name=u'Sous-catégorie')
-    abstract = models.TextField(u"Résumé", null=True, blank=True)
-    tags = models.ManyToManyField(BookTag, verbose_name=u'Etiquettes', blank=True)
-    language = models.ForeignKey(Language, verbose_name=u'Langue')
-    cover_pic = models.ImageField(verbose_name=u'Couverture', upload_to='alexandrie/upload', null=True, blank=True)
-    related_to = models.ForeignKey('Book', null=True, blank=True, verbose_name=u"Apparenté à")
-    notes = models.TextField(u"Notes", null=True, blank=True)
-    is_isbn_import = models.BooleanField(u"Import ISBN", default=False)
+    title = models.CharField(_("Title"), max_length=50)
+    authors = models.ManyToManyField(Author, verbose_name=_("Authors"))
+    publishers = models.ManyToManyField(Publisher, verbose_name=_("Publishers"))
+    publish_date = models.DateField(_("Publishing date"))
+    edition_name = models.CharField(_("Title edition"), max_length=80, null=True, blank=True)
+    classif_mark = models.CharField(_("Classification mark"), max_length=10)
+    height = models.PositiveIntegerField(_("Height (inches)"), null=True, blank=True)
+    isbn_nb = models.CharField(_("ISBN number"), max_length=20, null=True, blank=True, unique=True)
+    audiences = models.ManyToManyField(BookAudience, verbose_name=_("Audience"))
+    category = models.ForeignKey(BookCategory, verbose_name=_("Category"))
+    sub_category = models.ForeignKey(BookSubCategory, null=True, blank=True, verbose_name=_("Sub-category"))
+    abstract = models.TextField(_("Abstract"), null=True, blank=True)
+    tags = models.ManyToManyField(BookTag, verbose_name=_("Tags"), blank=True)
+    language = models.ForeignKey(Language, verbose_name=_("Language"))
+    cover_pic = models.ImageField(verbose_name=_("Cover"), upload_to='alexandrie/upload', null=True, blank=True)
+    related_to = models.ForeignKey('Book', null=True, blank=True, verbose_name=_("Linked to"))
+    notes = models.TextField(_("Notes"), null=True, blank=True)
+    is_isbn_import = models.BooleanField(_("ISBN import"), default=False)
 
     objects = BookQuerySet.as_manager()
 
@@ -437,7 +443,7 @@ class Book(ModelEntity):
         else:
             self.isbn_nb = isbnlib.get_canonical_isbn(self.isbn_nb)
             if not self.isbn_nb:
-                raise ValidationError({'isbn_nb': u"No. ISBN invalide"})
+                raise ValidationError({'isbn_nb': ugettext("Invalid ISBN number.")})
         self.title = self.title.strip().capitalize()
         super(Book, self).clean(*args, **kwargs)
 
@@ -464,8 +470,7 @@ class Book(ModelEntity):
 
     def get_nb_copy(self):
         return self.bookcopy_set.count()
-    get_nb_copy.short_description = 'Nb exemplaires'
-    
+    get_nb_copy.short_description = _("Number of samples")
     def has_copies(self):
         return self.get_nb_copy() > 0
 
@@ -477,19 +482,20 @@ class Book(ModelEntity):
     
     class Meta:
         ordering = ['-created_on']
-        verbose_name = "Livre"
+        verbose_name = _("Book")
+        verbose_name_plural = _("Books")
 
 
 class BookCopy(ModelEntity):
-    number = models.PositiveIntegerField(u"Numéro")
-    registered_on = models.DateField(u"Date d'enregistrement")
-    book = models.ForeignKey(Book, verbose_name=u"Livre")
-    condition = models.ForeignKey(BookCondition, verbose_name=u"Etat")
-    origin = models.ForeignKey(BookCopyOrigin, verbose_name=u"Origine")
-    price = models.FloatField("Prix", blank=True, null=True)
-    price_date = models.DateField("Date (prix)", blank=True, null=True)
-    disabled_on = models.DateField("Date de retrait", blank=True, null=True)
-    notes = models.TextField(u"Notes", null=True, blank=True)
+    number = models.PositiveIntegerField(_("Number"))
+    registered_on = models.DateField(_("Registration date"))
+    book = models.ForeignKey(Book, verbose_name=_("Book"))
+    condition = models.ForeignKey(BookCondition, verbose_name=_("Condition"))
+    origin = models.ForeignKey(BookCopyOrigin, verbose_name=_("Origin"))
+    price = models.FloatField(_("Price"), blank=True, null=True)
+    price_date = models.DateField(_("Date (price)"), blank=True, null=True)
+    disabled_on = models.DateField(_("Took out on"), blank=True, null=True)
+    notes = models.TextField(_("Notes"), null=True, blank=True)
 
     #Overriding
     def save(self, *args, **kwargs):
@@ -512,8 +518,8 @@ class BookCopy(ModelEntity):
 
     class Meta:
         ordering = ['number']
-        verbose_name = "Exemplaire d'un livre"
-        verbose_name_plural = "Exemplaires d'un livre"
+        verbose_name = _("Book sample")
+        verbose_name_plural = _("Book samples")
 
 
 class ReaderBorrowQuerySet(models.QuerySet):
@@ -527,12 +533,12 @@ class ReaderBorrowQuerySet(models.QuerySet):
         return self.filter(returned_on=None, borrow_due_date__lt=stddatetime.now())
 
 class ReaderBorrow(ModelEntity):
-    reader = models.ForeignKey(Reader, verbose_name=u'Lecteur')
-    bookcopy = models.ForeignKey(BookCopy, verbose_name=u'Exemplaire')
-    borrowed_date = models.DateField(u"Prêté le")
-    borrow_due_date = models.DateField(u"Retour pour le")
-    returned_on = models.DateField(u"Retourné le", blank=True, null=True)
-    notes = models.TextField(u"Notes", null=True, blank=True)
+    reader = models.ForeignKey(Reader, verbose_name=_("Reader"))
+    bookcopy = models.ForeignKey(BookCopy, verbose_name=_("Sample"))
+    borrowed_date = models.DateField(_("Borrowed on"))
+    borrow_due_date = models.DateField(_("Due date"))
+    returned_on = models.DateField(_("Returned on"), blank=True, null=True)
+    notes = models.TextField(_("Notes"), null=True, blank=True)
 
     objects = ReaderBorrowQuerySet.as_manager()
 
@@ -558,18 +564,15 @@ class ReaderBorrow(ModelEntity):
     def is_returned(self):
         return self.returned_on is not None
 
-    def is_returned_str(self):
-        return "Oui" if self.returned_on is not None else "Non"
-
     def is_late(self):
-        return self.borrow_due_date < stddate.today()
+        return self.borrow_due_date < stddate.today() and not self.is_returned()
 
     def list_all():
         return ReaderBorrow.objects.all()
 
     def get_full_name(self):
         if self.borrowed_date:
-            return "Emprunt du %s" % self.borrowed_date
+            return _("Borrowed on %s" % self.borrowed_date)
         return None
 
     def get_absolute_url(self):
@@ -580,4 +583,5 @@ class ReaderBorrow(ModelEntity):
 
     class Meta:
         ordering = ['borrow_due_date']
-        verbose_name = "Emprunt lecteur"
+        verbose_name = _("Reader borrowing")
+        verbose_name_plural = _("Reader borrowings")

@@ -2,141 +2,150 @@
 {
     "pk": 1,
     "fields": {
+        "library_website": "",
+        "library_email": "",
+        "library_name": "Sample book library",
+        "library_addr1": "Addr1",
+        "library_zip": "1234",
+        "library_addr2": "",
         "max_borrow_days": 21,
+        "appli_name": "Alexandrie",
+        "library_country": "GB",
         "nav_history": 10,
-        "default_country": "FR",
-        "appli_name": "Alexandrie"
+        "library_phone_number": "",
+        "library_city": "City",
+        "default_country": "GB"
     },
     "model": "alexandrie.generalconfiguration"
 },
 {
     "pk": 1,
     "fields": {
-        "is_default": true,
-        "label": "Fran\u00e7ais"
+        "label": "French",
+        "is_default": false
     },
     "model": "alexandrie.language"
 },
 {
     "pk": 2,
     "fields": {
-        "is_default": false,
-        "label": "Anglais"
+        "label": "English",
+        "is_default": true
     },
     "model": "alexandrie.language"
 },
 {
     "pk": 3,
     "fields": {
-        "is_default": false,
-        "label": "Allemand"
+        "label": "German",
+        "is_default": false
     },
     "model": "alexandrie.language"
 },
 {
     "pk": 4,
     "fields": {
-        "is_default": false,
-        "label": "Italien"
+        "label": "Italian",
+        "is_default": false
     },
     "model": "alexandrie.language"
 },
 {
     "pk": 5,
     "fields": {
-        "is_default": false,
-        "label": "Espagnol"
+        "label": "Spanish",
+        "is_default": false
     },
     "model": "alexandrie.language"
 },
 {
     "pk": 1,
     "fields": {
-        "label": "Actif"
+        "label": "Employed"
     },
     "model": "alexandrie.profession"
 },
 {
     "pk": 2,
     "fields": {
-        "label": "Etudiant"
+        "label": "Student"
     },
     "model": "alexandrie.profession"
 },
 {
     "pk": 3,
     "fields": {
-        "label": "Ecolier"
+        "label": "Pupil"
     },
     "model": "alexandrie.profession"
 },
 {
     "pk": 4,
     "fields": {
-        "label": "Retrait\u00e9"
+        "label": "Pensioner"
     },
     "model": "alexandrie.profession"
 },
 {
     "pk": 1,
     "fields": {
-        "label": "Adultes"
+        "label": "Adults"
     },
     "model": "alexandrie.bookaudience"
 },
 {
     "pk": 2,
     "fields": {
-        "label": "Adolescents"
+        "label": "Teenagers"
     },
     "model": "alexandrie.bookaudience"
 },
 {
     "pk": 3,
     "fields": {
-        "label": "Enfants"
+        "label": "Children"
     },
     "model": "alexandrie.bookaudience"
 },
 {
     "pk": 1,
     "fields": {
-        "label": "Neuf"
+        "label": "New"
     },
     "model": "alexandrie.bookcondition"
 },
 {
     "pk": 2,
     "fields": {
-        "label": "Bon"
+        "label": "Good"
     },
     "model": "alexandrie.bookcondition"
 },
 {
     "pk": 3,
     "fields": {
-        "label": "Passable"
+        "label": "Acceptable"
     },
     "model": "alexandrie.bookcondition"
 },
 {
     "pk": 4,
     "fields": {
-        "label": "Mauvais"
+        "label": "Bad"
     },
     "model": "alexandrie.bookcondition"
 },
 {
     "pk": 1,
     "fields": {
-        "label": "Roman"
+        "label": "Novel"
     },
     "model": "alexandrie.bookcategory"
 },
 {
     "pk": 2,
     "fields": {
-        "label": "Documentaire"
+        "label": "Documentary"
     },
     "model": "alexandrie.bookcategory"
 },
@@ -150,21 +159,21 @@
 {
     "pk": 4,
     "fields": {
-        "label": "BD"
+        "label": "Cartoon"
     },
     "model": "alexandrie.bookcategory"
 },
 {
     "pk": 5,
     "fields": {
-        "label": "Dictionnaire"
+        "label": "Dictionary"
     },
     "model": "alexandrie.bookcategory"
 },
 {
     "pk": 1,
     "fields": {
-        "label": "Histoire",
+        "label": "History",
         "parent_category": 2
     },
     "model": "alexandrie.booksubcategory"
@@ -172,7 +181,7 @@
 {
     "pk": 4,
     "fields": {
-        "label": "G\u00e9ographie",
+        "label": "Geography",
         "parent_category": 3
     },
     "model": "alexandrie.booksubcategory"
@@ -180,7 +189,7 @@
 {
     "pk": 5,
     "fields": {
-        "label": "Policier",
+        "label": "Detective novel",
         "parent_category": 1
     },
     "model": "alexandrie.booksubcategory"
@@ -188,15 +197,7 @@
 {
     "pk": 6,
     "fields": {
-        "label": "Aventures",
-        "parent_category": 1
-    },
-    "model": "alexandrie.booksubcategory"
-},
-{
-    "pk": 7,
-    "fields": {
-        "label": "Terroir",
+        "label": "Adventures",
         "parent_category": 1
     },
     "model": "alexandrie.booksubcategory"
@@ -204,7 +205,7 @@
 {
     "pk": 8,
     "fields": {
-        "label": "Langues \u00e9trang\u00e8res",
+        "label": "Foreign languages",
         "parent_category": 5
     },
     "model": "alexandrie.booksubcategory"
@@ -212,90 +213,57 @@
 {
     "pk": 9,
     "fields": {
-        "label": "Animaux",
+        "label": "French language",
+        "parent_category": 5
+    },
+    "model": "alexandrie.booksubcategory"
+},
+{
+    "pk": 10,
+    "fields": {
+        "label": "Animals",
         "parent_category": 2
+    },
+    "model": "alexandrie.booksubcategory"
+},
+{
+    "pk": 11,
+    "fields": {
+        "label": "English language",
+        "parent_category": 5
     },
     "model": "alexandrie.booksubcategory"
 },
 {
     "pk": 1,
     "fields": {
-        "label": "Don"
+        "label": "Donation"
     },
     "model": "alexandrie.bookcopyorigin"
 },
 {
     "pk": 2,
     "fields": {
-        "label": "Achat"
+        "label": "Purchase"
     },
     "model": "alexandrie.bookcopyorigin"
 },
 {
     "pk": 1,
     "fields": {
-        "code": "OL",
-        "label": "OpenLibrary",
-        "website": "https://openlibrary.org/"
-    },
-    "model": "alexandrie.isbnimportsource"
-},
-{
-    "pk": 1,
-    "fields": {
-        "password": "pbkdf2_sha256$12000$PJzQt4DWiR2K$DUOzSlHfbyjyCh+OovHAUOxMKQj1+MFR4czk4fP4OZA=",
-        "is_staff": true,
-        "date_joined": "2014-12-23T21:58:20.446Z",
-        "last_login": "2014-12-30T21:38:03.797Z",
+        "last_login": "2015-08-21T06:17:22.367Z",
         "username": "admin",
-        "is_superuser": true,
-        "first_name": "",
-        "last_name": "",
+        "password": "pbkdf2_sha256$20000$KcApCvYWbhZd$r81u+AiKF9LV3Bag5mQA2ESRFreoKFoEyz3F66wTrDk=",
         "is_active": true,
-        "groups": [],
+        "last_name": "admin",
         "email": "marc@mirelsol.org",
-        "user_permissions": []
+        "date_joined": "2014-12-23T21:58:20Z",
+        "user_permissions": [],
+        "is_superuser": true,
+        "first_name": "admin",
+        "groups": [],
+        "is_staff": true
     },
     "model": "auth.user"
-},
-{
-    "pk": 1,
-    "fields": {
-        "accessed_on": "2014-12-29T23:37:16.834Z",
-        "accessed_by": 1,
-        "title": "Auteur : Lucie FER",
-        "url": "/alexandrie/author/1/"
-    },
-    "model": "alexandrie.usernavigationhistory"
-},
-{
-    "pk": 2,
-    "fields": {
-        "accessed_on": "2014-12-29T23:37:26.030Z",
-        "accessed_by": 1,
-        "title": "Editeur : EYROLLES",
-        "url": "/alexandrie/publisher/1/"
-    },
-    "model": "alexandrie.usernavigationhistory"
-},
-{
-    "pk": 3,
-    "fields": {
-        "accessed_on": "2014-12-29T23:37:58.548Z",
-        "accessed_by": 1,
-        "title": "Livre : Hello2",
-        "url": "/alexandrie/book/1/"
-    },
-    "model": "alexandrie.usernavigationhistory"
-},
-{
-    "pk": 4,
-    "fields": {
-        "accessed_on": "2014-12-29T23:45:14.333Z",
-        "accessed_by": 1,
-        "title": "Exemplaire d'un livre : Hello2 (1)",
-        "url": "/alexandrie/bookcopy/1/"
-    },
-    "model": "alexandrie.usernavigationhistory"
 }
 ]

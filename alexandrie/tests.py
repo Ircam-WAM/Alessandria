@@ -43,6 +43,7 @@ class GenericTest(TestCase):
         book.audiences.add(audience1)
         book.authors.add(self.create_author(inst_nb))
         book.publishers.add(self.create_publisher(inst_nb))
+        book.clean()
         book.save()
         return book
     
@@ -67,10 +68,11 @@ class GenericTest(TestCase):
         r.sex = 'm'
         r.created_by = self.user
         r.created_on = datetime.today()
+        r.clean()
         r.save()
         return r
     
-    def create_author(self, inst_nb, first_name=None, last_name=None):
+    def create_author(self, inst_nb, first_name=None, last_name=None, alias=None):
         a = Author()
         if not first_name:
             first_name = "fn%s" % inst_nb
@@ -81,6 +83,7 @@ class GenericTest(TestCase):
         a.country = 'FR'
         a.created_by = self.user
         a.created_on = datetime.today()
+        a.clean()
         a.save()
         return a
     
@@ -92,6 +95,7 @@ class GenericTest(TestCase):
         p.country = 'FR'
         p.created_by = self.user
         p.created_on = datetime.today()
+        p.clean()
         p.save()
         return p
     
@@ -111,6 +115,11 @@ class PublisherTest(GenericTest):
         self.assertIsNotNone(Publisher.objects.get_by_name('pub à'))
         self.assertIsNotNone(Publisher.objects.get_by_name('PUB À'))
 
+    def test_search(self):
+        p = self.create_publisher(1, name='éditions eyrolles')
+        self.assertIsNotNone(Publisher.objects.search(name='éditions'))
+        self.assertIsNotNone(Publisher.objects.search(name='eyrolles'))
+
 
 class AuthorTest(GenericTest):
     def setUp(self):
@@ -125,6 +134,11 @@ class AuthorTest(GenericTest):
 
         self.assertIsNotNone(Author.objects.get_by_first_and_last_name('jean-marc', 'farà'))
         self.assertIsNotNone(Author.objects.get_by_first_and_last_name('JEAN-MARC', 'FARÀ'))
+
+    def test_search(self):
+        self.create_author(1, first_name='Georges Prosper', last_name='Remi', alias='Hergé')
+        self.assertIsNotNone(Author.objects.search(name='Remi'))
+        self.assertIsNotNone(Author.objects.search(name='Hergé'))
 
 
 class BookTest(GenericTest):
@@ -183,6 +197,10 @@ class BookTest(GenericTest):
         self.assertEqual(IsbnUtils.author_unpack('John Doe'), ('John', 'Doe'))
         self.assertEqual(IsbnUtils.author_unpack('John Henry Doe'), ('John Henry', 'Doe'))
 
+    def test_search(self):
+        self.create_book('1', title='My first book')
+        self.assertIsNotNone(Book.objects.search(title='my first'))
+
 
 class ReaderTest(GenericTest):
     def setUp(self):
@@ -200,6 +218,11 @@ class ReaderTest(GenericTest):
 
         self.assertIsNotNone(Reader.objects.get_by_first_and_last_name('jean-marc', 'pelè'))
         self.assertIsNotNone(Reader.objects.get_by_first_and_last_name('JEAN-MARC', 'PELÈ'))   
+
+    def test_search(self):
+        self.create_reader(1, first_name='Marc', last_name='Schneider')
+        self.assertIsNotNone(Reader.objects.search(last_name='schneid'))
+
 
 class AppliNewsTest(GenericTest):
     def setUp(self):

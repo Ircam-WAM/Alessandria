@@ -1,14 +1,18 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
-{% block title %}Retrait d'un exemplaire{% endblock %}
+{% block title %}{% trans "Removing the sample" %}{% endblock %}
 
-{% block pageTitle %}Retrait d'un exemplaire{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/static/alexandrie/layout/jquery-datepicker/jquery.datepick.css">
+{% endblock %}
+
+{% block pageTitle %}{% trans "Removing the sample" %}{% endblock %}
 
 {% block content %}
 
 <div class="textWarning">
-    <p>Retirer un exemplaire signifie qu'il ne fera plus partie des exemplaires à emprunter.&nbsp;
-    Toutefois il sera conservé dans l'historique du système.</p>
+    <p>{% trans "Removing a sample means that it won't be part of the samples to be borrowed. However it will be kept in the system history." %}</p>
 </div>
 <div class="row">
     <div class="col-sm-12">
@@ -17,11 +21,22 @@
             {% include 'alexandrie/_inc_form_edit_content_std.html' %}
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-warning">Retirer</button>
-                    <a class="btn" href="{% url 'alexandrie:bookcopy_update' form.instance.id %}">Annuler</a>
+                    <button type="submit" class="btn btn-warning">{% trans "Remove" %}</button>
+                    <a class="btn" href="{% url 'alexandrie:bookcopy_update' form.instance.id %}">{% trans "Cancel" %}</a>
                 </div>
             </div>
         </form>
     </div><!-- /.col-sm-12 -->
 </div>
+{% endblock %}
+
+{% block jscript %}
+<script type="text/javascript" src="/static/alexandrie/layout/jquery-datepicker/jquery.plugin.min.js"></script> 
+<script type="text/javascript" src="/static/alexandrie/layout/jquery-datepicker/jquery.datepick.min.js"></script>
+<script type="text/javascript" src="/static/alexandrie/layout/jquery-datepicker/jquery.datepick-{{ JS_DATEPICKER_LANG }}.js"></script>
+<script>
+$(function() {
+    $('#id_disabled_on').datepick({dateFormat: 'dd/mm/yyyy'});
+});
+</script>
 {% endblock %}

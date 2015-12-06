@@ -3,7 +3,7 @@
 import datetime
 
 from django import forms
-from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 from django_countries import countries
 
@@ -34,6 +34,8 @@ class ReaderBorrowForm(CommonForm):
             days=settings.GENERAL_CONFIGURATION.max_borrow_days
         )
     )
+
+    # 'bookcopy_list' and 'reader_list' are defined in local_settings.py (dict AJAX_LOOKUP_CHANNELS)
     bookcopy  = AutoCompleteSelectField('bookcopy_list', label=Meta.model._meta.get_field('bookcopy').verbose_name,
                                         required=True, help_text=None,
                                         plugin_options = {'autoFocus': True, 'minLength': 3})
@@ -54,6 +56,7 @@ class ReaderForm(CommonForm):
     )
 
 class ReaderSearchForm(forms.ModelForm):
+    reader_enabled = forms.BooleanField(label=_("Readers enabled"), initial=True)
     class Meta:
         model = Reader
         fields = ('last_name',)
@@ -111,14 +114,15 @@ class BookForm(CommonForm):
         widget=forms.TextInput(attrs={'size': '40'})
     )
 
+    # 'author_list' and 'publisher_list' are defined in local_settings.py (dict AJAX_LOOKUP_CHANNELS)
     authors  = AutoCompleteSelectMultipleField(
                     'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
-                    required=True, help_text=u"Insérer les 1ères lettres du nom",
+                    required=True, help_text=None,
                     plugin_options = {'autoFocus': True, 'minLength': 3}
     )
     publishers  = AutoCompleteSelectMultipleField(
                     'publisher_list', label=Meta.model._meta.get_field('publishers').verbose_name,
-                    required=True, help_text=u"Insérer les 1ères lettres du nom",
+                    required=True, help_text=None,
                     plugin_options = {'autoFocus': True, 'minLength': 3}
     )
     audiences = forms.ModelMultipleChoiceField(
@@ -128,6 +132,9 @@ class BookForm(CommonForm):
     )
 
 class BookSearchForm(forms.ModelForm):
+    author_name = forms.CharField(label=_('Author'))
+    has_copy = forms.BooleanField(label=_('Has copy'), initial=True)
+    took_away = forms.BooleanField(label=_('Took away'), initial=False)
     class Meta:
         model = Book
         fields = ('isbn_nb', 'title', 'category', 'sub_category',)

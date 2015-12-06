@@ -1,15 +1,16 @@
 {% extends 'alexandrie/base_tpl.html' %}
+{% load i18n %}
 
-{% block title %}Auteur{% endblock %}
+{% block title %}{% trans "Author" %}{% endblock %}
 
-{% block pageTitle %}Auteur:&nbsp;{{object.get_full_name|default:"nouveau"}}{% endblock %}
+{% block pageTitle %}{% trans "Author" %}:&nbsp;{{ object.get_full_name|default:_("new") }}{% endblock %}
 
 {% block content %}
 
 {% if object.id > 0 %}
 <ul class="nav nav-pills" role="tablist">
-    <li role="presentation" class="active"><a href="#mainForm" aria-controls="mainForm" role="tab" data-toggle="tab">Fiche</a></li>
-    <li role="presentation"><a href="#books" aria-controls="books" role="tab" data-toggle="tab">Livres</a></li>
+    <li role="presentation" class="active"><a href="#mainForm" aria-controls="mainForm" role="tab" data-toggle="tab">{% trans "Form" %}</a></li>
+    <li role="presentation"><a href="#books" aria-controls="books" role="tab" data-toggle="tab">{% trans "Books" %}</a></li>
 </ul>
 {% endif %}
 <div class="tab-content">

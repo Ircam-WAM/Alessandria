@@ -1,8 +1,8 @@
 {% extends 'alexandrie/base_tpl.html' %}
-
+{% load i18n %}
 {% load tag_extras %}
 
-{% block title %}Livre{% endblock %}
+{% block title %}{% trans "Book" %}{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="/static/alexandrie/layout/ajax_select/css/ajax_select.css" />
@@ -11,14 +11,14 @@
     <link rel="stylesheet" href="/static/alexandrie/layout/jquery-ui/jquery-ui.theme.min.css" />
 {% endblock %}
 
-{% block pageTitle %}Livre:&nbsp;{{object.title|default:"nouveau"}}{% endblock %}
+{% block pageTitle %}{% trans "Book" %}:&nbsp;{{ object.title|default:_("new") }}{% endblock %}
 
 {% block content %}
 
 {% if object.id > 0 %}
 <ul class="nav nav-pills" role="tablist">
-    <li role="presentation" class="active"><a href="#mainForm" aria-controls="mainForm" role="tab" data-toggle="tab">Fiche</a></li>
-    <li role="presentation"><a href="#borrows" aria-controls="borrows" role="tab" data-toggle="tab">Emprunts</a></li>
+    <li role="presentation" class="active"><a href="#mainForm" aria-controls="mainForm" role="tab" data-toggle="tab">{% trans "Form" %}</a></li>
+    <li role="presentation"><a href="#borrows" aria-controls="borrows" role="tab" data-toggle="tab">{% trans "Borrowings" %}</a></li>
 </ul>
 {% endif %}
 <div class="tab-content">
@@ -175,7 +175,7 @@
         {% if object.id > 0 %}
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Exemplaires</h3><a href="{% url 'alexandrie:bookcopy_add' object.id %}">Ajouter</a>
+                    <h3 class="panel-title">{% trans "Samples" %}</h3><a href="{% url 'alexandrie:bookcopy_add' object.id %}">{% trans "Add" %}</a>
                 </div>
                 <div class="panel-body">
                     <ul>
@@ -183,9 +183,9 @@
                         <li>
                             <a href="{% url 'alexandrie:bookcopy_update' bookcopy.id %}">
                                 {% if bookcopy.is_disabled %}
-                                    <del>Exemplaire {{ bookcopy }}</del>&nbsp;(Retiré)
+                                    <del>{% trans "Sample" %} {{ bookcopy }}</del>&nbsp;({% trans "removed" %})
                                 {% else %}
-                                    Exemplaire {{ bookcopy }}
+                                    {% trans "Sample" %} {{ bookcopy }}
                                 {% endif %}
                             </a>
                         </li>
@@ -193,6 +193,24 @@
                     </ul>
                 </div>
             </div>
+            {% for author in object.authors.all %}
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{% trans "Other books of" %} <a href="{% url 'alexandrie:author_update' author.id %}">{{ author }}</a></h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                        {% for book in author.book_set.all %}
+                            {% if book.id != object.id %}
+                                <li>
+                                    <a href="{% url 'alexandrie:book_update' book.id %}">{{ book }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
         {% endif %}
         </div>
     </div>
@@ -202,9 +220,9 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Date emprunt</th>
-                        <th>Lecteur</th>
-                        <th>Retourné</th>
+                        <th>{% trans "Borrowing date" %}</th>
+                        <th>{% trans "Reader" %}</th>
+                        <th>{% trans "Returned" %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -216,7 +234,7 @@
                     {% endif %}
                             <td><a href="{% url 'alexandrie:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date|date:"SHORT_DATE_FORMAT" }}</a></td>
                             <td><a href="{% url 'alexandrie:reader_update' borrow.reader.id %}">{{ borrow.reader }}</td>
-                            <td>{{ borrow.is_returned_str }}</td>
+                            <td>{{ borrow.returned_on|default:"" }}</td>
                         </tr>
                 {% endfor %}
                 </tbody>

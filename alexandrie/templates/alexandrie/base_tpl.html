@@ -23,50 +23,50 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
+                            <span class="sr-only">{% trans "Toggle navigation" %}</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="{% url 'alexandrie:home' %}">Accueil</a>
+                        <a class="navbar-brand" href="{% url 'alexandrie:home' %}">{% trans "Home" %}</a>
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Emprunts<span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Borrowings" %}<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{% url 'alexandrie:reader_borrow_add' %}">Ajouter</a></li>
-                                    <li><a href="{% url 'alexandrie:reader_borrow_list' 'current' %}">Emprunts en cours</a></li>
-                                    <li><a href="{% url 'alexandrie:reader_borrow_list' 'late' %}">Emprunts en retard</a></li>
-                                    <li><a href="{% url 'alexandrie:reader_borrow_list' %}">Tous les emprunts</a></li>
+                                    <li><a href="{% url 'alexandrie:reader_borrow_add' %}">{% trans "Add" %}</a></li>
+                                    <li><a href="{% url 'alexandrie:reader_borrow_list' 'current' %}">{% trans "Current borrowings" %}</a></li>
+                                    <li><a href="{% url 'alexandrie:reader_borrow_list' 'late' %}">{% trans "Late borrowings" %}</a></li>
+                                    <li><a href="{% url 'alexandrie:reader_borrow_list' %}">{% trans "All borrowings" %}</a></li>
                                 </ul>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Livres<span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Books" %}<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{% url 'alexandrie:book_add' %}">Ajouter</a></li>
-                                    <li><a href="{% url 'alexandrie:book_isbn_import' %}">Import ISBN</a></li>
-                                    <li><a href="{% url 'alexandrie:book_list' %}">Lister</a></li>
+                                    <li><a href="{% url 'alexandrie:book_add' %}">{% trans "Add" %}</a></li>
+                                    <li><a href="{% url 'alexandrie:book_isbn_import' %}">{% trans "ISBN import" %}</a></li>
+                                    <li><a href="{% url 'alexandrie:book_list' %}">{% trans "List" %}</a></li>
                                 </ul>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Lecteurs<span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Readers" %}<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{% url 'alexandrie:reader_add' %}">Ajouter</a></li>
-                                    <li><a href="{% url 'alexandrie:reader_list' %}">Lister</a></li>
+                                    <li><a href="{% url 'alexandrie:reader_add' %}">{% trans "Add" %}</a></li>
+                                    <li><a href="{% url 'alexandrie:reader_list' %}">{% trans "List" %}</a></li>
                                 </ul>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Auteurs<span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Authors" %}<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{% url 'alexandrie:author_add' %}">Ajouter</a></li>
-                                    <li><a href="{% url 'alexandrie:author_list' %}">Lister</a></li>
+                                    <li><a href="{% url 'alexandrie:author_add' %}">{% trans "Add" %}</a></li>
+                                    <li><a href="{% url 'alexandrie:author_list' %}">{% trans "List" %}</a></li>
                                     <!--li class="divider"></li>
                                     <li class="dropdown-header">Nav header</li>
                                     <li><a href="#">Separated link</a></li>
@@ -76,10 +76,10 @@
                         </ul>
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Editeurs<span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Publishers" %}<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{% url 'alexandrie:publisher_add' %}">Ajouter</a></li>
-                                    <li><a href="{% url 'alexandrie:publisher_list' %}">Lister</a></li>
+                                    <li><a href="{% url 'alexandrie:publisher_add' %}">{% trans "Add" %}</a></li>
+                                    <li><a href="{% url 'alexandrie:publisher_list' %}">{% trans "List" %}</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -87,25 +87,25 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                             {% if user.is_authenticated %}
-                                <a href="{% url 'alexandrie:logout' %}">Déconnexion {{ user.first_name }}</a>
+                                <a href="{% url 'alexandrie:logout' %}">{% trans "Log out" %} {{ user.first_name }}</a>
                             {% else %}
-                                <a href="{% url 'alexandrie:login' %}">Connexion</a>
+                                <a href="{% url 'alexandrie:login' %}">{% trans "Log in" %}</a>
                             {% endif %}
                             </li>
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/admin">Administration</a></li>
+                            <li><a href="/admin">{% trans "Administration" %}</a></li>
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Historique<span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "History" %}<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     {% for item in request.session.user_nav_list %}
                                         <li><a href="{{ item.0 }}">{{ item.1 }}</a></li>
                                      {% empty %}
-                                        <li>Vide</li>
+                                        <li>{% trans "Empty" %}</li>
                                     {% endfor %}
                                 </ul>
                             </li>
@@ -131,10 +131,8 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
-        <script src="{% static 'alexandrie/layout/js/jquery/jquery-1.11.1.min.js' %}"></script>
+        <script src="{% static 'alexandrie/layout/jquery/jquery.min.js' %}"></script>
         <script src="{% static 'alexandrie/layout/bootstrap/js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'alexandrie/layout/js/jquery/jquery.formset.js' %}"></script>
         {% block jscript %}{% endblock %}
     </body>
 </html>
