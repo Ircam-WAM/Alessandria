@@ -3,5 +3,8 @@
 *.sqlite3
 *.bak
 *.log
-*.komodoproject
 temp.json
+**/build
+**/dist
+**/django_alexandrie.egg-info
+
