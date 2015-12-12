@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-12 08:38+0100\n"
+"POT-Creation-Date: 2015-12-12 09:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc Schneider <marc@mirelsol.org>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
@@ -283,6 +283,7 @@ msgid "Name"
 msgstr "Nom"
 
 #: models.py:419 templates/alexandrie/book_list.html:20
+#: templates/alexandrie/book_list_by_publisher.html:15
 msgid "Title"
 msgstr "Titre"
 
@@ -308,6 +309,7 @@ msgstr "Hauteur (cm)"
 
 #: models.py:426 templates/alexandrie/book_isbn_import.html:16
 #: templates/alexandrie/book_list.html:22
+#: templates/alexandrie/book_list_by_publisher.html:17
 msgid "ISBN number"
 msgstr "No. ISBN"
 
@@ -429,6 +431,7 @@ msgstr "Supprimer"
 #: templates/alexandrie/_inc_form_edit_footer.html:3
 #: templates/alexandrie/author_list.html:22
 #: templates/alexandrie/book_list.html:24
+#: templates/alexandrie/book_list_by_publisher.html:19
 #: templates/alexandrie/publisher_list.html:21
 msgid "Created on"
 msgstr "Créé le"
@@ -615,12 +618,19 @@ msgid "Unknown ISBN number."
 msgstr "Numéro ISBN inconnu."
 
 #: templates/alexandrie/book_list.html:4 templates/alexandrie/book_list.html:6
+#: templates/alexandrie/book_list_by_publisher.html:4
+#: templates/alexandrie/book_list_by_publisher.html:6
 msgid "Book list"
 msgstr "Liste des livres"
 
 #: templates/alexandrie/book_list.html:37
+#: templates/alexandrie/book_list_by_publisher.html:32
 msgid "No book."
 msgstr "Aucun livre."
+
+#: templates/alexandrie/book_list_by_publisher.html:36
+msgid "Back to the publisher"
+msgstr "Retour à la fiche de l'éditeur"
 
 #: templates/alexandrie/bookcopy_detail.html:18
 msgid "This sample was removed."
@@ -707,6 +717,10 @@ msgstr "Mot de passe"
 msgid "Publisher"
 msgstr "Editeur"
 
+#: templates/alexandrie/publisher_detail.html:19
+msgid "See all books of this publisher"
+msgstr "Voir tous les livres de cet éditeur"
+
 #: templates/alexandrie/publisher_list.html:4
 #: templates/alexandrie/publisher_list.html:6
 msgid "Publisher list"
@@ -782,23 +796,23 @@ msgid "Unable to remove this publisher because it is referenced in a book."
 msgstr ""
 "Impossible de supprimer cet éditeur car il est référencé dans un livre."
 
-#: views.py:413
+#: views.py:425
 #, python-format
 msgid "Invalid author nb %s."
 msgstr "Auteur no. %s invalide."
 
-#: views.py:424
+#: views.py:436
 msgid "Invalid publisher."
 msgstr "Editeur invalide."
 
-#: views.py:561
+#: views.py:573
 msgid "The removing date can't be prior to the registring date."
 msgstr "La date de retrait ne peut être antérieure à la date d'enregistrement."
 
-#: views.py:563
+#: views.py:575
 msgid "Sample successfully removed."
 msgstr "Exemplaire retiré avec succès."
 
-#: views.py:596
+#: views.py:608
 msgid "Reader successfully disabled."
 msgstr "Lecteur désactivé avec succès"
