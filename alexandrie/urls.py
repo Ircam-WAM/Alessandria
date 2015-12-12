@@ -6,7 +6,7 @@ from django.conf.urls import patterns, url
 from alexandrie import views
 from alexandrie import ajax
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^$', views.HomeView.as_view(), name='home'),
     url(r'^login/$', views.LoginView.as_view(), name='login'),
     url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
@@ -47,4 +47,4 @@ urlpatterns = patterns('',
     url(r'bookcopy/(?P<pk>\d+)/delete/$', views.BookCopyDeleteView.as_view(), name='bookcopy_delete'),
 
     url(r'ajax/get/book_sub_categories/?$', ajax.get_book_sub_categories, name='get_book_sub_categories'),
-)
+]
