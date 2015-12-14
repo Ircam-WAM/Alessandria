@@ -1,11 +1,9 @@
 {% extends 'alexandrie/base_tpl.html' %}
 {% load i18n %}
 
-{% trans "Publisher list" as publisher_list %}
+{% block title %}{% trans "Publisher list" %}{% endblock %}
 
-{% block title %}{{ publisher_list }}{% endblock %}
-
-{% block pageTitle %}{{ publisher_list }}{% endblock %}
+{% block pageTitle %}{% trans "Publisher list" %}{% endblock %}
 
 {% block content %}
 

@@ -316,6 +316,18 @@ class PublisherListView(EntityListView):
     def _build_query(self, search_fields):
         self.object_list = self.model.objects.search(name=search_fields['name'])
 
+def book_list_by_publisher(request, publisher_id):
+    publisher = Publisher.objects.get(pk=publisher_id)
+    object_list = publisher.book_set.all()
+    return render_to_response(
+        'alexandrie/book_list_by_publisher.html',
+        {
+            'object_list': object_list,
+            'publisher': publisher,
+        },
+        context_instance=RequestContext(request),
+    )
+
 
 class BookCreateView(EntityCreateView):
     template_name = 'alexandrie/book_detail.html'

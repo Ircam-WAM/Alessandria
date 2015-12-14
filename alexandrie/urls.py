@@ -6,7 +6,7 @@ from django.conf.urls import patterns, url
 from alexandrie import views
 from alexandrie import ajax
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^$', views.HomeView.as_view(), name='home'),
     url(r'^login/$', views.LoginView.as_view(), name='login'),
     url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
@@ -31,12 +31,14 @@ urlpatterns = patterns('',
     url(r'publisher/(?P<pk>\d+)/$', views.PublisherUpdateView.as_view(), name='publisher_update'),
     url(r'publisher/(?P<pk>\d+)/delete/$', views.PublisherDeleteView.as_view(), name='publisher_delete'),
     url(r'publisher/list/$', views.PublisherListView.as_view(), name='publisher_list'),
+    url(r'publisher/(?P<publisher_id>\d+)/books/$', views.book_list_by_publisher, name='book_list_by_publisher'),
+
 
     url(r'book/add/$', views.BookCreateView.as_view(), name='book_add'),
     url(r'book/(?P<pk>\d+)/$', views.BookUpdateView.as_view(), name='book_update'),
     url(r'book/(?P<pk>\d+)/delete/$', views.BookDeleteView.as_view(), name='book_delete'),
     url(r'book/list/$', views.BookListView.as_view(), name='book_list'),
-    
+
     url(r'book/isbn/import/$', views.BookIsbnImportView.as_view(), name='book_isbn_import'),
 
     url(r'bookcopy/add/(?P<book_id>\d+)/$', views.BookCopyCreateView.as_view(), name='bookcopy_add'),
@@ -45,4 +47,4 @@ urlpatterns = patterns('',
     url(r'bookcopy/(?P<pk>\d+)/delete/$', views.BookCopyDeleteView.as_view(), name='bookcopy_delete'),
 
     url(r'ajax/get/book_sub_categories/?$', ajax.get_book_sub_categories, name='get_book_sub_categories'),
-)
+]

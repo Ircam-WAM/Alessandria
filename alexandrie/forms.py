@@ -7,7 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 from django_countries import countries
 
-import bibli.settings as settings
+#import bibli.settings as settings
+import alexandrie.local_settings as settings
 
 from alexandrie.models import *
 

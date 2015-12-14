@@ -3,7 +3,7 @@
 
 {% block title %}{% trans "Publisher" %}{% endblock %}
 
-{% block pageTitle %}{% trans "Publisher" %}:&nbsp;{{object.get_full_name|default:_("new")}}{% endblock %}
+{% block pageTitle %}{% trans "Publisher" %}:&nbsp;{{object|default:_("new")}}{% endblock %}
 
 {% block content %}
 
@@ -16,6 +16,9 @@
                     {% include 'alexandrie/_inc_form_edit_content_std.html' %}
                     {% include 'alexandrie/_inc_form_edit_buttons_std.html' with delete_url='alexandrie:publisher_delete' %}
                 </form>
+                {% if form.instance.id > 0 %}
+                    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>&nbsp;<a href="{% url 'alexandrie:book_list_by_publisher' object.id %}">{% trans "See all books of this publisher" %}</a>
+                {% endif %}
                 {% include 'alexandrie/_inc_form_edit_footer.html' %}
             </div>
         </div>

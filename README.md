@@ -1,10 +1,17 @@
 This is an application to manage a book library.
 
-
 # Installation
+
 ## Prerequisites
 * Django >= 1.7
 * Python 3
+
+## Get the sources and install alexandrie
+<pre>git clone https://gitlab.com/openlabmatera/alexandrie.git
+cd alexandrie
+python setup.py sdist
+pip install dist/django-alexandrie-<version>.tar.gz</pre>
+
 ## Django app - configuration
 * Open the file *settings.py*
   * Add to your *INSTALLED_APPS* settings:
@@ -16,8 +23,7 @@ This is an application to manage a book library.
         'ajax_select',
     )
     </pre>
-  * At the end of the file, add:<pre>
-    from alexandrie.local_settings import *</pre>
+
 * Open the file *urls.py* of your django project
   * Add this import at the beginning of the file:<pre>from ajax_select import urls as ajax_select_urls</pre>
   * Add to *urls_patterns*:<pre>urlpatterns = patterns('',

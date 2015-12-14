@@ -4,7 +4,6 @@
 Django settings for the alexandrie app.
 """
 
-#from bibli import settings
 from django.conf import settings
 from django.db.utils import OperationalError
 
