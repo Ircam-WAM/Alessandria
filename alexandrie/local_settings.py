@@ -46,15 +46,6 @@ LOGGING = {
     }
 }
 
-# Define the lookup channels in use on the site (autocomplete stuff)
-# Used in forms.py
-AJAX_LOOKUP_CHANNELS = {
-    'reader_list': ('alexandrie.ajax_lookup', 'ReaderLookup'),
-    'bookcopy_list': ('alexandrie.ajax_lookup', 'BookCopyLookup'),
-    'author_list': ('alexandrie.ajax_lookup', 'AuthorLookup'),
-    'publisher_list': ('alexandrie.ajax_lookup', 'PublisherLookup'),
-}
-
 try:
     from alexandrie.models import GeneralConfiguration
     GENERAL_CONFIGURATION = GeneralConfiguration.get()
