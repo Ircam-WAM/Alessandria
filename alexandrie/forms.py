@@ -36,7 +36,7 @@ class ReaderBorrowForm(CommonForm):
         )
     )
 
-    # 'bookcopy_list' and 'reader_list' are defined in local_settings.py (dict AJAX_LOOKUP_CHANNELS)
+    # 'bookcopy_list' and 'reader_list' are registered lookups.py
     bookcopy  = AutoCompleteSelectField('bookcopy_list', label=Meta.model._meta.get_field('bookcopy').verbose_name,
                                         required=True, help_text=None,
                                         plugin_options = {'autoFocus': True, 'minLength': 3})
@@ -115,7 +115,7 @@ class BookForm(CommonForm):
         widget=forms.TextInput(attrs={'size': '40'})
     )
 
-    # 'author_list' and 'publisher_list' are defined in local_settings.py (dict AJAX_LOOKUP_CHANNELS)
+    # 'author_list' and 'publisher_list' are registered lookups.py
     authors  = AutoCompleteSelectMultipleField(
                     'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
                     required=True, help_text=None,
