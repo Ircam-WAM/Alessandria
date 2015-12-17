@@ -164,7 +164,7 @@ class LoginView(TemplateView):
     logging_error_msg = _("Login error - wrong username or password.")
 
     def login_error(self):
-        messages.error(self.request, logging_error_msg)
+        messages.error(self.request, self.logging_error_msg)
         return HttpResponseRedirect(reverse('alexandrie:login'))
 
     def post(self, request):
@@ -189,7 +189,7 @@ class LoginView(TemplateView):
                 return HttpResponseRedirect(reverse('alexandrie:home'))
             else:
                 # An inactive account was used - no logging in!
-                messages.error(self.request, logging_error_msg)
+                messages.error(self.request, self.logging_error_msg)
                 return self.login_error()
         else:
             # Bad login details were provided. So we can't log the user in.
