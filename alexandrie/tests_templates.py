@@ -14,10 +14,6 @@ class GeneralTest(TestCase):
         )
         self.login()
 
-    def tearDown(self):
-        # TODO check logout
-        pass
-
     def login(self):
         self.client = Client()
         self.assertFalse(self.client.login(username='foo', password='bar'))
@@ -38,6 +34,11 @@ class GeneralTest(TestCase):
 
     def test_login_page(self):
         self.get_and_test_url('/login/')
+
+    def test_logout_page(self):
+        self.get_and_test_url('/logout/', 302)
+        response = self.client.get('/')
+        self.assertEqual(0, len(response.content))
 
     def test_pages_create_mode(self):
         self.get_and_test_url('/reader_borrow/add/')
