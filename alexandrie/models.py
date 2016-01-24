@@ -303,6 +303,7 @@ class Author(ModelEntity):
         homonyms = Author.objects.filter(first_name__iexact=self.first_name
             ).filter(last_name__iexact=self.last_name
             ).filter(birthday=self.birthday
+            ).exclude(id=self.id
         )
         if len(homonyms) > 0:
             raise ValidationError({'last_name': ugettext("This author already exists.")})
