@@ -45,20 +45,3 @@ LOGGING = {
         },
     }
 }
-
-try:
-    from alexandrie.models import GeneralConfiguration
-    GENERAL_CONFIGURATION = GeneralConfiguration.get()
-    LIBRARY_INFOS = {
-        'name': GENERAL_CONFIGURATION.library_name,
-        'addr1': GENERAL_CONFIGURATION.library_addr1,
-        'addr2': GENERAL_CONFIGURATION.library_addr2,
-        'zip': GENERAL_CONFIGURATION.library_zip,
-        'city': GENERAL_CONFIGURATION.library_city,
-        'phone_number': GENERAL_CONFIGURATION.library_phone_number,
-        'email': GENERAL_CONFIGURATION.library_email,
-        'website': GENERAL_CONFIGURATION.library_website,
-    }
-except OperationalError:
-    # To prevent "django.db.utils.OperationalError" when reseting the DB
-    pass

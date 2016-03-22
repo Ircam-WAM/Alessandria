@@ -4,13 +4,20 @@ import datetime
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from django.db.utils import OperationalError
 from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 from django_countries import countries
 
-#import bibli.settings as settings
-import alexandrie.local_settings as settings
-
 from alexandrie.models import *
+
+max_borrow_days = 0
+default_country = None
+try:
+    if GeneralConfiguration.objects.first() is not None:
+        max_borrow_days = GeneralConfiguration.objects.first().max_borrow_days
+except OperationalError:
+    # To prevent "django.db.utils.OperationalError" when reseting the DB
+    pass
 
 _l_countries = sorted(dict(countries).items())
 _l_default_exclude_fields = ['created_by', 'created_on', 'modified_by', 'modified_on']
@@ -32,7 +39,7 @@ class ReaderBorrowForm(CommonForm):
     borrow_due_date = forms.DateField(
         label=Meta.model._meta.get_field('borrow_due_date').verbose_name,
         initial= datetime.date.today() + datetime.timedelta(
-            days=settings.GENERAL_CONFIGURATION.max_borrow_days
+            days=max_borrow_days
         )
     )
 
@@ -53,7 +60,7 @@ class ReaderForm(CommonForm):
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
         choices=_l_countries,
-        initial=settings.GENERAL_CONFIGURATION.default_country
+        initial=default_country
     )
 
 class ReaderSearchForm(forms.ModelForm):
@@ -76,7 +83,7 @@ class AuthorForm(CommonForm):
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
         choices=_l_countries,
-        initial=settings.GENERAL_CONFIGURATION.default_country
+        initial=default_country
     )
 
 class AuthorSearchForm(forms.ModelForm):
@@ -93,7 +100,7 @@ class PublisherForm(CommonForm):
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
         choices=_l_countries,
-        initial=settings.GENERAL_CONFIGURATION.default_country
+        initial=default_country
     )
 
 class PublisherSearchForm(forms.ModelForm):
