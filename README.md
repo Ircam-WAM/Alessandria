@@ -11,8 +11,12 @@ This is an application to manage a book library.
 cd alexandrie
 python setup.py install</pre>
 
+## Setting up a Django project
+If you don't already have a django project, create one:
+<pre>django-admin startproject <my_project_name>
+
 ## Django app - configuration
-* Open the file *settings.py*
+* In your django project, open the file *settings.py*
   * Add to your *INSTALLED_APPS* settings:
     <pre>
     INSTALLED_APPS = (
@@ -23,7 +27,7 @@ python setup.py install</pre>
     )
     </pre>
 
-* Open the file *urls.py* of your django project
+* In your django project, open the file *urls.py* of your django project
   * Add this import at the beginning of the file:<pre>from ajax_select import urls as ajax_select_urls</pre>
   * Add to *urls_patterns*:<pre>urlpatterns = patterns('',
     ...

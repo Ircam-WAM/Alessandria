@@ -33,15 +33,6 @@ class GeneralConfiguration(models.Model):
     library_email = models.EmailField(_("Library e-mail"), unique=True, null=True, blank=True)
     library_website = models.URLField(verbose_name=_("Library website"), null=True, blank=True)
 
-    @staticmethod
-    def get():
-        if GeneralConfiguration.objects.count() > 0:
-            return GeneralConfiguration.objects.all()[0]
-        else:
-            gc = GeneralConfiguration()
-            gc.save()
-            return gc
-
     def __str__(self):
         return ugettext("Configuration") # TODO: check if it could be lazy
 
