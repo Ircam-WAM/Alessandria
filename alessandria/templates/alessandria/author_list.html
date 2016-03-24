@@ -1,0 +1,39 @@
+{% extends 'alessandria/base_tpl.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Author list" %}{% endblock %}
+
+{% block pageTitle %}{% trans "Author list" %}{% endblock %}
+
+{% block content %}
+
+<form class="form-horizontal" action="{% url 'alessandria:author_list' %}" method="post" role="form">{% csrf_token %}
+    {% include 'alessandria/_inc_form_search_std.html' %}
+</form>
+
+<div class="row">
+    <div class="col-md-12">
+        {% include 'alessandria/_inc_paginator_list.html' %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><a href="{% url 'alessandria:author_list' %}?order_field=last_name">{% trans "Name" %}</a></th>
+                    <th>Date de naissance</th>
+                    <th><a href="{% url 'alessandria:author_list' %}?order_field=created_on">{% trans "Created on" %}</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for author in object_list %}
+                <tr>
+                    <td><a href="{% url 'alessandria:author_update' author.id %}">{{ author }}</a></td>
+                    <td>{{ author.birthday|default:"" }}</td>
+                    <td>{{ author.created_on }}</td>
+                </tr>
+                {% empty %}
+                    <tr><td colspan="3">{% trans "No author." %}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

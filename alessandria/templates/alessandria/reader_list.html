@@ -1,0 +1,41 @@
+{% extends 'alessandria/base_tpl.html' %}
+{% load i18n %}
+
+{% block title %}Liste des lecteurs{% endblock %}
+
+{% block pageTitle %}Liste des lecteurs{% endblock %}
+
+{% block content %}
+
+<form class="form-horizontal" action="{% url 'alessandria:reader_list' %}" method="post" role="form">{% csrf_token %}
+    {% include 'alessandria/_inc_form_search_std.html' %}
+</form>
+
+<div class="row-fluid">
+    <div class="span12">
+        {% include 'alessandria/_inc_paginator_list.html' %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><a href="{% url 'alessandria:reader_list' %}?order_field=number">{% trans "Number" %}</a></th>
+                    <th>Prénom</th>
+                    <th><a href="{% url 'alessandria:reader_list' %}?order_field=last_name">{% trans "Name" %}</a></th>
+                    <th><a href="{% url 'alessandria:reader_list' %}?order_field=inscription_date">{% trans "Registration date" %}</a></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reader in object_list %}
+                <tr>
+                    <td><a href="{% url 'alessandria:reader_update' reader.id %}">{{ reader.number }}</a></td>
+                    <td><a href="{% url 'alessandria:reader_update' reader.id %}">{{ reader.first_name }}</a></td>
+                    <td><a href="{% url 'alessandria:reader_update' reader.id %}">{{ reader.last_name }}</a></td>
+                    <td>{{ reader.inscription_date|date:"SHORT_DATE_FORMAT" }}</td>
+                </tr>
+            {% empty %}
+                    <tr><td colspan="5">{% trans "No reader." %}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

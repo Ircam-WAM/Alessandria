@@ -1,0 +1,37 @@
+{% extends 'alessandria/base_tpl.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Publisher list" %}{% endblock %}
+
+{% block pageTitle %}{% trans "Publisher list" %}{% endblock %}
+
+{% block content %}
+
+<form class="form-horizontal" action="{% url 'alessandria:publisher_list' %}" method="post" role="form">{% csrf_token %}
+    {% include 'alessandria/_inc_form_search_std.html' %}
+</form>
+
+<div class="row">
+    <div class="col-md-12">
+        {% include 'alessandria/_inc_paginator_list.html' %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><a href="{% url 'alessandria:publisher_list' %}?order_field=name">{% trans "Name" %}</a></th>
+                    <th><a href="{% url 'alessandria:publisher_list' %}?order_field=created_on">{% trans "Created on" %}</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for publisher in object_list %}
+                <tr>
+                    <td><a href="{% url 'alessandria:publisher_update' publisher.id %}">{{ publisher.name }}</a></td>
+                    <td>{{ publisher.created_on}}</td>
+                </tr>
+                {% empty %}
+                    <tr><td colspan="2">{% trans "No publisher." %}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

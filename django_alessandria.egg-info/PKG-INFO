@@ -1,0 +1,17 @@
+Metadata-Version: 1.1
+Name: django-alessandria
+Version: 0.95
+Summary: Book library application for Django
+Home-page: https://gitlab.com/openlabmatera/alessandria
+Author: Marc Schneider
+Author-email: marc@mirelsol.org
+License: GPL v3
+Description: See README.rd
+Keywords: book library django application
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Framework :: Django

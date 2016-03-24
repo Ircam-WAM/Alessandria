@@ -1,0 +1,269 @@
+[
+{
+    "pk": 1,
+    "fields": {
+        "library_website": "",
+        "library_email": "",
+        "library_name": "Sample book library",
+        "library_addr1": "Addr1",
+        "library_zip": "1234",
+        "library_addr2": "",
+        "max_borrow_days": 21,
+        "appli_name": "Alexandrie",
+        "library_country": "GB",
+        "nav_history": 10,
+        "library_phone_number": "",
+        "library_city": "City",
+        "default_country": "GB"
+    },
+    "model": "alessandria.generalconfiguration"
+},
+{
+    "pk": 1,
+    "fields": {
+        "label": "French",
+        "is_default": false
+    },
+    "model": "alessandria.language"
+},
+{
+    "pk": 2,
+    "fields": {
+        "label": "English",
+        "is_default": true
+    },
+    "model": "alessandria.language"
+},
+{
+    "pk": 3,
+    "fields": {
+        "label": "German",
+        "is_default": false
+    },
+    "model": "alessandria.language"
+},
+{
+    "pk": 4,
+    "fields": {
+        "label": "Italian",
+        "is_default": false
+    },
+    "model": "alessandria.language"
+},
+{
+    "pk": 5,
+    "fields": {
+        "label": "Spanish",
+        "is_default": false
+    },
+    "model": "alessandria.language"
+},
+{
+    "pk": 1,
+    "fields": {
+        "label": "Employed"
+    },
+    "model": "alessandria.profession"
+},
+{
+    "pk": 2,
+    "fields": {
+        "label": "Student"
+    },
+    "model": "alessandria.profession"
+},
+{
+    "pk": 3,
+    "fields": {
+        "label": "Pupil"
+    },
+    "model": "alessandria.profession"
+},
+{
+    "pk": 4,
+    "fields": {
+        "label": "Pensioner"
+    },
+    "model": "alessandria.profession"
+},
+{
+    "pk": 1,
+    "fields": {
+        "label": "Adults"
+    },
+    "model": "alessandria.bookaudience"
+},
+{
+    "pk": 2,
+    "fields": {
+        "label": "Teenagers"
+    },
+    "model": "alessandria.bookaudience"
+},
+{
+    "pk": 3,
+    "fields": {
+        "label": "Children"
+    },
+    "model": "alessandria.bookaudience"
+},
+{
+    "pk": 1,
+    "fields": {
+        "label": "New"
+    },
+    "model": "alessandria.bookcondition"
+},
+{
+    "pk": 2,
+    "fields": {
+        "label": "Good"
+    },
+    "model": "alessandria.bookcondition"
+},
+{
+    "pk": 3,
+    "fields": {
+        "label": "Acceptable"
+    },
+    "model": "alessandria.bookcondition"
+},
+{
+    "pk": 4,
+    "fields": {
+        "label": "Bad"
+    },
+    "model": "alessandria.bookcondition"
+},
+{
+    "pk": 1,
+    "fields": {
+        "label": "Novel"
+    },
+    "model": "alessandria.bookcategory"
+},
+{
+    "pk": 2,
+    "fields": {
+        "label": "Documentary"
+    },
+    "model": "alessandria.bookcategory"
+},
+{
+    "pk": 3,
+    "fields": {
+        "label": "Magazine"
+    },
+    "model": "alessandria.bookcategory"
+},
+{
+    "pk": 4,
+    "fields": {
+        "label": "Cartoon"
+    },
+    "model": "alessandria.bookcategory"
+},
+{
+    "pk": 5,
+    "fields": {
+        "label": "Dictionary"
+    },
+    "model": "alessandria.bookcategory"
+},
+{
+    "pk": 1,
+    "fields": {
+        "label": "History",
+        "parent_category": 2
+    },
+    "model": "alessandria.booksubcategory"
+},
+{
+    "pk": 4,
+    "fields": {
+        "label": "Geography",
+        "parent_category": 3
+    },
+    "model": "alessandria.booksubcategory"
+},
+{
+    "pk": 5,
+    "fields": {
+        "label": "Detective novel",
+        "parent_category": 1
+    },
+    "model": "alessandria.booksubcategory"
+},
+{
+    "pk": 6,
+    "fields": {
+        "label": "Adventures",
+        "parent_category": 1
+    },
+    "model": "alessandria.booksubcategory"
+},
+{
+    "pk": 8,
+    "fields": {
+        "label": "Foreign languages",
+        "parent_category": 5
+    },
+    "model": "alessandria.booksubcategory"
+},
+{
+    "pk": 9,
+    "fields": {
+        "label": "French language",
+        "parent_category": 5
+    },
+    "model": "alessandria.booksubcategory"
+},
+{
+    "pk": 10,
+    "fields": {
+        "label": "Animals",
+        "parent_category": 2
+    },
+    "model": "alessandria.booksubcategory"
+},
+{
+    "pk": 11,
+    "fields": {
+        "label": "English language",
+        "parent_category": 5
+    },
+    "model": "alessandria.booksubcategory"
+},
+{
+    "pk": 1,
+    "fields": {
+        "label": "Donation"
+    },
+    "model": "alessandria.bookcopyorigin"
+},
+{
+    "pk": 2,
+    "fields": {
+        "label": "Purchase"
+    },
+    "model": "alessandria.bookcopyorigin"
+},
+{
+    "pk": 1,
+    "fields": {
+        "last_login": "2015-08-21T06:17:22.367Z",
+        "username": "admin",
+        "password": "pbkdf2_sha256$20000$KcApCvYWbhZd$r81u+AiKF9LV3Bag5mQA2ESRFreoKFoEyz3F66wTrDk=",
+        "is_active": true,
+        "last_name": "admin",
+        "email": "marc@mirelsol.org",
+        "date_joined": "2014-12-23T21:58:20Z",
+        "user_permissions": [],
+        "is_superuser": true,
+        "first_name": "admin",
+        "groups": [],
+        "is_staff": true
+    },
+    "model": "auth.user"
+}
+]

@@ -1,0 +1,39 @@
+{% extends 'alessandria/base_tpl.html' %}
+{% load i18n %}
+
+{% block title %}{{ publisher }}: {% trans "Book list" %}{% endblock %}
+
+{% block pageTitle %}{{ publisher }}: {% trans "Book list" %}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><a href="{% url 'alessandria:book_list' %}?order_field=title">{% trans "Title" %}</a></th>
+                    <th>Auteur</th>
+                    <th><a href="{% url 'alessandria:book_list' %}?order_field=isbn_nb">{% trans "ISBN number" %}</a></th>
+                    <th># Exemplaires</th>
+                    <th><a href="{% url 'alessandria:book_list' %}?order_field=created_on">{% trans "Created on" %}</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in object_list %}
+                <tr>
+                    <td><a href="{% url 'alessandria:book_update' book.id %}">{{ book.title }}</a></td>
+                    <td><a href="{% url 'alessandria:author_update' book.authors.first.id %}">{{ book.authors.first }}</td>
+                    <td>{{ book.isbn_nb|default:"-" }}</td>
+                    <td>{{ book.get_nb_copy }}</td>
+                    <td>{{ book.created_on }}</td>
+                </tr>
+                {% empty %}
+                    <tr><td colspan="5">{% trans "No book." %}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>&nbsp;<a href="{% url 'alessandria:publisher_update' publisher.id %}">{% trans "Back to the publisher" %}</a>
+    </div>
+</div>
+{% endblock %}

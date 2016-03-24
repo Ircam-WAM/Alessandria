@@ -1,0 +1,42 @@
+{% extends 'alessandria/base_tpl.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Removing the sample" %}{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="/static/alessandria/layout/jquery-datepicker/jquery.datepick.css">
+{% endblock %}
+
+{% block pageTitle %}{% trans "Removing the sample" %}{% endblock %}
+
+{% block content %}
+
+<div class="textWarning">
+    <p>{% trans "Removing a sample means that it won't be part of the samples to be borrowed. However it will be kept in the system history." %}</p>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        {% include 'alessandria/_inc_form_edit_header.html' %}
+        <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
+            {% include 'alessandria/_inc_form_edit_content_std.html' %}
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-warning">{% trans "Remove" %}</button>
+                    <a class="btn" href="{% url 'alessandria:bookcopy_update' form.instance.id %}">{% trans "Cancel" %}</a>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.col-sm-12 -->
+</div>
+{% endblock %}
+
+{% block jscript %}
+<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.plugin.min.js"></script> 
+<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.datepick.min.js"></script>
+<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.datepick-{{ JS_DATEPICKER_LANG }}.js"></script>
+<script>
+$(function() {
+    $('#id_disabled_on').datepick({dateFormat: 'dd/mm/yyyy'});
+});
+</script>
+{% endblock %}

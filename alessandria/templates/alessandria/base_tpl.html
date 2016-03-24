@@ -1,0 +1,138 @@
+{% load i18n %}
+{% load staticfiles %}
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Alessandria">
+        <meta name="author" content="Marc SCHNEIDER">
+        <!--link rel="icon" href="../../favicon.ico" -->
+      
+        <title>{% block title %}Alessandria - {{ LIBRARY_NAME }}{% endblock %}</title>
+      
+        <link rel="stylesheet" href="{% static 'alessandria/layout/bootstrap/css/bootstrap.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'alessandria/layout/style.css' %}" />
+        {% block head %}{% endblock %}
+    </head>
+
+    <body>
+        <div class="container">
+            <!-- Static navbar -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">{% trans "Toggle navigation" %}</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{% url 'alessandria:home' %}">{% trans "Home" %}</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Borrowings" %}<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'alessandria:reader_borrow_add' %}">{% trans "Add" %}</a></li>
+                                    <li><a href="{% url 'alessandria:reader_borrow_list' 'current' %}">{% trans "Current borrowings" %}</a></li>
+                                    <li><a href="{% url 'alessandria:reader_borrow_list' 'late' %}">{% trans "Late borrowings" %}</a></li>
+                                    <li><a href="{% url 'alessandria:reader_borrow_list' %}">{% trans "All borrowings" %}</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Books" %}<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'alessandria:book_add' %}">{% trans "Add" %}</a></li>
+                                    <li><a href="{% url 'alessandria:book_isbn_import' %}">{% trans "ISBN import" %}</a></li>
+                                    <li><a href="{% url 'alessandria:book_list' %}">{% trans "List" %}</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Readers" %}<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'alessandria:reader_add' %}">{% trans "Add" %}</a></li>
+                                    <li><a href="{% url 'alessandria:reader_list' %}">{% trans "List" %}</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Authors" %}<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'alessandria:author_add' %}">{% trans "Add" %}</a></li>
+                                    <li><a href="{% url 'alessandria:author_list' %}">{% trans "List" %}</a></li>
+                                    <!--li class="divider"></li>
+                                    <li class="dropdown-header">Nav header</li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#">One more separated link</a></li-->
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Publishers" %}<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'alessandria:publisher_add' %}">{% trans "Add" %}</a></li>
+                                    <li><a href="{% url 'alessandria:publisher_list' %}">{% trans "List" %}</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'alessandria:logout' %}">{% trans "Log out" %} {{ user.first_name }}</a>
+                            {% else %}
+                                <a href="{% url 'alessandria:login' %}">{% trans "Log in" %}</a>
+                            {% endif %}
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/admin">{% trans "Administration" %}</a></li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "History" %}<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    {% for item in request.session.user_nav_list %}
+                                        <li><a href="{{ item.0 }}">{{ item.1 }}</a></li>
+                                     {% empty %}
+                                        <li>{% trans "Empty" %}</li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div><!--/.container-fluid -->
+            </div>
+          
+            <div class="container">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{% block pageTitle %}Alessandria{% endblock %}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% block content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container -->
+        <div align="center">
+            Alessandria - Licence GNU GPLv3 - {{ VERSION|safe }} - {{ LIBRARY_NAME }}
+        </div>
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="{% static 'alessandria/layout/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'alessandria/layout/bootstrap/js/bootstrap.min.js' %}"></script>
+        {% block jscript %}{% endblock %}
+    </body>
+</html>

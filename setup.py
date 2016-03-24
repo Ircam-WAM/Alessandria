@@ -22,7 +22,7 @@ def get_package_data(package):
     dir_to_exclude = ['__pycache__',]
     file_ext_to_exclude = ['.pyc', '.log',]
     file_pref_to_exclude = ['temp',]
-    walk = [(dirpath.replace(package + os.sep, '', 1), filenames) # Remove 1st occurence of 'alexandrie/' in dirpath
+    walk = [(dirpath.replace(package + os.sep, '', 1), filenames) # Remove 1st occurence of 'alessandria/' in dirpath
             for dirpath, dirnames, filenames in os.walk(package)
             if not os.path.exists(os.path.join(dirpath, '__init__.py'))]
 
@@ -40,18 +40,18 @@ def get_package_data(package):
     return {package: filepaths}
 
 setup(
-    name='django-alexandrie',
-    version=find_version('alexandrie', '__init__.py'),
+    name='django-alessandria',
+    version=find_version('alessandria', '__init__.py'),
     description='Book library application for Django',
     author='Marc Schneider',
     author_email='marc@mirelsol.org',
     license="GPL v3",
     long_description="See README.rd",
     keywords="book library django application",
-    url='https://gitlab.com/openlabmatera/alexandrie',
+    url='https://gitlab.com/openlabmatera/alessandria',
     packages=find_packages(),
     zip_safe=False,
-    package_data=get_package_data('alexandrie'),
+    package_data=get_package_data('alessandria'),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
@@ -65,7 +65,7 @@ setup(
         'django-countries>=3.3',
         'django-ajax-selects>=1.3.6',
         'simplejson>=3.8.0',
-        #'pillow>=2.9.0',
+        'pillow>=2.9.0',
         'isbnlib>=3.5.6'
     ]
 )

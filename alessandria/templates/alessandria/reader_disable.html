@@ -1,0 +1,29 @@
+{% extends 'alessandria/base_tpl.html' %}
+{% load i18n %}
+
+{% trans "Disabling a reader" as disabling_a_reader %}
+
+{% block title %}{{ disabling_a_reader }}{% endblock %}
+
+{% block pageTitle %}{{ disabling_a_reader }}{% endblock %}
+
+{% block content %}
+
+<div class="textWarning">
+    <p>{% trans "Disabling a reader means that he won't be able to borrow books anymore. However he will be kept in the system history." %}</p>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        {% include 'alessandria/_inc_form_edit_header.html' %}
+        <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
+            {% include 'alessandria/_inc_form_edit_content_std.html' %}
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-warning">{% trans "Disable" %}</button>
+                    <a class="btn" href="{% url 'alessandria:reader_update' form.instance.id %}">{% trans "Cancel" %}</a>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.col-sm-12 -->
+</div>
+{% endblock %}
