@@ -1,0 +1,28 @@
+{% extends 'alessandria/base_tpl.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Publisher" %}{% endblock %}
+
+{% block pageTitle %}{% trans "Publisher" %}:&nbsp;{{object|default:_("new")}}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        {% include 'alessandria/_inc_form_edit_header.html' %}
+        <div class="panel panel-info">
+            <div class="panel-body">
+                <form class="form-horizontal" action="" method="post" role="form">{% csrf_token %}
+                    {% include 'alessandria/_inc_form_edit_content_std.html' %}
+                    {% include 'alessandria/_inc_form_edit_buttons_std.html' with delete_url='alessandria:publisher_delete' %}
+                </form>
+                {% if form.instance.id > 0 %}
+                    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>&nbsp;<a href="{% url 'alessandria:book_list_by_publisher' object.id %}">{% trans "See all books of this publisher" %}</a>
+                {% endif %}
+                {% include 'alessandria/_inc_form_edit_footer.html' %}
+            </div>
+        </div>
+    </div><!-- /.col-sm-12 -->
+</div>
+
+{% endblock %}

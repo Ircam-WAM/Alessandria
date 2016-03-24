@@ -1,4 +1,4 @@
-# Alexandrie: application de gestion d'une bibliothèque (english version below).
+# Alessandria: application de gestion d'une bibliothèque (english version below).
 
 ## Installation
 
@@ -7,9 +7,9 @@
 * Python 3
 * Une base de données (ex. sqlite)
 
-### Récupérer les sources et installer alexandrie
-<pre>git clone https://gitlab.com/openlabmatera/alexandrie.git
-cd alexandrie
+### Récupérer les sources et installer alessandria
+<pre>git clone https://gitlab.com/openlabmatera/alessandria.git
+cd alessandria
 python setup.py install</pre>
 
 ### Création d'un projet Django
@@ -22,8 +22,8 @@ Si vous ne souhaitez pas utiliser un projet Django existant, il faut en créer u
     <pre>
     INSTALLED_APPS = (
         ...
-        'alexandrie',
-        'alexandrie.templatetags.tag_extras',
+        'alessandria',
+        'alessandria.templatetags.tag_extras',
         'ajax_select',
     )
     </pre>
@@ -32,11 +32,11 @@ Si vous ne souhaitez pas utiliser un projet Django existant, il faut en créer u
   * Ajouter cet import en début de fichier:<pre>from ajax_select import urls as ajax_select_urls</pre>
   * A *urls_patterns* ajouter:<pre>urlpatterns = patterns('',
     ...
-    url(r'^alexandrie/', include('alexandrie.urls', namespace='alexandrie')),
-    url(r'^alexandrie/ajax_lookups/', include(ajax_select_urls)),
+    url(r'^alessandria/', include('alessandria.urls', namespace='alessandria')),
+    url(r'^alessandria/ajax_lookups/', include(ajax_select_urls)),
 )</pre>
 * Initialiser la base de données:<pre>./manage.py migrate
-./manage.py loaddata --app alexandrie ref_data</pre>
+./manage.py loaddata --app alessandria ref_data</pre>
 
 ### Premier lancement
 
@@ -45,11 +45,11 @@ Si vous ne souhaitez pas utiliser un projet Django existant, il faut en créer u
 * Adapter la configuration de l'application à vos besoins: (configuration générale, catégorie des livres, ...)
 
 ## Utilisation
-* Dans le navigateur, accéder à la page d'accueil: http://127.0.0.1:8000/alexandrie/
+* Dans le navigateur, accéder à la page d'accueil: http://127.0.0.1:8000/alessandria/
 
 *****
 
-Alexandrie: software to manage a book library.
+Alessandria: software to manage a book library.
 
 ## Installation 
 
@@ -58,9 +58,9 @@ Alexandrie: software to manage a book library.
 * Python 3
 * A database (e.g. sqlite)
 
-### Get the sources and install alexandrie
-<pre>git clone https://gitlab.com/openlabmatera/alexandrie.git
-cd alexandrie
+### Get the sources and install alessandria
+<pre>git clone https://gitlab.com/openlabmatera/alessandria.git
+cd alessandria
 python setup.py install</pre>
 
 ### Setting up a Django project
@@ -73,8 +73,8 @@ If you don't want to use an existing django project, create one:
     <pre>
     INSTALLED_APPS = (
         ...
-        'alexandrie',
-        'alexandrie.templatetags.tag_extras',
+        'alessandria',
+        'alessandria.templatetags.tag_extras',
         'ajax_select',
     )
     </pre>
@@ -83,11 +83,11 @@ If you don't want to use an existing django project, create one:
   * Add this import at the beginning of the file:<pre>from ajax_select import urls as ajax_select_urls</pre>
   * Add to *urls_patterns*:<pre>urlpatterns = patterns('',
     ...
-    url(r'^alexandrie/', include('alexandrie.urls', namespace='alexandrie')),
-    url(r'^alexandrie/ajax_lookups/', include(ajax_select_urls)),
+    url(r'^alessandria/', include('alessandria.urls', namespace='alessandria')),
+    url(r'^alessandria/ajax_lookups/', include(ajax_select_urls)),
 )</pre>
 * Initialize database:<pre>./manage.py migrate
-./manage.py loaddata --app alexandrie ref_data</pre>
+./manage.py loaddata --app alessandria ref_data</pre>
 
 ### First run
 
@@ -97,4 +97,4 @@ If you don't want to use an existing django project, create one:
 
 ## Usage
 
-* In your browser go to the start page: http://127.0.0.1:8000/alexandrie/
+* In your browser go to the start page: http://127.0.0.1:8000/alessandria/
