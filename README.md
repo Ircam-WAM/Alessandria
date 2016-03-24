@@ -14,7 +14,7 @@ python setup.py install</pre>
 
 ### Création d'un projet Django
 Si vous ne souhaitez pas utiliser un projet Django existant, il faut en créer un:
-<pre>django-admin startproject <nom_du_projet></pre>
+<pre>django-admin startproject nom_du_projet</pre>
 
 ### Django app - configuration
 * Dans le projet Django ouvrir le fichier *settings.py*
@@ -65,7 +65,7 @@ python setup.py install</pre>
 
 ### Setting up a Django project
 If you don't want to use an existing django project, create one:
-<pre>django-admin startproject <my_project_name></pre>
+<pre>django-admin startproject my_project_name</pre>
 
 ### Django app - configuration
 * In your django project, open the file *settings.py*
