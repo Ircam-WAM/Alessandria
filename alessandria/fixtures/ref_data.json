@@ -16,7 +16,7 @@
         "library_city": "City",
         "default_country": "GB"
     },
-    "model": "alexandrie.generalconfiguration"
+    "model": "alessandria.generalconfiguration"
 },
 {
     "pk": 1,
@@ -24,7 +24,7 @@
         "label": "French",
         "is_default": false
     },
-    "model": "alexandrie.language"
+    "model": "alessandria.language"
 },
 {
     "pk": 2,
@@ -32,7 +32,7 @@
         "label": "English",
         "is_default": true
     },
-    "model": "alexandrie.language"
+    "model": "alessandria.language"
 },
 {
     "pk": 3,
@@ -40,7 +40,7 @@
         "label": "German",
         "is_default": false
     },
-    "model": "alexandrie.language"
+    "model": "alessandria.language"
 },
 {
     "pk": 4,
@@ -48,7 +48,7 @@
         "label": "Italian",
         "is_default": false
     },
-    "model": "alexandrie.language"
+    "model": "alessandria.language"
 },
 {
     "pk": 5,
@@ -56,119 +56,119 @@
         "label": "Spanish",
         "is_default": false
     },
-    "model": "alexandrie.language"
+    "model": "alessandria.language"
 },
 {
     "pk": 1,
     "fields": {
         "label": "Employed"
     },
-    "model": "alexandrie.profession"
+    "model": "alessandria.profession"
 },
 {
     "pk": 2,
     "fields": {
         "label": "Student"
     },
-    "model": "alexandrie.profession"
+    "model": "alessandria.profession"
 },
 {
     "pk": 3,
     "fields": {
         "label": "Pupil"
     },
-    "model": "alexandrie.profession"
+    "model": "alessandria.profession"
 },
 {
     "pk": 4,
     "fields": {
         "label": "Pensioner"
     },
-    "model": "alexandrie.profession"
+    "model": "alessandria.profession"
 },
 {
     "pk": 1,
     "fields": {
         "label": "Adults"
     },
-    "model": "alexandrie.bookaudience"
+    "model": "alessandria.bookaudience"
 },
 {
     "pk": 2,
     "fields": {
         "label": "Teenagers"
     },
-    "model": "alexandrie.bookaudience"
+    "model": "alessandria.bookaudience"
 },
 {
     "pk": 3,
     "fields": {
         "label": "Children"
     },
-    "model": "alexandrie.bookaudience"
+    "model": "alessandria.bookaudience"
 },
 {
     "pk": 1,
     "fields": {
         "label": "New"
     },
-    "model": "alexandrie.bookcondition"
+    "model": "alessandria.bookcondition"
 },
 {
     "pk": 2,
     "fields": {
         "label": "Good"
     },
-    "model": "alexandrie.bookcondition"
+    "model": "alessandria.bookcondition"
 },
 {
     "pk": 3,
     "fields": {
         "label": "Acceptable"
     },
-    "model": "alexandrie.bookcondition"
+    "model": "alessandria.bookcondition"
 },
 {
     "pk": 4,
     "fields": {
         "label": "Bad"
     },
-    "model": "alexandrie.bookcondition"
+    "model": "alessandria.bookcondition"
 },
 {
     "pk": 1,
     "fields": {
         "label": "Novel"
     },
-    "model": "alexandrie.bookcategory"
+    "model": "alessandria.bookcategory"
 },
 {
     "pk": 2,
     "fields": {
         "label": "Documentary"
     },
-    "model": "alexandrie.bookcategory"
+    "model": "alessandria.bookcategory"
 },
 {
     "pk": 3,
     "fields": {
         "label": "Magazine"
     },
-    "model": "alexandrie.bookcategory"
+    "model": "alessandria.bookcategory"
 },
 {
     "pk": 4,
     "fields": {
         "label": "Cartoon"
     },
-    "model": "alexandrie.bookcategory"
+    "model": "alessandria.bookcategory"
 },
 {
     "pk": 5,
     "fields": {
         "label": "Dictionary"
     },
-    "model": "alexandrie.bookcategory"
+    "model": "alessandria.bookcategory"
 },
 {
     "pk": 1,
@@ -176,7 +176,7 @@
         "label": "History",
         "parent_category": 2
     },
-    "model": "alexandrie.booksubcategory"
+    "model": "alessandria.booksubcategory"
 },
 {
     "pk": 4,
@@ -184,7 +184,7 @@
         "label": "Geography",
         "parent_category": 3
     },
-    "model": "alexandrie.booksubcategory"
+    "model": "alessandria.booksubcategory"
 },
 {
     "pk": 5,
@@ -192,7 +192,7 @@
         "label": "Detective novel",
         "parent_category": 1
     },
-    "model": "alexandrie.booksubcategory"
+    "model": "alessandria.booksubcategory"
 },
 {
     "pk": 6,
@@ -200,7 +200,7 @@
         "label": "Adventures",
         "parent_category": 1
     },
-    "model": "alexandrie.booksubcategory"
+    "model": "alessandria.booksubcategory"
 },
 {
     "pk": 8,
@@ -208,7 +208,7 @@
         "label": "Foreign languages",
         "parent_category": 5
     },
-    "model": "alexandrie.booksubcategory"
+    "model": "alessandria.booksubcategory"
 },
 {
     "pk": 9,
@@ -216,7 +216,7 @@
         "label": "French language",
         "parent_category": 5
     },
-    "model": "alexandrie.booksubcategory"
+    "model": "alessandria.booksubcategory"
 },
 {
     "pk": 10,
@@ -224,7 +224,7 @@
         "label": "Animals",
         "parent_category": 2
     },
-    "model": "alexandrie.booksubcategory"
+    "model": "alessandria.booksubcategory"
 },
 {
     "pk": 11,
@@ -232,21 +232,21 @@
         "label": "English language",
         "parent_category": 5
     },
-    "model": "alexandrie.booksubcategory"
+    "model": "alessandria.booksubcategory"
 },
 {
     "pk": 1,
     "fields": {
         "label": "Donation"
     },
-    "model": "alexandrie.bookcopyorigin"
+    "model": "alessandria.bookcopyorigin"
 },
 {
     "pk": 2,
     "fields": {
         "label": "Purchase"
     },
-    "model": "alexandrie.bookcopyorigin"
+    "model": "alessandria.bookcopyorigin"
 },
 {
     "pk": 1,
