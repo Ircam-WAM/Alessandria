@@ -18,6 +18,10 @@ from django.template import RequestContext
 
 import isbnlib, logging
 
+# Import necessary load this module and the associated variables
+# like context_processors that supply variables to templates
+from alessandria import local_settings
+
 from alessandria.models import *
 from alessandria.forms import *
 from alessandria.utils import IsbnUtils
