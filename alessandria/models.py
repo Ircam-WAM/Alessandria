@@ -19,7 +19,7 @@ from alessandria.utils import MyString, IsbnUtils
 
 
 class GeneralConfiguration(models.Model):
-    appli_name = models.TextField(verbose_name=_("Software name"), default=u"Alexandrie")
+    appli_name = models.TextField(verbose_name=_("Software name"), default=u"Alessandria")
     default_country = CountryField(verbose_name=_("Default country"), default="FR")
     max_borrow_days = models.PositiveSmallIntegerField(_("Maximal borrowing days"), default=21)
     nav_history = models.PositiveSmallIntegerField(_("Navigation history"), default=10)
