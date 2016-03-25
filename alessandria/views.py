@@ -18,6 +18,10 @@ from django.template import RequestContext
 
 import isbnlib, logging
 
+# Import necessary load this module and the associated variables
+# like context_processors that supply variables to templates
+from alessandria import local_settings
+
 from alessandria.models import *
 from alessandria.forms import *
 from alessandria.utils import IsbnUtils
@@ -537,9 +541,8 @@ class BookIsbnImportView(ProtectedView, TemplateView):
 class BookCopyCreateView(EntityCreateView):
     template_name = 'alessandria/bookcopy_detail.html'
     model = BookCopy
-    form_class = BookCopyForm
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=BookCopyForm):
         form = super(BookCopyCreateView, self).get_form(form_class)
         self.book = Book.objects.get(pk=self.kwargs['book_id'])
         form.instance.book = self.book
