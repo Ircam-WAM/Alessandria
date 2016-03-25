@@ -3,6 +3,7 @@ from django.conf.urls import url
 from django.test import Client
 from django.test import TestCase
 from alessandria.urls import urlpatterns
+from alessandria.models import GeneralConfiguration
 
 
 class GeneralTest(TestCase):
@@ -12,6 +13,14 @@ class GeneralTest(TestCase):
             password='admin',
             email='admin@example.com'
         )
+        gc = GeneralConfiguration(
+            library_name = 'Test library',
+            library_addr1 = 'Addr1',
+            library_zip = '1234',
+            library_city = 'MyCity',
+            library_country = 'FR'
+        )
+        gc.save()
         self.login()
 
     def login(self):
