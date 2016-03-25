@@ -186,7 +186,7 @@ class BookTest(GenericTest):
         self.assertTrue(isbn_meta['Title'].startswith('The Tourist City Berlin'))
         self.assertIn('Braun', isbn_meta['Publisher'])
         self.assertIn('Jana Richter', isbn_meta['Authors'][0])
-        self.assertEqual(isbn_meta['Language'], 'eng')
+        self.assertEqual(isbn_meta['Language'].lower(), 'en')
         self.assertEqual(isbn_meta['Year'], '2010')
 
     def test_isbn_utils(self):
