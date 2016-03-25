@@ -541,9 +541,8 @@ class BookIsbnImportView(ProtectedView, TemplateView):
 class BookCopyCreateView(EntityCreateView):
     template_name = 'alessandria/bookcopy_detail.html'
     model = BookCopy
-    form_class = BookCopyForm
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=BookCopyForm):
         form = super(BookCopyCreateView, self).get_form(form_class)
         self.book = Book.objects.get(pk=self.kwargs['book_id'])
         form.instance.book = self.book
