@@ -14,7 +14,6 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
 
 import isbnlib, logging
 
@@ -323,13 +322,13 @@ class PublisherListView(EntityListView):
 def book_list_by_publisher(request, publisher_id):
     publisher = Publisher.objects.get(pk=publisher_id)
     object_list = publisher.book_set.all()
-    return render_to_response(
+    return render(
+        request,
         'alessandria/book_list_by_publisher.html',
         {
             'object_list': object_list,
             'publisher': publisher,
         },
-        context_instance=RequestContext(request),
     )
 
 
@@ -403,11 +402,12 @@ class BookIsbnImportView(ProtectedView, TemplateView):
             if isbn_meta:
                 return self._init_isbn_import(isbn_meta, request)
             else: # ISBN not found
-                return render_to_response(
-                    self.template_name, {
+                return render(
+                    request,
+                    self.template_name,
+                    {
                         'search': True,
                     },
-                    context_instance=RequestContext(request)
                 )
         elif cmd == 'import_isbn':
             # After submit button to import has been pressed
@@ -468,11 +468,12 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                     }
                 )
                 book_form.fields['isbn_nb'].widget.attrs['readonly'] = True
-                return render_to_response(
-                    'alessandria/book_detail.html', {
+                return render(
+                    request,
+                    'alessandria/book_detail.html', 
+                    {
                         'form': book_form,
                     },
-                    context_instance=RequestContext(request)
                 )
             else: # Error in one of the forms => display the import page again
                 isbn_nb = isbnlib.get_canonical_isbn(request.POST.get('isbn_nb'))
@@ -506,12 +507,13 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                 book = Book.init_from_isbn(isbn_meta)
                 book_form = BookForm(instance=book)
                 if book_form.instance.id:
-                    return render_to_response(
-                        self.template_name, {
+                    return render(
+                        request,
+                        self.template_name, 
+                        {
                             'book_form': book_form,
                             'search': True,
                         },
-                        context_instance=RequestContext(request)
                     )
                 country_code = IsbnUtils.get_country_code(isbn_meta)
                 # Initialize authors forms from isbn meta data
@@ -526,15 +528,15 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                 # Initialize publisher form from isbn meta data
                 publisher = Publisher.init_from_isbn(isbn_meta)
                 publisher_form = self._create_publisher_form(instance=publisher)
-
-                return render_to_response(
-                    self.template_name, {
+                return render(
+                    request,
+                    self.template_name, 
+                    {
                         'book_form': book_form,
                         'search': True,
                         'authors_form': authors_form,
                         'publisher_form': publisher_form,
                     },
-                    context_instance=RequestContext(request)
                 )
 
 
