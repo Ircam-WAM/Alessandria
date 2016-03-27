@@ -1,0 +1,361 @@
+[
+{
+    "model": "alessandria.generalconfiguration",
+    "pk": 1,
+    "fields": {
+        "appli_name": "Alessandria",
+        "default_country": "FR",
+        "max_borrow_days": 21,
+        "nav_history": 10,
+        "library_name": "Biblioth\u00e8que exemple",
+        "library_addr1": "Adresse 1",
+        "library_addr2": "",
+        "library_zip": "1234",
+        "library_city": "Ma ville",
+        "library_country": "FR",
+        "library_phone_number": "",
+        "library_email": "",
+        "library_website": ""
+    }
+},
+{
+    "model": "alessandria.language",
+    "pk": 1,
+    "fields": {
+        "label": "Fran\u00e7ais",
+        "is_default": true
+    }
+},
+{
+    "model": "alessandria.language",
+    "pk": 2,
+    "fields": {
+        "label": "Anglais",
+        "is_default": false
+    }
+},
+{
+    "model": "alessandria.language",
+    "pk": 3,
+    "fields": {
+        "label": "Allemand",
+        "is_default": false
+    }
+},
+{
+    "model": "alessandria.language",
+    "pk": 4,
+    "fields": {
+        "label": "Italien",
+        "is_default": false
+    }
+},
+{
+    "model": "alessandria.language",
+    "pk": 5,
+    "fields": {
+        "label": "Espagnol",
+        "is_default": false
+    }
+},
+{
+    "model": "alessandria.profession",
+    "pk": 1,
+    "fields": {
+        "label": "Actif"
+    }
+},
+{
+    "model": "alessandria.profession",
+    "pk": 2,
+    "fields": {
+        "label": "Etudiant"
+    }
+},
+{
+    "model": "alessandria.profession",
+    "pk": 3,
+    "fields": {
+        "label": "Ecolier"
+    }
+},
+{
+    "model": "alessandria.profession",
+    "pk": 4,
+    "fields": {
+        "label": "Retrait\u00e9"
+    }
+},
+{
+    "model": "alessandria.bookaudience",
+    "pk": 1,
+    "fields": {
+        "label": "Adultes"
+    }
+},
+{
+    "model": "alessandria.bookaudience",
+    "pk": 2,
+    "fields": {
+        "label": "Adolescents"
+    }
+},
+{
+    "model": "alessandria.bookaudience",
+    "pk": 3,
+    "fields": {
+        "label": "Enfants"
+    }
+},
+{
+    "model": "alessandria.bookcondition",
+    "pk": 1,
+    "fields": {
+        "label": "Neuf"
+    }
+},
+{
+    "model": "alessandria.bookcondition",
+    "pk": 2,
+    "fields": {
+        "label": "Bon"
+    }
+},
+{
+    "model": "alessandria.bookcondition",
+    "pk": 3,
+    "fields": {
+        "label": "Acceptable"
+    }
+},
+{
+    "model": "alessandria.bookcondition",
+    "pk": 4,
+    "fields": {
+        "label": "Mauvais"
+    }
+},
+{
+    "model": "alessandria.bookcategory",
+    "pk": 1,
+    "fields": {
+        "label": "Roman"
+    }
+},
+{
+    "model": "alessandria.bookcategory",
+    "pk": 2,
+    "fields": {
+        "label": "Documentaire"
+    }
+},
+{
+    "model": "alessandria.bookcategory",
+    "pk": 3,
+    "fields": {
+        "label": "Magazine"
+    }
+},
+{
+    "model": "alessandria.bookcategory",
+    "pk": 4,
+    "fields": {
+        "label": "BD"
+    }
+},
+{
+    "model": "alessandria.bookcategory",
+    "pk": 5,
+    "fields": {
+        "label": "Dictionnaire"
+    }
+},
+{
+    "model": "alessandria.booksubcategory",
+    "pk": 1,
+    "fields": {
+        "label": "Histoire",
+        "parent_category": 2
+    }
+},
+{
+    "model": "alessandria.booksubcategory",
+    "pk": 4,
+    "fields": {
+        "label": "G\u00e9ographie",
+        "parent_category": 3
+    }
+},
+{
+    "model": "alessandria.booksubcategory",
+    "pk": 5,
+    "fields": {
+        "label": "Policier",
+        "parent_category": 1
+    }
+},
+{
+    "model": "alessandria.booksubcategory",
+    "pk": 6,
+    "fields": {
+        "label": "Aventures",
+        "parent_category": 1
+    }
+},
+{
+    "model": "alessandria.booksubcategory",
+    "pk": 10,
+    "fields": {
+        "label": "Animaux",
+        "parent_category": 2
+    }
+},
+{
+    "model": "alessandria.booksubcategory",
+    "pk": 11,
+    "fields": {
+        "label": "Anglais",
+        "parent_category": 5
+    }
+},
+{
+    "model": "alessandria.booksubcategory",
+    "pk": 12,
+    "fields": {
+        "label": "Fran\u00e7ais",
+        "parent_category": 5
+    }
+},
+{
+    "model": "alessandria.bookcopyorigin",
+    "pk": 1,
+    "fields": {
+        "label": "Don"
+    }
+},
+{
+    "model": "alessandria.bookcopyorigin",
+    "pk": 2,
+    "fields": {
+        "label": "Achat"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$P5R5OayLf37b$u+v8P14MLHGfjmCE0PdQ1QRQf2e5cuClDqBhR0XAOE8=",
+        "last_login": "2016-03-27T08:08:51.601Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "admin",
+        "last_name": "admin",
+        "email": "marc@mirelsol.org",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2014-12-23T21:58:20Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "alessandria.usernavigationhistory",
+    "pk": 3,
+    "fields": {
+        "accessed_by": 1,
+        "accessed_on": "2016-03-25T07:22:15.058Z",
+        "title": "Livre : L'italien pour les nuls",
+        "url": "/alessandria/book/2/"
+    }
+},
+{
+    "model": "alessandria.usernavigationhistory",
+    "pk": 4,
+    "fields": {
+        "accessed_by": 1,
+        "accessed_on": "2016-03-27T08:12:17.491Z",
+        "title": "Publisher : BRAUN PUBLISH,CSI",
+        "url": "/alessandria/publisher/1/"
+    }
+},
+{
+    "model": "alessandria.usernavigationhistory",
+    "pk": 5,
+    "fields": {
+        "accessed_by": 1,
+        "accessed_on": "2016-03-27T08:12:46.395Z",
+        "title": "Publisher : QAR",
+        "url": "/alessandria/publisher/4/"
+    }
+},
+{
+    "model": "alessandria.usernavigationhistory",
+    "pk": 6,
+    "fields": {
+        "accessed_by": 1,
+        "accessed_on": "2016-03-27T08:21:27.596Z",
+        "title": "Exemplaire d'un livre : L'italien pour les nuls (1)",
+        "url": "/alessandria/bookcopy/2/"
+    }
+},
+{
+    "model": "alessandria.usernavigationhistory",
+    "pk": 7,
+    "fields": {
+        "accessed_by": 1,
+        "accessed_on": "2016-03-27T08:22:01.124Z",
+        "title": "Auteur : Francesca Romana ONOFRI",
+        "url": "/alessandria/author/4/"
+    }
+},
+{
+    "model": "alessandria.usernavigationhistory",
+    "pk": 8,
+    "fields": {
+        "accessed_by": 1,
+        "accessed_on": "2016-03-27T08:22:07.469Z",
+        "title": "Auteur : Marie De PALET",
+        "url": "/alessandria/author/2/"
+    }
+},
+{
+    "model": "alessandria.usernavigationhistory",
+    "pk": 9,
+    "fields": {
+        "accessed_by": 1,
+        "accessed_on": "2016-03-27T08:22:13.960Z",
+        "title": "Auteur : Jana RICHTER",
+        "url": "/alessandria/author/1/"
+    }
+},
+{
+    "model": "alessandria.usernavigationhistory",
+    "pk": 10,
+    "fields": {
+        "accessed_by": 1,
+        "accessed_on": "2016-03-27T08:22:20.818Z",
+        "title": "Auteur : Danielle STEEL",
+        "url": "/alessandria/author/3/"
+    }
+},
+{
+    "model": "alessandria.usernavigationhistory",
+    "pk": 11,
+    "fields": {
+        "accessed_by": 1,
+        "accessed_on": "2016-03-27T08:22:35.600Z",
+        "title": "Publisher : EDDDD",
+        "url": "/alessandria/publisher/2/"
+    }
+},
+{
+    "model": "alessandria.usernavigationhistory",
+    "pk": 12,
+    "fields": {
+        "accessed_by": 1,
+        "accessed_on": "2016-03-27T08:22:41.144Z",
+        "title": "Publisher : HELLO",
+        "url": "/alessandria/publisher/3/"
+    }
+}
+]
