@@ -36,7 +36,7 @@ Si vous ne souhaitez pas utiliser un projet Django existant, il faut en créer u
     url(r'^alessandria/ajax_lookups/', include(ajax_select_urls)),
 )</pre>
 * Initialiser la base de données:<pre>./manage.py migrate
-./manage.py loaddata --app alessandria ref_data</pre>
+./manage.py loaddata --app alessandria ref_data_fr</pre>
 
 ### Premier lancement
 
