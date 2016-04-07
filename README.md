@@ -49,7 +49,7 @@ Si vous ne souhaitez pas utiliser un projet Django existant, il faut en créer u
 
 *****
 
-Alessandria: software to manage a book library.
+# Alessandria: software to manage a book library.
 
 ## Installation 
 
