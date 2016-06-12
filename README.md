@@ -12,6 +12,9 @@
 cd alessandria
 python setup.py install</pre>
 
+* Remarque: si vous avez des erreurs concernant l'installation du module *pillow*, c'est probablement parcequ'il vous manque des bibliothèques système. Pour Debian Jessie, il faut exécuter:
+<pre>apt-get install libjpeg-dev libghc-zlib-dev</pre>
+
 ### Création d'un projet Django
 Si vous ne souhaitez pas utiliser un projet Django existant, il faut en créer un:
 <pre>django-admin startproject nom_du_projet</pre>
@@ -62,6 +65,9 @@ Si vous ne souhaitez pas utiliser un projet Django existant, il faut en créer u
 <pre>git clone https://gitlab.com/openlabmatera/alessandria.git
 cd alessandria
 python setup.py install</pre>
+
+* Note: if you get errors while the *pillow* module is being installed, it's probably because some libraries are missing on your system. On Debian Jessie, execute:
+<pre>apt-get install libjpeg-dev libghc-zlib-dev</pre>
 
 ### Setting up a Django project
 If you don't want to use an existing django project, create one:
