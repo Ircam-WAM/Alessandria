@@ -112,7 +112,7 @@ class EntityListView(ProtectedView, ListView):
         if order_field != None:
             # Sorting request
             if request.session.get('order_field') != None: # A previous sorting request was done on this page
-                # Check if the sorting field changed in relation to the last sorting request
+                # Check if the sorting field changed according to the last sorting request
                 stored_field = request.session.get('order_field')[1:] if request.session.get('order_field').startswith('-') else request.session.get('order_field')
                 if order_field == stored_field:
                     # Invert sort order
