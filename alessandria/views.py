@@ -90,28 +90,28 @@ class EntityListView(ProtectedView, ListView):
         # Call the base implementation first to get a context
         # The method of the super class will put 'object_list' and a 'paginator' and 'page_obj' objects in the context of the template
         context = super(EntityListView, self).get_context_data(**kwargs)
-        if self.form_class != None:
+        if self.form_class is not None:
             context['search_form'] = self.form_class()
         return context
 
     def get(self, request, **kwargs):
         order_field = request.GET.get('order_field')
-        if request.GET.get('page') != None or order_field != None:
-            if request.session.get('search_fields') != None:
+        if request.GET.get('page') is not None or order_field is not None:
+            if request.session.get('search_fields') is not None:
                 # Rebuild the query upon the search terms entered by the user
                 self._build_query(request.session.get('search_fields'))
             else:
-                if self.object_list == None: # Make sure the subclass didn't already create self.object_list
+                if self.object_list is None: # Make sure the subclass didn't already create self.object_list
                     self.object_list = self.model.objects.all()
         else:
             # First time we arrive on a list page
-            if self.object_list == None: # Make sure the subclass didn't already create self.object_list
+            if self.object_list is None: # Make sure the subclass didn't already create self.object_list
                 self.object_list = self.model.objects.all()
             request.session['order_field'] = None
             request.session['search_fields'] = None
-        if order_field != None:
+        if order_field is not None:
             # Sorting request
-            if request.session.get('order_field') != None: # A previous sorting request was done on this page
+            if request.session.get('order_field') is not None: # A previous sorting request was done on this page
                 # Check if the sorting field changed according to the last sorting request
                 stored_field = request.session.get('order_field')[1:] if request.session.get('order_field').startswith('-') else request.session.get('order_field')
                 if order_field == stored_field:
@@ -126,7 +126,7 @@ class EntityListView(ProtectedView, ListView):
             else:
                 # First time sorting request for this page
                 request.session['order_field'] = order_field
-        if request.session.get('order_field') != None:
+        if request.session.get('order_field') is not None:
             self.object_list = self.object_list.order_by(request.session.get('order_field'))
 
         context = self.get_context_data()
@@ -379,8 +379,8 @@ class BookListView(EntityListView):
             isbn_nb=search_fields['isbn_nb'], title=search_fields['title'], category=search_fields['category'],
             sub_category=search_fields['sub_category'], author_name=search_fields['author_name']
         )
-        self.object_list = self.object_list.filter(bookcopy__isnull=(search_fields.get('has_copy') == None))
-        self.object_list = self.object_list.filter(bookcopy__disabled_on__isnull=(search_fields.get('took_away') == None))
+        self.object_list = self.object_list.filter(bookcopy__isnull=(search_fields.get('has_copy') is None))
+        self.object_list = self.object_list.filter(bookcopy__disabled_on__isnull=(search_fields.get('took_away') is None))
 
 
 class BookIsbnImportView(ProtectedView, TemplateView):
@@ -623,4 +623,4 @@ class ReaderListView(EntityListView):
 
     def _build_query(self, search_fields):
         self.object_list = self.model.objects.search(last_name=search_fields['last_name'])
-        self.object_list = self.object_list.filter(disabled_on__isnull=(search_fields.get('reader_enabled') != None))
+        self.object_list = self.object_list.filter(disabled_on__isnull=(search_fields.get('reader_enabled') is not None))
