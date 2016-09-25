@@ -8,7 +8,9 @@ from django.db.utils import OperationalError
 from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 from django_countries import countries
 
-from alessandria.models import *
+from alessandria.models import (
+    GeneralConfiguration, ReaderBorrow, Reader, Author, Publisher, Book, BookAudience, BookCopy
+)
 
 max_borrow_days = 0
 default_country = None
