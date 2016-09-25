@@ -266,7 +266,7 @@ class Reader(ModelEntity):
 
 class AuthorManager(models.Manager):
     def get_by_first_and_last_name(self, first_name, last_name):
-        return self.filter(
+        return self.filter(  # iexact ne fonctionne pas avec les accents en majuscule
             first_name=first_name.title(),
             last_name=last_name.upper(),
         ).first()
