@@ -1,25 +1,16 @@
 # -*- coding: utf-8 -*-
+import logging
 
-from datetime import datetime as stddatetime
-
-from django.core.urlresolvers import reverse, reverse_lazy
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, render_to_response
-from django.views.generic.base import TemplateView, View
+from django.shortcuts import render, redirect
+from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils.translation import ugettext as _
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
-import isbnlib, logging
-
-# Import necessary load this module and the associated variables
-# like context_processors that supply variables to templates
-from alessandria import local_settings
 
 from alessandria.models import *
 from alessandria.forms import *
