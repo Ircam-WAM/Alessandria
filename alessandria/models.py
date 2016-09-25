@@ -12,10 +12,9 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.utils.translation import pgettext_lazy as pgettext_lazy
 from django_countries.fields import CountryField
 
-from alessandria.utils import MyString, IsbnUtils
+from alessandria.utils import IsbnUtils
 
 
 class GeneralConfiguration(models.Model):
