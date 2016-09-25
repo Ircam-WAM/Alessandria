@@ -1,7 +1,8 @@
-# -*- coding: utf-8 -*-
-
 from django.contrib import admin
-from alessandria.models import *
+from alessandria.models import (
+    GeneralConfiguration, Language, Profession, BookCondition, BookCategory, BookSubCategory, BookAudience, BookTag,
+    BookCopyOrigin, AppliNews
+)
 
 
 class LanguageAdmin(admin.ModelAdmin):
