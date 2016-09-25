@@ -1,5 +1,3 @@
-#-*- encoding:utf-8 *-*
-
 import datetime
 
 from django import forms
@@ -11,6 +9,7 @@ from django_countries import countries
 from alessandria.models import (
     GeneralConfiguration, ReaderBorrow, Reader, Author, Publisher, Book, BookAudience, BookCopy
 )
+
 
 max_borrow_days = 0
 default_country = None
@@ -27,7 +26,7 @@ _css_class_required_field = 'required'
 
 
 class CommonForm(forms.ModelForm):
-    required_css_class = 'required' # Used in the template
+    required_css_class = 'required'  # Used in the template
 
 
 class ReaderBorrowForm(CommonForm):
@@ -36,22 +35,22 @@ class ReaderBorrowForm(CommonForm):
         exclude = _l_default_exclude_fields
     borrowed_date = forms.DateField(
         label=Meta.model._meta.get_field('borrowed_date').verbose_name,
-        initial= datetime.date.today()
+        initial=datetime.date.today()
     )
     borrow_due_date = forms.DateField(
         label=Meta.model._meta.get_field('borrow_due_date').verbose_name,
-        initial= datetime.date.today() + datetime.timedelta(
-            days=max_borrow_days
-        )
+        initial=datetime.date.today() + datetime.timedelta(days=max_borrow_days)
     )
 
     # 'bookcopy_list' and 'reader_list' are registered lookups.py
-    bookcopy  = AutoCompleteSelectField('bookcopy_list', label=Meta.model._meta.get_field('bookcopy').verbose_name,
-                                        required=True, help_text=None,
-                                        plugin_options = {'autoFocus': True, 'minLength': 3})
-    reader  = AutoCompleteSelectField('reader_list', label=Meta.model._meta.get_field('reader').verbose_name,
-                                      required=True, help_text=None,
-                                      plugin_options = {'autoFocus': True, 'minLength': 3})
+    bookcopy = AutoCompleteSelectField(
+        'bookcopy_list', label=Meta.model._meta.get_field('bookcopy').verbose_name,
+        required=True, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
+    )
+    reader = AutoCompleteSelectField(
+        'reader_list', label=Meta.model._meta.get_field('reader').verbose_name,
+        required=True, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
+    )
 
 
 class ReaderForm(CommonForm):
@@ -65,11 +64,14 @@ class ReaderForm(CommonForm):
         initial=default_country
     )
 
+
 class ReaderSearchForm(forms.ModelForm):
     reader_enabled = forms.BooleanField(label=_("Readers enabled"), initial=True)
+
     class Meta:
         model = Reader
         fields = ('last_name',)
+
 
 class ReaderDisableForm(CommonForm):
     class Meta:
@@ -88,6 +90,7 @@ class AuthorForm(CommonForm):
         initial=default_country
     )
 
+
 class AuthorSearchForm(forms.ModelForm):
     class Meta:
         model = Author
@@ -104,6 +107,7 @@ class PublisherForm(CommonForm):
         choices=_l_countries,
         initial=default_country
     )
+
 
 class PublisherSearchForm(forms.ModelForm):
     class Meta:
@@ -125,26 +129,25 @@ class BookForm(CommonForm):
     )
 
     # 'author_list' and 'publisher_list' are registered lookups.py
-    authors  = AutoCompleteSelectMultipleField(
-                    'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
-                    required=True, help_text=None,
-                    plugin_options = {'autoFocus': True, 'minLength': 3}
+    authors = AutoCompleteSelectMultipleField(
+        'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
+        required=True, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
     )
-    publishers  = AutoCompleteSelectMultipleField(
-                    'publisher_list', label=Meta.model._meta.get_field('publishers').verbose_name,
-                    required=True, help_text=None,
-                    plugin_options = {'autoFocus': True, 'minLength': 3}
+    publishers = AutoCompleteSelectMultipleField(
+        'publisher_list', label=Meta.model._meta.get_field('publishers').verbose_name,
+        required=True, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
     )
     audiences = forms.ModelMultipleChoiceField(
-                    widget=forms.CheckboxSelectMultiple(),
-                    label=Meta.model._meta.get_field('audiences').verbose_name,
-                    queryset=BookAudience.objects.all()
+        widget=forms.CheckboxSelectMultiple(), label=Meta.model._meta.get_field('audiences').verbose_name,
+        queryset=BookAudience.objects.all()
     )
+
 
 class BookSearchForm(forms.ModelForm):
     author_name = forms.CharField(label=_('Author'))
     has_copy = forms.BooleanField(label=_('Has copy'), initial=True)
     took_away = forms.BooleanField(label=_('Took away'), initial=False)
+
     class Meta:
         model = Book
         fields = ('isbn_nb', 'title', 'category', 'sub_category',)
@@ -153,11 +156,12 @@ class BookSearchForm(forms.ModelForm):
 class BookCopyForm(CommonForm):
     class Meta:
         model = BookCopy
-        exclude =  _l_default_exclude_fields + ['number', 'book', 'disabled_on']
+        exclude = _l_default_exclude_fields + ['number', 'book', 'disabled_on']
 
     registered_on = forms.DateField(
         label=Meta.model._meta.get_field('registered_on').verbose_name, initial=datetime.date.today
     )
+
 
 class BookCopyDisableForm(CommonForm):
     class Meta:
