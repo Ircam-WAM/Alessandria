@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
+import isbnlib
+import datetime
 
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView
@@ -12,9 +14,15 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from alessandria.models import *
-from alessandria.forms import *
+from .models import (
+    UserNavigationHistory, Book, BookCopy, AppliNews, Reader, ReaderBorrow, Author, Publisher, Language
+)
+from .forms import (
+    AuthorForm, AuthorSearchForm, PublisherForm, PublisherSearchForm, BookForm, BookSearchForm,
+    BookCopyForm, BookCopyDisableForm, ReaderForm, ReaderBorrowForm, ReaderDisableForm, ReaderSearchForm
+)
 from alessandria.utils import IsbnUtils
+
 
 logger = logging.getLogger(__name__)
 PAGINATION_SIZE = 15
@@ -600,7 +608,7 @@ class ReaderDisableView(EntityUpdateView):
     form_class = ReaderDisableForm
 
     def form_valid(self, form):
-        self.object.disabled_on = stddatetime.now()
+        self.object.disabled_on = datetime.datetime.now()
         return super(ReaderDisableView, self).form_valid(form, _("Reader successfully disabled."))
 
     def get_success_url(self):
