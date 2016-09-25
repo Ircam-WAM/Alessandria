@@ -150,8 +150,8 @@ class ModelEntity(models.Model):
     modified_by = models.ForeignKey(DjangoUser, related_name="%(app_label)s_%(class)s_update", null=True, blank=True)
     modified_on = models.DateTimeField(verbose_name=u"Modifié le", auto_now=True, null=True, blank=True)
 
-    def clean(self, *args, **kwargs):
-        super(ModelEntity, self).clean(*args, **kwargs)
+    def clean(self):
+        super(ModelEntity, self).clean()
 
     def save(self, *args, **kwargs):
         super(ModelEntity, self).save(*args, **kwargs)
@@ -225,12 +225,12 @@ class Reader(ModelEntity):
             self.number = Reader.objects.count() + 1
         super(Reader, self).save(*args, **kwargs)
 
-    def clean(self, *args, **kwargs):
+    def clean(self):
         self.last_name = self.last_name.strip().upper()
         self.first_name = self.first_name.strip().title()
         if not self.email:  # Force empty string to be 'None'
             self.email = None
-        super(Reader, self).clean(*args, **kwargs)
+        super(Reader, self).clean()
 
     def is_disabled(self):
         return self.disabled_on is not None
@@ -290,7 +290,7 @@ class Author(ModelEntity):
 
     objects = AuthorQuerySet.as_manager()
 
-    def clean(self, *args, **kwargs):
+    def clean(self):
         homonyms = Author.objects.filter(
             first_name__iexact=self.first_name
         ).filter(
@@ -306,7 +306,7 @@ class Author(ModelEntity):
         self.first_name = self.first_name.strip().title()
         if self.alias:
             self.alias = self.alias.strip().title()
-        super(Author, self).clean(*args, **kwargs)
+        super(Author, self).clean()
 
     def get_full_name(self):
         if not self.first_name:
@@ -366,9 +366,9 @@ class Publisher(ModelEntity):
 
     objects = PublisherQuerySet.as_manager()
 
-    def clean(self, *args, **kwargs):
+    def clean(self):
         self.name = self.name.strip().upper()
-        super(Publisher, self).clean(*args, **kwargs)
+        super(Publisher, self).clean()
 
     @staticmethod
     def init_from_isbn(isbn_meta):
@@ -434,7 +434,7 @@ class Book(ModelEntity):
 
     objects = BookQuerySet.as_manager()
 
-    def clean(self, *args, **kwargs):
+    def clean(self):
         if not self.isbn_nb:  # Force empty string to be 'None'
             self.isbn_nb = None
         else:
@@ -442,7 +442,7 @@ class Book(ModelEntity):
             if not self.isbn_nb:
                 raise ValidationError({'isbn_nb': ugettext("Invalid ISBN number.")})
         self.title = self.title.strip().capitalize()
-        super(Book, self).clean(*args, **kwargs)
+        super(Book, self).clean()
 
     def save(self, *args, **kwargs):
         self.full_clean()
