@@ -27,12 +27,14 @@ from alessandria.utils import IsbnUtils
 logger = logging.getLogger(__name__)
 PAGINATION_SIZE = 15
 
+
 def load_user_nav_history(request, user):
     lst = UserNavigationHistory.objects.get_list(user)
     user_nav_list = []
     for user_nav in lst:
         user_nav_list.append((user_nav.url, user_nav.title))
     request.session['user_nav_list'] = user_nav_list
+
 
 def clear_user_nav_history(request):
     request.session['user_nav_list'] = None
@@ -58,6 +60,7 @@ class EntityCreateView(ProtectedView, CreateView):
         form.instance.created_by = self.request.user
         messages.success(self.request, success_msg)
         return super(EntityCreateView, self).form_valid(form)
+
 
 class EntityUpdateView(ProtectedView, UpdateView):
     def get(self, request, **kwargs):
@@ -87,7 +90,8 @@ class EntityListView(ProtectedView, ListView):
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        # The method of the super class will put 'object_list' and a 'paginator' and 'page_obj' objects in the context of the template
+        # The method of the super class will put 'object_list' and a 'paginator' and 'page_obj' objects in the context
+        # of the template
         context = super(EntityListView, self).get_context_data(**kwargs)
         if self.form_class is not None:
             context['search_form'] = self.form_class()
@@ -100,11 +104,11 @@ class EntityListView(ProtectedView, ListView):
                 # Rebuild the query upon the search terms entered by the user
                 self._build_query(request.session.get('search_fields'))
             else:
-                if self.object_list is None: # Make sure the subclass didn't already create self.object_list
+                if self.object_list is None:  # Make sure the subclass didn't already create self.object_list
                     self.object_list = self.model.objects.all()
         else:
             # First time we arrive on a list page
-            if self.object_list is None: # Make sure the subclass didn't already create self.object_list
+            if self.object_list is None:  # Make sure the subclass didn't already create self.object_list
                 self.object_list = self.model.objects.all()
             request.session['order_field'] = None
             request.session['search_fields'] = None
@@ -140,6 +144,7 @@ class EntityListView(ProtectedView, ListView):
             context['search_form'] = self.form_class(request.POST)
         return self.render_to_response(context)
 
+
 class EntityDeleteView(ProtectedView, DeleteView):
     pass
 
@@ -153,6 +158,7 @@ class HomeView(ProtectedView, TemplateView):
         context['last_books_list'] = Book.objects.all()[:10]
         context['last_appli_news_list'] = AppliNews.objects.list()[:3]
         return context
+
 
 class LogoutView(TemplateView):
     def get(self, request, **kwargs):
@@ -206,6 +212,7 @@ class ReaderBorrowCreateView(EntityCreateView):
     def form_valid(self, form):
         return super(ReaderBorrowCreateView, self).form_valid(form)
 
+
 class ReaderBorrowUpdateView(EntityUpdateView):
     template_name = 'alessandria/reader_borrow_detail.html'
     model = ReaderBorrow
@@ -214,10 +221,12 @@ class ReaderBorrowUpdateView(EntityUpdateView):
     def form_valid(self, form):
         return super(ReaderBorrowUpdateView, self).form_valid(form)
 
+
 class ReaderBorrowDeleteView(EntityDeleteView):
     template_name = 'alessandria/confirm_delete.html'
     model = ReaderBorrow
     success_url = reverse_lazy('alessandria:reader_borrow_list')
+
 
 class ReaderBorrowListView(EntityListView):
     template_name = 'alessandria/reader_borrow_list.html'
@@ -251,6 +260,7 @@ class AuthorCreateView(EntityCreateView):
     model = Author
     form_class = AuthorForm
 
+
 class AuthorUpdateView(EntityUpdateView):
     template_name = 'alessandria/author_detail.html'
     model = Author
@@ -258,6 +268,7 @@ class AuthorUpdateView(EntityUpdateView):
 
     def form_valid(self, form):
         return super(AuthorUpdateView, self).form_valid(form)
+
 
 class AuthorDeleteView(EntityDeleteView):
     template_name = 'alessandria/confirm_delete.html'
@@ -272,6 +283,7 @@ class AuthorDeleteView(EntityDeleteView):
             return redirect('alessandria:author_update', pk=author.id)
             #return redirect(author) # Call to get_absolute_url of Author model
         return super(AuthorDeleteView, self).get(request, kwargs)
+
 
 class AuthorListView(EntityListView):
     template_name = 'alessandria/author_list.html'
@@ -288,6 +300,7 @@ class PublisherCreateView(EntityCreateView):
     model = Publisher
     form_class = PublisherForm
 
+
 class PublisherUpdateView(EntityUpdateView):
     template_name = 'alessandria/publisher_detail.html'
     model = Publisher
@@ -295,6 +308,7 @@ class PublisherUpdateView(EntityUpdateView):
 
     def form_valid(self, form):
         return super(PublisherUpdateView, self).form_valid(form)
+
 
 class PublisherDeleteView(EntityDeleteView):
     template_name = 'alessandria/confirm_delete.html'
@@ -309,6 +323,7 @@ class PublisherDeleteView(EntityDeleteView):
             return redirect('alessandria:publisher_update', pk=publisher.id)
         return super(PublisherDeleteView, self).get(request, kwargs)
 
+
 class PublisherListView(EntityListView):
     template_name = 'alessandria/publisher_list.html'
     model = Publisher
@@ -317,6 +332,7 @@ class PublisherListView(EntityListView):
 
     def _build_query(self, search_fields):
         self.object_list = self.model.objects.search(name=search_fields['name'])
+
 
 def book_list_by_publisher(request, publisher_id):
     publisher = Publisher.objects.get(pk=publisher_id)
@@ -350,6 +366,7 @@ class BookCreateView(EntityCreateView):
         # Automatically propose to create the first copy of the book
         return HttpResponseRedirect(reverse('alessandria:bookcopy_add', args=[book_id]))
 
+
 class BookUpdateView(EntityUpdateView):
     template_name = 'alessandria/book_detail.html'
     model = Book
@@ -362,10 +379,12 @@ class BookUpdateView(EntityUpdateView):
         context['borrow_list'] = ReaderBorrow.objects.list_all_by_book(self.object.id)
         return context
 
+
 class BookDeleteView(EntityDeleteView):
     template_name = 'alessandria/confirm_delete.html'
     model = Book
     success_url = reverse_lazy('alessandria:book_list')
+
 
 class BookListView(EntityListView):
     template_name = 'alessandria/book_list.html'
@@ -400,7 +419,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                 isbn_meta = isbnlib.meta(isbn_nb)
             if isbn_meta:
                 return self._init_isbn_import(isbn_meta, request)
-            else: # ISBN not found
+            else:  # ISBN not found
                 return render(
                     request,
                     self.template_name,
@@ -427,17 +446,17 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                             if is_error_in_form:
                                 messages.error(self.request, _("Invalid author nb %s." % (i+1)))
                         authors_form.append(author_form)
-                else: # The author already exists in the DB
+                else:  # The author already exists in the DB
                     authors_ids.append(Author.objects.get(id=request.POST[author_id_fieldname]).id)
 
-            if not request.POST.get('publisher_id'): # The publisher doesn't exist in the db
-                if request.POST.get('publisher_to_create'): # The publisher was checked to be created
+            if not request.POST.get('publisher_id'):  # The publisher doesn't exist in the db
+                if request.POST.get('publisher_to_create'):  # The publisher was checked to be created
                     publisher_form = self._create_publisher_form(form_post=request.POST)
                     if not is_error_in_form:
                         is_error_in_form = not publisher_form.is_valid()
                         if is_error_in_form:
                             messages.error(self.request, _("Invalid publisher."))
-            else: # The publisher already exists in the DB
+            else:  # The publisher already exists in the DB
                 publisher_id = Publisher.objects.get(id=request.POST['publisher_id']).id
 
             if not is_error_in_form:
@@ -474,7 +493,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                         'form': book_form,
                     },
                 )
-            else: # Error in one of the forms => display the import page again
+            else:  # Error in one of the forms => display the import page again
                 isbn_nb = isbnlib.get_canonical_isbn(request.POST.get('isbn_nb'))
                 isbn_meta = isbnlib.meta(isbn_nb)
                 return self._init_isbn_import(isbn_meta, request)
@@ -555,6 +574,7 @@ class BookCopyCreateView(EntityCreateView):
     def form_valid(self, form):
         return super(BookCopyCreateView, self).form_valid(form)
 
+
 class BookCopyUpdateView(EntityUpdateView):
     template_name = 'alessandria/bookcopy_detail.html'
     model = BookCopy
@@ -566,6 +586,7 @@ class BookCopyUpdateView(EntityUpdateView):
 
     def form_valid(self, form):
         return super(BookCopyUpdateView, self).form_valid(form)
+
 
 class BookCopyDisableView(EntityUpdateView):
     template_name = 'alessandria/bookcopy_disable.html'
@@ -581,6 +602,7 @@ class BookCopyDisableView(EntityUpdateView):
     def get_success_url(self):
         return self.object.book.get_absolute_url()
 
+
 class BookCopyDeleteView(EntityDeleteView):
     template_name = 'alessandria/confirm_delete.html'
     model = BookCopy
@@ -594,6 +616,7 @@ class ReaderCreateView(EntityCreateView):
     model = Reader
     form_class = ReaderForm
 
+
 class ReaderUpdateView(EntityUpdateView):
     template_name = 'alessandria/reader_detail.html'
     model = Reader
@@ -601,6 +624,7 @@ class ReaderUpdateView(EntityUpdateView):
 
     def form_valid(self, form):
         return super(ReaderUpdateView, self).form_valid(form)
+
 
 class ReaderDisableView(EntityUpdateView):
     template_name = 'alessandria/reader_disable.html'
@@ -613,6 +637,7 @@ class ReaderDisableView(EntityUpdateView):
 
     def get_success_url(self):
         return self.object.get_absolute_url()
+
 
 class ReaderListView(EntityListView):
     template_name = 'alessandria/reader_list.html'
