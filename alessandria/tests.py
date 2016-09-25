@@ -3,6 +3,7 @@
 """
 Tests of the software
 """
+import isbnlib
 
 from datetime import date, datetime, timedelta
 
@@ -10,9 +11,9 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-import isbnlib
-
-from alessandria.models import *
+from alessandria.models import (
+    Language, BookCategory, BookSubCategory, BookAudience, Book, Reader, Profession, Author, Publisher, AppliNews
+)
 from alessandria.utils import IsbnUtils, MyString
 
 
