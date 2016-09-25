@@ -1,10 +1,5 @@
-#-*- encoding:utf-8 *-*
-
 import isbnlib
 import datetime
-#from datetime import datetime as stddatetime
-#from datetime import datetime as stddate
-#from datetime import date as stddate
 
 from django.db import models
 from django.db.models import Q
@@ -389,9 +384,6 @@ class Publisher(ModelEntity):
 
 
 class BookQuerySet(models.QuerySet):
-    def get_by_title(self, title):
-        return self.filter(name=name.capitalize()).first()
-
     def search(self, isbn_nb='', title='', category='', sub_category='', author_name=''):
         r_list = self.all()
         if (isbn_nb != ''):
