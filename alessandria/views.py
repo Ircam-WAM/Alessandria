@@ -396,7 +396,9 @@ class BookListView(EntityListView):
             sub_category=search_fields['sub_category'], author_name=search_fields['author_name']
         )
         self.object_list = self.object_list.filter(bookcopy__isnull=(search_fields.get('has_copy') is None))
-        self.object_list = self.object_list.filter(bookcopy__disabled_on__isnull=(search_fields.get('took_away') is None))
+        self.object_list = self.object_list.filter(
+            bookcopy__disabled_on__isnull=(search_fields.get('took_away') is None)
+        )
 
 
 class BookIsbnImportView(ProtectedView, TemplateView):
@@ -429,11 +431,11 @@ class BookIsbnImportView(ProtectedView, TemplateView):
             publisher_id = None
             publisher_form = None
             is_error_in_form = False
-            for s_i in lst_authors_nb: # Loop over all the authors of the book
+            for s_i in lst_authors_nb:  # Loop over all the authors of the book
                 i = int(s_i)
                 author_id_fieldname = 'author_id_%s' % i
-                if not request.POST.get(author_id_fieldname): # The author doesn't exist in the DB
-                    if request.POST.get('author_to_create_%s' % i): # It is checked to be created
+                if not request.POST.get(author_id_fieldname):  # The author doesn't exist in the DB
+                    if request.POST.get('author_to_create_%s' % i):  # It is checked to be created
                         author_form = self._create_author_form(form_post=request.POST, prefix='author_create_%s' %i)
                         if not is_error_in_form:
                             is_error_in_form = not author_form.is_valid()
@@ -475,7 +477,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
                         'publish_date': request.POST.get('publish_date'),
                         'authors': authors_ids,
                         'publishers': publisher_ids,
-                        'language': Language.get_default_language(), # TODO: Change me, use isbn_meta['Language']
+                        'language': Language.get_default_language(),  # TODO: Change me, use isbn_meta['Language']
                         'is_isbn_import': True
                     }
                 )
@@ -528,12 +530,12 @@ class BookIsbnImportView(ProtectedView, TemplateView):
             )
         # Initialize authors forms from isbn meta data
         authors_form = []
-        i=0
+        i = 0
         authors = Author.init_from_isbn(isbn_meta)
         for author in authors:
-            author_form = self._create_author_form(prefix='author_create_%s' %i, instance=author)
+            author_form = self._create_author_form(prefix='author_create_%s' % i, instance=author)
             authors_form.append(author_form)
-            i+=1
+            i += 1
 
         # Initialize publisher form from isbn meta data
         publisher = Publisher.init_from_isbn(isbn_meta)
