@@ -29,7 +29,7 @@ class GeneralConfiguration(models.Model):
     library_website = models.URLField(verbose_name=_("Library website"), null=True, blank=True)
 
     def __str__(self):
-        return ugettext("Configuration") # TODO: check if it could be lazy
+        return ugettext("Configuration")  # TODO: check if it could be lazy
 
     class Meta:
         verbose_name = _("Global settings of the software")
@@ -39,6 +39,7 @@ class GeneralConfiguration(models.Model):
 class UserNavigationHistoryQuerySet(models.QuerySet):
     def get_list(self, user):
         return self.filter(accessed_by=user).order_by('accessed_by')
+
 
 class UserNavigationHistory(models.Model):
     NAV_HISTORY = 10
@@ -66,6 +67,7 @@ class UserNavigationHistory(models.Model):
 # Reference #
 #############
 
+
 class ReferenceEntity(models.Model):
     label = models.CharField(u"Description", max_length=30)
     
@@ -77,7 +79,7 @@ class ReferenceEntity(models.Model):
 
 
 class Language(ReferenceEntity):
-    #code = models.CharField(u"Code", max_length=5) # Internationalization https://docs.djangoproject.com/en/1.7/topics/i18n/
+    # code = models.CharField(u"Code", max_length=5) # Internationalization https://docs.djangoproject.com/en/1.7/topics/i18n/
     is_default = models.BooleanField(_("Default language"), default=False)
 
     class Meta:
@@ -96,6 +98,7 @@ class Profession(ReferenceEntity):
     class Meta:
         verbose_name = _("Job")
         verbose_name_plural = _("Jobs")
+
 
 class BookAudience(ReferenceEntity):
     class Meta:
@@ -119,6 +122,7 @@ class BookCategory(ReferenceEntity):
 class BookSubCategory(ReferenceEntity):
     # For example : history / geography (=> sub-category of documentary, magazine), detective / adventure (=> novel)
     parent_category = models.ForeignKey(BookCategory)
+
     class Meta:
         verbose_name = _("Book sub-category")
         verbose_name_plural = _("Book sub-categories")
@@ -138,6 +142,7 @@ class BookCopyOrigin(ReferenceEntity):
 #########
 # Model #
 #########
+
 
 class ModelEntity(models.Model):
     created_by = models.ForeignKey(DjangoUser, related_name="%(app_label)s_%(class)s_add")
@@ -162,6 +167,7 @@ class AppliNewsQuerySet(models.QuerySet):
     def get_last(self):
         # We use first, because of the default ordering
         return self.filter(publish_date__lte=datetime.date.today()).first()
+
 
 class AppliNews(models.Model):
     publish_date = models.DateField(verbose_name=u"Date de publication")
@@ -188,19 +194,16 @@ class ReaderQuerySet(models.QuerySet):
     def search(self, last_name=''):
         r_list = self.all()
         if last_name != '':
-            r_list = r_list.filter(last_name__istartswith = last_name.upper())
+            r_list = r_list.filter(last_name__istartswith=last_name.upper())
         return r_list
+
 
 class Reader(ModelEntity):
     number = models.PositiveIntegerField(_("Number"), unique=True)
     inscription_date = models.DateField(_("Registration date"))
     first_name = models.CharField(_("First name"), max_length=20)
     last_name = models.CharField(_("Last name"), max_length=30)
-    sex = models.CharField(_("Gender"), max_length=3, choices = (
-                                                    ('f', _("Female")), 
-                                                    ('m', _("Male")), 
-                                                  )
-    )
+    sex = models.CharField(_("Gender"), max_length=3, choices=(('f', _("Female")), ('m', _("Male"))))
     birthday = models.DateField(_("Birthdate"))
     addr1 = models.CharField(_("Address 1"), max_length=30)
     addr2 = models.CharField(_("Address 2"), null=True, max_length=30, blank=True)
@@ -215,7 +218,7 @@ class Reader(ModelEntity):
 
     objects = ReaderQuerySet.as_manager()
 
-    #Overriding
+    # Overriding
     def save(self, *args, **kwargs):
         if not self.pk:
             # Create mode => automatically generate a reader number
@@ -225,7 +228,7 @@ class Reader(ModelEntity):
     def clean(self, *args, **kwargs):
         self.last_name = self.last_name.strip().upper()
         self.first_name = self.first_name.strip().title()
-        if not self.email: # Force empty string to be 'None'
+        if not self.email:  # Force empty string to be 'None'
             self.email = None
         super(Reader, self).clean(*args, **kwargs)
 
@@ -260,6 +263,7 @@ class Reader(ModelEntity):
         verbose_name = _("Reader")
         verbose_name_plural = _("Readers")
 
+
 class AuthorQuerySet(models.QuerySet):
     def get_by_first_and_last_name(self, first_name, last_name):
         return self.filter(
@@ -270,8 +274,9 @@ class AuthorQuerySet(models.QuerySet):
     def search(self, name=''):
         r_list = self.all()
         if name != '':
-            r_list = r_list.filter(Q(last_name__istartswith = name) | Q(alias__istartswith = name))
+            r_list = r_list.filter(Q(last_name__istartswith=name) | Q(alias__istartswith=name))
         return r_list
+
 
 class Author(ModelEntity):
     first_name = models.CharField(_("First name"), max_length=20)
@@ -286,10 +291,14 @@ class Author(ModelEntity):
     objects = AuthorQuerySet.as_manager()
 
     def clean(self, *args, **kwargs):
-        homonyms = Author.objects.filter(first_name__iexact=self.first_name
-            ).filter(last_name__iexact=self.last_name
-            ).filter(birthday=self.birthday
-            ).exclude(id=self.id
+        homonyms = Author.objects.filter(
+            first_name__iexact=self.first_name
+        ).filter(
+            last_name__iexact=self.last_name
+        ).filter(
+            birthday=self.birthday
+        ).exclude(
+            id=self.id
         )
         if len(homonyms) > 0:
             raise ValidationError({'last_name': ugettext("This author already exists.")})
@@ -345,8 +354,9 @@ class PublisherQuerySet(models.QuerySet):
     def search(self, name=''):
         r_list = self.all()
         if name != '':
-            r_list = r_list.filter(name__icontains = name.upper())
+            r_list = r_list.filter(name__icontains=name.upper())
         return r_list
+
 
 class Publisher(ModelEntity):
     name = models.CharField(_("Name"), max_length=30, unique=True)
@@ -386,18 +396,21 @@ class Publisher(ModelEntity):
 class BookQuerySet(models.QuerySet):
     def search(self, isbn_nb='', title='', category='', sub_category='', author_name=''):
         r_list = self.all()
-        if (isbn_nb != ''):
+        if isbn_nb != '':
             isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
-            r_list = r_list.filter(isbn_nb = isbn_nb)
-        if (title != ''):
-            r_list = r_list.filter(title__icontains = title)
-        if (category != ''):
-            r_list = r_list.filter(category__id = category)
-        if (sub_category != ''):
-            r_list = r_list.filter(sub_category__id = sub_category)
-        if (author_name != ''):
-            r_list = r_list.filter(Q(authors__last_name__icontains=author_name) | Q(authors__alias__icontains=author_name))
+            r_list = r_list.filter(isbn_nb=isbn_nb)
+        if title != '':
+            r_list = r_list.filter(title__icontains=title)
+        if category != '':
+            r_list = r_list.filter(category__id=category)
+        if sub_category != '':
+            r_list = r_list.filter(sub_category__id=sub_category)
+        if author_name != '':
+            r_list = (
+                r_list.filter(Q(authors__last_name__icontains=author_name) | Q(authors__alias__icontains=author_name))
+            )
         return r_list
+
 
 class Book(ModelEntity):
     title = models.CharField(_("Title"), max_length=50)
@@ -422,7 +435,7 @@ class Book(ModelEntity):
     objects = BookQuerySet.as_manager()
 
     def clean(self, *args, **kwargs):
-        if not self.isbn_nb: # Force empty string to be 'None'
+        if not self.isbn_nb:  # Force empty string to be 'None'
             self.isbn_nb = None
         else:
             self.isbn_nb = isbnlib.get_canonical_isbn(self.isbn_nb)
@@ -442,8 +455,8 @@ class Book(ModelEntity):
             book = Book()
             book.title = isbn_meta['Title'].strip()
             book.isbn_nb = isbn_meta['ISBN-13'] if isbn_meta.get('ISBN-13') else isbn_meta['ISBN-10']
-            #language_code = isbn_meta['Language'][:2].upper()
-            #self.language = isbn_meta['Language'][:2].upper()
+            # language_code = isbn_meta['Language'][:2].upper()
+            # self.language = isbn_meta['Language'][:2].upper()
             if isbn_meta['Year']:
                 book.publish_date = datetime.date(year=int(isbn_meta['Year']), month=1, day=1)
             r_book = Book.objects.filter(isbn_nb=book.isbn_nb).first()
@@ -455,6 +468,7 @@ class Book(ModelEntity):
     def get_nb_copy(self):
         return self.bookcopy_set.count()
     get_nb_copy.short_description = _("Number of samples")
+
     def has_copies(self):
         return self.get_nb_copy() > 0
 
@@ -481,7 +495,7 @@ class BookCopy(ModelEntity):
     disabled_on = models.DateField(_("Took out on"), blank=True, null=True)
     notes = models.TextField(_("Notes"), null=True, blank=True)
 
-    #Overriding
+    # Overriding
     def save(self, *args, **kwargs):
         if not self.pk:
             # Create mode => automatically generate a book copy number
@@ -494,11 +508,11 @@ class BookCopy(ModelEntity):
     def is_disabled(self):
         return self.disabled_on is not None
 
-    def disabled_on_label(self): # Convenient function to be accessed from the template
+    def disabled_on_label(self):  # Convenient function to be accessed from the template
         return self._meta.get_field('disabled_on').verbose_name
 
     def __str__(self):
-        return "%s (%s)" %(str(self.book), self.number)
+        return "%s (%s)" % (str(self.book), self.number)
 
     class Meta:
         ordering = ['number']
@@ -515,6 +529,7 @@ class ReaderBorrowQuerySet(models.QuerySet):
 
     def list_late(self):
         return self.filter(returned_on=None, borrow_due_date__lt=datetime.datetime.now())
+
 
 class ReaderBorrow(ModelEntity):
     reader = models.ForeignKey(Reader, verbose_name=_("Reader"))
@@ -534,10 +549,10 @@ class ReaderBorrow(ModelEntity):
         ).first()
         error = False
         if already_borrowed is not None:
-            if self.id: # Update mode
-                if already_borrowed.id != self.id: # Not updating the current record
+            if self.id:  # Update mode
+                if already_borrowed.id != self.id:  # Not updating the current record
                     error = True
-            else: # Create mode
+            else:  # Create mode
                 error = True
             if error:
                 raise ValidationError(
@@ -560,7 +575,7 @@ class ReaderBorrow(ModelEntity):
         return reverse('alessandria:reader_borrow_update', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return "%s : %s" %(str(self.reader), str(self.bookcopy.book))
+        return "%s : %s" % (str(self.reader), str(self.bookcopy.book))
 
     class Meta:
         ordering = ['borrow_due_date']
