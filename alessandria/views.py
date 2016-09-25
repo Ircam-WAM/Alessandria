@@ -21,7 +21,6 @@ from .forms import (
     AuthorForm, AuthorSearchForm, PublisherForm, PublisherSearchForm, BookForm, BookSearchForm,
     BookCopyForm, BookCopyDisableForm, ReaderForm, ReaderBorrowForm, ReaderDisableForm, ReaderSearchForm
 )
-from alessandria.utils import IsbnUtils
 
 
 logger = logging.getLogger(__name__)
@@ -239,7 +238,6 @@ class ReaderBorrowListView(EntityListView):
         pass
 
     def get(self, request, **kwargs):
-        page_title = ""
         if kwargs.get('display') == 'current':
             page_title = "Emprunts en cours"
             self.object_list = ReaderBorrow.objects.list_current()
@@ -407,10 +405,6 @@ class BookIsbnImportView(ProtectedView, TemplateView):
     def post(self, request):
         cmd = request.POST['cmd']
         if cmd == 'search_isbn':
-            book = None
-            authors_form = None
-            publisher_form = None
-            book_form = None
             # Search ISBN info
             isbn_nb = request.POST['isbn_nb']
             isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
@@ -520,42 +514,40 @@ class BookIsbnImportView(ProtectedView, TemplateView):
         return publisher_form
 
     def _init_isbn_import(self, isbn_meta, request):
-                isbn_meta_nb = IsbnUtils.get_isbn_nb_from_meta(isbn_meta)
-                # Initialize book form from isbn meta data
-                book = Book.init_from_isbn(isbn_meta)
-                book_form = BookForm(instance=book)
-                if book_form.instance.id:
-                    return render(
-                        request,
-                        self.template_name, 
-                        {
-                            'book_form': book_form,
-                            'search': True,
-                        },
-                    )
-                country_code = IsbnUtils.get_country_code(isbn_meta)
-                # Initialize authors forms from isbn meta data
-                authors_form = []
-                i=0
-                authors = Author.init_from_isbn(isbn_meta)
-                for author in authors:
-                    author_form = self._create_author_form(prefix='author_create_%s' %i, instance=author)
-                    authors_form.append(author_form)
-                    i+=1
+        # Initialize book form from isbn meta data
+        book = Book.init_from_isbn(isbn_meta)
+        book_form = BookForm(instance=book)
+        if book_form.instance.id:
+            return render(
+                request,
+                self.template_name,
+                {
+                    'book_form': book_form,
+                    'search': True,
+                },
+            )
+        # Initialize authors forms from isbn meta data
+        authors_form = []
+        i=0
+        authors = Author.init_from_isbn(isbn_meta)
+        for author in authors:
+            author_form = self._create_author_form(prefix='author_create_%s' %i, instance=author)
+            authors_form.append(author_form)
+            i+=1
 
-                # Initialize publisher form from isbn meta data
-                publisher = Publisher.init_from_isbn(isbn_meta)
-                publisher_form = self._create_publisher_form(instance=publisher)
-                return render(
-                    request,
-                    self.template_name, 
-                    {
-                        'book_form': book_form,
-                        'search': True,
-                        'authors_form': authors_form,
-                        'publisher_form': publisher_form,
-                    },
-                )
+        # Initialize publisher form from isbn meta data
+        publisher = Publisher.init_from_isbn(isbn_meta)
+        publisher_form = self._create_publisher_form(instance=publisher)
+        return render(
+            request,
+            self.template_name,
+            {
+                'book_form': book_form,
+                'search': True,
+                'authors_form': authors_form,
+                'publisher_form': publisher_form,
+            },
+        )
 
 
 class BookCopyCreateView(EntityCreateView):
