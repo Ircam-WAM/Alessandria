@@ -194,7 +194,7 @@ class ReaderManager(models.Manager):
     def search(self, last_name=''):
         r_list = self.all()
         if last_name != '':
-            r_list = r_list.filter(last_name__istartswith=last_name.upper())
+            r_list = r_list.filter(last_name__istartswith=last_name)
         return r_list
 
 
@@ -354,7 +354,7 @@ class PublisherManager(models.Manager):
     def search(self, name=''):
         r_list = self.all()
         if name != '':
-            r_list = r_list.filter(name__icontains=name.upper())
+            r_list = r_list.filter(name__icontains=name)
         return r_list
 
 
