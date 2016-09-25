@@ -1,9 +1,10 @@
 #-*- encoding:utf-8 *-*
 
 import isbnlib
-from datetime import datetime as stddatetime
-from datetime import datetime as stddate
-from datetime import date as stddate
+import datetime
+#from datetime import datetime as stddatetime
+#from datetime import datetime as stddate
+#from datetime import date as stddate
 
 from django.db import models
 from django.db.models import Q
@@ -161,11 +162,11 @@ class ModelEntity(models.Model):
 
 class AppliNewsQuerySet(models.QuerySet):
     def list(self):
-        return self.filter(publish_date__lte=stddate.today())
+        return self.filter(publish_date__lte=datetime.date.today())
 
     def get_last(self):
         # We use first, because of the default ordering
-        return self.filter(publish_date__lte=stddate.today()).first()
+        return self.filter(publish_date__lte=datetime.date.today()).first()
 
 class AppliNews(models.Model):
     publish_date = models.DateField(verbose_name=u"Date de publication")
@@ -243,7 +244,7 @@ class Reader(ModelEntity):
         return self.readerborrow_set.filter(returned_on=None)
 
     def list_borrow_late(self):
-        return self.readerborrow_set.filter(returned_on=None, borrow_due_date__lt=stddatetime.now())
+        return self.readerborrow_set.filter(returned_on=None, borrow_due_date__lt=datetime.datetime.now())
     
     def nb_borrow(self):
         return self.readerborrow_set.count()
@@ -452,7 +453,7 @@ class Book(ModelEntity):
             #language_code = isbn_meta['Language'][:2].upper()
             #self.language = isbn_meta['Language'][:2].upper()
             if isbn_meta['Year']:
-                book.publish_date = stddate(year=int(isbn_meta['Year']), month=1, day=1)
+                book.publish_date = datetime.date(year=int(isbn_meta['Year']), month=1, day=1)
             r_book = Book.objects.filter(isbn_nb=book.isbn_nb).first()
             if r_book:
                 # The book already exists in the database
@@ -521,7 +522,7 @@ class ReaderBorrowQuerySet(models.QuerySet):
         return self.filter(returned_on=None)
 
     def list_late(self):
-        return self.filter(returned_on=None, borrow_due_date__lt=stddatetime.now())
+        return self.filter(returned_on=None, borrow_due_date__lt=datetime.datetime.now())
 
 class ReaderBorrow(ModelEntity):
     reader = models.ForeignKey(Reader, verbose_name=_("Reader"))
@@ -556,7 +557,7 @@ class ReaderBorrow(ModelEntity):
         return self.returned_on is not None
 
     def is_late(self):
-        return self.borrow_due_date < stddate.today() and not self.is_returned()
+        return self.borrow_due_date < datetime.date.today() and not self.is_returned()
 
     def list_all():
         return ReaderBorrow.objects.all()
