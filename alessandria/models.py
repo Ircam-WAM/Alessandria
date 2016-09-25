@@ -559,9 +559,6 @@ class ReaderBorrow(ModelEntity):
     def is_late(self):
         return self.borrow_due_date < datetime.date.today() and not self.is_returned()
 
-    def list_all():
-        return ReaderBorrow.objects.all()
-
     def get_full_name(self):
         if self.borrowed_date:
             return _("Borrowed on %s" % self.borrowed_date)

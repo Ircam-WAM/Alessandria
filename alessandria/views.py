@@ -246,7 +246,7 @@ class ReaderBorrowListView(EntityListView):
             self.object_list = ReaderBorrow.objects.list_late()
         else:
             page_title = "Tous les emprunts"
-            self.object_list = ReaderBorrow.list_all()
+            self.object_list = ReaderBorrow.objects.all()
         template_response = super(ReaderBorrowListView, self).get(request, **kwargs)
         template_response.context_data['page_title'] = page_title
         template_response.context_data['display'] = kwargs.get('display')
