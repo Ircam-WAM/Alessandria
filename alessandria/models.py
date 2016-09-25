@@ -36,7 +36,7 @@ class GeneralConfiguration(models.Model):
         verbose_name_plural = verbose_name
 
 
-class UserNavigationHistoryQuerySet(models.QuerySet):
+class UserNavigationHistoryManager(models.Manager):
     def get_list(self, user):
         return self.filter(accessed_by=user).order_by('accessed_by')
 
@@ -49,7 +49,7 @@ class UserNavigationHistory(models.Model):
     title = models.CharField(max_length=80)
     url = models.CharField(max_length=255)
 
-    objects = UserNavigationHistoryQuerySet.as_manager()
+    objects = UserNavigationHistoryManager()
 
     @staticmethod
     def add(url, title, user):
@@ -160,7 +160,7 @@ class ModelEntity(models.Model):
         abstract = True
 
 
-class AppliNewsQuerySet(models.QuerySet):
+class AppliNewsManager(models.Manager):
     def list(self):
         return self.filter(publish_date__lte=datetime.date.today())
 
@@ -173,7 +173,7 @@ class AppliNews(models.Model):
     publish_date = models.DateField(verbose_name=u"Date de publication")
     news = models.TextField(verbose_name=u"Info")
 
-    objects = AppliNewsQuerySet.as_manager()
+    objects = AppliNewsManager()
 
     def __str__(self):
         return "%s - %s" % (self.publish_date, self.news)
@@ -184,7 +184,7 @@ class AppliNews(models.Model):
         ordering = ['-publish_date']
 
 
-class ReaderQuerySet(models.QuerySet):
+class ReaderManager(models.Manager):
     def get_by_first_and_last_name(self, first_name, last_name):
         return self.filter(
             first_name=first_name.title(),
@@ -216,7 +216,7 @@ class Reader(ModelEntity):
     disabled_on = models.DateField(_("Disabled on"), blank=True, null=True)
     notes = models.TextField(_("Notes"), null=True, blank=True)
 
-    objects = ReaderQuerySet.as_manager()
+    objects = ReaderManager()
 
     # Overriding
     def save(self, *args, **kwargs):
@@ -264,7 +264,7 @@ class Reader(ModelEntity):
         verbose_name_plural = _("Readers")
 
 
-class AuthorQuerySet(models.QuerySet):
+class AuthorManager(models.Manager):
     def get_by_first_and_last_name(self, first_name, last_name):
         return self.filter(
             first_name=first_name.title(),
@@ -288,7 +288,7 @@ class Author(ModelEntity):
     notes = models.TextField(_("Notes"), null=True, blank=True)
     is_isbn_import = models.BooleanField(_("ISBN import"), default=False)
 
-    objects = AuthorQuerySet.as_manager()
+    objects = AuthorManager()
 
     def clean(self):
         homonyms = Author.objects.filter(
@@ -347,7 +347,7 @@ class Author(ModelEntity):
         verbose_name_plural = _("Authors")
 
 
-class PublisherQuerySet(models.QuerySet):
+class PublisherManager(models.Manager):
     def get_by_name(self, name):
         return self.filter(name=name.upper()).first()
 
@@ -364,7 +364,7 @@ class Publisher(ModelEntity):
     notes = models.TextField(_("Notes"), null=True, blank=True)
     is_isbn_import = models.BooleanField(_("ISBN import"), default=False)
 
-    objects = PublisherQuerySet.as_manager()
+    objects = PublisherManager()
 
     def clean(self):
         self.name = self.name.strip().upper()
@@ -393,7 +393,7 @@ class Publisher(ModelEntity):
         verbose_name_plural = "Publishers"
 
 
-class BookQuerySet(models.QuerySet):
+class BookManager(models.Manager):
     def search(self, isbn_nb='', title='', category='', sub_category='', author_name=''):
         r_list = self.all()
         if isbn_nb != '':
@@ -432,7 +432,7 @@ class Book(ModelEntity):
     notes = models.TextField(_("Notes"), null=True, blank=True)
     is_isbn_import = models.BooleanField(_("ISBN import"), default=False)
 
-    objects = BookQuerySet.as_manager()
+    objects = BookManager()
 
     def clean(self):
         if not self.isbn_nb:  # Force empty string to be 'None'
@@ -520,7 +520,7 @@ class BookCopy(ModelEntity):
         verbose_name_plural = _("Book samples")
 
 
-class ReaderBorrowQuerySet(models.QuerySet):
+class ReaderBorrowManager(models.Manager):
     def list_all_by_book(self, book_id):
         return self.filter(bookcopy__book__id=book_id)
 
@@ -539,7 +539,7 @@ class ReaderBorrow(ModelEntity):
     returned_on = models.DateField(_("Returned on"), blank=True, null=True)
     notes = models.TextField(_("Notes"), null=True, blank=True)
 
-    objects = ReaderBorrowQuerySet.as_manager()
+    objects = ReaderBorrowManager()
 
     def clean(self):
         already_borrowed = ReaderBorrow.objects.filter(
