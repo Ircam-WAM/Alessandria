@@ -91,7 +91,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for borrow in object.list_borrow_all|slice:":10" %}
+                    {% for borrow in object.list_borrow_all %}
                         <tr>
                             <td><a href="{% url 'alessandria:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date|date:"SHORT_DATE_FORMAT" }}</a></td>
                             <td><a href="{% url 'alessandria:book_update' borrow.bookcopy.book.id %}">{{ borrow.bookcopy.book }}</td>
