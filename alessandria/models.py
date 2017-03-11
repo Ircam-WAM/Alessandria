@@ -578,6 +578,6 @@ class ReaderBorrow(ModelEntity):
         return "%s : %s" % (str(self.reader), str(self.bookcopy.book))
 
     class Meta:
-        ordering = ['borrow_due_date']
+        ordering = ['-borrow_due_date']
         verbose_name = _("Reader borrowing")
         verbose_name_plural = _("Reader borrowings")
