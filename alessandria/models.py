@@ -541,6 +541,11 @@ class ReaderBorrow(ModelEntity):
 
     objects = ReaderBorrowManager()
 
+    class Meta:
+        ordering = ['-borrow_due_date']
+        verbose_name = _("Reader borrowing")
+        verbose_name_plural = _("Reader borrowings")
+
     def clean(self):
         already_borrowed = ReaderBorrow.objects.filter(
             bookcopy__id=self.bookcopy.id
@@ -577,7 +582,3 @@ class ReaderBorrow(ModelEntity):
     def __str__(self):
         return "%s : %s" % (str(self.reader), str(self.bookcopy.book))
 
-    class Meta:
-        ordering = ['-borrow_due_date']
-        verbose_name = _("Reader borrowing")
-        verbose_name_plural = _("Reader borrowings")
