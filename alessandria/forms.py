@@ -145,8 +145,6 @@ class PublisherSearchForm(forms.ModelForm):
 
 
 class BookForm(CommonForm):
-    def __init__(self, *args, **kwargs):
-        super(BookForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = Book
