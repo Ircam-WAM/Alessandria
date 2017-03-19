@@ -219,5 +219,3 @@ class BookCopyDisableForm(CommonForm):
         required=True
     )
 
-    def clean(self):
-        cleaned_data = super(BookCopyDisableForm, self).clean()
