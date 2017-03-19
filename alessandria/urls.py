@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'reader/list/$', views.ReaderListView.as_view(), name='reader_list'),
     url(r'reader/(?P<pk>\d+)/disable/$', views.ReaderDisableView.as_view(), name='reader_disable'),
 
-    url(r'author/add/$', views.AuthorCreateView.as_view(), name='author_add'),
+    url(r'author/add/(?P<redirect_to_book>\w+)?$', views.AuthorCreateView.as_view(), name='author_add'),
     url(r'author/(?P<pk>\d+)/$', views.AuthorUpdateView.as_view(), name='author_update'),
     url(r'author/(?P<pk>\d+)/delete/$', views.AuthorDeleteView.as_view(), name='author_delete'),
     url(r'author/list/$', views.AuthorListView.as_view(), name='author_list'),
@@ -32,11 +32,11 @@ urlpatterns = [
     url(r'publisher/list/$', views.PublisherListView.as_view(), name='publisher_list'),
     url(r'publisher/(?P<publisher_id>\d+)/books/$', views.book_list_by_publisher, name='book_list_by_publisher'),
 
-
-    url(r'book/add/$', views.BookCreateView.as_view(), name='book_add'),
+    url(r'book/add/(?P<from_external_page>\w+)?$', views.BookCreateView.as_view(), name='book_add'),
     url(r'book/(?P<pk>\d+)/$', views.BookUpdateView.as_view(), name='book_update'),
     url(r'book/(?P<pk>\d+)/delete/$', views.BookDeleteView.as_view(), name='book_delete'),
     url(r'book/list/$', views.BookListView.as_view(), name='book_list'),
+    url(r'book/save_book_form_to_session/(?P<dest_url>\S+)/$', views.save_book_form_to_session, name='save_book_form_to_session'),
 
     url(r'book/isbn/import/$', views.BookIsbnImportView.as_view(), name='book_isbn_import'),
 

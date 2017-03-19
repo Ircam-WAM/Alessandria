@@ -258,6 +258,11 @@ class AuthorCreateView(EntityCreateView):
     model = Author
     form_class = AuthorForm
 
+    def get_success_url(self):
+        if 'redirect_to_book' in self.kwargs:
+            return reverse('alessandria:book_add', args=['from_external_page'])
+        return super().get_success_url()
+
 
 class AuthorUpdateView(EntityUpdateView):
     template_name = 'alessandria/author_detail.html'
@@ -350,6 +355,34 @@ class BookCreateView(EntityCreateView):
     model = Book
     form_class = BookForm
 
+    """
+    def get_form(self, form_class=BookForm):
+        if 'book_post_form' in self.request.session:
+            book_post_form = self.request.session['book_post_form']
+            del self.request.session['book_post_form']
+            form = BookForm(book_post_form)
+            print("---", form.errors)
+            form.empty_permitted = True
+            print(dir(form))
+            return form
+
+        return super().get_form(form_class)
+    """
+
+    def get_initial(self):
+        if 'from_external_page' in self.kwargs and 'book_post_form' in self.request.session:
+            print("------------ HELLO8 -----")
+            book_post_form = self.request.session['book_post_form']
+            #book_post_form['authors'] = ''
+            #book_post_form['publishers'] = ['51']
+            #bf = BookForm(book_post_form)
+            #print("---------", bf)
+            del self.request.session['book_post_form']
+            print("###########", book_post_form)
+            return book_post_form
+        return super().get_initial()
+
+
     def get_context_data(self, **kwargs):
         """Called after the get method"""
         # Call the base implementation first to get a context
@@ -363,6 +396,17 @@ class BookCreateView(EntityCreateView):
         book_id = self.object.id
         # Automatically propose to create the first copy of the book
         return HttpResponseRedirect(reverse('alessandria:bookcopy_add', args=[book_id]))
+
+
+def save_book_form_to_session(request, dest_url):
+    book_post = request.POST.copy()
+    print(book_post['authors'])
+    book_post['publishers'] = [item for item in book_post['publishers'].split('|') if item]
+    book_post['authors'] = [item for item in book_post['authors'].split('|') if item]
+    request.session['book_post_form'] = book_post
+    print(">>>>>>>>>>>>", request.session['book_post_form'])
+    # dest_url will either contain the url to create an author or the url to create a publisher
+    return HttpResponseRedirect(reverse(dest_url, args=['redirect_to_book']))
 
 
 class BookUpdateView(EntityUpdateView):

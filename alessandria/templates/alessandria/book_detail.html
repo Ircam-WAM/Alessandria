@@ -28,11 +28,11 @@
             <div class="panel panel-info">
                 <div class="panel-body">
                     {% if object.id > 0 %}
-                        <form class="form-horizontal" enctype="multipart/form-data" action="" method="post" role="form">{% csrf_token %}
+                        <form id="curForm" class="form-horizontal" enctype="multipart/form-data" action="" method="post" role="form">{% csrf_token %}
                     {% else %}
                         {# We have to explicitely set the 'action' value because we can come from the isbn import view #}
                         {# In this case if we don't put it it will reload the import isbn view #}
-                        <form class="form-horizontal" enctype="multipart/form-data" action="{% url 'alessandria:book_add' %}" method="post" role="form">{% csrf_token %}
+                        <form id="curForm" class="form-horizontal" enctype="multipart/form-data" action="{% url 'alessandria:book_add' %}" method="post" role="form">{% csrf_token %}
                     {% endif %}
                         <div class="form-group">
                             <label for="{{ form.title.id_for_label }}" class="col-sm-2 control-label {{ form.title.css_classes }}">{{ form.title.label }}</label>
@@ -52,6 +52,7 @@
                                     <div class="text-danger">{{ form.authors.errors }}</div>
                                 {% endif %}
                             </div>
+                            <div><a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:author_add' %}')">Add new</a></div>
     
                             <label for="{{ form.publishers.id_for_label }}" class="col-sm-2 control-label {{ form.publishers.css_classes }}">{{ form.publishers.label }}</label>
                             <div class="col-sm-4">
@@ -250,6 +251,11 @@
 <script src="/static/alessandria/layout/jquery-ui/jquery-ui.min.js"></script>
 <script src="/static/alessandria/layout/ajax_select/js/ajax_select.js"></script>
 <script>
+    function submitForm(action) {
+        $('#curForm').attr("action", action);
+        $('#curForm').submit();
+    }
+
     function get_sub_categories(){
         jQuery.ajax({
             async: false,
