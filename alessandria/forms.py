@@ -45,12 +45,36 @@ class ReaderBorrowForm(CommonForm):
     # 'bookcopy_list' and 'reader_list' are registered lookups.py
     bookcopy = AutoCompleteSelectField(
         'bookcopy_list', label=Meta.model._meta.get_field('bookcopy').verbose_name,
-        required=True, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
+        required=False, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
     )
     reader = AutoCompleteSelectField(
         'reader_list', label=Meta.model._meta.get_field('reader').verbose_name,
-        required=True, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
+        required=False, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
     )
+
+    def clean_reader(self):
+        if self.cleaned_data['reader'] is None:
+            raise forms.ValidationError(_("Please select a reader"))
+        return self.cleaned_data['reader']
+
+    def clean_bookcopy(self):
+        bookcopy = self.cleaned_data['bookcopy']
+        if bookcopy is None:
+            raise forms.ValidationError(_("Please select a a book copy"))
+        # Make sure this bookcopy was not already borrowed by somebody else
+        already_borrowed = ReaderBorrow.objects.filter(bookcopy=bookcopy).filter(returned_on=None).first()
+        error = False
+        if already_borrowed is not None:
+            if self.instance is not None:  # Update mode
+                if already_borrowed.id != self.instance.id:  # Not updating the current record
+                    error = True
+            else:  # Create mode
+                error = True
+            if error:
+                raise forms.ValidationError(
+                    _('This book copy was already borrowed by {0}.').format(already_borrowed.reader)
+                )
+        return bookcopy
 
 
 class ReaderForm(CommonForm):
@@ -131,16 +155,26 @@ class BookForm(CommonForm):
     # 'author_list' and 'publisher_list' are registered lookups.py
     authors = AutoCompleteSelectMultipleField(
         'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
-        required=True, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
+        required=False, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
     )
     publishers = AutoCompleteSelectMultipleField(
         'publisher_list', label=Meta.model._meta.get_field('publishers').verbose_name,
-        required=True, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
+        required=False, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
     )
     audiences = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(), label=Meta.model._meta.get_field('audiences').verbose_name,
         queryset=BookAudience.objects.all()
     )
+
+    def clean_authors(self):
+        if not any(self.cleaned_data['authors']):  # It is a list
+            raise forms.ValidationError(_("Please select at least one author"))
+        return self.cleaned_data['authors']
+
+    def clean_publishers(self):
+        if not any(self.cleaned_data['publishers']):  # It is a list
+            raise forms.ValidationError(_("Please select at least one publisher"))
+        return self.cleaned_data['publishers']
 
 
 class BookSearchForm(forms.ModelForm):
