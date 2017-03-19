@@ -90,7 +90,12 @@ class ReaderForm(CommonForm):
 
 
 class ReaderSearchForm(forms.ModelForm):
-    reader_enabled = forms.BooleanField(label=_("Readers enabled"), initial=True)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Override the fields making it NOT mandatory
+        self.fields['last_name'].required = False
+
+    reader_enabled = forms.BooleanField(label=_("Readers enabled"), initial=True, required=False)
 
     class Meta:
         model = Reader
@@ -178,9 +183,16 @@ class BookForm(CommonForm):
 
 
 class BookSearchForm(forms.ModelForm):
-    author_name = forms.CharField(label=_('Author'))
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Override the fields making it NOT mandatory
+        self.fields['isbn_nb'].required = False
+        self.fields['title'].required = False
+        self.fields['category'].required = False
+
+    author_name = forms.CharField(label=_('Author'), required=False)
     has_copy = forms.BooleanField(label=_('Has copy'), initial=True)
-    took_away = forms.BooleanField(label=_('Took away'), initial=False)
+    took_away = forms.BooleanField(label=_('Took away'), initial=False, required=False)
 
     class Meta:
         model = Book
