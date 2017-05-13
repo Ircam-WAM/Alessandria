@@ -322,17 +322,15 @@ class Author(ModelEntity):
     @staticmethod
     def init_from_isbn(isbn_meta):
         authors = []
-        for author in isbn_meta['Authors']:
+        isbn_authors = [author.strip() for author in isbn_meta['Authors'] if author.strip()]
+        for author in isbn_authors:
             # Example of author : "John Doe", "John Henry Doe"
             first_name, last_name = IsbnUtils.author_unpack(author)
-            author = Author.objects.get_by_first_and_last_name(first_name, last_name)
-            if author is None:
-                author = Author(
-                    first_name=first_name,
-                    last_name=last_name,
-                    country=IsbnUtils.get_country_code(isbn_meta)
-                )
-            authors.append(author)
+            existing_author = Author.objects.get_by_first_and_last_name(first_name, last_name)
+            if existing_author is not None and last_name:
+                authors.append(existing_author)
+            else:
+                authors.append(Author(first_name=first_name, last_name=last_name))
         return authors
 
     def get_absolute_url(self):
@@ -374,11 +372,8 @@ class Publisher(ModelEntity):
     def init_from_isbn(isbn_meta):
         name = isbn_meta['Publisher'].strip() if isbn_meta['Publisher'] else ""
         publisher = Publisher.objects.get_by_name(name)
-        if publisher is None:
-            publisher = Publisher(
-                name=name,
-                country=IsbnUtils.get_country_code(isbn_meta)
-            )
+        if publisher is None and name:
+            publisher = Publisher(name=name)
         return publisher
 
     def get_absolute_url(self):

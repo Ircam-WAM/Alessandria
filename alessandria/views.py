@@ -453,6 +453,7 @@ class BookIsbnImportView(ProtectedView, TemplateView):
             if isbn_nb:
                 isbn_meta = isbnlib.meta(isbn_nb)
             if isbn_meta:
+                logger.debug("ISBN data: {}".format(isbn_meta))
                 return self._init_isbn_import(isbn_meta, request)
             else:  # ISBN not found
                 return render(
@@ -465,128 +466,60 @@ class BookIsbnImportView(ProtectedView, TemplateView):
         elif cmd == 'import_isbn':
             # After submit button to import has been pressed
             lst_authors_nb = request.POST.getlist('author_nb')
-            authors_form = []
             authors_ids = []
             publisher_id = None
-            publisher_form = None
-            is_error_in_form = False
             for s_i in lst_authors_nb:  # Loop over all the authors of the book
                 i = int(s_i)
                 author_id_fieldname = 'author_id_%s' % i
-                if not request.POST.get(author_id_fieldname):  # The author doesn't exist in the DB
-                    if request.POST.get('author_to_create_%s' % i):  # It is checked to be created
-                        author_form = self._create_author_form(form_post=request.POST, prefix='author_create_%s' %i)
-                        if not is_error_in_form:
-                            is_error_in_form = not author_form.is_valid()
-                            if is_error_in_form:
-                                messages.error(self.request, _("Invalid author nb %s." % (i+1)))
-                        authors_form.append(author_form)
-                else:  # The author already exists in the DB
+                if request.POST.get(author_id_fieldname):  # The author already exists in the DB
                     authors_ids.append(Author.objects.get(id=request.POST[author_id_fieldname]).id)
 
-            if not request.POST.get('publisher_id'):  # The publisher doesn't exist in the db
-                if request.POST.get('publisher_to_create'):  # The publisher was checked to be created
-                    publisher_form = self._create_publisher_form(form_post=request.POST)
-                    if not is_error_in_form:
-                        is_error_in_form = not publisher_form.is_valid()
-                        if is_error_in_form:
-                            messages.error(self.request, publisher_form.errors)
-            else:  # The publisher already exists in the DB
+            if request.POST.get('publisher_id'):  # The publisher already exists in the DB
                 publisher_id = Publisher.objects.get(id=request.POST['publisher_id']).id
 
-            if not is_error_in_form:
-                # Create the authors in the DB from the page form
-                for author_form in authors_form:
-                    author_form.instance.created_by = request.user
-                    author_form.instance.is_isbn_import = True
-                    author_form.save()
-                    authors_ids.append(author_form.instance.id)
-                if publisher_form:
-                    # Create the publisher in the DB from the page form
-                    publisher_form.instance.created_by = request.user
-                    publisher_form.instance.is_isbn_import = True
-                    publisher_form.save()
-                    publisher_id = publisher_form.instance.id
-                # Initialize the book with the values that have been entered
-                publisher_ids = [publisher_id] if publisher_id is not None else []
-                book_form = BookForm(
-                    initial={
-                        'title': request.POST.get('title'),
-                        'isbn_nb': request.POST.get('isbn_nb'),
-                        'publish_date': request.POST.get('publish_date'),
-                        'authors': authors_ids,
-                        'publishers': publisher_ids,
-                        'language': Language.get_default_language(),  # TODO: Change me, use isbn_meta['Language']
-                        'is_isbn_import': True
-                    }
-                )
-                book_form.fields['isbn_nb'].widget.attrs['readonly'] = True
-                return render(
-                    request,
-                    'alessandria/book_detail.html', 
-                    {
-                        'form': book_form,
-                    },
-                )
-            else:  # Error in one of the forms => display the import page again
-                isbn_nb = isbnlib.get_canonical_isbn(request.POST.get('isbn_nb'))
-                isbn_meta = isbnlib.meta(isbn_nb)
-                return self._init_isbn_import(isbn_meta, request)
-
-    def _create_author_form(self, prefix, instance=None, form_post=None):
-        author_form = None
-        if instance:
-            author_form = AuthorForm(prefix=prefix, instance=instance)
-        if form_post:
-            author_form = AuthorForm(form_post, prefix=prefix)
-        # Remove useless fields
-        author_form.fields.pop(key='notes')
-        author_form.fields.pop(key='website')
-        return author_form
-
-    def _create_publisher_form(self, instance=None, form_post=None):
-        publisher_form = None
-        if instance:
-            publisher_form = PublisherForm(instance=instance)
-        if form_post:
-            publisher_form = PublisherForm(form_post)
-        # Remove useless fields
-        publisher_form.fields.pop(key='notes')
-        return publisher_form
+            # Initialize the book with the values that have been entered
+            publisher_ids = [publisher_id] if publisher_id is not None else []
+            book_form = BookForm(
+                initial={
+                    'title': request.POST.get('title'),
+                    'isbn_nb': request.POST.get('isbn_nb'),
+                    'publish_date': request.POST.get('publish_date'),
+                    'authors': authors_ids,
+                    'publishers': publisher_ids,
+                    'language': Language.get_default_language(),  # TODO: Change me, use isbn_meta['Language']
+                    'is_isbn_import': True
+                }
+            )
+            book_form.fields['isbn_nb'].widget.attrs['readonly'] = True
+            return render(
+                request,
+                'alessandria/book_detail.html',
+                {
+                    'form': book_form,
+                },
+            )
 
     def _init_isbn_import(self, isbn_meta, request):
         # Initialize book form from isbn meta data
         book = Book.init_from_isbn(isbn_meta)
-        book_form = BookForm(instance=book)
-        if book_form.instance.id:
+        if book.id is not None:  # Book already exists in the DB
             return render(
                 request,
                 self.template_name,
                 {
-                    'book_form': book_form,
+                    'book': book,
                     'search': True,
                 },
             )
-        # Initialize authors forms from isbn meta data
-        authors_form = []
-        i = 0
-        authors = Author.init_from_isbn(isbn_meta)
-        for author in authors:
-            author_form = self._create_author_form(prefix='author_create_%s' % i, instance=author)
-            authors_form.append(author_form)
-            i += 1
 
-        # Initialize publisher form from isbn meta data
-        publisher = Publisher.init_from_isbn(isbn_meta)
-        publisher_form = self._create_publisher_form(instance=publisher)
         return render(
             request,
             self.template_name,
             {
-                'book_form': book_form,
+                'book': book,
                 'search': True,
-                'authors_form': authors_form,
-                'publisher_form': publisher_form,
+                'authors': Author.init_from_isbn(isbn_meta),
+                'publisher': Publisher.init_from_isbn(isbn_meta),
             },
         )
 
