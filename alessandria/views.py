@@ -260,6 +260,9 @@ class AuthorCreateView(EntityCreateView):
 
     def get_success_url(self):
         if 'redirect_to_book' in self.kwargs:
+            book_post = self.request.session['book_post_form']
+            book_post['authors'].append(str(self.object.id))
+            self.request.session['book_post_form'] = book_post
             return reverse('alessandria:book_add', args=['from_external_page'])
         return super().get_success_url()
 
@@ -371,14 +374,8 @@ class BookCreateView(EntityCreateView):
 
     def get_initial(self):
         if 'from_external_page' in self.kwargs and 'book_post_form' in self.request.session:
-            print("------------ HELLO8 -----")
             book_post_form = self.request.session['book_post_form']
-            #book_post_form['authors'] = ''
-            #book_post_form['publishers'] = ['51']
-            #bf = BookForm(book_post_form)
-            #print("---------", bf)
             del self.request.session['book_post_form']
-            print("###########", book_post_form)
             return book_post_form
         return super().get_initial()
 
@@ -399,6 +396,9 @@ class BookCreateView(EntityCreateView):
 
 
 def save_book_form_to_session(request, dest_url):
+    """
+    View called from within the book page to add either a new author or a new publisher
+    """
     book_post = request.POST.copy()
     print(book_post['authors'])
     book_post['publishers'] = [item for item in book_post['publishers'].split('|') if item]
