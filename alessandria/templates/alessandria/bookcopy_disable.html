@@ -4,7 +4,7 @@
 {% block title %}{% trans "Removing the sample" %}{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="/static/alessandria/layout/jquery-datepicker/jquery.datepick.css">
+    <link rel="stylesheet" href="/static/alessandria/layout/bootstrap_datepicker/css/bootstrap-datepicker3.css">
 {% endblock %}
 
 {% block pageTitle %}{% trans "Removing the sample" %}{% endblock %}
@@ -31,12 +31,17 @@
 {% endblock %}
 
 {% block jscript %}
-<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.plugin.min.js"></script> 
-<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.datepick.min.js"></script>
-<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.datepick-{{ JS_DATEPICKER_LANG }}.js"></script>
+<script type="text/javascript" src="/static/alessandria/layout/jquery-ui/jquery-ui.min.js"></script>
+<script src="/static/alessandria/layout/bootstrap_datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/static/alessandria/layout/bootstrap_datepicker/locales/bootstrap-datepicker.fr.min.js"></script>
 <script>
+{% get_current_language as LANGUAGE_CODE %}
 $(function() {
-    $('#id_disabled_on').datepick({dateFormat: 'dd/mm/yyyy'});
+    $('#id_disabled_on').datepicker({
+      language: "{{ LANGUAGE_CODE }}",
+      autoclose: true,
+      todayHighlight: true,
+    });
 });
 </script>
 {% endblock %}

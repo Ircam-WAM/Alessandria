@@ -5,7 +5,7 @@
 {% block title %}{% trans "Book sample" %}{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="/static/alessandria/layout/jquery-datepicker/jquery.datepick.css">
+    <link rel="stylesheet" href="/static/alessandria/layout/bootstrap_datepicker/css/bootstrap-datepicker3.css">
 {% endblock %}
 
 {% block pageTitle %}{% trans "Book sample" %}:&nbsp;{{ form.instance.number|default:_("new") }} ({{ form.instance.book }}){% endblock %}
@@ -63,13 +63,21 @@
 
 {% block jscript %}
 <script type="text/javascript" src="/static/alessandria/layout/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.plugin.min.js"></script> 
-<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.datepick.min.js"></script>
-<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.datepick-{{ JS_DATEPICKER_LANG }}.js"></script>
+<script src="/static/alessandria/layout/bootstrap_datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/static/alessandria/layout/bootstrap_datepicker/locales/bootstrap-datepicker.fr.min.js"></script>
 <script>
+{% get_current_language as LANGUAGE_CODE %}
 $(function() {
-    $('#id_registered_on').datepick({dateFormat: 'dd/mm/yyyy'});
-    $('#id_price_date').datepick({dateFormat: 'dd/mm/yyyy'});
+    $('#id_registered_on').datepicker({
+      language: "{{ LANGUAGE_CODE }}",
+      autoclose: true,
+      todayHighlight: true,
+    });
+    $('#id_price_date').datepicker({
+      language: "{{ LANGUAGE_CODE }}",
+      autoclose: true,
+      todayHighlight: true,
+    });
 });
 </script>
 {% endblock %}

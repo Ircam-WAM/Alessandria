@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/static/alessandria/layout/jquery-ui/jquery-ui.min.css" />
     <link rel="stylesheet" href="/static/alessandria/layout/jquery-ui/jquery-ui.structure.min.css" />
     <link rel="stylesheet" href="/static/alessandria/layout/jquery-ui/jquery-ui.theme.min.css" />
-    <link rel="stylesheet" href="/static/alessandria/layout/jquery-datepicker/jquery.datepick.css">
+    <link rel="stylesheet" href="/static/alessandria/layout/bootstrap_datepicker/css/bootstrap-datepicker3.css">
 {% endblock %}
 
 {% block pageTitle %}
@@ -61,14 +61,26 @@
 {% block jscript %}
 <script src="/static/alessandria/layout/jquery-ui/jquery-ui.min.js"></script>
 <script src="/static/alessandria/layout/ajax_select/js/ajax_select.js"></script>
-<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.plugin.min.js"></script> 
-<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.datepick.min.js"></script>
-<script type="text/javascript" src="/static/alessandria/layout/jquery-datepicker/jquery.datepick-{{ JS_DATEPICKER_LANG }}.js"></script>
+<script src="/static/alessandria/layout/bootstrap_datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/static/alessandria/layout/bootstrap_datepicker/locales/bootstrap-datepicker.fr.min.js"></script>
 <script>
+{% get_current_language as LANGUAGE_CODE %}
 $(function() {
-    $('#id_borrowed_date').datepick({dateFormat: 'dd/mm/yyyy'});
-    $('#id_borrow_due_date').datepick({dateFormat: 'dd/mm/yyyy'});
-    $('#id_returned_on').datepick({dateFormat: 'dd/mm/yyyy'});
+    $('#id_borrowed_date').datepicker({
+      language: "{{ LANGUAGE_CODE }}",
+      autoclose: true,
+      todayHighlight: true,
+    });
+
+    $('#id_borrow_due_date').datepicker({
+      language: "{{ LANGUAGE_CODE }}",
+      autoclose: true,
+    });
+
+    $('#id_returned_on').datepicker({
+      language: "{{ LANGUAGE_CODE }}",
+      autoclose: true,
+    });
 });
 </script>
 {% endblock %}
