@@ -260,6 +260,7 @@ class AuthorCreateView(EntityCreateView):
 
     def get_success_url(self):
         if 'redirect_to_book' in self.kwargs:
+            # We created the author from the book page
             book_post = self.request.session['book_post_form']
             book_post['authors'].append(str(self.object.id))
             self.request.session['book_post_form'] = book_post
@@ -305,6 +306,15 @@ class PublisherCreateView(EntityCreateView):
     template_name = 'alessandria/publisher_detail.html'
     model = Publisher
     form_class = PublisherForm
+
+    def get_success_url(self):
+        if 'redirect_to_book' in self.kwargs:
+            # We created the publisher from the book page
+            book_post = self.request.session['book_post_form']
+            book_post['publishers'].append(str(self.object.id))
+            self.request.session['book_post_form'] = book_post
+            return reverse('alessandria:book_add', args=['from_external_page'])
+        return super().get_success_url()
 
 
 class PublisherUpdateView(EntityUpdateView):
@@ -358,22 +368,9 @@ class BookCreateView(EntityCreateView):
     model = Book
     form_class = BookForm
 
-    """
-    def get_form(self, form_class=BookForm):
-        if 'book_post_form' in self.request.session:
-            book_post_form = self.request.session['book_post_form']
-            del self.request.session['book_post_form']
-            form = BookForm(book_post_form)
-            print("---", form.errors)
-            form.empty_permitted = True
-            print(dir(form))
-            return form
-
-        return super().get_form(form_class)
-    """
-
     def get_initial(self):
         if 'from_external_page' in self.kwargs and 'book_post_form' in self.request.session:
+            # If we added an author or a publisher, we want to restore the initial form
             book_post_form = self.request.session['book_post_form']
             del self.request.session['book_post_form']
             return book_post_form
@@ -400,11 +397,9 @@ def save_book_form_to_session(request, dest_url):
     View called from within the book page to add either a new author or a new publisher
     """
     book_post = request.POST.copy()
-    print(book_post['authors'])
     book_post['publishers'] = [item for item in book_post['publishers'].split('|') if item]
     book_post['authors'] = [item for item in book_post['authors'].split('|') if item]
     request.session['book_post_form'] = book_post
-    print(">>>>>>>>>>>>", request.session['book_post_form'])
     # dest_url will either contain the url to create an author or the url to create a publisher
     return HttpResponseRedirect(reverse(dest_url, args=['redirect_to_book']))
 

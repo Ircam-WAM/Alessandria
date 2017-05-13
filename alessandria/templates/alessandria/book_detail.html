@@ -61,6 +61,7 @@
                                     <div class="text-danger">{{ form.publishers.errors }}</div>
                                 {% endif %}
                             </div>
+                            <div><a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:publisher_add' %}')">Add new</a></div>
                         </div>
     
                         <div class="form-group">
