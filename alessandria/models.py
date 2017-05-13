@@ -117,6 +117,7 @@ class BookCategory(ReferenceEntity):
     class Meta:
         verbose_name = _("Book category")
         verbose_name_plural = _("Book categories")
+        ordering = ['label']
 
 
 class BookSubCategory(ReferenceEntity):
@@ -126,6 +127,7 @@ class BookSubCategory(ReferenceEntity):
     class Meta:
         verbose_name = _("Book sub-category")
         verbose_name_plural = _("Book sub-categories")
+        ordering = ['label']
 
 
 class BookTag(ReferenceEntity):
