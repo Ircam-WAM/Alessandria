@@ -139,7 +139,7 @@ class EntityListView(ProtectedView, ListView):
         request.session['search_fields'] = request.POST
         request.session['order_field'] = None
         context = self.get_context_data()
-        if self.form_class != None:
+        if self.form_class is not None:
             context['search_form'] = self.form_class(request.POST)
         return self.render_to_response(context)
 
