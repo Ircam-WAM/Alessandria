@@ -45,23 +45,32 @@
                         </div>
     
                         <div class="form-group">
-                            <label for="{{ form.authors.id_for_label }}" class="col-sm-2 control-label {{ form.authors.css_classes }}">{{ form.authors.label }}</label>
+                            <label for="{{ form.authors.id_for_label }}" class="col-sm-2 control-label {{ form.authors.css_classes }}">
+                                {{ form.authors.label }}
+                                <a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:author_add' %}')">
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                </a>
+                            </label>
+
                             <div class="col-sm-4">
                                 {{ form.authors|addcss:"form-control" }}
                                 {% if form.authors.errors %}
                                     <div class="text-danger">{{ form.authors.errors }}</div>
                                 {% endif %}
                             </div>
-                            <div><a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:author_add' %}')">Add new</a></div>
-    
-                            <label for="{{ form.publishers.id_for_label }}" class="col-sm-2 control-label {{ form.publishers.css_classes }}">{{ form.publishers.label }}</label>
+
+                            <label for="{{ form.publishers.id_for_label }}" class="col-sm-2 control-label {{ form.publishers.css_classes }}">
+                                {{ form.publishers.label }}
+                                <a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:publisher_add' %}')">
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                </a>
+                            </label>
                             <div class="col-sm-4">
                                 {{ form.publishers|addcss:"form-control" }}
                                 {% if form.publishers.errors %}
                                     <div class="text-danger">{{ form.publishers.errors }}</div>
                                 {% endif %}
                             </div>
-                            <div><a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:publisher_add' %}')">Add new</a></div>
                         </div>
     
                         <div class="form-group">
