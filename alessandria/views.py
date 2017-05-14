@@ -92,6 +92,14 @@ class EntityListView(ProtectedView, ListView):
         # The method of the super class will put 'object_list' and a 'paginator' and 'page_obj' objects in the context
         # of the template
         context = super(EntityListView, self).get_context_data(**kwargs)
+        cur_page_nb = context['page_obj'].number
+        num_pages = context['paginator'].num_pages
+
+        pages_window = [i for i in range(max(cur_page_nb-3, 1), min(cur_page_nb+4, num_pages + 1))]
+        context['pages_window'] = pages_window
+        context['window_first_page_nb'] = pages_window[0]
+        context['window_last_page_nb'] = pages_window[-1]
+
         if self.form_class is not None:
             context['search_form'] = self.form_class()
         return context

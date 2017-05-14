@@ -2,16 +2,27 @@
 {% if paginator.count > 0 %}
     <nav>
         <ul class="pagination">
-            <li><span aria-hidden="true">{{ paginator.count }} {% trans "records" %}</span></li>
+            <li><span class="disabled" aria-hidden="true">{{ paginator.count }} {% trans "records" %}</span></li>
             <li><span aria-hidden="true">{% trans "Pages" %}</span></li>
-            <li>
-                {% if page_obj.has_previous %}
+            {% if page_obj.has_previous %}
+                <li>
                     <a href="?page={{ page_obj.previous_page_number }}" aria-label="{% trans 'Previous' %}">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
-                {% endif %}
-            </li>
-            {% for page_number in paginator.page_range %}
+                </li>
+            {% endif %}
+
+            {% if window_first_page_nb != 1 %}
+                <li>
+                    <a href="?page=1" aria-label="1">
+                        <span aria-hidden="true">1</span>
+                    </a>
+                </li>
+                <li>
+                    <span aria-hidden="true">...</span>
+                </li>
+            {% endif %}
+            {% for page_number in pages_window %}
                 <li>
                     {% if page_number != page_obj.number %}
                         <a href="?page={{ page_number }}">{{ page_number }}</a>
@@ -20,13 +31,24 @@
                     {% endif %}
                 </li>
             {% endfor %}
-            <li>
-                {% if page_obj.has_next %}
+            {% if window_last_page_nb != paginator.num_pages %}
+                <li>
+                  <span aria-hidden="true">...</span>
+                </li>
+                <li>
+                    <a href="?page={{ paginator.num_pages }}" aria-label="{{ paginator.num_pages }}">
+                        <span aria-hidden="true">{{ paginator.num_pages }}</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+                <li>
                     <a href="?page={{ page_obj.next_page_number }}" aria-label="{% trans 'Next' %}">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
-                {% endif %}
-            </li>
+                </li>
+            {% endif %}
         </ul>
     </nav>
 {% endif %}
