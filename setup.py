@@ -61,11 +61,11 @@ setup(
         'Framework :: Django',
     ],
     install_requires=[
-        'django>=1.9',
-        'django-countries>=3.3',
-        'django-ajax-selects>=1.3.6',
+        'django<1.12',
+        'django-countries<=4.5',
+        'django-ajax-selects==1.5.2',
         'simplejson>=3.8.0',
         'pillow>=2.9.0',
-        'isbnlib>=3.5.6'
+        'isbnlib==3.5.8'
     ]
 )
