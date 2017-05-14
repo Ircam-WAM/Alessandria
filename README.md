@@ -3,7 +3,7 @@
 ## Installation
 
 ### Prérequis
-* Django >= 1.7
+* Django <= 1.11
 * Python 3
 * Une base de données (ex. sqlite)
 
@@ -78,7 +78,7 @@ urlpatterns   = patterns('',
 ## Installation 
 
 ### Prerequisites
-* Django >= 1.7
+* Django <= 1.11
 * Python 3
 * A database (e.g. sqlite)
 
