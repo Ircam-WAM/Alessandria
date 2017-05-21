@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-21 07:31+0200\n"
-"PO-Revision-Date: 2017-05-21 07:32+0200\n"
+"POT-Creation-Date: 2017-05-21 07:33+0200\n"
+"PO-Revision-Date: 2017-05-21 07:34+0200\n"
 "Last-Translator: Unknown <mirelsol@vito-pc>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
 "Language: fr\n"
@@ -42,15 +42,19 @@ msgstr "Lecteurs actifs"
 msgid "This author already exists."
 msgstr "Cet auteur existe déjà."
 
-#: forms.py:202
+#: forms.py:172
+msgid "This publisher already exists."
+msgstr "Cet éditeur existe déjà."
+
+#: forms.py:208
 msgid "Please select at least one author"
 msgstr "Veuillez sélectionner au moins un auteur"
 
-#: forms.py:207
+#: forms.py:213
 msgid "Please select at least one publisher"
 msgstr "Veuillez sélectionner au moins un éditeur"
 
-#: forms.py:219 models.py:345 templates/alessandria/author_detail.html:4
+#: forms.py:225 models.py:345 templates/alessandria/author_detail.html:4
 #: templates/alessandria/author_detail.html:6
 #: templates/alessandria/book_detail.html:21
 #: templates/alessandria/book_isbn_import.html:77
@@ -58,11 +62,11 @@ msgstr "Veuillez sélectionner au moins un éditeur"
 msgid "Author"
 msgstr "Auteur"
 
-#: forms.py:220
+#: forms.py:226
 msgid "Has copy"
 msgstr "Avec exemplaire"
 
-#: forms.py:221
+#: forms.py:227
 msgid "Took away"
 msgstr "Retiré"
 
@@ -855,4 +859,3 @@ msgstr "Exemplaire retiré avec succès."
 #: views.py:613
 msgid "Reader successfully disabled."
 msgstr "Lecteur désactivé avec succès"
-

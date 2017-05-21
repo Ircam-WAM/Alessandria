@@ -165,6 +165,12 @@ class PublisherForm(CommonForm):
         initial=default_country
     )
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if Publisher.objects.filter(name__iexact=cleaned_data.get("name")).exists():
+            self.add_error('name', _("This publisher already exists."))
+
 
 class PublisherSearchForm(forms.ModelForm):
     class Meta:
