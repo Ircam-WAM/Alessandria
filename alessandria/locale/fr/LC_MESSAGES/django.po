@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-14 08:17+0200\n"
-"PO-Revision-Date: 2017-05-14 08:19+0200\n"
+"POT-Creation-Date: 2017-05-21 07:31+0200\n"
+"PO-Revision-Date: 2017-05-21 07:32+0200\n"
 "Last-Translator: Unknown <mirelsol@vito-pc>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
 "Language: fr\n"
@@ -30,19 +30,27 @@ msgstr "Veuillez sélectionner un exemplaire"
 msgid "This book copy was already borrowed by {0}."
 msgstr "Cet exemplaire a déjà été emprunté par {0}."
 
-#: forms.py:98
+#: forms.py:104
+msgid "This reader already exists."
+msgstr "Ce lecteur existe déjà."
+
+#: forms.py:113
 msgid "Readers enabled"
 msgstr "Lecteurs actifs"
 
-#: forms.py:174
+#: forms.py:148
+msgid "This author already exists."
+msgstr "Cet auteur existe déjà."
+
+#: forms.py:202
 msgid "Please select at least one author"
 msgstr "Veuillez sélectionner au moins un auteur"
 
-#: forms.py:179
+#: forms.py:207
 msgid "Please select at least one publisher"
 msgstr "Veuillez sélectionner au moins un éditeur"
 
-#: forms.py:191 models.py:346 templates/alessandria/author_detail.html:4
+#: forms.py:219 models.py:345 templates/alessandria/author_detail.html:4
 #: templates/alessandria/author_detail.html:6
 #: templates/alessandria/book_detail.html:21
 #: templates/alessandria/book_isbn_import.html:77
@@ -50,11 +58,11 @@ msgstr "Veuillez sélectionner au moins un éditeur"
 msgid "Author"
 msgstr "Auteur"
 
-#: forms.py:192
+#: forms.py:220
 msgid "Has copy"
 msgstr "Avec exemplaire"
 
-#: forms.py:193
+#: forms.py:221
 msgid "Took away"
 msgstr "Retiré"
 
@@ -122,7 +130,7 @@ msgstr "Paramètres globaux de l'application"
 msgid "Default language"
 msgstr "Langue par défaut"
 
-#: models.py:86 models.py:426
+#: models.py:86 models.py:425
 msgid "Language"
 msgstr "Langue"
 
@@ -138,7 +146,7 @@ msgstr "Profession"
 msgid "Jobs"
 msgstr "Professions"
 
-#: models.py:105 models.py:421
+#: models.py:105 models.py:420
 msgid "Audience"
 msgstr "Public cible"
 
@@ -194,20 +202,20 @@ msgstr "Nouveauté de l'application"
 msgid "Software news"
 msgstr "Nouveautés de l'application"
 
-#: models.py:204 models.py:485 templates/alessandria/reader_list.html:20
+#: models.py:204 models.py:484 templates/alessandria/reader_list.html:20
 msgid "Number"
 msgstr "Numéro"
 
-#: models.py:205 models.py:486 templates/alessandria/index.html:50
+#: models.py:205 models.py:485 templates/alessandria/index.html:50
 #: templates/alessandria/reader_list.html:23
 msgid "Registration date"
 msgstr "Date d'enregistrement"
 
-#: models.py:206 models.py:284
+#: models.py:206 models.py:281
 msgid "First name"
 msgstr "Prénom"
 
-#: models.py:207 models.py:285
+#: models.py:207 models.py:282
 msgid "Last name"
 msgstr "Nom"
 
@@ -223,7 +231,7 @@ msgstr "Femme"
 msgid "Male"
 msgstr "Homme"
 
-#: models.py:209 models.py:287
+#: models.py:209 models.py:284
 msgid "Birthdate"
 msgstr "Date de naissance"
 
@@ -243,7 +251,7 @@ msgstr "Code postal"
 msgid "City"
 msgstr "Ville"
 
-#: models.py:214 models.py:288 models.py:363
+#: models.py:214 models.py:285 models.py:362
 msgid "Country"
 msgstr "Pays"
 
@@ -259,12 +267,12 @@ msgstr "Tél."
 msgid "Disabled on"
 msgstr "Désactivé le"
 
-#: models.py:219 models.py:290 models.py:364 models.py:429 models.py:493
-#: models.py:537
+#: models.py:219 models.py:287 models.py:363 models.py:428 models.py:492
+#: models.py:536
 msgid "Notes"
 msgstr "Notes"
 
-#: models.py:265 models.py:532 templates/alessandria/book_detail.html:256
+#: models.py:265 models.py:531 templates/alessandria/book_detail.html:256
 #: templates/alessandria/reader_borrow_list.html:17
 #: templates/alessandria/reader_detail.html:4
 #: templates/alessandria/reader_detail.html:10
@@ -275,28 +283,24 @@ msgstr "Lecteur"
 msgid "Readers"
 msgstr "Lecteurs"
 
-#: models.py:286
+#: models.py:283
 msgid "Alias"
 msgstr "Nom d'emprunt"
 
-#: models.py:289
+#: models.py:286
 msgid "Website"
 msgstr "Site web"
 
-#: models.py:291 models.py:365 models.py:430
+#: models.py:288 models.py:364 models.py:429
 #: templates/alessandria/base_tpl.html:51
 msgid "ISBN import"
 msgstr "Import ISBN"
 
-#: models.py:306
-msgid "This author already exists."
-msgstr "Cet auteur existe déjà."
-
-#: models.py:347 models.py:414 templates/alessandria/base_tpl.html:67
+#: models.py:346 models.py:413 templates/alessandria/base_tpl.html:67
 msgid "Authors"
 msgstr "Auteurs"
 
-#: models.py:362 templates/alessandria/author_list.html:20
+#: models.py:361 templates/alessandria/author_list.html:20
 #: templates/alessandria/book_isbn_import.html:89
 #: templates/alessandria/book_isbn_import.html:116
 #: templates/alessandria/publisher_list.html:20
@@ -304,72 +308,72 @@ msgstr "Auteurs"
 msgid "Name"
 msgstr "Nom"
 
-#: models.py:413 templates/alessandria/book_isbn_import.html:63
+#: models.py:412 templates/alessandria/book_isbn_import.html:63
 #: templates/alessandria/book_list.html:20
 #: templates/alessandria/book_list_by_publisher.html:15
 msgid "Title"
 msgstr "Titre"
 
-#: models.py:415 templates/alessandria/base_tpl.html:80
+#: models.py:414 templates/alessandria/base_tpl.html:80
 msgid "Publishers"
 msgstr "Editeurs"
 
-#: models.py:416
+#: models.py:415
 msgid "Publishing date"
 msgstr "Date de publication"
 
-#: models.py:417
+#: models.py:416
 msgid "Title edition"
 msgstr "Titre de l'édition"
 
-#: models.py:418
+#: models.py:417
 msgid "Classification mark"
 msgstr "Cote"
 
-#: models.py:419
+#: models.py:418
 msgid "Height (inches)"
 msgstr "Hauteur (cm)"
 
-#: models.py:420 templates/alessandria/book_isbn_import.html:16
+#: models.py:419 templates/alessandria/book_isbn_import.html:16
 #: templates/alessandria/book_isbn_import.html:58
 #: templates/alessandria/book_list.html:22
 #: templates/alessandria/book_list_by_publisher.html:17
 msgid "ISBN number"
 msgstr "No. ISBN"
 
-#: models.py:422
+#: models.py:421
 msgid "Category"
 msgstr "Catégorie"
 
-#: models.py:423
+#: models.py:422
 msgid "Sub-category"
 msgstr "Sous-catégorie"
 
-#: models.py:424
+#: models.py:423
 msgid "Abstract"
 msgstr "Résumé"
 
-#: models.py:425
+#: models.py:424
 msgid "Tags"
 msgstr "Etiquettes"
 
-#: models.py:427
+#: models.py:426
 msgid "Cover"
 msgstr "Couverture"
 
-#: models.py:428
+#: models.py:427
 msgid "Linked to"
 msgstr "Est lié à"
 
-#: models.py:440
+#: models.py:439
 msgid "Invalid ISBN number."
 msgstr "No. ISBN invalide."
 
-#: models.py:467
+#: models.py:466
 msgid "Number of samples"
 msgstr "Nombre d'exemplaires"
 
-#: models.py:480 models.py:487 templates/alessandria/book_detail.html:5
+#: models.py:479 models.py:486 templates/alessandria/book_detail.html:5
 #: templates/alessandria/book_detail.html:14
 #: templates/alessandria/index.html:51
 #: templates/alessandria/reader_borrow_list.html:18
@@ -377,67 +381,67 @@ msgstr "Nombre d'exemplaires"
 msgid "Book"
 msgstr "Livre"
 
-#: models.py:481 templates/alessandria/author_detail.html:13
+#: models.py:480 templates/alessandria/author_detail.html:13
 #: templates/alessandria/base_tpl.html:48
 msgid "Books"
 msgstr "Livres"
 
-#: models.py:488
+#: models.py:487
 msgid "Condition"
 msgstr "Etat"
 
-#: models.py:489
+#: models.py:488
 msgid "Origin"
 msgstr "Origine"
 
-#: models.py:490
+#: models.py:489
 msgid "Price"
 msgstr "Prix"
 
-#: models.py:491
+#: models.py:490
 msgid "Date (price)"
 msgstr "Date (prix)"
 
-#: models.py:492
+#: models.py:491
 msgid "Took out on"
 msgstr "Retiré le"
 
-#: models.py:516 templates/alessandria/bookcopy_detail.html:5
+#: models.py:515 templates/alessandria/bookcopy_detail.html:5
 #: templates/alessandria/bookcopy_detail.html:11
 msgid "Book sample"
 msgstr "Exemplaire d'un livre"
 
-#: models.py:517
+#: models.py:516
 msgid "Book samples"
 msgstr "Exemplaires des livres"
 
-#: models.py:533 templates/alessandria/book_detail.html:45
+#: models.py:532 templates/alessandria/book_detail.html:45
 #: templates/alessandria/book_detail.html:47
 msgid "Sample"
 msgstr "Exemplaire"
 
-#: models.py:534 templates/alessandria/reader_borrow_list.html:16
+#: models.py:533 templates/alessandria/reader_borrow_list.html:16
 msgid "Borrowed on"
 msgstr "Emprunté le"
 
-#: models.py:535 templates/alessandria/reader_borrow_list.html:19
+#: models.py:534 templates/alessandria/reader_borrow_list.html:19
 msgid "Due date"
 msgstr "Date d'échéance"
 
-#: models.py:536 templates/alessandria/reader_borrow_list.html:20
+#: models.py:535 templates/alessandria/reader_borrow_list.html:20
 #: templates/alessandria/reader_detail.html:90
 msgid "Returned on"
 msgstr "Rendu le"
 
-#: models.py:543
+#: models.py:542
 msgid "Reader borrowing"
 msgstr "Emprunt d'un lecteur"
 
-#: models.py:544
+#: models.py:543
 msgid "Reader borrowings"
 msgstr "Emprunts des lecteurs"
 
-#: models.py:554
+#: models.py:553
 #, python-format
 msgid "Borrowed on %s"
 msgstr "Emprunté le %s"
@@ -635,7 +639,8 @@ msgstr "Cet auteur existe déjà, il sera associé au livre."
 
 #: templates/alessandria/book_isbn_import.html:83
 msgid "This author wasn't found in the database, you will have to create it."
-msgstr "Cet auteur n'a pas été trouvé dans la base de données, vous devrez le créer."
+msgstr ""
+"Cet auteur n'a pas été trouvé dans la base de données, vous devrez le créer."
 
 #: templates/alessandria/book_isbn_import.html:97
 msgid "No author is set in ISBN data"
@@ -648,7 +653,8 @@ msgstr "Cet éditeur existe, il sera associé au livre."
 #: templates/alessandria/book_isbn_import.html:110
 msgid ""
 "This publisher wasn't found in the database, you will have to create it."
-msgstr "Cet éditeur n'a pas été trouvé dans la base de données, vous devrez le créer."
+msgstr ""
+"Cet éditeur n'a pas été trouvé dans la base de données, vous devrez le créer."
 
 #: templates/alessandria/book_isbn_import.html:124
 msgid "No publisher is set in ISBN data"
@@ -850,14 +856,3 @@ msgstr "Exemplaire retiré avec succès."
 msgid "Reader successfully disabled."
 msgstr "Lecteur désactivé avec succès"
 
-#~ msgid "This author doesn't exist, create it?"
-#~ msgstr "Cet auteur n'existe pas, le créer ?"
-
-#~ msgid "This publisher doesn't exist, create it?"
-#~ msgstr "Cet éditeur n'existe pas, le créer ?"
-
-#~ msgid "Invalid author nb %s."
-#~ msgstr "Auteur no. %s invalide."
-
-#~ msgid "Invalid publisher."
-#~ msgstr "Editeur invalide."

@@ -88,6 +88,21 @@ class ReaderForm(CommonForm):
         initial=default_country
     )
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        homonyms = Reader.objects.filter(
+            first_name__iexact=cleaned_data.get("first_name")
+        ).filter(
+            last_name__iexact=cleaned_data.get("last_name")
+        ).filter(
+            birthday=cleaned_data.get("birthday")
+        ).filter(
+            city__iexact=cleaned_data.get("city")
+        )
+        if homonyms.exists():
+            self.add_error('last_name', _("This reader already exists."))
+
 
 class ReaderSearchForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
