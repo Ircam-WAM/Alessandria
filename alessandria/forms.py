@@ -119,6 +119,19 @@ class AuthorForm(CommonForm):
         initial=default_country
     )
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        homonyms = Author.objects.filter(
+            first_name__iexact=cleaned_data.get("first_name")
+        ).filter(
+            last_name__iexact=cleaned_data.get("last_name")
+        ).filter(
+            birthday=cleaned_data.get("birthday")
+        )
+        if homonyms.exists():
+            self.add_error('last_name', _("This author already exists."))
+
 
 class AuthorSearchForm(forms.ModelForm):
     class Meta:
