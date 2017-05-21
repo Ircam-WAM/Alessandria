@@ -270,7 +270,7 @@ class AuthorCreateView(EntityCreateView):
     form_class = AuthorForm
 
     def get_success_url(self):
-        if 'redirect_to_book' in self.kwargs:
+        if self.kwargs.get('redirect_to_book', None) is not None:
             # We created the author from the book page
             book_post = self.request.session['book_post_form']
             book_post['authors'].append(str(self.object.id))
@@ -319,7 +319,7 @@ class PublisherCreateView(EntityCreateView):
     form_class = PublisherForm
 
     def get_success_url(self):
-        if 'redirect_to_book' in self.kwargs:
+        if self.kwargs.get('redirect_to_book', None) is not None:
             # We created the publisher from the book page
             book_post = self.request.session['book_post_form']
             book_post['publishers'].append(str(self.object.id))
