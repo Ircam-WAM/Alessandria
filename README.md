@@ -40,6 +40,7 @@ django-admin startproject nom_du_projet
 * Dans le projet Django, ouvrir le fichier *urls.py*
   * Ajouter cet import en début de fichier:
 ```
+from django.conf.urls import include
 from   ajax_select import urls as ajax_select_urls
 ```
      
@@ -115,6 +116,7 @@ INSTALLED_APPS = (
 * In your django project, open the file *urls.py* of your django project
   * Add this import at the beginning of the file:
   ```
+from django.conf.urls import include
 from   ajax_select import urls as ajax_select_urls
 ```
   * Add to *urls_patterns*:
