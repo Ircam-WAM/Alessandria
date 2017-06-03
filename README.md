@@ -9,7 +9,7 @@
 
 ### Récupérer les sources et installer alessandria
 ```
-git clone https://gitlab.com/openlabmatera/alessandria.git
+git clone https://gitlab.com/mirelsol/alessandria.git
 cd alessandria
 python setup.py install
 ```
@@ -85,7 +85,7 @@ urlpatterns   = patterns('',
 
 ### Get the sources and install alessandria
 ```
-git clone https://gitlab.com/openlabmatera/alessandria.git
+git clone https://gitlab.com/mirelsol/alessandria.git
 cd alessandria
 python setup.py install
 ```
