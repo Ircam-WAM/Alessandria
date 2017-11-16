@@ -18,9 +18,9 @@
             <thead>
                 <tr>
                     <th><a href="{% url 'alessandria:book_list' %}?order_field=title">{% trans "Title" %}</a></th>
-                    <th>Auteur</th>
-                    <th><a href="{% url 'alessandria:book_list' %}?order_field=isbn_nb">{% trans "ISBN number" %}</a></th>
-                    <th># Exemplaires</th>
+                    <th>Fabricant</th>
+                    <!-- <th><a href="{% url 'alessandria:book_list' %}?order_field=isbn_nb">{% trans "ISBN number" %}</a></th> -->
+                    <th>Exemplaires</th>
                     <th><a href="{% url 'alessandria:book_list' %}?order_field=created_on">{% trans "Created on" %}</a></th>
                 </tr>
             </thead>
@@ -29,7 +29,7 @@
                 <tr>
                     <td><a href="{% url 'alessandria:book_update' book.id %}">{{ book.title }}</a></td>
                     <td><a href="{% url 'alessandria:author_update' book.authors.first.id %}">{{ book.authors.first }}</td>
-                    <td>{{ book.isbn_nb|default:"-" }}</td>
+                  <!--   <td>{{ book.isbn_nb|default:"-" }}</td>  -->
                     <td>{{ book.get_nb_copy }}</td>
                     <td>{{ book.created_on }}</td>
                 </tr>

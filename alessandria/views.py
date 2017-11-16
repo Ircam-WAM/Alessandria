@@ -218,7 +218,7 @@ class ReaderBorrowCreateView(EntityCreateView):
     template_name = 'alessandria/reader_borrow_detail.html'
     model = ReaderBorrow
     form_class = ReaderBorrowForm
-    
+
     def form_valid(self, form):
         return super(ReaderBorrowCreateView, self).form_valid(form)
 
@@ -400,7 +400,7 @@ class BookCreateView(EntityCreateView):
         super(BookCreateView, self).form_valid(form)
         book_id = self.object.id
         # Automatically propose to create the first copy of the book
-        return HttpResponseRedirect(reverse('alessandria:bookcopy_add', args=[book_id]))
+        return HttpResponseRedirect(reverse('alessandria:book_list'))
 
 
 def save_book_form_to_session(request, dest_url):

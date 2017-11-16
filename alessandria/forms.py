@@ -26,7 +26,9 @@ _css_class_required_field = 'required'
 
 
 class CommonForm(forms.ModelForm):
-    required_css_class = 'required'  # Used in the template
+    #Modification dans le but de ne pas bloquer l'utilisateur
+    #required_css_class = 'required'  # Used in the template
+    exclude = _l_default_exclude_fields
 
 
 class ReaderBorrowForm(CommonForm):
@@ -80,7 +82,7 @@ class ReaderBorrowForm(CommonForm):
 class ReaderForm(CommonForm):
     class Meta:
         model = Reader
-        exclude = _l_default_exclude_fields + ['number', 'disabled_on']
+        exclude = _l_default_exclude_fields + ['number', 'disabled_on', 'birthday', 'sex']
 
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
@@ -126,7 +128,7 @@ class ReaderDisableForm(CommonForm):
 class AuthorForm(CommonForm):
     class Meta:
         model = Author
-        exclude = _l_default_exclude_fields + ['is_isbn_import', 'import_source']
+        exclude = _l_default_exclude_fields + ['is_isbn_import', 'import_source', 'first_name', 'birthday', 'alias']
 
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
@@ -152,12 +154,13 @@ class AuthorSearchForm(forms.ModelForm):
     class Meta:
         model = Author
         fields = ('last_name',)
+        exclude = ['birthday', 'isbn_nb']
 
 
 class PublisherForm(CommonForm):
     class Meta:
         model = Publisher
-        exclude = _l_default_exclude_fields + ['is_isbn_import', 'import_source']
+        exclude = _l_default_exclude_fields + ['is_isbn_import', 'import_source', 'first_name']
 
     country = forms.ChoiceField(
         label=Meta.model._meta.get_field('country').verbose_name,
@@ -180,9 +183,19 @@ class PublisherSearchForm(forms.ModelForm):
 
 class BookForm(CommonForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Override the fields making it NOT mandatory
+        # self.fields['isbn_nb'].required = False
+
     class Meta:
         model = Book
         exclude = _l_default_exclude_fields + ['related_to', 'cover_pic']
+        #exclude = _l_default_exclude_fields + ['related_to', 'cover_pic', 'authors', 'edition_name', 'language', 'height', 'isbn_nb']
+        # Modification du 6 juillet: ajout de 'isbn_nb' dans exclude: provoque une erreur
+
+    #title authors publishers publish_date edition_name classif_mark height isbn_nb audiences
+    #category sub_category abstract tags language cover_pic related_to notes is_isbn_import
 
     title = forms.CharField(
         label=Meta.model._meta.get_field('title').verbose_name,
@@ -192,7 +205,7 @@ class BookForm(CommonForm):
     # 'author_list' and 'publisher_list' are registered lookups.py
     authors = AutoCompleteSelectMultipleField(
         'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
-        required=False, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
+        required=True, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
     )
     publishers = AutoCompleteSelectMultipleField(
         'publisher_list', label=Meta.model._meta.get_field('publishers').verbose_name,
@@ -200,35 +213,38 @@ class BookForm(CommonForm):
     )
     audiences = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(), label=Meta.model._meta.get_field('audiences').verbose_name,
+        required=False,
         queryset=BookAudience.objects.all()
     )
 
-    def clean_authors(self):
-        if not any(self.cleaned_data['authors']):  # It is a list
-            raise forms.ValidationError(_("Please select at least one author"))
-        return self.cleaned_data['authors']
-
-    def clean_publishers(self):
-        if not any(self.cleaned_data['publishers']):  # It is a list
-            raise forms.ValidationError(_("Please select at least one publisher"))
-        return self.cleaned_data['publishers']
+    # def clean_authors(self):
+    #     if not any(self.cleaned_data['authors']):  # It is a list
+    #         raise forms.ValidationError(_("Please select at least one author"))
+    #     return self.cleaned_data['authors']
+    #
+    # def clean_publishers(self):
+    #     if not any(self.cleaned_data['publishers']):  # It is a list
+    #         raise forms.ValidationError(_("Please select at least one publisher"))
+    #     return self.cleaned_data['publishers']
 
 
 class BookSearchForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Override the fields making it NOT mandatory
-        self.fields['isbn_nb'].required = False
+        #self.fields['isbn_nb'].required = False
         self.fields['title'].required = False
         self.fields['category'].required = False
 
     author_name = forms.CharField(label=_('Author'), required=False)
-    has_copy = forms.BooleanField(label=_('Has copy'), initial=True)
+    #has_copy = forms.BooleanField(label=_('Has copy'), initial=True)
     took_away = forms.BooleanField(label=_('Took away'), initial=False, required=False)
 
     class Meta:
         model = Book
         fields = ('isbn_nb', 'title', 'category', 'sub_category',)
+        #ajout de 'isbn_nb' dans exclude: commenter aussi la ligne 228, sinon erreur
+        exclude = _l_default_exclude_fields + ['number', 'disabled_on', 'isbn_nb']
 
 
 class BookCopyForm(CommonForm):
@@ -250,4 +266,3 @@ class BookCopyDisableForm(CommonForm):
         label=Meta.model._meta.get_field('disabled_on').verbose_name,
         required=True
     )
-

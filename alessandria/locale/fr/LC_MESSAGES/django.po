@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-21 07:33+0200\n"
+"POT-Creation-Date: 2017-08-08 10:39+0200\n"
 "PO-Revision-Date: 2017-05-21 07:34+0200\n"
 "Last-Translator: Unknown <mirelsol@vito-pc>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
@@ -17,56 +17,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:57
+#: forms.py:59
 msgid "Please select a reader"
-msgstr "Veuillez sélectionner un lecteur"
+msgstr "Veuillez sélectionner un/e utilisateur/trice"
 
-#: forms.py:63
+#: forms.py:65
 msgid "Please select a a book copy"
-msgstr "Veuillez sélectionner un exemplaire"
+msgstr "Veuillez sélectionner un modèle de matériel"
 
-#: forms.py:75
+#: forms.py:77
 #, python-brace-format
 msgid "This book copy was already borrowed by {0}."
-msgstr "Cet exemplaire a déjà été emprunté par {0}."
+msgstr "Ce matériel a déjà été emprunté par {0}."
 
-#: forms.py:104
+#: forms.py:106
 msgid "This reader already exists."
-msgstr "Ce lecteur existe déjà."
+msgstr "Cet/te utilisateur/trice existe déjà."
 
-#: forms.py:113
+#: forms.py:115
 msgid "Readers enabled"
-msgstr "Lecteurs actifs"
+msgstr "Utilisateurs/trices actifs/ves"
 
-#: forms.py:148
+#: forms.py:150
 msgid "This author already exists."
-msgstr "Cet auteur existe déjà."
+msgstr "Ce fabricant existe déjà."
 
-#: forms.py:172
+#: forms.py:175
 msgid "This publisher already exists."
-msgstr "Cet éditeur existe déjà."
+msgstr "Ce fabricant existe déjà."
 
-#: forms.py:208
-msgid "Please select at least one author"
-msgstr "Veuillez sélectionner au moins un auteur"
-
-#: forms.py:213
-msgid "Please select at least one publisher"
-msgstr "Veuillez sélectionner au moins un éditeur"
-
-#: forms.py:225 models.py:345 templates/alessandria/author_detail.html:4
+#: forms.py:239 models.py:345 templates/alessandria/author_detail.html:4
 #: templates/alessandria/author_detail.html:6
 #: templates/alessandria/book_detail.html:21
 #: templates/alessandria/book_isbn_import.html:77
 #: templates/alessandria/index.html:52
 msgid "Author"
-msgstr "Auteur"
+msgstr "Fabricant"
 
-#: forms.py:226
-msgid "Has copy"
-msgstr "Avec exemplaire"
-
-#: forms.py:227
+#: forms.py:241
 msgid "Took away"
 msgstr "Retiré"
 
@@ -88,35 +76,36 @@ msgstr "Historique de navigation"
 
 #: models.py:21
 msgid "Library name"
-msgstr "Nom de la bibliothèque"
+msgstr "Nom du parc de matériel"
 
 #: models.py:22
 msgid "Library address 1"
-msgstr "Adresse 1 de la bibliothèque"
+msgstr "Adresse 1 du parc de matériel"
 
 #: models.py:23
 msgid "Library address 2"
-msgstr "Adresse 2 de la bibliothèque"
+msgstr "Adresse 2 du parc de matériel"
 
 #: models.py:24
 msgid "Library zip code"
-msgstr "Code postal de la bibliothèque"
+msgstr "Code postal du parc de matériel"
 
 #: models.py:25
 msgid "Library city"
-msgstr "Ville de la bibliothèque"
+msgstr "Ville du parc de matériel"
 
 #: models.py:26
 msgid "Library country"
-msgstr "Pays de la bibliothèque"
+msgstr ""
+"Structure de rattachement du parc de matériel (Institut, laboratoire, etc...)"
 
 #: models.py:27
 msgid "Library phone"
-msgstr "Téléphone de la bibliothèque"
+msgstr "Téléphone du/de la responsable du parc de matériel"
 
 #: models.py:28
 msgid "Library e-mail"
-msgstr "E-mail de la bibliothèque"
+msgstr "E-mail du/de la responsable du parc de matériel"
 
 #: models.py:29
 msgid "Library website"
@@ -144,11 +133,11 @@ msgstr "Langues"
 
 #: models.py:99
 msgid "Job"
-msgstr "Profession"
+msgstr "Catégorie professionnelle"
 
 #: models.py:100
 msgid "Jobs"
-msgstr "Professions"
+msgstr "Catégories professionnelles"
 
 #: models.py:105 models.py:420
 msgid "Audience"
@@ -160,43 +149,43 @@ msgstr "Publics cibles"
 
 #: models.py:111
 msgid "Book condition"
-msgstr "Etat d'un livre"
+msgstr "Etat du matériel"
 
 #: models.py:112
 msgid "Book conditions"
-msgstr "Etats d'un livre"
+msgstr "Etats du matériel"
 
 #: models.py:118
 msgid "Book category"
-msgstr "Catégorie d'un livre"
+msgstr "Catégorie du matériel"
 
 #: models.py:119
 msgid "Book categories"
-msgstr "Catégories d'un livre"
+msgstr "Catégories du matériel"
 
 #: models.py:128
 msgid "Book sub-category"
-msgstr "Sous-catégorie d'un livre"
+msgstr "Sous-catégorie d'un matériel"
 
 #: models.py:129
 msgid "Book sub-categories"
-msgstr "Sous-catégories d'un livre"
+msgstr "Sous-catégories d'un matériel"
 
 #: models.py:135
 msgid "Book tag"
-msgstr "Etiquette d'un livre"
+msgstr "Etiquette d'un "
 
 #: models.py:136
 msgid "Book tags"
-msgstr "Etiquettes d'un livre"
+msgstr "Etiquettes d'un matériel"
 
 #: models.py:141
 msgid "Book origin"
-msgstr "Origine d'un livre"
+msgstr "Origine d'un matériel"
 
 #: models.py:142
 msgid "Book origins"
-msgstr "Origines d'un livre"
+msgstr "Origines d'un matériel"
 
 #: models.py:184
 msgid "Software news (item)"
@@ -225,7 +214,7 @@ msgstr "Nom"
 
 #: models.py:208
 msgid "Gender"
-msgstr "Sexe"
+msgstr "Genre"
 
 #: models.py:208
 msgid "Female"
@@ -245,7 +234,7 @@ msgstr "Adresse 1"
 
 #: models.py:211
 msgid "Address 2"
-msgstr "Adresse 2"
+msgstr "Bureau"
 
 #: models.py:212
 msgid "Zip code"
@@ -276,16 +265,16 @@ msgstr "Désactivé le"
 msgid "Notes"
 msgstr "Notes"
 
-#: models.py:265 models.py:531 templates/alessandria/book_detail.html:256
+#: models.py:265 models.py:531 templates/alessandria/book_detail.html:257
 #: templates/alessandria/reader_borrow_list.html:17
 #: templates/alessandria/reader_detail.html:4
 #: templates/alessandria/reader_detail.html:10
 msgid "Reader"
-msgstr "Lecteur"
+msgstr "Utilisateur/trice"
 
-#: models.py:266 templates/alessandria/base_tpl.html:58
+#: models.py:266 templates/alessandria/base_tpl.html:59
 msgid "Readers"
-msgstr "Lecteurs"
+msgstr "Utilisateurs/trices"
 
 #: models.py:283
 msgid "Alias"
@@ -296,13 +285,13 @@ msgid "Website"
 msgstr "Site web"
 
 #: models.py:288 models.py:364 models.py:429
-#: templates/alessandria/base_tpl.html:51
+#: templates/alessandria/base_tpl.html:52
 msgid "ISBN import"
 msgstr "Import ISBN"
 
-#: models.py:346 models.py:413 templates/alessandria/base_tpl.html:67
+#: models.py:346 models.py:413 templates/alessandria/base_tpl.html:68
 msgid "Authors"
-msgstr "Auteurs"
+msgstr "Fabricants"
 
 #: models.py:361 templates/alessandria/author_list.html:20
 #: templates/alessandria/book_isbn_import.html:89
@@ -316,15 +305,15 @@ msgstr "Nom"
 #: templates/alessandria/book_list.html:20
 #: templates/alessandria/book_list_by_publisher.html:15
 msgid "Title"
-msgstr "Titre"
+msgstr "Nom du matériel"
 
-#: models.py:414 templates/alessandria/base_tpl.html:80
+#: models.py:414 templates/alessandria/base_tpl.html:81
 msgid "Publishers"
-msgstr "Editeurs"
+msgstr "Fabricants"
 
 #: models.py:415
 msgid "Publishing date"
-msgstr "Date de publication"
+msgstr "Date d'achat"
 
 #: models.py:416
 msgid "Title edition"
@@ -332,7 +321,11 @@ msgstr "Titre de l'édition"
 
 #: models.py:417
 msgid "Classification mark"
-msgstr "Cote"
+msgstr "Référence"
+
+#: models.py:417
+msgid "Corresponds to serial number or internal reference"
+msgstr "Entrer le numéro de série ou la référence interne"
 
 #: models.py:418
 msgid "Height (inches)"
@@ -355,7 +348,7 @@ msgstr "Sous-catégorie"
 
 #: models.py:423
 msgid "Abstract"
-msgstr "Résumé"
+msgstr "Notice succincte"
 
 #: models.py:424
 msgid "Tags"
@@ -383,16 +376,16 @@ msgstr "Nombre d'exemplaires"
 #: templates/alessandria/reader_borrow_list.html:18
 #: templates/alessandria/reader_detail.html:89
 msgid "Book"
-msgstr "Livre"
+msgstr "matériel"
 
 #: models.py:480 templates/alessandria/author_detail.html:13
 #: templates/alessandria/base_tpl.html:48
 msgid "Books"
-msgstr "Livres"
+msgstr "matériels"
 
 #: models.py:487
 msgid "Condition"
-msgstr "Etat"
+msgstr "État"
 
 #: models.py:488
 msgid "Origin"
@@ -413,11 +406,11 @@ msgstr "Retiré le"
 #: models.py:515 templates/alessandria/bookcopy_detail.html:5
 #: templates/alessandria/bookcopy_detail.html:11
 msgid "Book sample"
-msgstr "Exemplaire d'un livre"
+msgstr "Exemplaire d'un matériel"
 
 #: models.py:516
 msgid "Book samples"
-msgstr "Exemplaires des livres"
+msgstr "Exemplaires des matériels"
 
 #: models.py:532 templates/alessandria/book_detail.html:45
 #: templates/alessandria/book_detail.html:47
@@ -439,11 +432,11 @@ msgstr "Rendu le"
 
 #: models.py:542
 msgid "Reader borrowing"
-msgstr "Emprunt d'un lecteur"
+msgstr "Emprunt d'un/e utilisateur/trice"
 
 #: models.py:543
 msgid "Reader borrowings"
-msgstr "Emprunts des lecteurs"
+msgstr "Emprunts des utilisateurs/trices"
 
 #: models.py:553
 #, python-format
@@ -521,11 +514,11 @@ msgstr "Fiche"
 #: templates/alessandria/author_list.html:4
 #: templates/alessandria/author_list.html:6
 msgid "Author list"
-msgstr "Liste des auteurs"
+msgstr "Liste des fabricants"
 
 #: templates/alessandria/author_list.html:33
 msgid "No author."
-msgstr "Aucun auteur."
+msgstr "Aucun fabricant enregistré."
 
 #: templates/alessandria/base_tpl.html:27
 msgid "Toggle navigation"
@@ -543,9 +536,9 @@ msgstr "Emprunts"
 
 #: templates/alessandria/base_tpl.html:39
 #: templates/alessandria/base_tpl.html:50
-#: templates/alessandria/base_tpl.html:60
-#: templates/alessandria/base_tpl.html:69
-#: templates/alessandria/base_tpl.html:82
+#: templates/alessandria/base_tpl.html:61
+#: templates/alessandria/base_tpl.html:70
+#: templates/alessandria/base_tpl.html:83
 #: templates/alessandria/book_detail.html:34
 #: templates/alessandria/book_detail.html:84
 #: templates/alessandria/book_detail.html:98
@@ -566,30 +559,30 @@ msgstr "Emprunts en retard"
 msgid "All borrowings"
 msgstr "Tous les emprunts"
 
-#: templates/alessandria/base_tpl.html:52
-#: templates/alessandria/base_tpl.html:61
-#: templates/alessandria/base_tpl.html:70
-#: templates/alessandria/base_tpl.html:83
+#: templates/alessandria/base_tpl.html:53
+#: templates/alessandria/base_tpl.html:62
+#: templates/alessandria/base_tpl.html:71
+#: templates/alessandria/base_tpl.html:84
 msgid "List"
 msgstr "Liste"
 
-#: templates/alessandria/base_tpl.html:91
+#: templates/alessandria/base_tpl.html:92
 msgid "Log out"
 msgstr "Déconnexion"
 
-#: templates/alessandria/base_tpl.html:93 templates/alessandria/login.html:35
+#: templates/alessandria/base_tpl.html:94 templates/alessandria/login.html:35
 msgid "Log in"
 msgstr "Connexion"
 
-#: templates/alessandria/base_tpl.html:99
+#: templates/alessandria/base_tpl.html:100
 msgid "Administration"
 msgstr "Administration"
 
-#: templates/alessandria/base_tpl.html:104
+#: templates/alessandria/base_tpl.html:105
 msgid "History"
 msgstr "Historique"
 
-#: templates/alessandria/base_tpl.html:109
+#: templates/alessandria/base_tpl.html:110
 msgid "Empty"
 msgstr "Vide"
 
@@ -601,28 +594,28 @@ msgstr "Exemplaires"
 msgid "removed"
 msgstr "retiré"
 
-#: templates/alessandria/book_detail.html:230
+#: templates/alessandria/book_detail.html:231
 #: templates/alessandria/reader_borrow_detail.html:41
 msgid "Other books of"
-msgstr "Autres livres de"
+msgstr "Autres matériels de"
 
-#: templates/alessandria/book_detail.html:255
+#: templates/alessandria/book_detail.html:256
 #: templates/alessandria/reader_detail.html:88
 msgid "Borrowing date"
 msgstr "Date d'emprunt"
 
-#: templates/alessandria/book_detail.html:257
+#: templates/alessandria/book_detail.html:258
 msgid "Returned"
 msgstr "Rendu"
 
 #: templates/alessandria/book_isbn_import.html:6
 #: templates/alessandria/book_isbn_import.html:8
 msgid "ISBN import of a book"
-msgstr "Import ISBN d'un livre"
+msgstr "Import ISBN d'un matériel"
 
 #: templates/alessandria/book_isbn_import.html:44
 msgid "This book"
-msgstr "Ce livre"
+msgstr "Ce matériel"
 
 #: templates/alessandria/book_isbn_import.html:44
 msgid "already exists."
@@ -630,7 +623,7 @@ msgstr "existe déjà."
 
 #: templates/alessandria/book_isbn_import.html:54
 msgid "Book found"
-msgstr "Livre trouvé"
+msgstr "matériel trouvé"
 
 #: templates/alessandria/book_isbn_import.html:68
 #: templates/alessandria/index.html:20
@@ -639,26 +632,28 @@ msgstr "Date"
 
 #: templates/alessandria/book_isbn_import.html:81
 msgid "This author already exists, it will be linked to the book."
-msgstr "Cet auteur existe déjà, il sera associé au livre."
+msgstr "Ce fabricant existe déjà, il sera associé au matériel."
 
 #: templates/alessandria/book_isbn_import.html:83
 msgid "This author wasn't found in the database, you will have to create it."
 msgstr ""
-"Cet auteur n'a pas été trouvé dans la base de données, vous devrez le créer."
+"Ce fabricant n'a pas été trouvé dans la base de données, vous devrez le "
+"créer."
 
 #: templates/alessandria/book_isbn_import.html:97
 msgid "No author is set in ISBN data"
-msgstr "Aucun auteur ne figure dans les données ISBN"
+msgstr "Aucun fabricant existant"
 
 #: templates/alessandria/book_isbn_import.html:108
 msgid "This publisher already exists, it will be linked to the book."
-msgstr "Cet éditeur existe, il sera associé au livre."
+msgstr "Ce fabricant existe, il sera associé au matériel."
 
 #: templates/alessandria/book_isbn_import.html:110
 msgid ""
 "This publisher wasn't found in the database, you will have to create it."
 msgstr ""
-"Cet éditeur n'a pas été trouvé dans la base de données, vous devrez le créer."
+"Ce fabricant n'a pas été trouvé dans la base de données, vous devrez le "
+"créer."
 
 #: templates/alessandria/book_isbn_import.html:124
 msgid "No publisher is set in ISBN data"
@@ -677,20 +672,20 @@ msgstr "Numéro ISBN inconnu."
 #: templates/alessandria/book_list_by_publisher.html:4
 #: templates/alessandria/book_list_by_publisher.html:6
 msgid "Book list"
-msgstr "Liste des livres"
+msgstr "Liste des matériels"
 
 #: templates/alessandria/book_list.html:37
 #: templates/alessandria/book_list_by_publisher.html:32
 msgid "No book."
-msgstr "Aucun livre."
+msgstr "Aucun matériel."
 
 #: templates/alessandria/book_list_by_publisher.html:36
 msgid "Back to the publisher"
-msgstr "Retour à la fiche de l'éditeur"
+msgstr "Retour à la fiche du fabricant"
 
 #: templates/alessandria/bookcopy_detail.html:18
 msgid "This sample was removed."
-msgstr "Cet exemplaire a été retiré."
+msgstr "Ce matériel a été retiré."
 
 #: templates/alessandria/bookcopy_detail.html:47
 msgid "Take out"
@@ -705,7 +700,7 @@ msgstr "Annuler"
 #: templates/alessandria/bookcopy_disable.html:4
 #: templates/alessandria/bookcopy_disable.html:10
 msgid "Removing the sample"
-msgstr "Retrait de l'exemplaire"
+msgstr "Retrait du matériel"
 
 #: templates/alessandria/bookcopy_disable.html:15
 msgid ""
@@ -746,7 +741,7 @@ msgstr "Aucune actualité."
 
 #: templates/alessandria/index.html:44
 msgid "Last books registered"
-msgstr "Derniers livres enregistrés"
+msgstr "Derniers matériels enregistrés"
 
 #: templates/alessandria/login.html:4 templates/alessandria/login.html:6
 msgid "Authentication"
@@ -758,7 +753,7 @@ msgstr "Connexion"
 
 #: templates/alessandria/login.html:21
 msgid "Username"
-msgstr "Nom d'utilisateur"
+msgstr "Nom d'utilisateur/trice"
 
 #: templates/alessandria/login.html:27
 msgid "Password"
@@ -771,16 +766,16 @@ msgstr "Editeur"
 
 #: templates/alessandria/publisher_detail.html:20
 msgid "See all books of this publisher"
-msgstr "Voir tous les livres de cet éditeur"
+msgstr "Voir tous les matériels de ce fabricant"
 
 #: templates/alessandria/publisher_list.html:4
 #: templates/alessandria/publisher_list.html:6
 msgid "Publisher list"
-msgstr "Liste des éditeurs"
+msgstr "Liste des fabricants"
 
 #: templates/alessandria/publisher_list.html:31
 msgid "No publisher."
-msgstr "Aucun éditeur."
+msgstr "Aucun fabricant."
 
 #: templates/alessandria/reader_borrow_detail.html:4
 msgid "Borrowing"
@@ -809,23 +804,23 @@ msgstr "Désactiver"
 
 #: templates/alessandria/reader_detail.html:46
 msgid "Summary"
-msgstr "Résumé"
+msgstr "Notice succincte"
 
 #: templates/alessandria/reader_disable.html:4
 msgid "Disabling a reader"
-msgstr "Désactiver un lecteur"
+msgstr "Désactiver un/e utilisateur/trice"
 
 #: templates/alessandria/reader_disable.html:13
 msgid ""
 "Disabling a reader means that he won't be able to borrow books anymore. "
 "However he will be kept in the system history."
 msgstr ""
-"Désactiver un lecteur signifie qu'il ne pourra plus emprunter de livres. "
-"Toutefois il sera conservé dans l'historique du système."
+"Désactiver un/e utilisateur/trice signifie qu'il ne pourra plus emprunter de "
+"matériels. Toutefois il sera conservé dans l'historique du système."
 
 #: templates/alessandria/reader_list.html:35
 msgid "No reader."
-msgstr "Aucun lecteur."
+msgstr "Aucun/e utilisateur/trice."
 
 #: views.py:52 views.py:73
 msgid "Error when saving the record."
@@ -837,16 +832,18 @@ msgstr "Enregistrement effectué avec succès"
 
 #: views.py:182
 msgid "Login error - wrong username or password."
-msgstr "Erreur de connexion - nom d'utilisateur ou mot de passe incorrect"
+msgstr ""
+"Erreur de connexion - nom d'utilisateur/trice ou mot de passe incorrect"
 
 #: views.py:300
 msgid "Unable to remove this author because it is referenced in a book."
-msgstr "Impossible de supprimer cet auteur car il est référencé dans un livre."
+msgstr ""
+"Impossible de supprimer ce fabricant car il est référencé dans un matériel."
 
 #: views.py:349
 msgid "Unable to remove this publisher because it is referenced in a book."
 msgstr ""
-"Impossible de supprimer cet éditeur car il est référencé dans un livre."
+"Impossible de supprimer ce fabricant car il est référencé dans un matériel."
 
 #: views.py:575
 msgid "The removing date can't be prior to the registring date."
@@ -858,4 +855,13 @@ msgstr "Exemplaire retiré avec succès."
 
 #: views.py:613
 msgid "Reader successfully disabled."
-msgstr "Lecteur désactivé avec succès"
+msgstr "Utilisateur/trice désactivé/e avec succès"
+
+#~ msgid "Please select at least one author"
+#~ msgstr "Veuillez sélectionner au moins un fabricant"
+
+#~ msgid "Please select at least one publisher"
+#~ msgstr "Veuillez sélectionner au moins un fabricant"
+
+#~ msgid "Has copy"
+#~ msgstr "Avec exemplaire"

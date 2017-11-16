@@ -70,7 +70,7 @@ class UserNavigationHistory(models.Model):
 
 class ReferenceEntity(models.Model):
     label = models.CharField(u"Description", max_length=30)
-    
+
     class Meta:
         abstract = True
 
@@ -206,7 +206,7 @@ class Reader(ModelEntity):
     first_name = models.CharField(_("First name"), max_length=20)
     last_name = models.CharField(_("Last name"), max_length=30)
     sex = models.CharField(_("Gender"), max_length=3, choices=(('f', _("Female")), ('m', _("Male"))))
-    birthday = models.DateField(_("Birthdate"))
+    birthday = models.DateField(_("Birthdate"), null=True, blank=True)
     addr1 = models.CharField(_("Address 1"), max_length=30)
     addr2 = models.CharField(_("Address 2"), null=True, max_length=30, blank=True)
     zip = models.CharField(_("Zip code"), max_length=10)
@@ -236,7 +236,7 @@ class Reader(ModelEntity):
 
     def is_disabled(self):
         return self.disabled_on is not None
-    
+
     def list_borrow_all(self):
         return self.readerborrow_set.all()
 
@@ -245,7 +245,7 @@ class Reader(ModelEntity):
 
     def list_borrow_late(self):
         return self.readerborrow_set.filter(returned_on=None, borrow_due_date__lt=datetime.datetime.now())
-    
+
     def nb_borrow(self):
         return self.readerborrow_set.count()
 
@@ -259,7 +259,7 @@ class Reader(ModelEntity):
 
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
-    
+
     class Meta:
         ordering = ['last_name', 'first_name']
         verbose_name = _("Reader")
@@ -311,7 +311,7 @@ class Author(ModelEntity):
 
     def get_full_name(self):
         if not self.first_name:
-            return ""
+            return self.last_name
         full_name = ' '.join([self.first_name, self.last_name])
         if self.alias:
             full_name += ' (' + self.alias + ')'
@@ -382,7 +382,7 @@ class Publisher(ModelEntity):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         ordering = ['name']
         verbose_name = "Publisher"
@@ -392,41 +392,41 @@ class Publisher(ModelEntity):
 class BookManager(models.Manager):
     def search(self, isbn_nb='', title='', category='', sub_category='', author_name=''):
         r_list = self.all()
-        if isbn_nb != '':
-            isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
-            r_list = r_list.filter(isbn_nb=isbn_nb)
-        if title != '':
-            r_list = r_list.filter(title__icontains=title)
-        if category != '':
-            r_list = r_list.filter(category__id=category)
-        if sub_category != '':
-            r_list = r_list.filter(sub_category__id=sub_category)
-        if author_name != '':
-            r_list = (
-                r_list.filter(Q(authors__last_name__icontains=author_name) | Q(authors__alias__icontains=author_name))
-            )
+        # if isbn_nb != '':
+        #     isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
+        #     r_list = r_list.filter(isbn_nb=isbn_nb)
+        # if title != '':
+        #     r_list = r_list.filter(title__icontains=title)
+        # if category != '':
+        #     r_list = r_list.filter(category__id=category)
+        # if sub_category != '':
+        #     r_list = r_list.filter(sub_category__id=sub_category)
+        # if author_name != '':
+        #     r_list = (
+        #         r_list.filter(Q(authors__last_name__icontains=author_name) | Q(authors__alias__icontains=author_name))
+        #     )
         return r_list
 
 
 class Book(ModelEntity):
     title = models.CharField(_("Title"), max_length=50)
     authors = models.ManyToManyField(Author, verbose_name=_("Authors"))
-    publishers = models.ManyToManyField(Publisher, verbose_name=_("Publishers"))
-    publish_date = models.DateField(_("Publishing date"))
+    publishers = models.ManyToManyField(Publisher, verbose_name=_("Publishers"), blank=True)
+    publish_date = models.DateField(_("Publishing date"), null=True, blank=True)
     edition_name = models.CharField(_("Title edition"), max_length=80, null=True, blank=True)
-    classif_mark = models.CharField(_("Classification mark"), max_length=10)
+    classif_mark = models.CharField(_("Classification mark"), max_length=10, null=True, blank=True, help_text=_("Corresponds to serial number or internal reference"))
     height = models.PositiveIntegerField(_("Height (inches)"), null=True, blank=True)
     isbn_nb = models.CharField(_("ISBN number"), max_length=20, null=True, blank=True, unique=True)
-    audiences = models.ManyToManyField(BookAudience, verbose_name=_("Audience"))
+    audiences = models.ManyToManyField(BookAudience, verbose_name=_("Audience"), blank=True)
     category = models.ForeignKey(BookCategory, verbose_name=_("Category"))
     sub_category = models.ForeignKey(BookSubCategory, null=True, blank=True, verbose_name=_("Sub-category"))
     abstract = models.TextField(_("Abstract"), null=True, blank=True)
     tags = models.ManyToManyField(BookTag, verbose_name=_("Tags"), blank=True)
-    language = models.ForeignKey(Language, verbose_name=_("Language"))
+    language = models.ForeignKey(Language, verbose_name=_("Language"), null=True, blank=True)
     cover_pic = models.ImageField(verbose_name=_("Cover"), upload_to='alessandria/upload', null=True, blank=True)
     related_to = models.ForeignKey('Book', null=True, blank=True, verbose_name=_("Linked to"))
     notes = models.TextField(_("Notes"), null=True, blank=True)
-    is_isbn_import = models.BooleanField(_("ISBN import"), default=False)
+    is_isbn_import = models.BooleanField(_("ISBN import"), default=False, blank=True)
 
     objects = BookManager()
 
@@ -473,7 +473,7 @@ class Book(ModelEntity):
 
     def __str__(self):
         return self.title
-    
+
     class Meta:
         ordering = ['-created_on']
         verbose_name = _("Book")
@@ -558,4 +558,3 @@ class ReaderBorrow(ModelEntity):
 
     def __str__(self):
         return "%s : %s" % (str(self.reader), str(self.bookcopy.book))
-

@@ -8,9 +8,9 @@
         <meta name="description" content="Alessandria">
         <meta name="author" content="Marc SCHNEIDER">
         <!--link rel="icon" href="../../favicon.ico" -->
-      
+
         <title>{% block title %}Alessandria - {{ LIBRARY_NAME }}{% endblock %}</title>
-      
+
         <link rel="stylesheet" href="{% static 'alessandria/layout/bootstrap/css/bootstrap.min.css' %}" />
         <link rel="stylesheet" href="{% static 'alessandria/layout/style.css' %}" />
         <link rel="stylesheet" href="{% static 'alessandria/layout/font-awesome/css/font-awesome.min.css' %}">
@@ -48,7 +48,8 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Books" %}<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="{% url 'alessandria:book_add' %}">{% trans "Add" %}</a></li>
-                                    <li><a href="{% url 'alessandria:book_isbn_import' %}">{% trans "ISBN import" %}</a></li>
+                                    <!--Modif 10/07/2017-->
+                                    <!--<li><a href="{% url 'alessandria:book_isbn_import' %}">{% trans "ISBN import" %}</a></li>-->
                                     <li><a href="{% url 'alessandria:book_list' %}">{% trans "List" %}</a></li>
                                 </ul>
                             </li>
@@ -75,7 +76,7 @@
                                 </ul>
                             </li>
                         </ul>
-                        <ul class="nav navbar-nav">
+                      <!--  <ul class="nav navbar-nav">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Publishers" %}<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -83,7 +84,7 @@
                                     <li><a href="{% url 'alessandria:publisher_list' %}">{% trans "List" %}</a></li>
                                 </ul>
                             </li>
-                        </ul>
+                        </ul> -->
 
                         <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -114,7 +115,7 @@
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
             </div>
-          
+
             <div class="container">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
