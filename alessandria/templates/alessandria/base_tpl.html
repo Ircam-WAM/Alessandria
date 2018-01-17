@@ -76,15 +76,18 @@
                                 </ul>
                             </li>
                         </ul>
-                      <!--  <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Publishers" %}<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{% url 'alessandria:publisher_add' %}">{% trans "Add" %}</a></li>
-                                    <li><a href="{% url 'alessandria:publisher_list' %}">{% trans "List" %}</a></li>
-                                </ul>
+                        <!--Modif 10/01/2018-->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Scan" %}<span class="caret"></span></a>-->
+                                <a href="{% url 'alessandria:matScan' %}">{% trans "Scan" %} {{ user.first_name }}</a>
+
+                                <!--<ul class="dropdown-menu" role="menu">
+                                         <li><a href="{% url 'alessandria:publisher_add' %}">{% trans "Add" %}</a></li>
+                                         <li><a href="{% url 'alessandria:publisher_list' %}">{% trans "List" %}</a></li>
+                                </ul> -->
                             </li>
-                        </ul> -->
+                        </ul>
 
                         <ul class="nav navbar-nav navbar-right">
                             <li>

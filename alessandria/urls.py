@@ -46,4 +46,7 @@ urlpatterns = [
     url(r'bookcopy/(?P<pk>\d+)/delete/$', views.BookCopyDeleteView.as_view(), name='bookcopy_delete'),
 
     url(r'ajax/get/book_sub_categories/?$', ajax.get_book_sub_categories, name='get_book_sub_categories'),
+
+# AJOUT D'UN ONGLET...
+    url(r'scan/$', views.Scan.as_view(), name='matScan'),
 ]

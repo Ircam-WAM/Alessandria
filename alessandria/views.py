@@ -212,7 +212,44 @@ class LoginView(TemplateView):
         else:
             # Bad login details were provided. So we can't log the user in.
             return self.login_error()
+######################## CRÉATION D'UN ONGLET SCAN !!!!!!!!!!!!! ################
+class Scan(TemplateView):
+    template_name = 'alessandria/scan.html'
+    #logging_error_msg = _("Login error - wrong username or password.")
 
+    #def login_error(self):
+    #    messages.error(self.request, self.logging_error_msg)
+    #    return HttpResponseRedirect(reverse('alessandria:login'))
+
+    def matScan(self, request):
+        #"""Gather the username and password provided by the user.
+        #This information is obtained from the login form.
+        #"""
+        username = request.POST['username']
+        #password = request.POST['password']
+
+        # Use Django's machinery to attempt to see if the username/password
+        # combination is valid - a User object is returned if it is.
+        #user = authenticate(username=username, password=password)
+
+        # If we have a User object, the credentials are correct.
+        #if user:
+            # Is the account active? It could have been disabled.
+            #if user.is_active:
+                # If the account is valid and active, we can log the user in.
+                # We'll send the user back to the homepage.
+                #login(request, user)
+                #load_user_nav_history(request, user)
+                #return HttpResponseRedirect(reverse('alessandria:home'))
+            #else:
+                # An inactive account was used - no logging in!
+                #messages.error(self.request, self.logging_error_msg)
+                #return self.login_error()
+        #else:
+            # Bad login details were provided. So we can't log the user in.
+            #return self.login_error()
+
+###################################################################################
 
 class ReaderBorrowCreateView(EntityCreateView):
     template_name = 'alessandria/reader_borrow_detail.html'
