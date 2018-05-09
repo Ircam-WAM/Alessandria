@@ -1,6 +1,7 @@
 #-*- encoding:utf-8 *-*
 import unicodedata
-
+import uuid
+from django.apps import apps
 
 class IsbnUtils(object):
     @staticmethod
@@ -33,3 +34,13 @@ class MyString(object):
         if s is None:
             return None
         return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
+
+def generate_book_uuid():
+    
+    Book = apps.get_model('alessandria','Book')
+    b_uuid = ""
+    while True :
+        b_uuid = str(uuid.uuid4())[:5]   
+        if not Book.objects.filter(_uuid=b_uuid):
+            break;
+    return b_uuid
