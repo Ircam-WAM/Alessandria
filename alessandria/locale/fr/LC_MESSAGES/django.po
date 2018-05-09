@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-08 10:39+0200\n"
+"POT-Creation-Date: 2018-01-17 10:25+0000\n"
 "PO-Revision-Date: 2017-05-21 07:34+0200\n"
 "Last-Translator: Unknown <mirelsol@vito-pc>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
@@ -265,7 +265,7 @@ msgstr "Désactivé le"
 msgid "Notes"
 msgstr "Notes"
 
-#: models.py:265 models.py:531 templates/alessandria/book_detail.html:257
+#: models.py:265 models.py:531 templates/alessandria/book_detail.html:258
 #: templates/alessandria/reader_borrow_list.html:17
 #: templates/alessandria/reader_detail.html:4
 #: templates/alessandria/reader_detail.html:10
@@ -307,7 +307,7 @@ msgstr "Nom"
 msgid "Title"
 msgstr "Nom du matériel"
 
-#: models.py:414 templates/alessandria/base_tpl.html:81
+#: models.py:414
 msgid "Publishers"
 msgstr "Fabricants"
 
@@ -538,7 +538,7 @@ msgstr "Emprunts"
 #: templates/alessandria/base_tpl.html:50
 #: templates/alessandria/base_tpl.html:61
 #: templates/alessandria/base_tpl.html:70
-#: templates/alessandria/base_tpl.html:83
+#: templates/alessandria/base_tpl.html:86
 #: templates/alessandria/book_detail.html:34
 #: templates/alessandria/book_detail.html:84
 #: templates/alessandria/book_detail.html:98
@@ -562,27 +562,32 @@ msgstr "Tous les emprunts"
 #: templates/alessandria/base_tpl.html:53
 #: templates/alessandria/base_tpl.html:62
 #: templates/alessandria/base_tpl.html:71
-#: templates/alessandria/base_tpl.html:84
+#: templates/alessandria/base_tpl.html:87
 msgid "List"
 msgstr "Liste"
 
-#: templates/alessandria/base_tpl.html:92
+#: templates/alessandria/base_tpl.html:82
+#: templates/alessandria/base_tpl.html:83
+msgid "Scan"
+msgstr ""
+
+#: templates/alessandria/base_tpl.html:95
 msgid "Log out"
 msgstr "Déconnexion"
 
-#: templates/alessandria/base_tpl.html:94 templates/alessandria/login.html:35
+#: templates/alessandria/base_tpl.html:97 templates/alessandria/login.html:35
 msgid "Log in"
 msgstr "Connexion"
 
-#: templates/alessandria/base_tpl.html:100
+#: templates/alessandria/base_tpl.html:103
 msgid "Administration"
 msgstr "Administration"
 
-#: templates/alessandria/base_tpl.html:105
+#: templates/alessandria/base_tpl.html:108
 msgid "History"
 msgstr "Historique"
 
-#: templates/alessandria/base_tpl.html:110
+#: templates/alessandria/base_tpl.html:113
 msgid "Empty"
 msgstr "Vide"
 
@@ -594,17 +599,17 @@ msgstr "Exemplaires"
 msgid "removed"
 msgstr "retiré"
 
-#: templates/alessandria/book_detail.html:231
+#: templates/alessandria/book_detail.html:232
 #: templates/alessandria/reader_borrow_detail.html:41
 msgid "Other books of"
 msgstr "Autres matériels de"
 
-#: templates/alessandria/book_detail.html:256
+#: templates/alessandria/book_detail.html:257
 #: templates/alessandria/reader_detail.html:88
 msgid "Borrowing date"
 msgstr "Date d'emprunt"
 
-#: templates/alessandria/book_detail.html:258
+#: templates/alessandria/book_detail.html:259
 msgid "Returned"
 msgstr "Rendu"
 
@@ -822,6 +827,12 @@ msgstr ""
 msgid "No reader."
 msgstr "Aucun/e utilisateur/trice."
 
+#: templates/alessandria/scan.html:5
+msgid ""
+"Merci de scanner le QRCode d'un objet. Vous serez automatiquement redirigé "
+"vers sa page d'emprunt."
+msgstr ""
+
 #: views.py:52 views.py:73
 msgid "Error when saving the record."
 msgstr "Erreur lors de l'enregistrement"
@@ -835,25 +846,25 @@ msgid "Login error - wrong username or password."
 msgstr ""
 "Erreur de connexion - nom d'utilisateur/trice ou mot de passe incorrect"
 
-#: views.py:300
+#: views.py:337
 msgid "Unable to remove this author because it is referenced in a book."
 msgstr ""
 "Impossible de supprimer ce fabricant car il est référencé dans un matériel."
 
-#: views.py:349
+#: views.py:386
 msgid "Unable to remove this publisher because it is referenced in a book."
 msgstr ""
 "Impossible de supprimer ce fabricant car il est référencé dans un matériel."
 
-#: views.py:575
+#: views.py:612
 msgid "The removing date can't be prior to the registring date."
 msgstr "La date de retrait ne peut être antérieure à la date d'enregistrement."
 
-#: views.py:577
+#: views.py:614
 msgid "Sample successfully removed."
 msgstr "Exemplaire retiré avec succès."
 
-#: views.py:613
+#: views.py:650
 msgid "Reader successfully disabled."
 msgstr "Utilisateur/trice désactivé/e avec succès"
 
