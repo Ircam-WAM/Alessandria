@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django_countries.fields import CountryField
 
-from alessandria.utils import IsbnUtils
+from alessandria.utils import *
 
 
 class GeneralConfiguration(models.Model):
@@ -409,7 +409,8 @@ class BookManager(models.Manager):
 
 
 class Book(ModelEntity):
-    title = models.CharField(_("Title"), max_length=50)
+    title = models.CharField(_("Title"), max_length=50)   
+    _uuid = models.CharField(_("Unique Id"), max_length=50)
     authors = models.ManyToManyField(Author, verbose_name=_("Authors"))
     publishers = models.ManyToManyField(Publisher, verbose_name=_("Publishers"), blank=True)
     publish_date = models.DateField(_("Publishing date"), null=True, blank=True)
@@ -427,8 +428,13 @@ class Book(ModelEntity):
     related_to = models.ForeignKey('Book', null=True, blank=True, verbose_name=_("Linked to"))
     notes = models.TextField(_("Notes"), null=True, blank=True)
     is_isbn_import = models.BooleanField(_("ISBN import"), default=False, blank=True)
+    qrcode = models.ImageField(verbose_name=_("QR Code"), upload_to='alessandria/upload/qrcode', null=True, blank=True)
 
     objects = BookManager()
+
+    @property
+    def uuid(self):
+        return 'IRCAM_' + self._uuid
 
     def clean(self):
         if not self.isbn_nb:  # Force empty string to be 'None'
@@ -442,6 +448,8 @@ class Book(ModelEntity):
 
     def save(self, *args, **kwargs):
         self.full_clean()
+        if not self._uuid:
+            self._uuid = generate_book_uuid()
         super(Book, self).save(*args, **kwargs)
 
     @staticmethod
@@ -518,7 +526,7 @@ class BookCopy(ModelEntity):
 
 class ReaderBorrowManager(models.Manager):
     def list_all_by_book(self, book_id):
-        return self.filter(bookcopy__book__id=book_id)
+        return self.filter(book__id=book_id)
 
     def list_current(self):
         return self.filter(returned_on=None)
@@ -529,7 +537,7 @@ class ReaderBorrowManager(models.Manager):
 
 class ReaderBorrow(ModelEntity):
     reader = models.ForeignKey(Reader, verbose_name=_("Reader"))
-    bookcopy = models.ForeignKey(BookCopy, verbose_name=_("Sample"))
+    book = models.ForeignKey(Book, verbose_name=_("Sample"))
     borrowed_date = models.DateField(_("Borrowed on"))
     borrow_due_date = models.DateField(_("Due date"))
     returned_on = models.DateField(_("Returned on"), blank=True, null=True)
@@ -557,4 +565,4 @@ class ReaderBorrow(ModelEntity):
         return reverse('alessandria:reader_borrow_update', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return "%s : %s" % (str(self.reader), str(self.bookcopy.book))
+        return "%s : %s" % (str(self.reader), str(self.book.title))
