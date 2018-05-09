@@ -32,6 +32,14 @@ class CommonForm(forms.ModelForm):
 
 
 class ReaderBorrowForm(CommonForm):
+    
+    def __init__(self, *args, **kwargs):
+        book = kwargs['instance']
+        kwargs['instance'] =  ReaderBorrow.objects.get(book=book)
+        print("************** ", type(kwargs['instance']))
+        super().__init__(*args, **kwargs)
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+
     class Meta:
         model = ReaderBorrow
         exclude = _l_default_exclude_fields
@@ -45,8 +53,8 @@ class ReaderBorrowForm(CommonForm):
     )
 
     # 'bookcopy_list' and 'reader_list' are registered lookups.py
-    bookcopy = AutoCompleteSelectField(
-        'bookcopy_list', label=Meta.model._meta.get_field('bookcopy').verbose_name,
+    book = AutoCompleteSelectField(
+        'book_list', label=Meta.model._meta.get_field('book').verbose_name,
         required=False, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
     )
     reader = AutoCompleteSelectField(
@@ -59,12 +67,12 @@ class ReaderBorrowForm(CommonForm):
             raise forms.ValidationError(_("Please select a reader"))
         return self.cleaned_data['reader']
 
-    def clean_bookcopy(self):
-        bookcopy = self.cleaned_data['bookcopy']
-        if bookcopy is None:
+    def clean_book(self):
+        book = self.cleaned_data['book']
+        if book is None:
             raise forms.ValidationError(_("Please select a a book copy"))
-        # Make sure this bookcopy was not already borrowed by somebody else
-        already_borrowed = ReaderBorrow.objects.filter(bookcopy=bookcopy).filter(returned_on=None).first()
+        # Make sure this book was not already borrowed by somebody else
+        already_borrowed = ReaderBorrow.objects.filter(book=book).filter(returned_on=None).first()
         error = False
         if already_borrowed is not None:
             if self.instance is not None:  # Update mode
@@ -76,7 +84,7 @@ class ReaderBorrowForm(CommonForm):
                 raise forms.ValidationError(
                     _('This book copy was already borrowed by {0}.').format(already_borrowed.reader)
                 )
-        return bookcopy
+        return book
 
 
 class ReaderForm(CommonForm):
@@ -182,15 +190,14 @@ class PublisherSearchForm(forms.ModelForm):
 
 
 class BookForm(CommonForm):
-
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Override the fields making it NOT mandatory
-        # self.fields['isbn_nb'].required = False
+        super(BookForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = Book
         exclude = _l_default_exclude_fields + ['related_to', 'cover_pic']
+        print("********************************************")
+        print(exclude)
         #exclude = _l_default_exclude_fields + ['related_to', 'cover_pic', 'authors', 'edition_name', 'language', 'height', 'isbn_nb']
         # Modification du 6 juillet: ajout de 'isbn_nb' dans exclude: provoque une erreur
 
@@ -216,17 +223,6 @@ class BookForm(CommonForm):
         required=False,
         queryset=BookAudience.objects.all()
     )
-
-    # def clean_authors(self):
-    #     if not any(self.cleaned_data['authors']):  # It is a list
-    #         raise forms.ValidationError(_("Please select at least one author"))
-    #     return self.cleaned_data['authors']
-    #
-    # def clean_publishers(self):
-    #     if not any(self.cleaned_data['publishers']):  # It is a list
-    #         raise forms.ValidationError(_("Please select at least one publisher"))
-    #     return self.cleaned_data['publishers']
-
 
 class BookSearchForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
