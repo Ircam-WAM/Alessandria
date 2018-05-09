@@ -253,7 +253,7 @@ class Scan(TemplateView):
 
 class ReaderBorrowCreateView(EntityCreateView):
     template_name = 'alessandria/reader_borrow_detail.html'
-    model = ReaderBorrow
+    model = Book
     form_class = ReaderBorrowForm
 
     def form_valid(self, form):
@@ -262,7 +262,7 @@ class ReaderBorrowCreateView(EntityCreateView):
 
 class ReaderBorrowUpdateView(EntityUpdateView):
     template_name = 'alessandria/reader_borrow_detail.html'
-    model = ReaderBorrow
+    model = Book
     form_class = ReaderBorrowForm
 
     def form_valid(self, form):
