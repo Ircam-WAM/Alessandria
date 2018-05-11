@@ -9,11 +9,15 @@
 {% block jscript %}
     <script>
         $(document).ready(function() {
-            objectId = null            
+            objectId = ""          
+            var regex = RegExp('^{{ QRCODE_PREFIX }}[a-z0-9]{5}$');
+  
             $(document).keypress(function(event){
-                objectId = event.originalEvent.key
-                if (objectId.match(/^IRCAM_[a-z0-9]{5}$/)) {
-                    let url_mask = "{% url 'alessandria:reader_borrow_update' pk=99999 %}".replace(/99999/, objectId);
+                objectId += event.originalEvent.key
+
+                console.log(objectId, regex.test(objectId))
+                if (regex.test(objectId)) {
+                    let url_mask = "{% url 'alessandria:reader_borrow_update' uuid='IRCAM_99999' %}".replace(/IRCAM_99999/, objectId);
                     document.location.replace(url_mask)
                 }
             })

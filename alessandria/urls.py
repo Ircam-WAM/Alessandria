@@ -4,6 +4,7 @@ from django.conf.urls import url
 
 from alessandria import views
 from alessandria import ajax
+from django.conf import settings
 
 urlpatterns = [
     url(r'^$', views.HomeView.as_view(), name='home'),
@@ -11,7 +12,7 @@ urlpatterns = [
     url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
 
     url(r'reader_borrow/add/$', views.ReaderBorrowCreateView.as_view(), name='reader_borrow_add'),
-    url(r'reader_borrow(?:/(?P<pk>\d+)/)$', views.ReaderBorrowUpdateView.as_view(), name='reader_borrow_update'),
+    url(r'reader_borrow/(?P<uuid>' + settings.QRCODE_PREFIX + '[a-z0-9]{5})/$', views.ReaderBorrowUpdateView.as_view(), name='reader_borrow_update'),
 
     url(r'reader_borrow/list/$', views.ReaderBorrowListView.as_view(), name='reader_borrow_list'),
     url(r'reader_borrow/list/(?P<display>\w+)/$', views.ReaderBorrowListView.as_view(), name='reader_borrow_list'),

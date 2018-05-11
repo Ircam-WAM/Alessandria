@@ -1,6 +1,5 @@
 import isbnlib
 import datetime
-
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User as DjangoUser
@@ -9,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django_countries.fields import CountryField
+from django.conf import settings
 
 from alessandria.utils import *
 
@@ -434,7 +434,7 @@ class Book(ModelEntity):
 
     @property
     def uuid(self):
-        return 'IRCAM_' + self._uuid
+        return  settings.QRCODE_PREFIX + self._uuid
 
     def clean(self):
         if not self.isbn_nb:  # Force empty string to be 'None'
@@ -450,6 +450,9 @@ class Book(ModelEntity):
         self.full_clean()
         if not self._uuid:
             self._uuid = generate_book_uuid()
+        if not qrcode:
+            filename, filebuffer = generate_qrcode(self.uuid)
+            self.qrcode.save(filename, filebuffer)
         super(Book, self).save(*args, **kwargs)
 
     @staticmethod

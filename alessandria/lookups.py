@@ -11,7 +11,7 @@ from alessandria.models import Reader, BookCopy, Author, Publisher, Book
 @register('reader_list')
 class ReaderLookup(LookupChannel):
     model = Reader
-
+    
     def get_query(self, q, request):
         return Reader.objects.filter(
             Q(last_name__icontains=q.upper()) | Q(first_name__icontains=q.title())

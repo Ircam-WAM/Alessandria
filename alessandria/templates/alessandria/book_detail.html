@@ -1,6 +1,5 @@
 {% extends 'alessandria/base_tpl.html' %}
-{% load i18n %}
-{% load tag_extras %}
+{% load i18n tag_extras static %}
 
 {% block title %}{% trans "Book" %}{% endblock %}
 
@@ -206,6 +205,9 @@
                                     {% endif %}
                                 </div>
                             </div>
+
+                            <img src="{% get_media_prefix %}{{ book.qrcode }}" title="" />
+
                             {{ form.is_isbn_import.as_hidden }}
 
                             {% if book.has_copies %}
@@ -246,7 +248,7 @@
         </div>
     </div>
     {% endif %}
-
+    
     {% if object.id > 0 %}
     <div role="tabpanel" class="row tab-pane" id="borrows">
         <div class="col-sm-12">
@@ -265,7 +267,7 @@
                     {% else %}
                         <tr>
                     {% endif %}
-                            <td><a href="{% url 'alessandria:reader_borrow_update' borrow.id %}">{{ borrow.borrowed_date|date:"SHORT_DATE_FORMAT" }}</a></td>
+                            <td><a href="{% url 'alessandria:reader_borrow_update' uuid=book.uuid %}">{{ borrow.borrowed_date|date:"SHORT_DATE_FORMAT" }}</a></td>
                             <td><a href="{% url 'alessandria:reader_update' borrow.reader.id %}">{{ borrow.reader }}</td>
                             <td>{{ borrow.returned_on|default:"" }}</td>
                         </tr>

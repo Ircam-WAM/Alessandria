@@ -1,7 +1,11 @@
 #-*- encoding:utf-8 *-*
 import unicodedata
 import uuid
+import qrcode
+from io import BytesIO
 from django.apps import apps
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 
 class IsbnUtils(object):
     @staticmethod
@@ -44,3 +48,21 @@ def generate_book_uuid():
         if not Book.objects.filter(_uuid=b_uuid):
             break;
     return b_uuid
+
+def generate_qrcode(txt):
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=6,
+        border=0,
+    )
+    qr.add_data(txt)
+    qr.make(fit=True)
+
+    img = qr.make_image()
+
+    bf = BytesIO()
+    img.save(bf)
+    filename = '%s.png' % (txt)
+    filebuffer = InMemoryUploadedFile(bf, None, filename, 'image/png', bf.getbuffer().nbytes, None)
+    return filename, filebuffer    

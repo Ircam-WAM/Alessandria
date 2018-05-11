@@ -33,12 +33,12 @@ class CommonForm(forms.ModelForm):
 
 class ReaderBorrowForm(CommonForm):
     
-    def __init__(self, *args, **kwargs):
-        book = kwargs['instance']
-        kwargs['instance'] =  ReaderBorrow.objects.get(book=book)
-        print("************** ", type(kwargs['instance']))
-        super().__init__(*args, **kwargs)
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    # def __init__(self, *args, **kwargs):
+    #     book = kwargs['instance']
+    #     kwargs['instance'] =  ReaderBorrow.objects.get(book=book)
+    #     print("************** ", type(kwargs['instance']))
+    #     super().__init__(*args, **kwargs)
+    #     print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 
     class Meta:
         model = ReaderBorrow
@@ -196,8 +196,6 @@ class BookForm(CommonForm):
     class Meta:
         model = Book
         exclude = _l_default_exclude_fields + ['related_to', 'cover_pic']
-        print("********************************************")
-        print(exclude)
         #exclude = _l_default_exclude_fields + ['related_to', 'cover_pic', 'authors', 'edition_name', 'language', 'height', 'isbn_nb']
         # Modification du 6 juillet: ajout de 'isbn_nb' dans exclude: provoque une erreur
 
