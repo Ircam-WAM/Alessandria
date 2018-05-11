@@ -411,7 +411,7 @@ class BookManager(models.Manager):
 class Book(ModelEntity):
     title = models.CharField(_("Title"), max_length=50)   
     _uuid = models.CharField(_("Unique Id"), max_length=50)
-    authors = models.ManyToManyField(Author, verbose_name=_("Authors"))
+    authors = models.ManyToManyField(Author, verbose_name=_("Authors"), blank=True)
     publishers = models.ManyToManyField(Publisher, verbose_name=_("Publishers"), blank=True)
     publish_date = models.DateField(_("Publishing date"), null=True, blank=True)
     edition_name = models.CharField(_("Title edition"), max_length=80, null=True, blank=True)

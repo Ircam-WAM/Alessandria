@@ -195,7 +195,7 @@ class BookForm(CommonForm):
 
     class Meta:
         model = Book
-        exclude = _l_default_exclude_fields + ['related_to', 'cover_pic']
+        exclude = _l_default_exclude_fields + ['related_to', '_uuid']
         #exclude = _l_default_exclude_fields + ['related_to', 'cover_pic', 'authors', 'edition_name', 'language', 'height', 'isbn_nb']
         # Modification du 6 juillet: ajout de 'isbn_nb' dans exclude: provoque une erreur
 
@@ -210,7 +210,7 @@ class BookForm(CommonForm):
     # 'author_list' and 'publisher_list' are registered lookups.py
     authors = AutoCompleteSelectMultipleField(
         'author_list', label=Meta.model._meta.get_field('authors').verbose_name,
-        required=True, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
+        required=False, help_text=None, plugin_options={'autoFocus': True, 'minLength': 3}
     )
     publishers = AutoCompleteSelectMultipleField(
         'publisher_list', label=Meta.model._meta.get_field('publishers').verbose_name,
