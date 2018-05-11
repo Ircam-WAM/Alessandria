@@ -565,7 +565,7 @@ class ReaderBorrow(ModelEntity):
         return None
 
     def get_absolute_url(self):
-        return reverse('alessandria:reader_borrow_update', kwargs={'pk': self.pk})
+        return reverse('alessandria:reader_borrow_update', kwargs={'uuid': self.book.uuid})
 
     def __str__(self):
         return "%s : %s" % (str(self.reader), str(self.book.title))
