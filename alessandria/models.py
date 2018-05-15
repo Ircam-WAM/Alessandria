@@ -434,7 +434,7 @@ class Book(ModelEntity):
 
     @property
     def uuid(self):
-        return  settings.QRCODE_PREFIX + self._uuid
+        return  settings.QRCODE_PREFIX+ settings.QRCODE_SEP + self._uuid
 
     def clean(self):
         if not self.isbn_nb:  # Force empty string to be 'None'

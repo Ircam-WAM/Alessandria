@@ -69,11 +69,14 @@
                         {% endif %}
                             <div class="form-group">
                                 <label for="{{ form.title.id_for_label }}" class="col-sm-2 control-label {{ form.title.css_classes }}">{{ form.title.label }}</label>
-                                <div class="col-sm-8">
+                                <div class="col-sm-7">
                                     {{ form.title|addcss:"form-control" }}
                                     {% if form.title.errors %}
                                         <div class="text-danger">{{ form.title.errors }}</div>
                                     {% endif %}
+                                </div>
+                                <div class="col-sm-3">
+                                    <span><strong>{% trans 'Unique ID' %} : </strong> {{ book.uuid }}</span>
                                 </div>
                             </div>
 

@@ -223,6 +223,7 @@ class Scan(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Scan, self).get_context_data(**kwargs)
         context['QRCODE_PREFIX'] = settings.QRCODE_PREFIX
+        context['QRCODE_SEP'] = settings.QRCODE_SEP
         return context
 
 
@@ -241,7 +242,7 @@ class ReaderBorrowUpdateView(EntityUpdateView):
     form_class = ReaderBorrowForm
 
     def get_object(self, queryset=None):
-        b_uuid = re.sub(settings.QRCODE_PREFIX, '', self.kwargs['uuid'])    
+        b_uuid = re.sub(settings.QRCODE_PREFIX + settings.QRCODE_SEP, '', self.kwargs['uuid'])    
         try:
             return ReaderBorrow.objects.get(book___uuid=b_uuid)
         except :
