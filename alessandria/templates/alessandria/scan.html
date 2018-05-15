@@ -11,14 +11,13 @@
         $(document).ready(function() {
             objectId = ""          
             var regex = RegExp('^{{ QRCODE_PREFIX }}({{ QRCODE_SEP }}|!)[a-z0-9]{5}$');
-  
             $(document).keypress(function(event){
-                objectId += event.originalEvent.key
-                console.log(objectId, regex.test(objectId))
+                objectId += event.originalEvent.key;
+                console.log(objectId);
                 if (regex.test(objectId)) {
-                    objectId.replace('!','_')
-                    let url_mask = "{% url 'alessandria:reader_borrow_update' uuid='IRCAM_99999' %}".replace(/IRCAM_99999/, objectId)
-                    document.location.replace(url_mask)
+                    objectId.replace('!','_');
+                    let url_mask = "{% url 'alessandria:reader_borrow_update' uuid='IRCAM_99999' %}".replace(/IRCAM_99999/, objectId);
+                    document.location.replace(url_mask);
                 }
             })
         })
