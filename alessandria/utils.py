@@ -3,9 +3,10 @@ import unicodedata
 import uuid
 import qrcode
 from io import BytesIO
+from PIL import ImageTk, Image, Image, ImageFont, ImageDraw
 from django.apps import apps
 from django.core.files.uploadedfile import InMemoryUploadedFile
-
+from django.conf import settings
 
 class IsbnUtils(object):
     @staticmethod
@@ -49,20 +50,32 @@ def generate_book_uuid():
             break;
     return b_uuid
 
-def generate_qrcode(txt):
+def generate_qrcode(uuid):
+    
+    bf = BytesIO()
+
+    # Create QRCode
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
         box_size=6,
         border=0,
     )
-    qr.add_data(txt)
+    qr.add_data(uuid)
     qr.make(fit=True)
+    qr_img = qr.make_image()
+    
+    # Paste QRCode on bigger white image
+    background = Image.new('RGBA', (126, 200), (255, 255, 255, 255))
+    bg_w, bg_h = background.size
+    background.paste(qr_img)
+    filename = '%s.png' % (uuid)
 
-    img = qr.make_image()
+    # Draw UUID at the bottom
+    draw = ImageDraw.Draw(background)
+    font = ImageFont.truetype(settings.STATIC_ROOT + "alessandria/layout/font/ABeeZee-Regular.otf", 16)
+    draw.text((10, 150), uuid, (0,0,0), font=font)
+    background.save(bf, format='PNG')
 
-    bf = BytesIO()
-    img.save(bf)
-    filename = '%s.png' % (txt)
     filebuffer = InMemoryUploadedFile(bf, None, filename, 'image/png', bf.getbuffer().nbytes, None)
     return filename, filebuffer    

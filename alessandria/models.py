@@ -1,5 +1,7 @@
 import isbnlib
 import datetime
+from PIL import ImageTk, Image
+from alessandria.utils import *
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User as DjangoUser
@@ -9,8 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django_countries.fields import CountryField
 from django.conf import settings
-
-from alessandria.utils import *
+from django.core.files.images import ImageFile
 
 
 class GeneralConfiguration(models.Model):
@@ -450,9 +451,9 @@ class Book(ModelEntity):
         self.full_clean()
         if not self._uuid:
             self._uuid = generate_book_uuid()
-        if not qrcode:
+        if not self.qrcode:
             filename, filebuffer = generate_qrcode(self.uuid)
-            self.qrcode.save(filename, filebuffer)
+            self.qrcode = ImageFile(filebuffer, filename)
         super(Book, self).save(*args, **kwargs)
 
     @staticmethod
