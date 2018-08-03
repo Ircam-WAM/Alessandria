@@ -17,7 +17,7 @@
                 if (regex.test(objectId)) {
                     objectId = objectId.replace('!','_');
                     console.log(objectId)
-                    let url_mask = "{% url 'alessandria:reader_borrow_update' uuid='IRCAM_99999' %}".replace(/IRCAM_99999/, objectId);
+                    let url_mask = "{% url 'alessandria:book_update' pk='IRCAM_99999' %}".replace(/IRCAM_99999/, objectId);
                     document.location.replace(url_mask);
                 }
             })

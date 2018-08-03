@@ -441,6 +441,13 @@ class BookUpdateView(EntityUpdateView):
     model = Book
     form_class = BookForm
 
+    def get_object(self, queryset=None):
+        _uuid = re.sub(settings.QRCODE_PREFIX + settings.QRCODE_SEP, '', self.kwargs['pk'])    
+        try:
+            return Book.objects.get(_uuid=_uuid)
+        except :
+            return super(BookUpdateView, self).get_object(queryset=None)
+
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(BookUpdateView, self).get_context_data(**kwargs)
