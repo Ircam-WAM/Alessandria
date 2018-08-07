@@ -903,7 +903,7 @@ msgstr "Enregistrement effectué avec succès"
 
 #: views.py:463
 msgid "Your object has been updated."
-msgstr "Votre objet a été mis à jour."
+msgstr "Votre objet a bien été mis à jour."
 
 #: views.py:610
 msgid "The removing date can't be prior to the registring date."

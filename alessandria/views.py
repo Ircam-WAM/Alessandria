@@ -468,6 +468,12 @@ class BookDeleteView(EntityDeleteView):
     model = Book
     success_url = reverse_lazy('alessandria:book_list')
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(BookDeleteView, self).get_context_data(**kwargs)
+        context['previous_url'] =  self.request.META.get('HTTP_REFERER')
+        return context
+
 
 class BookListView(EntityListView):
     template_name = 'alessandria/book_list.html'
