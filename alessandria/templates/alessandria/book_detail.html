@@ -123,7 +123,9 @@
                                 </div>
                                 <label for="{{ form.qrcode.id_for_label }}" class="col-sm-1 control-label {{ form.qrcode.css_classes }}">{{ form.qrcode.label }}</label>
                                 <div class="col-sm-4">
-                                    <img src="{% get_media_prefix %}{{ book.qrcode }}" title="" />
+                                    <a href="{% get_media_prefix %}{{ book.qrcode }}" title="" target="_blank">
+                                        <img src="{% get_media_prefix %}{{ book.qrcode }}" title="" />
+                                    </a>
                                 </div>
                             </div>
 

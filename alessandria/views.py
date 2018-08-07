@@ -399,6 +399,7 @@ class BookCreateView(EntityCreateView):
     template_name = 'alessandria/book_detail.html'
     model = Book
     form_class = BookForm
+    success_msg = _('Your object has been saved.')
 
     def get_initial(self):
         if 'from_external_page' in self.kwargs and 'book_post_form' in self.request.session:
@@ -422,6 +423,9 @@ class BookCreateView(EntityCreateView):
         book_id = self.object.id
         # Automatically propose to create the first copy of the book
         return HttpResponseRedirect(reverse('alessandria:book_list'))
+
+    def form_valid(self, form, success_msg=_("Record successful saved.")):
+        return super(BookCreateView, self).form_valid(form, success_msg=_("Your object has been saved."))
 
 
 def save_book_form_to_session(request, dest_url):
@@ -454,6 +458,9 @@ class BookUpdateView(EntityUpdateView):
         context['bookcopy_list'] = self.object.bookcopy_set.all()
         context['borrow_list'] = ReaderBorrow.objects.list_all_by_book(self.object.id)
         return context
+
+    def form_valid(self, form, success_msg=_(" successful saved.")):
+        return super(BookUpdateView, self).form_valid(form, success_msg=_("Your object has been updated."))
 
 
 class BookDeleteView(EntityDeleteView):

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-07 14:59+0000\n"
+"POT-Creation-Date: 2018-08-07 15:25+0000\n"
 "PO-Revision-Date: 2017-05-21 07:34+0200\n"
 "Last-Translator: Unknown <mirelsol@vito-pc>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
@@ -265,7 +265,7 @@ msgstr "Désactivé le"
 msgid "Notes"
 msgstr "Notes"
 
-#: models.py:266 models.py:560 templates/alessandria/book_detail.html:229
+#: models.py:266 models.py:560 templates/alessandria/book_detail.html:231
 #: templates/alessandria/reader_borrow_list.html:17
 #: templates/alessandria/reader_detail.html:4
 #: templates/alessandria/reader_detail.html:10
@@ -630,21 +630,21 @@ msgstr "Exemplaires"
 msgid "removed"
 msgstr "retiré"
 
-#: templates/alessandria/book_detail.html:140
+#: templates/alessandria/book_detail.html:142
 msgid "Unique ID"
 msgstr ""
 
-#: templates/alessandria/book_detail.html:203
+#: templates/alessandria/book_detail.html:205
 #: templates/alessandria/reader_borrow_detail.html:41
 msgid "Other books of"
 msgstr "Autres matériels de"
 
-#: templates/alessandria/book_detail.html:228
+#: templates/alessandria/book_detail.html:230
 #: templates/alessandria/reader_detail.html:88
 msgid "Borrowing date"
 msgstr "Date d'emprunt"
 
-#: templates/alessandria/book_detail.html:230
+#: templates/alessandria/book_detail.html:232
 msgid "Returned"
 msgstr "Rendu"
 
@@ -872,7 +872,7 @@ msgstr ""
 msgid "Error when saving the record."
 msgstr "Erreur lors de l'enregistrement"
 
-#: views.py:59 views.py:80
+#: views.py:59 views.py:80 views.py:427
 msgid "Record successful saved."
 msgstr "Enregistrement effectué avec succès"
 
@@ -891,15 +891,29 @@ msgid "Unable to remove this publisher because it is referenced in a book."
 msgstr ""
 "Impossible de supprimer ce fabricant car il est référencé dans un matériel."
 
-#: views.py:603
+#: views.py:402 views.py:428
+msgid "Your object has been saved."
+msgstr "Votre objet a bien été ajouté."
+
+#: views.py:462
+#, fuzzy
+#| msgid "Record successful saved."
+msgid " successful saved."
+msgstr "Enregistrement effectué avec succès"
+
+#: views.py:463
+msgid "Your object has been updated."
+msgstr "Votre objet a été mis à jour."
+
+#: views.py:610
 msgid "The removing date can't be prior to the registring date."
 msgstr "La date de retrait ne peut être antérieure à la date d'enregistrement."
 
-#: views.py:605
+#: views.py:612
 msgid "Sample successfully removed."
 msgstr "Exemplaire retiré avec succès."
 
-#: views.py:641
+#: views.py:648
 msgid "Reader successfully disabled."
 msgstr "Utilisateur/trice désactivé/e avec succès"
 
