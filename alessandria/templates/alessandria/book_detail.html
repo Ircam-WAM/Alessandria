@@ -68,51 +68,66 @@
                             <form id="curForm" class="form-horizontal" enctype="multipart/form-data" action="{% url 'alessandria:book_add' %}" method="post" role="form">{% csrf_token %}
                         {% endif %}
                             <div class="form-group">
+                                
                                 <label for="{{ form.title.id_for_label }}" class="col-sm-2 control-label {{ form.title.css_classes }}">{{ form.title.label }}</label>
-                                <div class="col-sm-7">
+                                <div class="col-sm-4">
                                     {{ form.title|addcss:"form-control" }}
                                     {% if form.title.errors %}
                                         <div class="text-danger">{{ form.title.errors }}</div>
                                     {% endif %}
                                 </div>
-                                <div class="col-sm-3">
-                                    <span><strong>{% trans 'Unique ID' %} : </strong> {{ book.uuid }}</span>
+                                <label for="{{ form.state.id_for_label }}" class="col-sm-1 control-label {{ form.state.css_classes }}">{{ form.state.label }}</label>
+                                <div class="col-sm-4">
+                                    {{ form.state|addcss:"form-control" }}
+                                    {% if form.state.errors %}
+                                        <div class="text-danger">{{ form.state.errors }}</div>
+                                    {% endif %}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="{{ form.authors.id_for_label }}" class="col-sm-2 control-label {{ form.authors.css_classes }}">
-                                    {{ form.authors.label }}
-                                    <a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:author_add' %}')" title="{% trans 'Add' %}">
-                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                    </a>
-                                </label>
 
-                                <div class="col-sm-4">
-                                    {{ form.authors|addcss:"form-control" }}
-                                    {% if form.authors.errors %}
-                                        <div class="text-danger">{{ form.authors.errors }}</div>
-                                    {% endif %}
+                                <div class="col-sm-6">
+                                    <div class="row form-group">    
+                                        <label for="{{ form.authors.id_for_label }}" class="col-sm-4 control-label {{ form.authors.css_classes }}">
+                                            {{ form.authors.label }}
+                                            <a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:author_add' %}')" title="{% trans 'Add' %}">
+                                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                            </a>
+                                        </label>
+                                        <div class="col-sm-8">
+                                            {{ form.authors|addcss:"form-control" }}
+                                            {% if form.authors.errors %}
+                                                <div class="text-danger">{{ form.authors.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="{{ form.category.id_for_label }}" class="col-sm-4 control-label {{ form.category.css_classes }}">{{ form.category.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form.category|addcss:"form-control" }}
+                                            {% if form.category.errors %}
+                                                <div class="text-danger">{{ form.category.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="{{ form.sub_category.id_for_label }}" class="col-sm-4 control-label {{ form.sub_category.css_classes }}">{{ form.sub_category.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form.sub_category|addcss:"form-control" }}
+                                            {% if form.sub_category.errors %}
+                                                <div class="text-danger">{{ form.sub_category.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
+                                <label for="{{ form.qrcode.id_for_label }}" class="col-sm-1 control-label {{ form.qrcode.css_classes }}">{{ form.qrcode.label }}</label>
                                 <div class="col-sm-4">
-                                    
-                                </div>    
-                                <!--
-                                <label for="{{ form.publishers.id_for_label }}" class="col-sm-2 control-label {{ form.publishers.css_classes }}">
-                                    {{ form.publishers.label }}
-                                    <a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:publisher_add' %}')" title="{% trans 'Add' %}">
-                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                    </a>
-                                </label>
-                                <div class="col-sm-4">
-                                    {{ form.publishers|addcss:"form-control" }}
-                                    {% if form.publishers.errors %}
-                                        <div class="text-danger">{{ form.publishers.errors }}</div>
-                                    {% endif %}
-                                </div>-->
+                                    <img src="{% get_media_prefix %}{{ book.qrcode }}" title="" />
+                                </div>
                             </div>
 
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label for="{{ form.classif_mark.id_for_label }}" class="col-sm-2 control-label {{ form.classif_mark.css_classes }}">{{ form.classif_mark.label }}</label>
                                 <div class="col-sm-4">
                                     {{ form.classif_mark|addcss:"form-control" }}
@@ -121,85 +136,22 @@
                                     {% endif %}
                                     <p>{{ form.classif_mark.help_text }}</p>
                                 </div>
-                                <!--
-                                <label for="{{ form.audiences.id_for_label }}" class="col-sm-2 control-label {{ form.audiences.css_classes }}">{{ form.audiences.label }}</label>
-                                <div class="col-sm-4">
-                                    {{ form.audiences }}
-                                    {% if form.audiences.errors %}
-                                        <div class="text-danger">{{ form.audiences.errors }}</div>
-                                    {% endif %}
-                                </div> -->
-                            </div>
 
-                            <div class="form-group">
-                                <label for="{{ form.category.id_for_label }}" class="col-sm-2 control-label {{ form.category.css_classes }}">{{ form.category.label }}</label>
+                                <label for="" class="col-sm-1 control-label {{ form.uuid.css_classes }}"><strong>{% trans 'Unique ID' %}</strong></label>
                                 <div class="col-sm-4">
-                                    {{ form.category|addcss:"form-control" }}
-                                    {% if form.category.errors %}
-                                        <div class="text-danger">{{ form.category.errors }}</div>
-                                    {% endif %}
-                                </div>
-                                <label for="{{ form.sub_category.id_for_label }}" class="col-sm-2 control-label {{ form.sub_category.css_classes }}">{{ form.sub_category.label }}</label>
-                                <div class="col-sm-4">
-                                    {{ form.sub_category|addcss:"form-control" }}
-                                    {% if form.sub_category.errors %}
-                                        <div class="text-danger">{{ form.sub_category.errors }}</div>
-                                    {% endif %}
+                                    <span>{{ book.uuid }}</span>
                                 </div>
                             </div>
 
-                            <!-- <div class="form-group">
-                                <label for="{{ form.language.id_for_label }}" class="col-sm-2 control-label {{ form.language.css_classes }}">{{ form.language.label }}</label>
-                                <div class="col-sm-4">
-                                    {{ form.language|addcss:"form-control" }}
-                                    {% if form.language.errors %}
-                                        <div class="text-danger">{{ form.language.errors }}</div>
-                                    {% endif %}
-                                </div>
-                                <label for="{{ form.height.id_for_label }}" class="col-sm-2 control-label {{ form.height.css_classes }}">{{ form.height.label }}</label>
-                                <div class="col-sm-4">
-                                    {{ form.height|addcss:"form-control" }}
-                                    {% if form.height.errors %}
-                                        <div class="text-danger">{{ form.height.errors }}</div>
-                                    {% endif %}
-                                </div>
-                            </div> -->
-
-                            <!-- <div class="form-group">
-                                <label for="{{ form.publish_date.id_for_label }}" class="col-sm-2 control-label {{ form.publish_date.css_classes }}">{{ form.publish_date.label }}</label>
-                                <div class="col-sm-4">
-                                    {{ form.publish_date }}
-                                    {% if form.publish_date.errors %}
-                                        <div class="text-danger">{{ form.publish_date.errors }}</div>
-                                    {% endif %}
-                                </div>
-                                <label for="{{ form.edition_name.id_for_label }}" class="col-sm-2 control-label {{ form.edition_name.css_classes }}">{{ form.edition_name.label }}</label>
-                                <div class="col-sm-4">
-                                    {{ form.edition_name|addcss:"form-control" }}
-                                    {% if form.edition_name.errors %}
-                                        <div class="text-danger">{{ form.edition_name.errors }}</div>
-                                    {% endif %}
-                                </div>
-                            </div> -->
-
-                            <div class="form-group">
-                                <label for="{{ form.v.id_for_label }}" class="col-sm-2 control-label {{ form.cover_pic.css_classes }}">{{ form.cover_pic.label }}</label>
-                                <div class="col-sm-10">
-                                    {{ form.cover_pic|addcss:"form-control" }}
-                                    {% if form.cover_pic.errors %}
-                                        <div class="text-danger">{{ form.cover_pic.errors }}</div>
-                                    {% endif %}
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label for="{{ form.abstract.id_for_label }}" class="col-sm-2 control-label {{ form.abstract.css_classes }}">{{ form.abstract.label }}</label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     {{ form.abstract|addcss:"form-control" }}
                                     {% if form.abstract.errors %}
                                         <div class="text-danger">{{ form.abstract.errors }}</div>
                                     {% endif %}
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 col-sm-offset-1">
                                     {% thumbnail book.cover_pic "x200" crop="center" as im %}
                                         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                                     {% endthumbnail %}
@@ -209,14 +161,19 @@
 
                             <div class="form-group">
                                 <label for="{{ form.notes.id_for_label }}" class="col-sm-2 control-label {{ form.notes.css_classes }}">{{ form.notes.label }}</label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4 ">
                                     {{ form.notes|addcss:"form-control" }}
                                     {% if form.notes.errors %}
                                         <div class="text-danger">{{ form.notes.errors }}</div>
                                     {% endif %}
                                 </div>
+                                <label for="{{ form.v.id_for_label }}" class="col-sm-1 control-label {{ form.cover_pic.css_classes }}">{{ form.cover_pic.label }}</label>
                                 <div class="col-sm-4">
-                                    <img src="{% get_media_prefix %}{{ book.qrcode }}" title="" />
+                                    {{ form.cover_pic|addcss:"form-control" }}
+                                    {% if form.cover_pic.errors %}
+                                        <div class="text-danger">{{ form.cover_pic.errors }}</div>
+                                    {% endif %}
+     
                                 </div>
                             </div>
 

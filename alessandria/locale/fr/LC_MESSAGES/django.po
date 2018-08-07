@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 14:42+0000\n"
+"POT-Creation-Date: 2018-08-07 09:31+0000\n"
 "PO-Revision-Date: 2017-05-21 07:34+0200\n"
 "Last-Translator: Unknown <mirelsol@vito-pc>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
@@ -265,7 +265,7 @@ msgstr "Désactivé le"
 msgid "Notes"
 msgstr "Notes"
 
-#: models.py:266 models.py:543 templates/alessandria/book_detail.html:272
+#: models.py:266 models.py:543 templates/alessandria/book_detail.html:220
 #: templates/alessandria/reader_borrow_list.html:17
 #: templates/alessandria/reader_detail.html:4
 #: templates/alessandria/reader_detail.html:10
@@ -325,11 +325,7 @@ msgstr "Titre de l'édition"
 
 #: models.py:419
 msgid "Classification mark"
-msgstr "Référence"
-
-#: models.py:419
-msgid "Corresponds to serial number or internal reference"
-msgstr "Entrer le numéro de série ou la référence interne"
+msgstr "Numéro de série"
 
 #: models.py:420
 msgid "Height (inches)"
@@ -352,7 +348,7 @@ msgstr "Sous-catégorie"
 
 #: models.py:425
 msgid "Abstract"
-msgstr "Notice succincte"
+msgstr "Description"
 
 #: models.py:426
 msgid "Tags"
@@ -360,7 +356,7 @@ msgstr "Etiquettes"
 
 #: models.py:428
 msgid "Cover"
-msgstr "Couverture"
+msgstr "Photo"
 
 #: models.py:429
 msgid "Linked to"
@@ -552,8 +548,7 @@ msgstr "Emprunts"
 #: templates/alessandria/base_tpl.html:70
 #: templates/alessandria/base_tpl.html:86
 #: templates/alessandria/book_detail.html:33
-#: templates/alessandria/book_detail.html:86
-#: templates/alessandria/book_detail.html:103
+#: templates/alessandria/book_detail.html:88
 msgid "Add"
 msgstr "Ajouter"
 
@@ -615,17 +610,17 @@ msgstr "retiré"
 msgid "Unique ID"
 msgstr ""
 
-#: templates/alessandria/book_detail.html:246
+#: templates/alessandria/book_detail.html:194
 #: templates/alessandria/reader_borrow_detail.html:41
 msgid "Other books of"
 msgstr "Autres matériels de"
 
-#: templates/alessandria/book_detail.html:271
+#: templates/alessandria/book_detail.html:219
 #: templates/alessandria/reader_detail.html:88
 msgid "Borrowing date"
 msgstr "Date d'emprunt"
 
-#: templates/alessandria/book_detail.html:273
+#: templates/alessandria/book_detail.html:221
 msgid "Returned"
 msgstr "Rendu"
 
@@ -883,6 +878,9 @@ msgstr "Exemplaire retiré avec succès."
 #: views.py:641
 msgid "Reader successfully disabled."
 msgstr "Utilisateur/trice désactivé/e avec succès"
+
+#~ msgid "Corresponds to serial number or internal reference"
+#~ msgstr "Entrer le numéro de série ou la référence interne"
 
 #~ msgid "Please select at least one author"
 #~ msgstr "Veuillez sélectionner au moins un fabricant"

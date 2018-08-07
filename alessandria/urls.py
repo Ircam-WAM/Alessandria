@@ -34,13 +34,13 @@ urlpatterns = [
     url(r'publisher/list/$', views.PublisherListView.as_view(), name='publisher_list'),
     url(r'publisher/(?P<publisher_id>\d+)/books/$', views.book_list_by_publisher, name='book_list_by_publisher'),
 
-    url(r'book/add/(?P<from_external_page>\w+)?$', views.BookCreateView.as_view(), name='book_add'),
-    url(r'^book/(?P<pk>\d+|' + settings.QRCODE_PREFIX + settings.QRCODE_SEP + '[a-z0-9]{5})/$', views.BookUpdateView.as_view(), name='book_update'),
-    url(r'book/(?P<pk>\d+)/delete/$', views.BookDeleteView.as_view(), name='book_delete'),
-    url(r'book/list/$', views.BookListView.as_view(), name='book_list'),
-    url(r'book/save_book_form_to_session/(?P<dest_url>\S+)/$', views.save_book_form_to_session, name='save_book_form_to_session'),
+    url(r'object/add/(?P<from_external_page>\w+)?$', views.BookCreateView.as_view(), name='book_add'),
+    url(r'^object/(?P<pk>\d+|' + settings.QRCODE_PREFIX + settings.QRCODE_SEP + '[a-z0-9]{5})/$', views.BookUpdateView.as_view(), name='book_update'),
+    url(r'object/(?P<pk>\d+)/delete/$', views.BookDeleteView.as_view(), name='book_delete'),
+    url(r'object/list/$', views.BookListView.as_view(), name='book_list'),
+    url(r'object/save_book_form_to_session/(?P<dest_url>\S+)/$', views.save_book_form_to_session, name='save_book_form_to_session'),
 
-    url(r'book/isbn/import/$', views.BookIsbnImportView.as_view(), name='book_isbn_import'),
+    url(r'object/isbn/import/$', views.BookIsbnImportView.as_view(), name='book_isbn_import'),
 
     url(r'bookcopy/add/(?P<book_id>\d+)/$', views.BookCopyCreateView.as_view(), name='bookcopy_add'),
     url(r'bookcopy/(?P<pk>\d+)/$', views.BookCopyUpdateView.as_view(), name='bookcopy_update'),

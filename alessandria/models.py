@@ -410,13 +410,20 @@ class BookManager(models.Manager):
 
 
 class Book(ModelEntity):
+    
+    STATES = (('available', _("Available")),
+            ('borrowed', _("Borrowed")),
+            ('damaged', _("Damaged")),
+            ('lost', _("Lost")),
+            ('withdrawed', _("Withdrawed")))
+
     title = models.CharField(_("Title"), max_length=50)   
     _uuid = models.CharField(_("Unique Id"), max_length=50)
     authors = models.ManyToManyField(Author, verbose_name=_("Authors"), blank=True)
     publishers = models.ManyToManyField(Publisher, verbose_name=_("Publishers"), blank=True)
     publish_date = models.DateField(_("Publishing date"), null=True, blank=True)
     edition_name = models.CharField(_("Title edition"), max_length=80, null=True, blank=True)
-    classif_mark = models.CharField(_("Classification mark"), max_length=10, null=True, blank=True, help_text=_("Corresponds to serial number or internal reference"))
+    classif_mark = models.CharField(_("Classification mark"), max_length=10, null=True, blank=True)
     height = models.PositiveIntegerField(_("Height (inches)"), null=True, blank=True)
     isbn_nb = models.CharField(_("ISBN number"), max_length=20, null=True, blank=True, unique=True)
     audiences = models.ManyToManyField(BookAudience, verbose_name=_("Audience"), blank=True)
@@ -430,12 +437,22 @@ class Book(ModelEntity):
     notes = models.TextField(_("Notes"), null=True, blank=True)
     is_isbn_import = models.BooleanField(_("ISBN import"), default=False, blank=True)
     qrcode = models.ImageField(verbose_name=_("QR Code"), upload_to='alessandria/upload/qrcode', null=True, blank=True)
-
+    state = models.CharField(_('state'), max_length=32, choices=STATES, default='available')
     objects = BookManager()
 
     @property
     def uuid(self):
-        return  settings.QRCODE_PREFIX+ settings.QRCODE_SEP + self._uuid
+        return settings.QRCODE_PREFIX+ settings.QRCODE_SEP + self._uuid
+
+    def update_state(self):
+        rb = ReaderBorrow.objects.get(book__id=self.id) 
+        if rb:
+            if self.state == 'available' or self.state == 'borrowed':
+                if rb.borrowed_date and not rb.returned_on:
+                    self.state = 'borrowed' 
+                if rb.returned_on:               
+                    self.state = 'available'
+                self.save()    
 
     def clean(self):
         if not self.isbn_nb:  # Force empty string to be 'None'
@@ -553,6 +570,10 @@ class ReaderBorrow(ModelEntity):
         ordering = ['-borrow_due_date']
         verbose_name = _("Reader borrowing")
         verbose_name_plural = _("Reader borrowings")
+
+    def save(self, *args, **kwargs):
+        self.book.update_state()
+        super(ReaderBorrow, self).save(*args, **kwargs)
 
     def is_returned(self):
         return self.returned_on is not None
