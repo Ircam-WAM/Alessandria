@@ -28,7 +28,11 @@
                 {% for book in object_list %}
                 <tr>
                     <td><a href="{% url 'alessandria:book_update' book.id %}">{{ book.title }}</a></td>
-                    <td><a href="{% url 'alessandria:author_update' book.authors.first.id %}">{{ book.authors.first }}</td>
+                    <td>
+                        {% if book.authors.first.id %}
+                            <a href="{% url 'alessandria:author_update' book.authors.first.id %}">{{ book.authors.first }}
+                        {% endif %}        
+                    </td>
                     <td>{{ book.classif_mark }}</td>
                     <td>{{ book.manufacturer_ref }}</td>
                     <td>{{ book.created_on }}</td>
