@@ -58,7 +58,7 @@
                             <td>{{ book.created_on|date:"SHORT_DATE_FORMAT" }}</td>
                             <td><a href="{% url 'alessandria:book_update' book.id %}">{{ book }}</a></td>
                             <td>
-                                {% if book.authors %}
+                                {% if book.authors.first.id %}
                                     <a href="{% url 'alessandria:author_update' book.authors.first.id %}">{{ book.authors.first }}</a>
                                 {% endif %}
                             </td>
