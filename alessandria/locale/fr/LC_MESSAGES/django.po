@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-08 08:14+0000\n"
+"POT-Creation-Date: 2018-08-08 08:48+0000\n"
 "PO-Revision-Date: 2017-05-21 07:34+0200\n"
 "Last-Translator: Unknown <mirelsol@vito-pc>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
@@ -343,11 +343,11 @@ msgstr "Date d'achat"
 msgid "Title edition"
 msgstr "Titre de l'édition"
 
-#: models.py:426
+#: models.py:426 templates/alessandria/book_list.html:22
 msgid "Classification mark"
 msgstr "Numéro de série"
 
-#: models.py:427
+#: models.py:427 templates/alessandria/book_list.html:23
 msgid "Manufacturer Reference"
 msgstr "Référence du fabricant"
 
@@ -487,7 +487,7 @@ msgstr "Supprimer"
 
 #: templates/alessandria/_inc_form_edit_footer.html:3
 #: templates/alessandria/author_list.html:22
-#: templates/alessandria/book_list.html:23
+#: templates/alessandria/book_list.html:24
 #: templates/alessandria/book_list_by_publisher.html:19
 #: templates/alessandria/publisher_list.html:21
 msgid "Created on"
@@ -713,7 +713,7 @@ msgstr "Numéro ISBN inconnu."
 msgid "Book list"
 msgstr "Liste des matériels"
 
-#: templates/alessandria/book_list.html:37
+#: templates/alessandria/book_list.html:39
 #: templates/alessandria/book_list_by_publisher.html:32
 msgid "No book."
 msgstr "Aucun matériel."
@@ -862,11 +862,13 @@ msgstr ""
 msgid "No reader."
 msgstr "Aucun/e utilisateur/trice."
 
-#: templates/alessandria/scan.html:6
+#: templates/alessandria/scan.html:5
 msgid ""
-"Merci de scanner le QRCode d'un objet. Vous serez automatiquement redirigé "
-"vers sa page d'emprunt."
+"Please scan the object's QRCode. You will be automatically redirected to its "
+"edition page."
 msgstr ""
+"Merci de scanner le QRCode d'un objet. Vous serez automatiquement redirigé "
+"vers sa page d'édition."
 
 #: views.py:55 views.py:76
 msgid "Error when saving the record."
