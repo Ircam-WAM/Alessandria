@@ -424,6 +424,7 @@ class Book(ModelEntity):
     publish_date = models.DateField(_("Publishing date"), null=True, blank=True)
     edition_name = models.CharField(_("Title edition"), max_length=80, null=True, blank=True)
     classif_mark = models.CharField(_("Classification mark"), max_length=10, null=True, blank=True)
+    manufacturer_ref = models.CharField(_("Manufacturer Reference"), max_length=10, null=True, blank=True)
     height = models.PositiveIntegerField(_("Height (inches)"), null=True, blank=True)
     isbn_nb = models.CharField(_("ISBN number"), max_length=20, null=True, blank=True, unique=True)
     audiences = models.ManyToManyField(BookAudience, verbose_name=_("Audience"), blank=True)

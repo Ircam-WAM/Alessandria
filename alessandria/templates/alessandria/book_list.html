@@ -19,7 +19,8 @@
                 <tr>
                     <th><a href="{% url 'alessandria:book_list' %}?order_field=title">{% trans "Title" %}</a></th>
                     <th>Fabricant</th>
-                    <th>Exemplaires</th>
+                    <th>{% trans "Classification mark" %}</th>
+                    <th>{% trans "Manufacturer Reference" %}</th>
                     <th colspan="2"><a href="{% url 'alessandria:book_list' %}?order_field=created_on">{% trans "Created on" %}</a></th>
                 </tr>
             </thead>
@@ -28,7 +29,8 @@
                 <tr>
                     <td><a href="{% url 'alessandria:book_update' book.id %}">{{ book.title }}</a></td>
                     <td><a href="{% url 'alessandria:author_update' book.authors.first.id %}">{{ book.authors.first }}</td>
-                    <td>{{ book.get_nb_copy }}</td>
+                    <td>{{ book.classif_mark }}</td>
+                    <td>{{ book.manufacturer_ref }}</td>
                     <td>{{ book.created_on }}</td>
                     <td><a class="btn btn-primary btn-block" href="{% url 'alessandria:book_update' book.id %}" role="button">Edit</a></td>
                     <td><a class="btn btn-danger" href="{% url 'alessandria:book_delete' book.id %}" role="button">Delete</a></td>

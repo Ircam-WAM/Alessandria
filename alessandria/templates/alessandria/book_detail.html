@@ -146,6 +146,17 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="{{ form.manufacturer_ref.id_for_label }}" class="col-sm-2 control-label {{ form.manufacturer_ref.css_classes }}">{{ form.manufacturer_ref.label }}</label>
+                                <div class="col-sm-4">
+                                    {{ form.manufacturer_ref|addcss:"form-control" }}
+                                    {% if form.manufacturer_ref.errors %}
+                                        <div class="text-danger">{{ form.manufacturer_ref.errors }}</div>
+                                    {% endif %}
+                                    <p>{{ form.manufacturer_ref.help_text }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="{{ form.abstract.id_for_label }}" class="col-sm-2 control-label {{ form.abstract.css_classes }}">{{ form.abstract.label }}</label>
                                 <div class="col-sm-4">
                                     {{ form.abstract|addcss:"form-control" }}
@@ -158,8 +169,7 @@
                                         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                                     {% endthumbnail %}
                                 </div>
-                            </div>
-
+                            </div>       
 
                             <div class="form-group">
                                 <label for="{{ form.notes.id_for_label }}" class="col-sm-2 control-label {{ form.notes.css_classes }}">{{ form.notes.label }}</label>
