@@ -76,6 +76,28 @@
                                         <div class="text-danger">{{ form.title.errors }}</div>
                                     {% endif %}
                                 </div>
+                                <label for="{{ form.status.id_for_label }}" class="col-sm-1 control-label {{ form.status.css_classes }}">{{ form.status.label }}</label>
+                                <div class="col-sm-4">
+                                    {{ form.status|htmlattributes:"{'class':'form-control', 'disabled':'disabled' }" }}
+                                    {% if form.status.errors %}
+                                        <div class="text-danger">{{ form.status.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.authors.id_for_label }}" class="col-sm-2 control-label {{ form.authors.css_classes }}">
+                                    {{ form.authors.label }}
+                                    <a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:author_add' %}')" title="{% trans 'Add' %}">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                    </a>
+                                </label>
+                                <div class="col-sm-4">
+                                    {{ form.authors|addcss:"form-control" }}
+                                    {% if form.authors.errors %}
+                                        <div class="text-danger">{{ form.authors.errors }}</div>
+                                    {% endif %}
+                                </div>
                                 <label for="{{ form.state.id_for_label }}" class="col-sm-1 control-label {{ form.state.css_classes }}">{{ form.state.label }}</label>
                                 <div class="col-sm-4">
                                     {{ form.state|addcss:"form-control" }}
@@ -86,31 +108,22 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="{{ form.category.id_for_label }}" class="col-sm-2 control-label {{ form.category.css_classes }}">{{ form.category.label }}</label>
+                                <div class="col-sm-4">
+                                    {{ form.category|addcss:"form-control" }}
+                                    {% if form.category.errors %}
+                                        <div class="text-danger">{{ form.category.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <label for="" class="col-sm-1 control-label {{ form.uuid.css_classes }}"><strong>{% trans 'Unique ID' %}</strong></label>
+                                <div class="col-sm-4">
+                                    <span>{{ book.uuid }}</span>
+                                </div>
+                            </div>
 
+                            <div class="form-group">
                                 <div class="col-sm-6">
-                                    <div class="row form-group">    
-                                        <label for="{{ form.authors.id_for_label }}" class="col-sm-4 control-label {{ form.authors.css_classes }}">
-                                            {{ form.authors.label }}
-                                            <a href="javascript:submitForm('{% url 'alessandria:save_book_form_to_session' 'alessandria:author_add' %}')" title="{% trans 'Add' %}">
-                                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                            </a>
-                                        </label>
-                                        <div class="col-sm-8">
-                                            {{ form.authors|addcss:"form-control" }}
-                                            {% if form.authors.errors %}
-                                                <div class="text-danger">{{ form.authors.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <label for="{{ form.category.id_for_label }}" class="col-sm-4 control-label {{ form.category.css_classes }}">{{ form.category.label }}</label>
-                                        <div class="col-sm-8">
-                                            {{ form.category|addcss:"form-control" }}
-                                            {% if form.category.errors %}
-                                                <div class="text-danger">{{ form.category.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
+              
                                     <div class="row form-group">
                                         <label for="{{ form.sub_category.id_for_label }}" class="col-sm-4 control-label {{ form.sub_category.css_classes }}">{{ form.sub_category.label }}</label>
                                         <div class="col-sm-8">
@@ -120,39 +133,33 @@
                                             {% endif %}
                                         </div>
                                     </div>
+                                    <div class="row form-group">
+                                        <label for="{{ form.classif_mark.id_for_label }}" class="col-sm-4 control-label {{ form.classif_mark.css_classes }}">{{ form.classif_mark.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form.classif_mark|addcss:"form-control" }}
+                                            {% if form.classif_mark.errors %}
+                                                <div class="text-danger">{{ form.classif_mark.errors }}</div>
+                                            {% endif %}
+                                            <p>{{ form.classif_mark.help_text }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="{{ form.manufacturer_ref.id_for_label }}" class="col-sm-4 control-label {{ form.manufacturer_ref.css_classes }}">{{ form.manufacturer_ref.label }}</label>
+                                        <div class="col-sm-8">
+                                            {{ form.manufacturer_ref|addcss:"form-control" }}
+                                            {% if form.manufacturer_ref.errors %}
+                                                <div class="text-danger">{{ form.manufacturer_ref.errors }}</div>
+                                            {% endif %}
+                                            <p>{{ form.manufacturer_ref.help_text }}</p>
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <label for="{{ form.qrcode.id_for_label }}" class="col-sm-1 control-label {{ form.qrcode.css_classes }}">{{ form.qrcode.label }}</label>
                                 <div class="col-sm-4">
                                     <a href="{% get_media_prefix %}{{ book.qrcode }}" title="" target="_blank">
                                         <img src="{% get_media_prefix %}{{ book.qrcode }}" title="" />
                                     </a>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="{{ form.classif_mark.id_for_label }}" class="col-sm-2 control-label {{ form.classif_mark.css_classes }}">{{ form.classif_mark.label }}</label>
-                                <div class="col-sm-4">
-                                    {{ form.classif_mark|addcss:"form-control" }}
-                                    {% if form.classif_mark.errors %}
-                                        <div class="text-danger">{{ form.classif_mark.errors }}</div>
-                                    {% endif %}
-                                    <p>{{ form.classif_mark.help_text }}</p>
-                                </div>
-
-                                <label for="" class="col-sm-1 control-label {{ form.uuid.css_classes }}"><strong>{% trans 'Unique ID' %}</strong></label>
-                                <div class="col-sm-4">
-                                    <span>{{ book.uuid }}</span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="{{ form.manufacturer_ref.id_for_label }}" class="col-sm-2 control-label {{ form.manufacturer_ref.css_classes }}">{{ form.manufacturer_ref.label }}</label>
-                                <div class="col-sm-4">
-                                    {{ form.manufacturer_ref|addcss:"form-control" }}
-                                    {% if form.manufacturer_ref.errors %}
-                                        <div class="text-danger">{{ form.manufacturer_ref.errors }}</div>
-                                    {% endif %}
-                                    <p>{{ form.manufacturer_ref.help_text }}</p>
                                 </div>
                             </div>
 
@@ -169,6 +176,7 @@
                                         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                                     {% endthumbnail %}
                                 </div>
+
                             </div>       
 
                             <div class="form-group">

@@ -411,11 +411,14 @@ class BookManager(models.Manager):
 
 class Book(ModelEntity):
     
-    STATES = (('available', _("Available")),
-            ('borrowed', _("Borrowed")),
+    STATES = (('good_condition', _("Good Condition")),
             ('damaged', _("Damaged")),
             ('lost', _("Lost")),
             ('withdrawed', _("Withdrawed")))
+
+
+    STATUSES = (('available', _("Available")),
+            ('borrowed', _("Borrowed")))
 
     title = models.CharField(_("Title"), max_length=50)   
     _uuid = models.CharField(_("Unique Id"), max_length=50)
@@ -438,7 +441,8 @@ class Book(ModelEntity):
     notes = models.TextField(_("Notes"), null=True, blank=True)
     is_isbn_import = models.BooleanField(_("ISBN import"), default=False, blank=True)
     qrcode = models.ImageField(verbose_name=_("QR Code"), upload_to='alessandria/upload/qrcode', null=True, blank=True)
-    state = models.CharField(_('state'), max_length=32, choices=STATES, default='available')
+    state = models.CharField(_('state'), max_length=32, choices=STATES, default='good_condition')
+    status = models.CharField(_('status'), max_length=32, choices=STATUSES, default='available', blank=True)
     objects = BookManager()
 
     @property
@@ -448,12 +452,11 @@ class Book(ModelEntity):
     def update_state(self):
         rb = ReaderBorrow.objects.get(book__id=self.id) 
         if rb:
-            if self.state == 'available' or self.state == 'borrowed':
-                if rb.borrowed_date and not rb.returned_on:
-                    self.state = 'borrowed' 
-                if rb.returned_on:               
-                    self.state = 'available'
-                self.save()    
+            if rb.borrowed_date and not rb.returned_on:
+                self.status = 'borrowed' 
+            if rb.returned_on:               
+                self.status = 'available'
+            self.save()    
 
     def clean(self):
         if not self.isbn_nb:  # Force empty string to be 'None'
@@ -573,8 +576,8 @@ class ReaderBorrow(ModelEntity):
         verbose_name_plural = _("Reader borrowings")
 
     def save(self, *args, **kwargs):
-        self.book.update_state()
         super(ReaderBorrow, self).save(*args, **kwargs)
+        self.book.update_state()
 
     def is_returned(self):
         return self.returned_on is not None
