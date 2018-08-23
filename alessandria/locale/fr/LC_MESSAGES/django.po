@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandrie\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-09 14:39+0000\n"
+"POT-Creation-Date: 2018-08-23 13:02+0000\n"
 "PO-Revision-Date: 2017-05-21 07:34+0200\n"
 "Last-Translator: Unknown <mirelsol@vito-pc>\n"
 "Language-Team: French <marc@mirelsol.org>\n"
@@ -195,11 +195,11 @@ msgstr "Nouveauté de l'application"
 msgid "Software news"
 msgstr "Nouveautés de l'application"
 
-#: models.py:205 models.py:517 templates/alessandria/reader_list.html:20
+#: models.py:205 models.py:518 templates/alessandria/reader_list.html:20
 msgid "Number"
 msgstr "Numéro"
 
-#: models.py:206 models.py:518 templates/alessandria/index.html:50
+#: models.py:206 models.py:519 templates/alessandria/index.html:50
 #: templates/alessandria/reader_list.html:23
 msgid "Registration date"
 msgstr "Date d'enregistrement"
@@ -260,12 +260,12 @@ msgstr "Tél."
 msgid "Disabled on"
 msgstr "Désactivé le"
 
-#: models.py:220 models.py:288 models.py:364 models.py:441 models.py:525
-#: models.py:569
+#: models.py:220 models.py:288 models.py:364 models.py:441 models.py:526
+#: models.py:570
 msgid "Notes"
 msgstr "Notes"
 
-#: models.py:266 models.py:564 templates/alessandria/book_detail.html:249
+#: models.py:266 models.py:565 templates/alessandria/book_detail.html:258
 #: templates/alessandria/reader_borrow_list.html:17
 #: templates/alessandria/reader_detail.html:4
 #: templates/alessandria/reader_detail.html:10
@@ -399,17 +399,21 @@ msgstr "état"
 
 #: models.py:445
 msgid "status"
-msgstr "état"
+msgstr "statut"
 
-#: models.py:467
+#: models.py:447
+msgid "url"
+msgstr ""
+
+#: models.py:468
 msgid "Invalid ISBN number."
 msgstr "No. ISBN invalide."
 
-#: models.py:499
+#: models.py:500
 msgid "Number of samples"
 msgstr "Nombre d'exemplaires"
 
-#: models.py:512 models.py:519 templates/alessandria/book_detail.html:4
+#: models.py:513 models.py:520 templates/alessandria/book_detail.html:4
 #: templates/alessandria/book_detail.html:13
 #: templates/alessandria/index.html:51
 #: templates/alessandria/reader_borrow_list.html:18
@@ -417,67 +421,67 @@ msgstr "Nombre d'exemplaires"
 msgid "Book"
 msgstr "Objet"
 
-#: models.py:513 templates/alessandria/author_detail.html:13
+#: models.py:514 templates/alessandria/author_detail.html:13
 #: templates/alessandria/base_tpl.html:48
 msgid "Books"
 msgstr "matériels"
 
-#: models.py:520
+#: models.py:521
 msgid "Condition"
 msgstr "État"
 
-#: models.py:521
+#: models.py:522
 msgid "Origin"
 msgstr "Origine"
 
-#: models.py:522
+#: models.py:523
 msgid "Price"
 msgstr "Prix"
 
-#: models.py:523
+#: models.py:524
 msgid "Date (price)"
 msgstr "Date (prix)"
 
-#: models.py:524
+#: models.py:525
 msgid "Took out on"
 msgstr "Retiré le"
 
-#: models.py:548 templates/alessandria/bookcopy_detail.html:5
+#: models.py:549 templates/alessandria/bookcopy_detail.html:5
 #: templates/alessandria/bookcopy_detail.html:11
 msgid "Book sample"
 msgstr "Exemplaire d'un matériel"
 
-#: models.py:549
+#: models.py:550
 msgid "Book samples"
 msgstr "Exemplaires des matériels"
 
-#: models.py:565 templates/alessandria/book_detail.html:44
+#: models.py:566 templates/alessandria/book_detail.html:44
 #: templates/alessandria/book_detail.html:46
 msgid "Sample"
 msgstr "Exemplaire"
 
-#: models.py:566 templates/alessandria/reader_borrow_list.html:16
+#: models.py:567 templates/alessandria/reader_borrow_list.html:16
 msgid "Borrowed on"
 msgstr "Emprunté le"
 
-#: models.py:567 templates/alessandria/reader_borrow_list.html:19
+#: models.py:568 templates/alessandria/reader_borrow_list.html:19
 msgid "Due date"
 msgstr "Date d'échéance"
 
-#: models.py:568 templates/alessandria/reader_borrow_list.html:20
+#: models.py:569 templates/alessandria/reader_borrow_list.html:20
 #: templates/alessandria/reader_detail.html:90
 msgid "Returned on"
 msgstr "Rendu le"
 
-#: models.py:575
+#: models.py:576
 msgid "Reader borrowing"
 msgstr "Emprunt d'un/e utilisateur/trice"
 
-#: models.py:576
+#: models.py:577
 msgid "Reader borrowings"
 msgstr "Emprunts des utilisateurs/trices"
 
-#: models.py:590
+#: models.py:591
 #, python-format
 msgid "Borrowed on %s"
 msgstr "Emprunté le %s"
@@ -637,21 +641,21 @@ msgstr "Exemplaires"
 msgid "removed"
 msgstr "retiré"
 
-#: templates/alessandria/book_detail.html:150
+#: templates/alessandria/book_detail.html:118
 msgid "Unique ID"
 msgstr ""
 
-#: templates/alessandria/book_detail.html:223
+#: templates/alessandria/book_detail.html:232
 #: templates/alessandria/reader_borrow_detail.html:41
 msgid "Other books of"
 msgstr "Autres matériels de"
 
-#: templates/alessandria/book_detail.html:248
+#: templates/alessandria/book_detail.html:257
 #: templates/alessandria/reader_detail.html:88
 msgid "Borrowing date"
 msgstr "Date d'emprunt"
 
-#: templates/alessandria/book_detail.html:250
+#: templates/alessandria/book_detail.html:259
 msgid "Returned"
 msgstr "Rendu"
 

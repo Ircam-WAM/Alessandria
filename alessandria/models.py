@@ -444,6 +444,7 @@ class Book(ModelEntity):
     state = models.CharField(_('state'), max_length=32, choices=STATES, default='good_condition')
     status = models.CharField(_('status'), max_length=32, choices=STATUSES, default='available', blank=True)
     objects = BookManager()
+    url = models.URLField(max_length=1000, null=False, blank=True, verbose_name=_('url'))
 
     @property
     def uuid(self):
