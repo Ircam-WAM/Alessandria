@@ -396,16 +396,16 @@ class BookManager(models.Manager):
         # if isbn_nb != '':
         #     isbn_nb = isbnlib.get_canonical_isbn(isbn_nb)
         #     r_list = r_list.filter(isbn_nb=isbn_nb)
-        # if title != '':
-        #     r_list = r_list.filter(title__icontains=title)
-        # if category != '':
-        #     r_list = r_list.filter(category__id=category)
-        # if sub_category != '':
-        #     r_list = r_list.filter(sub_category__id=sub_category)
-        # if author_name != '':
-        #     r_list = (
-        #         r_list.filter(Q(authors__last_name__icontains=author_name) | Q(authors__alias__icontains=author_name))
-        #     )
+        if title != '':
+            r_list = r_list.filter(title__icontains=title)
+        if category != '':
+            r_list = r_list.filter(category__id=category)
+        if sub_category != '':
+            r_list = r_list.filter(sub_category__id=sub_category)
+        if author_name != '':
+            r_list = (
+                r_list.filter(Q(authors__last_name__icontains=author_name) | Q(authors__alias__icontains=author_name))
+            )
         return r_list
 
 

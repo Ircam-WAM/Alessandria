@@ -483,10 +483,12 @@ class BookListView(EntityListView):
 
     def _build_query(self, search_fields):
         self.object_list = Book.objects.search(
-            isbn_nb=search_fields['isbn_nb'], title=search_fields['title'], category=search_fields['category'],
-            sub_category=search_fields['sub_category'], author_name=search_fields['author_name']
+            title=search_fields['title'],
+            category=search_fields['category'],
+            sub_category=search_fields['sub_category'],
+            author_name=search_fields['author_name']
         )
-        self.object_list = self.object_list.filter(bookcopy__isnull=(search_fields.get('has_copy') is None))
+        # self.object_list = self.object_list.filter(bookcopy__isnull=(search_fields.get('has_copy') is None))
         self.object_list = self.object_list.filter(
             bookcopy__disabled_on__isnull=(search_fields.get('took_away') is None)
         )
